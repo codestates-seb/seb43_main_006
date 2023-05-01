@@ -7,15 +7,15 @@
 **`팀 명` :** 주신사 </br>
 **`프로젝트 명` :** 매주매주 </br>
 **`프로젝트 기간` :** 2023.04.28 - 2023.05.31 </br>
-`배포링크` :  [ ❤️매주매주❤️ ]
+`배포링크` :  [ ❤️매주매주❤️ ](링크)
 
 </br>
 
 ## ❤️ Team ❤️
 
-| <a href="https://github.com/jbsim999" target="_blank">정호재</a><br>(FE, 팀장) | <a href="https://github.com/Mia-Oh" target="_blank">최진영</a><br>(BE, 팀장) | <a href="https://github.com/dooyong2" target="_blank">양선우</a><br>(FE, 팀원) | <a href="https://github.com/artwoojin" target="_blank">문지영</a><br>(FE, 팀원) | <a href="https://github.com/SUM1NG" target="_blank">임시은</a><br>(FE, 팀원) | <a href="https://github.com/youa7878" target="_blank">임태균</a><br>(BE, 팀원) | <a href="https://github.com/youa7878" target="_blank">고유강</a><br>(BE, 팀원) |
+| <a href="https://github.com/JHJFE" target="_blank">정호재</a><br>(FE, 팀장) | <a href="https://github.com/jy3026" target="_blank">최진영</a><br>(BE, 팀장) | <a href="https://github.com/sunwoo020" target="_blank">양선우</a><br>(FE, 팀원) | <a href="https://github.com/mongzii" target="_blank">문지영</a><br>(FE, 팀원) | <a href="https://github.com/sineTlsl" target="_blank">임시은</a><br>(FE, 팀원) | <a href="https://github.com/taegyun0903" target="_blank">임태균</a><br>(BE, 팀원) | <a href="https://github.com/KYOOKANG" target="_blank">고유강</a><br>(BE, 팀원) |
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| <img alt="정호재" src="" height="100" width="80"> | <img alt="최진영" src="" height="100" width="80"> | <img alt="양선우" src="" height="100" width="80"> | <img alt="문지영" src="" height="100" width="80"> | <img alt="임시은" src="" height="100" width="80"> | <img alt="임태균" src="" height="100" width="80"> | <img alt="고유강" src="" height="100" width="80"> 
+| <img alt="정호재" src="https://github.com/JHJFE" height="100" width="80"> | <img alt="최진영" src="https://github.com/jy3026" height="100" width="80"> | <img alt="양선우" src="https://github.com/sunwoo020" height="100" width="80"> | <img alt="문지영" src="https://github.com/mongzii" height="100" width="80"> | <img alt="임시은" src="https://github.com/sineTlsl" height="100" width="80"> | <img alt="임태균" src="https://github.com/taegyun0903" height="100" width="80"> | <img alt="고유강" src="https://github.com/KYOOKANG" height="100" width="80"> 
 |- "" </br> - "" </br> - "" </br> - "" </br> - "" </br>| - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> - "" </br>|-  "" </br> - "" </br> - "" </br> - "" </br> - ""| - "" </br> - "" </br> - "" </br>- "" </br> |- "" </br> - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> | - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> | - "" </br> - "" </br> - "" </br> - "" </br> - "" </br> - "" </br>
 
 
