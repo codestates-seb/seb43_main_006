@@ -49,7 +49,7 @@
 
 </br>
 
-## ✉️ Commit  Message ✉️ 
+## ✉️ Git Commit Message Convention ✉️ 
 
 |Tag|Title|
 |:---:|:---|
