@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from './Home/Home';
-import Cart from './Cart/Cart';
-import Login from './Certification/Login';
-import Signup from './Certification/Signup';
-import Mypage from './Mypage/Mypage';
-import Payment from './Payment/Payment';
-import Place from './Place/Place';
-import PaymentConfirm from './Payment/PaymentConfirm';
-import Alcohol from './Alcohol/Alcohol';
-import AlcoholDetail from './Alcohol/AlcoholDetail';
+import Home from './Home/Home.tsx';
+import Cart from './Cart/Cart.tsx';
+import Login from './Certification/Login.tsx';
+import Signup from './Certification/Signup.js';//수정해야함
+import Mypage from './Mypage/Mypage.tsx';
+import Payment from './Payment/Payment.tsx';
+import Place from './Place/Place.tsx';
+import PaymentConfirm from './Payment/PaymentConfirm.tsx';
+import Alcohol from './Alcohol/Alcohol.tsx';
+import AlcoholDetail from './Alcohol/AlcoholDetail.tsx';
 
 const RoutesComponent = () => {
   return (
@@ -28,3 +28,5 @@ const RoutesComponent = () => {
     </Routes>
   );
 };
+
+export default RoutesComponent;

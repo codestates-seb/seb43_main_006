@@ -22,7 +22,9 @@
     "typeRoots": ["./node_modules/@types", "@types"],
     "allowImportingTsExtensions": true,
     "sourceMap": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "noImplicitAny": true,
+    "strictNullChecks": true, 
   },
   "include": [
     "src"
