@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SignupContainer = styled.main`
-`;
+const SignupContainer = styled.section``;
 
 const Signup = () => {
   return <SignupContainer>Signup!!</SignupContainer>;
