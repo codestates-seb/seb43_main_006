@@ -1,9 +1,9 @@
-import Header from "./Header/index.tsx";
-import Main from "./Main/index.tsx";
+import Header from "./Header/index";
+import Main from "./Main/index";
 import { ReactNode } from "react";
 type LayoutProps = {
-    children: ReactNode
-}
+  children: ReactNode;
+};
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>

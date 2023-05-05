@@ -1,19 +1,19 @@
-import styled from 'styled-components';
-import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import Cart from './pages/Cart.tsx';
-import Login from './pages/Login.tsx';
-import Signup from './pages/Signup.tsx';
-import Mypage from './pages/Mypage.tsx';
-import Payment from './pages/Payment/Payment.tsx';
-import Place from './pages/Place.tsx';
-import PaymentConfirm from './pages/Payment/PaymentConfirm.tsx';
-import Alcohol from './pages/Alcohol.tsx';
-import AlcoholDetail from './pages/AlcoholDetail.tsx';
-import Layout from './layout/index.tsx';
-import HelpCenter from './pages/HelpCenter.tsx';
+import styled from "styled-components";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Mypage from "./pages/Mypage";
+import Payment from "./pages/Payment/Payment";
+import Place from "./pages/Place";
+import PaymentConfirm from "./pages/Payment/PaymentConfirm";
+import Alcohol from "./pages/Alcohol";
+import AlcoholDetail from "./pages/AlcoholDetail";
+import Layout from "./layout/index";
+import HelpCenter from "./pages/HelpCenter";
 
-const BodyContainer = styled.body`
+const BodyContainer = styled.div`
   min-height: 100vh;
   ${({ theme }) => theme.common.flexCenterCol};
 `;
@@ -21,7 +21,6 @@ const BodyContainer = styled.body`
 const App = () => {
   return (
     <BodyContainer>
-      <button>asdf</button>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -39,19 +39,19 @@ const fontSizes = {
 const common = {
   flexCenter: `
       display: flex;
-      justify-contents: center;
+      justify-content: center;
       align-items: center;
     `,
   flexCenterCol: `
       display: flex;
       flex-direction: column;
-      justify-contents: center;
+      justify-content: center;
       align-items: center;
     `,
   flexCenterRow: `
       display: flex;
       flex-direction: row;
-      justify-contents: center;
+      justify-content: center;
       align-items: center;
     `,
 };

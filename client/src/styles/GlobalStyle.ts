@@ -31,7 +31,8 @@ export default createGlobalStyle`
     input{
         display: flex;
         outline: none;
-        padding-left: 10px;
+        border: none;
+        background-color: inherit;
     }
     a{
         text-decoration: none;

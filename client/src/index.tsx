@@ -1,12 +1,12 @@
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import store from './redux/slice/store.tsx';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './styles/GlobalStyle.ts';
-import theme from './styles/theme.ts';
-const rootElement = document.getElementById('root');
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import store from "./redux/slice/store";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styles/GlobalStyle";
+import theme from "./styles/theme";
+const rootElement = document.getElementById("root");
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
@@ -17,8 +17,8 @@ if (rootElement) {
           <App />
         </BrowserRouter>
       </Provider>
-    </ThemeProvider>
+    </ThemeProvider>,
   );
 } else {
-  console.error('No root');
+  console.error("No root");
 }
