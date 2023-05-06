@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PlaceContainer = styled.main`
-`;
+const PlaceContainer = styled.section``;
 
 const Place = () => {
   return <PlaceContainer>Place!!</PlaceContainer>;
