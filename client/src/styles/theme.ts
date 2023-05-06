@@ -1,18 +1,15 @@
-// 반응형 구현을 위한 px -> rem 단위 변환
-function pxToRem(pixelValue: number) {
-  const remValue = pixelValue / 16;
-  return `${remValue}rem`;
-}
 // 화면 사이즈
 const size = {
-  mobile: '',
-  tablet: '',
+  mobile: "768px",
+  tablet: "1024px",
+  desktop: "1025px"
 };
 
 // 화면 변경 지점
 const breakpoints = {
   mobileMax: `screen and (max-width: ${size.mobile})`,
   tabletMax: `screen and (max-width: ${size.tablet})`,
+  desktopMin: `screen and (max-width: ${size.desktop})`,
 };
 
 // 콘텐츠 넓이 관련
@@ -30,10 +27,10 @@ const colors = {
 
 // 폰트 크기
 const fontSizes = {
-  title: pxToRem(18),
-  subtitle: pxToRem(15),
-  money: pxToRem(16),
-  defalt: pxToRem(14),
+  title: "18px",
+  subtitle: "15px",
+  money: "16px",
+  defalt: "14px",
 };
 
 const common = {
@@ -54,6 +51,11 @@ const common = {
       justify-content: center;
       align-items: center;
     `,
+    flexCol: `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    ` 
 };
 
 const theme = {
