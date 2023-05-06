@@ -15,7 +15,7 @@ import HelpCenter from "./pages/HelpCenter";
 
 const BodyContainer = styled.div`
   min-height: 100vh;
-  ${({ theme }) => theme.common.flexCenterCol};
+  ${({ theme }) => theme.common.flexCol};
 `;
 
 const App = () => {
