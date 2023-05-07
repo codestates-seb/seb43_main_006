@@ -2,7 +2,7 @@
 const size = {
   mobile: "768px",
   tablet: "1024px",
-  desktop: "1025px"
+  desktop: "1025px",
 };
 
 // 화면 변경 지점
@@ -14,15 +14,15 @@ const breakpoints = {
 
 // 콘텐츠 넓이 관련
 const widthSize = {
-  contentMax: '1250px',
+  contentMax: "1250px",
 };
 
 // 색
 const colors = {
-  fontColor: '#181818',
-  themeColor: '#AB4448',
-  border: '#DEDEDE',
-  bg: '#F7F7F7',
+  fontColor: "#181818",
+  themeColor: "#AB4448",
+  border: "#DEDEDE",
+  bg: "#F7F7F7",
 };
 
 // 폰트 크기
@@ -51,11 +51,11 @@ const common = {
       justify-content: center;
       align-items: center;
     `,
-    flexCol: `
+  flexCol: `
       display: flex;
       flex-direction: column;
       align-items: center;
-    ` 
+    `,
 };
 
 const theme = {
