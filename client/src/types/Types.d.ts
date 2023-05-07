@@ -1,4 +1,4 @@
-declare module 'my-module' {
+declare module "my-module" {
   export interface MyType {
     id: number;
     name: string;
