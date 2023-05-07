@@ -5,8 +5,8 @@ function pxToRem(pixelValue: number) {
 }
 // 화면 사이즈
 const size = {
-  mobile: '',
-  tablet: '',
+  mobile: "",
+  tablet: "",
 };
 
 // 화면 변경 지점
@@ -17,15 +17,15 @@ const breakpoints = {
 
 // 콘텐츠 넓이 관련
 const widthSize = {
-  contentMax: '1250px',
+  contentMax: "1250px",
 };
 
 // 색
 const colors = {
-  fontColor: '#181818',
-  themeColor: '#AB4448',
-  border: '#DEDEDE',
-  bg: '#F7F7F7',
+  fontColor: "#181818",
+  themeColor: "#AB4448",
+  border: "#DEDEDE",
+  bg: "#F7F7F7",
 };
 
 // 폰트 크기
