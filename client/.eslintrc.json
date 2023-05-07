@@ -1,15 +1,18 @@
-// .eslintrc.json
 {
   "env": {
     "browser": true,
-    "es2021": true,
+    "es6": true,
     "node": true
   },
   "extends": [
     // "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "react",
+    "@typescript-eslint"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,18 +23,9 @@
   },
   "rules": {
     "react/react-in-jsx-scope": 0,
-    "react/jsx-uses-react": 0,
-    "import/no-unresolved": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": false,
-        "parser": "flow",
-        "trailingComma": "all",
-        "endOfLine": "auto"
-      }
-    ]
-  },
-  "plugins": ["prettier"],
-  "parser": "babel-parser"
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "no-nested-ternary": 0
+  }
 }

@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import ResetStyle from 'styled-reset';
+import { createGlobalStyle } from "styled-components";
+import ResetStyle from "styled-reset";
 
 export default createGlobalStyle`
     ${ResetStyle} // input button textarea a link 등등의 스타일 초기화
@@ -13,5 +13,8 @@ export default createGlobalStyle`
     a{
         text-decoration: none;
         color: inherit;
+    }
+    main {
+        width: 100%;
     }
 `;
