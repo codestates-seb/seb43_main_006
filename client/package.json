@@ -18,14 +18,16 @@
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.10",
-    "typescript": "^5.0.4",
+    "styled-reset": "^4.4.6",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint."
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +48,8 @@
     ]
   },
   "devDependencies": {
+    "@types/prettier": "^2.7.2",
+    "@types/styled-components": "^5.1.26",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
