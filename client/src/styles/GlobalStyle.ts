@@ -14,4 +14,7 @@ export default createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
+    main {
+        width: 100%;
+    }
 `;
