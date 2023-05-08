@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as Mainlogo } from "../../assets/images/Logo.svg";
+import backimg from "../../assets/images/Headerback.png";
 import { useRef } from "react";
 import { useHover } from "usehooks-ts";
 
@@ -22,17 +23,16 @@ const StyledList = styled.li<IHeaderContainerProps>`
 `;
 
 const HeaderContainer = styled.header<IHeaderContainerProps>`
-  height: ${({ hovering }) => (hovering ? "300px" : "135px")};
+  height: ${({ hovering }) => (hovering ? "60%" : "50px")};
   width: 100%;
-  background: ${({ hovering }) => (hovering ? "rgba(255, 228, 225, 1)" : "none")};
-  position: sticky;
+  background-image: ${({ hovering }) => (hovering ? "rgba(255, 228, 225, 1)" : "none")};
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
-  flex-direction: row;
   transition: all 0.5s ease;
   color: ${({ hovering }) => (hovering ? "#22222" : "#ffe4e1")};
   background-color: ${({ hovering }) => (hovering ? "rgba(255, 228, 225, 0.7)" : "transparent")};
+  z-index: 1;
 `;
 
 const LogoContainer = styled.div<IHeaderContainerProps>`
@@ -41,7 +41,7 @@ const LogoContainer = styled.div<IHeaderContainerProps>`
   position: absolute;
   max-height: 30px;
   top: 40px;
-  left: 50px;
+  left: 100px;
 `;
 
 const Ulist = styled.div`
