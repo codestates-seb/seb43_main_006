@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as Mainlogo } from "../../assets/Image/Logo.svg";
+import { ReactComponent as Mainlogo } from "../../assets/image/Logo.svg";
 import { useRef } from "react";
 import { useHover } from "usehooks-ts";
 
