@@ -1,6 +1,9 @@
 package com.codestates.julsinsa.member.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.item.entity.Favorite;
+import com.codestates.julsinsa.review.entity.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,6 +47,29 @@ public class Member extends Auditable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Favorite> favorites = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews = new ArrayList<>();
+
+
+    //관계 편의 메서드
+    public void addFavorite(Favorite favorite){
+        favorites.add(favorite);
+        if(favorite.getMember() != this) {
+            favorite.setMember(this);
+        }
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        if(review.getMember() != this) {
+            review.setMember(this);
+        }
+    }
 
     public enum MemberStatus {
 

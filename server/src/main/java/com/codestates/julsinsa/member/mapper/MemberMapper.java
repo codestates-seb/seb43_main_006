@@ -9,4 +9,9 @@ import org.mapstruct.ReportingPolicy;
 public interface MemberMapper {
 
     Member memberPostToMember(MemberDto.Post requestBody);
+    Member memberPatchToMember(MemberDto.Patch requestBody);
+
+    MemberDto.Response memberToMemberResponse(Member member);
+
+//    Member memberDeleteToMember(MemberDto.Delete requestBody);
 }

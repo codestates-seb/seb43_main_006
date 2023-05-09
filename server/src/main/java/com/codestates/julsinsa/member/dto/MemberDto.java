@@ -43,7 +43,11 @@ public class MemberDto {
 
     @Getter
     public static class Patch {
+        private String displayName;
 
+        private String phone;
+
+        private String password;
     }
 
     @AllArgsConstructor
@@ -55,10 +59,15 @@ public class MemberDto {
 
         private String displayName;
         private String email;
-        private String name;
         private String phone;
-        private Member.MemberStatus userStatus;
+        private Member.MemberStatus memberStatus;
 
         private LocalDate birthDate;
+    }
+
+    @Getter
+    public static class Delete {
+        private String email;
+        private String password;
     }
 }

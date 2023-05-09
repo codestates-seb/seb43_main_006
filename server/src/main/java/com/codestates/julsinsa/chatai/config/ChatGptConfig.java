@@ -3,7 +3,7 @@ package com.codestates.julsinsa.chatai.config;
 public class ChatGptConfig {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer ";
-    public static final String API_KEY = "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";
+    public static final String API_KEY = "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";
     public static final String MODEL = "text-davinci-003";
     public static final Integer MAX_TOKEN = 300;
     public static final Double TEMPERATURE = 0.0;

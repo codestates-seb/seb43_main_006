@@ -1,9 +1,14 @@
 package com.codestates.julsinsa.member.service;
 
+import com.codestates.julsinsa.auth.dto.LoginDto;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
 import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.item.dto.ItemDto;
+import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.helper.event.MemberRegistrationApplicationEvent;
+import com.codestates.julsinsa.item.entity.Item;
+import com.codestates.julsinsa.item.repository.FavoriteRepository;
 import com.codestates.julsinsa.member.dto.EmailRequest;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
@@ -13,6 +18,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,17 +42,17 @@ public class MemberService {
     private final JavaMailSender javaMailSender;
 
     private final ApplicationEventPublisher publisher;
-
+    private final FavoriteRepository favoriteRepository;
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
 
-
-
+        // Oauth2 가입한 유저는 닉네임이 없기에 이메일로 설정
         if(member.getDisplayName() == null) member.setDisplayName(member.getEmail());
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
+        // Oauth2 가입한 유저는 비밀번호가 없기에 로직을 설정함
         if(member.getPassword() != null) {
             String encryptedPassword = passwordEncoder.encode(member.getPassword());
             member.setPassword(encryptedPassword);
@@ -57,10 +63,6 @@ public class MemberService {
 
             verifyAuthKey(authMap.get(member.getEmail()), member.getEmail());
         }
-
-
-
-
         Member savedMember = memberRepository.save(member);
 
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
@@ -68,11 +70,59 @@ public class MemberService {
 
     }
 
-    public void deleteMember(long memberId) {
+    public Member updateMember(Member member){
 
+        // 로그인한 유저 불러오기
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
+        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+        // 각각 설정
+        Optional.ofNullable(member.getDisplayName()).ifPresent(displayName -> findmember.setDisplayName(displayName));
+        Optional.ofNullable(member.getPhone()).ifPresent(phone -> findmember.setPhone(phone));
+        Optional.ofNullable(member.getPassword()).ifPresent(password -> findmember.setPassword(password));
+        String encode = passwordEncoder.encode(findmember.getPassword());
+        findmember.setPassword(encode);
+
+        return memberRepository.save(findmember);
+    }
+
+    public List<ItemDto.favoriteItemResponse> findFavorites(){
+        // 로그인한 유저 불러오기
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
+        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+        // 찜 목록 생성
+        List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
+        List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
+        for (Object[] objects : resultList) {
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((String) objects[0], (int) objects[1],(int) objects[2], (int) objects[3], (double) objects[4]);
+            itemList.add(item);
+        }
+
+        return itemList;
+    }
+    // 이메일 전송 실패시 회원 삭제
+    public void deleteMember(long memberId){
         Member member = findVerifiedMember(memberId);
 
         memberRepository.delete(member);
+    }
+
+    // 회원 탈퇴 아이디와 비밀번호가 일치해야함
+    public void deleteMember(LoginDto member) {
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
+        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+
+        if(!(findmember.getEmail().equals(member.getUsername()) && passwordEncoder.matches(member.getPassword(), findmember.getPassword()))){
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHORIZED);
+        }
+
+
+        memberRepository.delete(findmember);
     }
 
     private void verifyExistsEmail(String email){
@@ -95,8 +145,11 @@ public class MemberService {
         return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
+    // 메일 인증 비동기로 구현
     @Async
     public void sendEmail(EmailRequest request) {
+
+        verifyExistsEmail(request.getEmail());
 
         String authValue = authMap.get(request.getEmail());
         if(authValue != null){
@@ -134,5 +187,6 @@ public class MemberService {
         }
         return false;
     }
+
 
 }

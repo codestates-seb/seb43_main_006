@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,6 +37,8 @@ public class ChatGptService {
 
     // 사용자의 질문을 받아와 ChatGptRequestDto 객체를 생성하고, 이를 HttpEntity로 묶어 getResponse 메소드를 호출하여 GPT-3 API에 질문을 전송하고, 답변을 반환.
     // 이때, 사용되는 파라미터들은 ChatGptConfig 클래스에 미리 정의
+
+    //비동기로 구현할라니까 응답이안오네 ㅋㅋ
     public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
         return this.getResponse(
                 this.buildHttpEntity(
