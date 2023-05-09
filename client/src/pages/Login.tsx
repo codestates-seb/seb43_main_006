@@ -2,67 +2,109 @@ import styled, { ThemeContext } from "styled-components";
 import { useContext, useState, ChangeEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Common/Button";
+import { ReactComponent as Logo } from "../assets/images/Logo.svg";
+import facebook from "../assets/images/facebook.png";
+import google from "../assets/images/google.png";
+import Maintop from "../assets/images/login-bg.png";
+import { Icon } from "../types/Interfaces";
 
-const url = "https://ee61-124-111-225-247.ngrok-free.app/";
-const LoginContainer = styled.section`
-  width: 618px;
+const url = "https://25ff-124-111-225-247.ngrok-free.app/";
+
+const Container = styled.section`
+  width: 100vw;
+  height: 100vh;
   ${({ theme }) => theme.common.flexCenterCol};
 `;
-const TopContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 90px;
+const Back = styled.div`
   width: 100%;
-  height: 128px;
-
-  .greeting {
-    color: ${({ theme }) => theme.colors.themeColor};
-    font-size: 30px;
-    font-weight: 600;
-  }
+  height: 100%;
+  background-image: url(${Maintop});
+  background-size: cover;
+  position: absolute;
+  width: inherit;
+  z-index: -1;
+  filter: blur(5px);
 `;
+
+const MainLogo = styled(Logo)`
+  width: 150px;
+  margin-bottom: 25px;
+`;
+
+const LoginContainer = styled.section`
+  width: 500px;
+  ${({ theme }) => theme.common.flexCenterCol};
+`;
+
 const BottomContainer = styled.div`
   width: 100%;
-  height: 618px;
   background-color: ${({ theme }) => theme.colors.bg};
-  padding: 50px 36px;
+  padding: 20px 30px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 5px;
   .input-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-row-gap: 60px;
+    grid-row-gap: 15px;
   }
   .oauth-container {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-row-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+    grid-column-gap: 50px;
+  }
+  .go-sign {
+    color: ${({ theme }) => theme.colors.themeColor};
+    float: right;
+    margin-top: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .oauth-content {
+    ${({ theme }) => theme.common.flexCenterCol};
+    gap: 10px;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.fontColor};
+    cursor: pointer;
+  }
+  .oauth-btn {
+    ${({ theme }) => theme.common.flexCenterCol};
+    padding: 15px;
+    border: 1px solid #b7b7b7;
+    border-radius: 50%;
   }
 `;
+
 const InputContainer = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-
-  height: 100px;
+  color: ${({ theme }) => theme.colors.themeColor};
+  height: 70px;
   width: 100%;
-  font-weight: 600;
+  padding: 0px;
+  font-weight: 400;
   .title {
     font-size: 20px;
   }
   .input {
-    font-size: 20px;
-    border-bottom: 1px solid gray;
+    height: 45px;
+    font-size: 16px;
+    background-color: inherit;
+    border: 1px solid #b7b7b7;
+    padding: 10px 15px;
+    border-radius: 5px;
   }
 `;
-const Button = styled.button`
-  ${({ theme }) => theme.common.flexCenter};
 
-  height: 52px;
-  width: 100%;
-  font-size: 18px;
-  font-weight: 500;
-  background-color: ${(props) => props.color};
-  ${(props) => (props.color === "white" ? "color : black" : "color : white")}
+const OAuthButton = styled.button<Icon>`
+  background-image: url(${({ icon }) => icon});
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: inherit;
 `;
 
 const Login = () => {
@@ -103,35 +145,62 @@ const Login = () => {
     //오어스 인증링크로 이동
     window.location.assign(`${url}oauth2/authorization/facebook`);
   };
+  const GotoSign = () => {
+    navigate("/signup");
+  };
   return (
-    <LoginContainer>
-      <TopContainer>
-        <div className="greeting">Get Started</div>
-      </TopContainer>
-      <BottomContainer>
-        <div className="input-container">
-          <InputContainer>
-            <div className="title">E-mail</div>
-            <input autoComplete="on" onChange={emailHandler} className="input"></input>
-          </InputContainer>
-          <InputContainer>
-            <div className="title">Password</div>
-            <input autoComplete="off" onChange={passwordHandler} type="password" className="input"></input>
-          </InputContainer>
-        </div>
-        <div className="oauth-container">
-          <Button onClick={handleLogin} color={themeContext["themeColor"]} name="Login">
-            Login
-          </Button>
-          <Button onClick={googleOAuthHandler} color="white" name="google">
-            Google
-          </Button>
-          <Button onClick={facebookOAuthHandler} color="#0000f7" name="Face Book">
-            Face Book
-          </Button>
-        </div>
-      </BottomContainer>
-    </LoginContainer>
+    <Container>
+      <Back />
+      <LoginContainer>
+        <BottomContainer>
+          <MainLogo></MainLogo>
+          <div className="input-container">
+            <InputContainer>
+              <div className="title">E-mail</div>
+              <input placeholder="인증 이메일" autoComplete="on" onChange={emailHandler} className="input"></input>
+            </InputContainer>
+            <InputContainer>
+              <div className="title">Password</div>
+              <input
+                placeholder="비밀번호"
+                autoComplete="off"
+                onChange={passwordHandler}
+                type="password"
+                className="input"
+              ></input>
+            </InputContainer>
+            <Button
+              width="100%"
+              height="45px"
+              bg={themeContext["themeColor"]}
+              color="white"
+              fontSize="18px"
+              borderRadious="7px"
+              onClick={handleLogin}
+            >
+              Log In
+            </Button>
+          </div>
+          <div className="oauth-container">
+            <div onClick={googleOAuthHandler} className="oauth-content">
+              <div className="oauth-btn">
+                <OAuthButton icon={facebook} />
+              </div>
+              <div> 페이스북 로그인</div>
+            </div>
+            <div className="oauth-content">
+              <div onClick={facebookOAuthHandler} className="oauth-btn">
+                <OAuthButton icon={google} />
+              </div>
+              <div> 구글 로그인</div>
+            </div>
+          </div>
+          <div onClick={GotoSign} className="go-sign">
+            I&apos;m new
+          </div>
+        </BottomContainer>
+      </LoginContainer>
+    </Container>
   );
 };
 
