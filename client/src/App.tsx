@@ -11,7 +11,7 @@ import Notmember from "./pages/Mypage/notmember";
 import Orderpage from "./pages/Mypage/orderpage";
 
 import Payment from "./pages/Payment/Payment";
-// import Place from "./pages/Place";
+import Place from "./pages/Place";
 import PaymentConfirm from "./pages/Payment/PaymentConfirm";
 import Alcohol from "./pages/Alcohol";
 import AlcoholDetail from "./pages/AlcoholDetail";
@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/mypage/orderpage" element={<Orderpage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
-          {/* <Route path="/place" element={<Place />} /> */}
+          <Route path="/place" element={<Place />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
         </Routes>
       </Layout>
