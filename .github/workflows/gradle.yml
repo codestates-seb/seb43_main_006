@@ -27,8 +27,7 @@ jobs:
       with:
         arguments: build
         gradle-executable: './server/gradlew'
-    - name: Add permission 
-      run: chmod +x gradlew 
+  
     
     # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
