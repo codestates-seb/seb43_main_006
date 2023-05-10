@@ -5,12 +5,12 @@ export interface Sample {
   object: object;
 }
 
-export interface loginInfo {
+export interface LoginInfo {
   email: string;
   password: string;
 }
 
-export interface signInfo {
+export interface SignInfo {
   realName: string;
   displayName: string;
   email: string;
@@ -18,4 +18,21 @@ export interface signInfo {
   phone: string;
   birthDate: string;
   mailKey: string;
+}
+
+export interface BtnProps {
+  children: string;
+  width: string;
+  height: string;
+  bg: string;
+  color: string;
+  fontSize: string;
+  fontWeight?: string;
+  border?: string;
+  borderRadious?: string;
+  onClick: () => void;
+}
+
+export interface Icon {
+  icon: string;
 }
