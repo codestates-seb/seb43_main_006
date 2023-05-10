@@ -20,7 +20,7 @@ const widthSize = {
 // 색
 const colors = {
   fontColor: "#181818",
-  themeColor: "#AB4448",
+  themeColor: "#222222",
   border: "#DEDEDE",
   bg: "#F7F7F7",
 };
