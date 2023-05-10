@@ -156,6 +156,7 @@ const HomeContainer = styled.section`
   align-items: flex-start;
   max-width: 1440px;
   font-size: 96px;
+  overflow : hidden;
 
   .Maintop {
     position: relative;
@@ -326,7 +327,7 @@ const HomeContainer = styled.section`
 }
   & ul {
     overflow-x :scroll;
-    height : 200px;
+    height : 220px;
     &li {
     }
   }
