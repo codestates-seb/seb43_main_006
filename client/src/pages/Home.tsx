@@ -79,7 +79,7 @@ const Home: React.FC = () => {
         </p>
       </div>
       <div className="saleslist">
-        <p>
+        <a>
           위스키 계열
           <ul className="1stsales">
             <li>
@@ -110,8 +110,8 @@ const Home: React.FC = () => {
               <img src={samplelist} className="slist" alt="sample list" />
             </li>
           </ul>
-        </p>
-        <p>
+        </a>
+        <a>
           보드카 계열
           <ul className="2ndsales">
             <li>
@@ -142,7 +142,7 @@ const Home: React.FC = () => {
               <img src={samplelist} className="slist" alt="sample list" />
             </li>
           </ul>
-        </p>
+        </a>
       </div>
     </HomeContainer>
   );
@@ -295,7 +295,7 @@ const HomeContainer = styled.section`
   height : 1880px;
   flex-direction : column;
   padding-left : 200px;
-  & p {
+  & a {
     font-size : 20px;
     padding-left : 20px;
     height : 30px;
