@@ -10,6 +10,7 @@ import com.codestates.julsinsa.helper.event.MemberRegistrationApplicationEvent;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.repository.FavoriteRepository;
 import com.codestates.julsinsa.member.dto.EmailRequest;
+import com.codestates.julsinsa.member.dto.FindDto;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,7 @@ public class MemberService {
         }
         Member savedMember = memberRepository.save(member);
 
+        // 여기서 this는 MemberService
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
         return savedMember;
 
@@ -125,6 +127,27 @@ public class MemberService {
         memberRepository.delete(findmember);
     }
 
+    public Member findMemberEmail(FindDto.Id requestBody) {
+        Optional<Member> optionalMember = memberRepository.findByRealNameAndPhone(requestBody.getName(), requestBody.getPhone());
+        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return member;
+    }
+
+    public Member findMemberPassword(FindDto.Password requestBody){
+        Optional<Member> optionalMember = memberRepository.findByRealNameAndPhoneAndEmail(requestBody.getName(), requestBody.getPhone(), requestBody.getEmail());
+        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        String tempPassword = getTempPassword();
+        String encryptedPassword = passwordEncoder.encode(tempPassword);
+        member.setPassword(encryptedPassword);
+
+        sendTempPassword(member,tempPassword);
+
+
+        return memberRepository.save(member);
+    }
+
     private void verifyExistsEmail(String email){
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if(optionalMember.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
@@ -172,7 +195,19 @@ public class MemberService {
         javaMailSender.send(message);
     }
 
+    @Async
+    public void sendTempPassword(Member member, String tempPassword) {
 
+        String subject = "매주매주 임시 비밀번호 발급";
+        String text = "임시 비밀번호는 " + tempPassword + "입니다.";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(member.getEmail());
+        message.setSubject(subject);
+        message.setText(text);
+
+        javaMailSender.send(message);
+    }
 
     public void authEmail(EmailRequest request) {
         if(!request.getMailKey().equals(authMap.get(request.getEmail()))){
@@ -188,5 +223,18 @@ public class MemberService {
         return false;
     }
 
+    public String getTempPassword(){
+        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
+        String str = "";
+
+        // 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            str += charSet[idx];
+        }
+        return str;
+    }
 }
