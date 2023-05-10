@@ -5,7 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 // components
 import ReviewRating from "../Common/ReviewRating";
 import PriceRegular from "../Common/PriceRegular";
-import { useState } from "react";
+import ClickFavoriteItem from "../Common/ClickFavoriteItem";
 
 interface ItemProps {
   item: AlcoholListData;
@@ -25,9 +25,7 @@ const AlcoholItemContainer = styled.div`
     width: 300px;
     height: 300px;
     ${({ theme }) => theme.common.flexCenter};
-    border-bottom: 3.5px solid #fff;
-    /* border: 2px solid ${({ theme }) => theme.colors.border}; */
-    /* border-radius: 5px; */
+    border-bottom: 3.5px solid ${({ theme }) => theme.colors.bg};
     margin-bottom: 6px;
     position: relative;
     img {
@@ -35,7 +33,7 @@ const AlcoholItemContainer = styled.div`
     }
     &:hover {
       border: none;
-      border-bottom: 3.5px solid #222;
+      border-bottom: 3.5px solid ${({ theme }) => theme.colors.themeColor};
     }
     .item_like {
       display: none;
@@ -82,14 +80,12 @@ const AlcoholItemContainer = styled.div`
 `;
 
 const AlcoholListItem = ({ item }: ItemProps) => {
-  const [favorited, setFavorited] = useState<boolean>(false);
-
   return (
     <AlcoholItemContainer>
       <div className="item_img">
         <img src={item.profile} />
         <div className="item_like">
-          <AiFillHeart color={favorited ? "#D43635" : "#e4e5e9"} size="20px" />
+          <ClickFavoriteItem icon={AiFillHeart} color="#e4e5e9" activeColor="#D43635" size={20} />
         </div>
       </div>
       <div className="item_content">
