@@ -1,38 +1,59 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactComponent as Mainlogo } from "../../assets/images/Logo.svg";
-import backimg from "../../assets/images/Headerback.png";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useHover } from "usehooks-ts";
+import Headerback from "../../assets/images/Headerback.png";
 
 interface IHeaderContainerProps {
-  hovering?: boolean;
+  hovering: string;
+  y: number;
+}
+interface ScrollState {
+  x: number;
+  y: number;
 }
 
 const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
   path {
-    fill: ${({ hovering }) => (hovering ? "#ab4448" : "#ffe4e1")};
-    transition: all 1.5s ease-out;
+    ${({ hovering, y }) =>
+      y > 1
+        ? css`
+            fill: #222222;
+          `
+        : css`
+            fill: ${hovering === "true" ? "#222222" : "#222222"};
+            transition: all 0.3s ease-out;
+          `}
   }
 `;
 
 const StyledList = styled.li<IHeaderContainerProps>`
-  font-size: 20px;
-  margin-top: 15px;
-  transition: all 0.1s ease-out;
-  display: ${({ hovering }) => (hovering ? "flex" : "none")};
+  transition: all 0.3s ease-out;
+  display: ${({ hovering }) => (hovering === "true" ? "flex" : "none")};
 `;
 
 const HeaderContainer = styled.header<IHeaderContainerProps>`
-  height: ${({ hovering }) => (hovering ? "60%" : "50px")};
   width: 100%;
-  background-image: ${({ hovering }) => (hovering ? "rgba(255, 228, 225, 1)" : "none")};
   position: fixed;
-  top: 0;
-  left: 0;
-  transition: all 0.5s ease;
-  color: ${({ hovering }) => (hovering ? "#22222" : "#ffe4e1")};
-  background-color: ${({ hovering }) => (hovering ? "rgba(255, 228, 225, 0.7)" : "transparent")};
-  z-index: 1;
+  max-width: 1440px;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  z-index: 999;
+
+  ${({ hovering, y }) =>
+    y > 0 || hovering === "true"
+      ? css`
+          height: 150px;
+          color: #222222;
+          background-image: url(${Headerback});
+          opacity: 0.8;
+        `
+      : css`
+          height: 0px;
+          color: #222222;
+          background-image: none;
+          opacity: 1;
+        `}
 `;
 
 const LogoContainer = styled.div<IHeaderContainerProps>`
@@ -40,88 +61,134 @@ const LogoContainer = styled.div<IHeaderContainerProps>`
   align-items: flex-start;
   position: absolute;
   max-height: 30px;
-  top: 40px;
+  top: 6px;
   left: 100px;
 `;
 
 const Ulist = styled.div`
   display: flex;
-  position: relative;
-  padding-left: 100px;
+  position: absolute;
+  padding-left: 300px;
   justify-content: center;
+  width: 1300px;
 
   & ul {
     padding-left: 40px;
     padding-top: 10px;
-    font-size: 22px;
+    font-size: 20px;
     width: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 0 auto;
+    font-weight: bold;
   }
 
   & ul {
     & li {
+      padding-top: 15px;
       font-size: 16px;
+      font-weight: 400;
+      flex-direction: row;
     }
+  }
+  .banner1 {
+    padding-left: 60px;
   }
   .banner2 {
     padding-left: 25px;
   }
-  & p {
+  & div {
     padding-left: 50px;
     width: 50px;
     display: flex;
     flex-direction: row;
-    .icon3 {
-      padding-left: 150px;
-    }
     & * {
       padding-left: 100px;
     }
+  }
+  .banner3 {
+    padding-left: 0px;
+  }
+  .banner4 {
+    padding-left: 0px;
+  }
+  .banner5 {
+    padding-left: 0px;
+  }
+  .banner6 {
+    padding-left: 100px;
+    font-size: 16px;
   }
 `;
 
 const Header = () => {
   const hoverRef = useRef(null);
+
   const isHover = useHover(hoverRef);
 
+  const useScroll = (): ScrollState => {
+    const [state, setState] = useState<ScrollState>({ x: 0, y: 0 });
+
+    const onScroll = (): void => {
+      setState({ x: window.scrollX, y: window.scrollY });
+    };
+    useEffect(() => {
+      window.addEventListener("scroll", onScroll);
+      return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+    return state;
+  };
+  const { y } = useScroll();
+
   return (
-    <HeaderContainer hovering={isHover}>
+    <HeaderContainer hovering={(isHover || false).toString()} y={y}>
       <nav>
         <div ref={hoverRef} className="hoverlayer">
-          <LogoContainer hovering={isHover}>
-            <WhiteMainlogo className="mainlogo" hovering={isHover} />
+          <LogoContainer hovering={(isHover || false).toString()} y={y}>
+            <WhiteMainlogo className="mainlogo" hovering={(isHover || false).toString()} y={y} />
             <Ulist>
               <ul className="banner1">
                 List
-                <StyledList hovering={isHover}>List1</StyledList>
-                <StyledList hovering={isHover}>List2</StyledList>
-                <StyledList hovering={isHover}>List3</StyledList>
-                <StyledList hovering={isHover}>List4</StyledList>
-                <StyledList hovering={isHover}>List5</StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  주류 리스트
+                </StyledList>
               </ul>
               <ul className="banner2">
-                My Page
-                <StyledList hovering={isHover}>My Page1</StyledList>
-                <StyledList hovering={isHover}>My Page2</StyledList>
-                <StyledList hovering={isHover}>My Page3</StyledList>
-                <StyledList hovering={isHover}>My Page4</StyledList>
-                <StyledList hovering={isHover}>My Page5</StyledList>
+                Order
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  찜
+                </StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  픽업 장소 조회
+                </StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  장바구니
+                </StyledList>
               </ul>
               <ul className="banner3">
-                장바구니
-                <StyledList hovering={isHover}>장바구니 정보</StyledList>
-                <StyledList hovering={isHover}>Main2</StyledList>
-                <StyledList hovering={isHover}>Main3</StyledList>
-                <StyledList hovering={isHover}>Main4</StyledList>
-                <StyledList hovering={isHover}>Main5</StyledList>
+                My Page
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  주문 내역
+                </StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  지난 구매 내역
+                </StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  개인 정보 수정
+                </StyledList>
               </ul>
-              <p>
-                <ul className="icon2"> 2</ul>
-                <ul className="icon3"> Menu Bar</ul>
-              </p>
+              <ul className="banner4">
+                고객센터
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  자주 묻는 질문
+                </StyledList>
+                <StyledList hovering={(isHover || false).toString()} y={y}>
+                  회원 탈퇴
+                </StyledList>
+              </ul>
+              <ul className="banner5">Search</ul>
+              <ul className="banner6">로그인</ul>
             </Ulist>
           </LogoContainer>
         </div>

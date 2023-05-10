@@ -20,4 +20,7 @@ export default createGlobalStyle`
     main { 
         width: 100%; 
     }
+    .main {
+        margin-top: 60px;
+    }
 `;
