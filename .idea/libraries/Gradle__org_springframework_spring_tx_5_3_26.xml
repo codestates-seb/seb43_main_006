@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework:spring-tx:5.3.26" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework" artifactId="spring-tx" version="5.3.26" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.springframework/spring-tx/5.3.26/a7731a245b8f5ddad7f358b2a9aa842b7f3d7ee2/spring-tx-5.3.26.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.springframework/spring-tx/5.3.26/b648dddd1a9addeb69da84fc160a3bc3700234b6/spring-tx-5.3.26-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework.cloud" artifactId="spring-cloud-aws-autoconfigure" version="2.2.6.RELEASE" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-aws-autoconfigure/2.2.6.RELEASE/e443d11a6714e24da9f57c18f55a122836f68483/spring-cloud-aws-autoconfigure-2.2.6.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.springframework.cloud/spring-cloud-aws-autoconfigure/2.2.6.RELEASE/accc5f4548a5cfb8037fcee2c7d5a4a3df1f3ccd/spring-cloud-aws-autoconfigure-2.2.6.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
