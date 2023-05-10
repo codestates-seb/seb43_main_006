@@ -1,8 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const PaymentContainer = styled.main`
-`;
+const PaymentContainer = styled.main``;
 
 const Payment = () => {
   return <PaymentContainer>Payment!!</PaymentContainer>;

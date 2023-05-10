@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/eslint": "^8.37.0",
     "@types/jest": "^29.5.1",
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.0",
@@ -18,7 +19,9 @@
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.10",
-    "typescript": "^5.0.4",
+    "styled-reset": "^4.4.6",
+    "typescript": "^4.9.5",
+    "usehooks-ts": "^2.9.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -46,11 +49,17 @@
     ]
   },
   "devDependencies": {
+    "@types/prettier": "^2.7.2",
+    "@types/react-icons": "^3.0.0",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.8"
   }
 }
