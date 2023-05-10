@@ -4,6 +4,7 @@ import com.codestates.julsinsa.auth.dto.LoginDto;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
 import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.helper.email.HtmlEmailSendable;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.helper.event.MemberRegistrationApplicationEvent;
@@ -185,28 +186,52 @@ public class MemberService {
         authMap.put(request.getEmail(),authKey);
 
         String subject = "매주매주 회원가입 인증 이메일";
-        String text = "회원 가입을 위한 인증번호는 " + authKey + "입니다.";
+        String text = "<html><body style='background-color:#f9f9f9;'>"
+                + "<div style='background-color:white; padding:20px;'>"
+                + "<h2 style='color:#008080;'>회원 가입 인증 이메일</h2>"
+                + "<p>회원 가입을 위한 인증번호는 <strong>" + authKey + "</strong> 입니다.</p>"
+                + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
+                + "</div></body></html>";
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(request.getEmail());
-        message.setSubject(subject);
-        message.setText(text);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(request.getEmail());
+//        message.setSubject(subject);
+//        message.setText(text);
+//
+//        javaMailSender.send(message);
 
-        javaMailSender.send(message);
+        HtmlEmailSendable htmlEmailSender = new HtmlEmailSendable(javaMailSender);
+        try {
+            htmlEmailSender.send(new String[]{request.getEmail()}, subject, text, null);
+        } catch (InterruptedException e) {
+            log.error("Failed to send HTML email.", e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Async
     public void sendTempPassword(Member member, String tempPassword) {
 
         String subject = "매주매주 임시 비밀번호 발급";
-        String text = "임시 비밀번호는 " + tempPassword + "입니다.";
+        String text =  "<html><body>"
+                + "<p style='font-size: 16px; font-weight: bold;'>안녕하세요 " + member.getDisplayName() + "님!</p>"
+                + "<p style='font-size: 14px; line-height: 24px;'>임시 비밀번호는 <span style='font-weight: bold;'>" + tempPassword + "</span>입니다.</p>"
+                + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
+                + "</body></html>";
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(member.getEmail());
-        message.setSubject(subject);
-        message.setText(text);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(member.getEmail());
+//        message.setSubject(subject);
+//        message.setText(text);
+//        javaMailSender.send(message);
 
-        javaMailSender.send(message);
+        HtmlEmailSendable htmlEmailSender = new HtmlEmailSendable(javaMailSender);
+        try {
+            htmlEmailSender.send(new String[]{member.getEmail()}, subject, text, null);
+        } catch (InterruptedException e) {
+            log.error("Failed to send HTML email.", e);
+            throw new RuntimeException(e);
+        }
     }
 
     public void authEmail(EmailRequest request) {
