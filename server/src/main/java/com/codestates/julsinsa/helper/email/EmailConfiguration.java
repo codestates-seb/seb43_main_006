@@ -29,10 +29,16 @@ public class EmailConfiguration {
     @Value("${mail.smtp.starttls.enable}")
     private String tlsEnable;
 
-    @Primary
+
     @Bean
     public EmailSendable simpleEmailSendable() {
         return new SimpleEmailSendable(javaMailSender());
+    }
+
+    @Primary
+    @Bean
+    public EmailSendable htmlEmailSendable() {
+        return new HtmlEmailSendable(javaMailSender());
     }
 
     @Bean

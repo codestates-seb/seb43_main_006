@@ -34,7 +34,15 @@ public class MemberRegistrationEventListener {
     public void listen(MemberRegistrationApplicationEvent event) throws Exception{
         try {
             String[] to = new String[]{event.getMember().getEmail()};
-            String message = event.getMember().getDisplayName() + "님, 회원 가입이 성공적으로 완료되었습니다.";
+            String message = "<html><body>"
+                    + "<div style=\"background-color:#f5f5f5;padding:20px\">"
+                    + "<h2 style=\"color:#007bff;margin-bottom:20px\">매주매주 회원 가입이 완료되었습니다.</h2>"
+                    + "<p style=\"font-size:16px;margin-bottom:20px\">안녕하세요, " + event.getMember().getDisplayName() + "님!</p>"
+                    + "<p style=\"font-size:16px;margin-bottom:20px\">매주매주의 회원이 되신 것을 축하드립니다.</p>"
+                    + "<p style=\"font-size:16px;margin-bottom:20px\">감사합니다.</p>"
+                    + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
+                    + "</div>"
+                    + "</body></html>";
             emailSender.sendEmail(to,subject,message,templateName);
         } catch (MailSendException e) {
             e.printStackTrace();
