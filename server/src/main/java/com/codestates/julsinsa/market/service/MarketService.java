@@ -1,13 +1,12 @@
-package com.codestates.sulsinsa.market.service;
+package com.codestates.julsinsa.market.service;
 
-import com.codestates.sulsinsa.exception.BusinessLogicException;
-import com.codestates.sulsinsa.exception.ExceptionCode;
-import com.codestates.sulsinsa.market.entitiy.Market;
-import com.codestates.sulsinsa.market.repository.MarketRepository;
+
+import com.codestates.julsinsa.exception.BusinessLogicException;
+import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.market.entitiy.Market;
+import com.codestates.julsinsa.market.repository.MarketRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

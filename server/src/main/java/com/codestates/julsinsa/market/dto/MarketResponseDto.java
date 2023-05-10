@@ -1,13 +1,11 @@
-package com.codestates.sulsinsa.market.dto;
+package com.codestates.julsinsa.market.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
-public class MarketPatchDto {
+public class MarketResponseDto {
 
     private Long marketId;
     private String name;

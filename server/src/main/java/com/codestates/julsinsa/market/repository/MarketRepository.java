@@ -1,6 +1,6 @@
-package com.codestates.sulsinsa.market.repository;
+package com.codestates.julsinsa.market.repository;
 
-import com.codestates.sulsinsa.market.entitiy.Market;
+import com.codestates.julsinsa.market.entitiy.Market;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

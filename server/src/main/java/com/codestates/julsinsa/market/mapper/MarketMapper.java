@@ -1,9 +1,9 @@
-package com.codestates.sulsinsa.market.mapper;
+package com.codestates.julsinsa.market.mapper;
 
-import com.codestates.sulsinsa.market.dto.MarketPatchDto;
-import com.codestates.sulsinsa.market.dto.MarketPostDto;
-import com.codestates.sulsinsa.market.dto.MarketResponseDto;
-import com.codestates.sulsinsa.market.entitiy.Market;
+import com.codestates.julsinsa.market.dto.MarketPostDto;
+import com.codestates.julsinsa.market.dto.MarketResponseDto;
+import com.codestates.julsinsa.market.dto.MarketPatchDto;
+import com.codestates.julsinsa.market.entitiy.Market;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;

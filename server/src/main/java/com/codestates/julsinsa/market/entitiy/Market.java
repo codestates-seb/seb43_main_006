@@ -1,4 +1,4 @@
-package com.codestates.sulsinsa.market.entitiy;
+package com.codestates.julsinsa.market.entitiy;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

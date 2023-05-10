@@ -1,13 +1,14 @@
-package com.codestates.sulsinsa.market.dto;
+package com.codestates.julsinsa.market.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
-public class MarketResponseDto {
+public class MarketPostDto {
 
-    private Long marketId;
     private String name;
     private String phone;
     private String address;
