@@ -10,11 +10,15 @@ export default createGlobalStyle`
         Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
         sans-serif;
     }
+
     a{
         text-decoration: none;
         color: inherit;
     }
     main {
         width: 100%;
+    }
+    .main {
+        margin-top: 60px;
     }
 `;
