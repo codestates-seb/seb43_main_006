@@ -1,4 +1,4 @@
-package com.codestates.sulsinsa.order;
+package com.codestates.julsinsa.order;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

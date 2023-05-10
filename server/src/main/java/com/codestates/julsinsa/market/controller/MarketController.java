@@ -1,12 +1,12 @@
-package com.codestates.sulsinsa.market.controller;
+package com.codestates.julsinsa.market.controller;
 
-import com.codestates.sulsinsa.market.dto.MarketPatchDto;
-import com.codestates.sulsinsa.market.dto.MarketPostDto;
-import com.codestates.sulsinsa.market.dto.MarketResponseDto;
-import com.codestates.sulsinsa.market.entitiy.Market;
-import com.codestates.sulsinsa.market.mapper.MarketMapper;
-import com.codestates.sulsinsa.market.repository.MarketRepository;
-import com.codestates.sulsinsa.market.service.MarketService;
+import com.codestates.julsinsa.market.dto.MarketPostDto;
+import com.codestates.julsinsa.market.dto.MarketResponseDto;
+import com.codestates.julsinsa.market.mapper.MarketMapper;
+import com.codestates.julsinsa.market.service.MarketService;
+import com.codestates.julsinsa.market.dto.MarketPatchDto;
+import com.codestates.julsinsa.market.entitiy.Market;
+import com.codestates.julsinsa.market.repository.MarketRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
