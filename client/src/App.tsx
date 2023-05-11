@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import SignupInput from "./pages/Signup/SignupInput";
 import Likepage from "./pages/Mypage/likepage";
 import Orderpage from "./pages/Mypage/orderpage";
+import Changeinfopage from "./pages/Mypage/changeinfo";
 import Payment from "./pages/Payment/Payment";
 import Place from "./pages/Place";
 import PaymentConfirm from "./pages/Payment/PaymentConfirm";
@@ -21,7 +22,7 @@ const BodyContainer = styled.div`
   min-height: 100vh;
   ${({ theme }) => theme.common.flexCol};
 `;
-//0509 22:12
+
 const App = () => {
   return (
     <BodyContainer>
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/signup/term" element={<SignupTerm />} />
           <Route path="/mypage/likepage" element={<Likepage />} />
           <Route path="/mypage/orderpage" element={<Orderpage />} />
+          <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
           <Route path="/place" element={<Place />} />
