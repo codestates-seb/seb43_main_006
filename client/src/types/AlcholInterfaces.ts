@@ -1,13 +1,22 @@
 // 주류 리스트 데이터
 export interface AlcoholListData {
   itemId: number;
-  title_Kor: string;
+  titleKor: string;
   discountRate: string;
   price: number;
   categories: string[];
   profile: string;
   reviewCount: number;
   reviewRating: number;
+}
+
+// 주류 리스트 데이터 Props
+export interface AlcoholListProps {
+  data: AlcoholListData[] | null;
+  totalData: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  size: number;
 }
 
 // 주류 리스트 상세 데이터

@@ -59,7 +59,7 @@ const AlcoholItemContainer = styled.div`
     }
     .item_discount_rate {
       font-weight: 700;
-      color: ${({ theme }) => theme.colors.themeColor};
+      color: #a84448;
       margin-right: 10px;
     }
     .item_price {
@@ -90,7 +90,7 @@ const AlcoholListItem = ({ item }: ItemProps) => {
         </div>
       </div>
       <div className="item_content">
-        <p className="item_title">{item.title_Kor}</p>
+        <p className="item_title">{item.titleKor}</p>
         <div>
           <span className="item_discount_rate">{item.discountRate}</span>
           <span className="item_price">

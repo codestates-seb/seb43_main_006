@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import useAxios from "../../hooks/useAxios";
-import { useEffect, useState } from "react";
-import { AlcoholListData } from "../../types/AlcholInterfaces";
+import { AlcoholListProps } from "../../types/AlcholInterfaces";
 import { Link } from "react-router-dom";
 
 // components
@@ -14,6 +12,7 @@ const AlcoholListContainer = styled.div`
   height: 100%;
   ${({ theme }) => theme.common.flexCol};
   width: 100%;
+  margin: 1.2rem 0 3rem 0;
 `;
 
 // 알코올 정렬 방식
@@ -23,15 +22,16 @@ const SortingUtils = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 50px;
-  background: #d2a1a1;
-  font-size: 14px;
-  font-weight: 600;
+  /* background: #d2a1a1; */
+  border-bottom: 1px solid lightgray;
+  font-size: 16px;
+  font-weight: 700;
 `;
 
 // 알코올 리스트
 const AlcoholListBox = styled.ul`
   flex-direction: row;
-  margin-top: 16px;
+  margin-top: 30px;
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
@@ -39,26 +39,7 @@ const AlcoholListBox = styled.ul`
   width: 100%;
 `;
 
-const AlcoholList = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const size = 12;
-
-  const { data, isLoading, error, totalData } = useAxios<AlcoholListData[]>({
-    url: `${process.env.REACT_APP_API_URL}/items`,
-    params: {
-      page: currentPage,
-      size,
-    },
-    currentPage,
-  });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error</div>;
-  }
-
+const AlcoholList = ({ data, totalData, currentPage, setCurrentPage, size }: AlcoholListProps) => {
   return (
     <AlcoholListContainer>
       <SortingUtils>
@@ -76,15 +57,8 @@ const AlcoholList = () => {
           ))}
         </AlcoholListBox>
       )}
-      <>{data ? console.log(totalData) : null}</>
-      {typeof totalData === "number" ? (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          itemsPerPage={size}
-          totalData={totalData}
-        />
-      ) : null}
+
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={size} totalData={totalData} />
     </AlcoholListContainer>
   );
 };

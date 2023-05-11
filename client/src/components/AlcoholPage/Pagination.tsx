@@ -38,6 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, setCurrentPage, it
 
   const handleClickPage = (pageNum: number): void => {
     setCurrentPage(pageNum);
+    window.scrollTo(0, 0);
   };
 
   // 페이지네이션 버튼들
