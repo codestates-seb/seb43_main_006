@@ -30,6 +30,7 @@ const AlcoholItemContainer = styled.div`
     position: relative;
     img {
       height: 90%;
+      max-width: 100%;
     }
     &:hover {
       border: none;
