@@ -18,7 +18,6 @@ type StepProps = {
 };
 
 const Container = styled.div`
-  margin-top: 60px;
   color: ${({ theme }) => theme.colors.fontColor};
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
