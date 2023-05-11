@@ -1,6 +1,8 @@
 package com.codestates.julsinsa.item.repository;
 
 import com.codestates.julsinsa.item.entity.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +21,8 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     @Query(value = "DELETE FROM favorite WHERE item_id = :itemId and member_id = :memberId", nativeQuery = true)
     int downFavorite(long itemId,long memberId);
 
+    // 카테고리 지정해서 페이지네이션
+    Page<Item> findAllByCategories(String category, Pageable pageable);
 
+    Page<Item> findAllByTitleKorContaining(String titleKor, Pageable pageable);
 }

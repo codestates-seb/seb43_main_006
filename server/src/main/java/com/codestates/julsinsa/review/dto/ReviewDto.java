@@ -4,6 +4,7 @@ import com.codestates.julsinsa.image.entity.ReviewImage;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +14,12 @@ public class ReviewDto {
     @Getter
     public static class Post{
 
+        @NotBlank
         private String title;
 
+        @NotBlank
         private String content;
+
 
         private double rating;
     }
@@ -44,6 +48,8 @@ public class ReviewDto {
         private String content;
 
         private double rating;
+
+        private String displayName;
 
         private LocalDateTime createdAt;
 

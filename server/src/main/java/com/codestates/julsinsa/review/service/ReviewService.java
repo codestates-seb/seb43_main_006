@@ -49,9 +49,12 @@ public class ReviewService {
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
+
         // 파일 첨부 된거 저장하기
-        List<ReviewImage> reviewImage = imageService.uploadReviewImage(files, review);
-        review.addImage(reviewImage);
+        if(files != null){
+            List<ReviewImage> reviewImage = imageService.uploadReviewImage(files, review);
+            review.addImage(reviewImage);
+        }
 
         // 리뷰 평점이랑 개수 계산
         int newReviewCount = item.getReviews().size() + 1;

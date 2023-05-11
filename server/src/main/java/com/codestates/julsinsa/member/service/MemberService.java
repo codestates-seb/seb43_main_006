@@ -100,7 +100,7 @@ public class MemberService {
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
         List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
         for (Object[] objects : resultList) {
-            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((String) objects[0], (int) objects[1],(int) objects[2], (int) objects[3], (double) objects[4]);
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((String) objects[0], (int) objects[1],(int) objects[2], (int) objects[3], (double) objects[4],(String) objects[5]);
             itemList.add(item);
         }
 
@@ -214,8 +214,8 @@ public class MemberService {
 
         String subject = "매주매주 임시 비밀번호 발급";
         String text =  "<html><body>"
-                + "<p style='font-size: 16px; font-weight: bold;'>안녕하세요 " + member.getDisplayName() + "님!</p>"
-                + "<p style='font-size: 14px; line-height: 24px;'>임시 비밀번호는 <span style='font-weight: bold;'>" + tempPassword + "</span>입니다.</p>"
+                + "<h2 style='color:#008080;'>안녕하세요 " + member.getDisplayName() + "님!</h2>"
+                + "<p style='font-size: 14px; line-height: 24px;'>임시 비밀번호는 <span style='font-weight: bold;'>" + tempPassword + "</span> 입니다.</p>"
                 + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
                 + "</body></html>";
 
