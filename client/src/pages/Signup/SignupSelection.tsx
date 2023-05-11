@@ -7,7 +7,6 @@ type TypeProps = {
 };
 
 const Container = styled.div`
-  margin-top: 60px;
   height: 100vh;
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
