@@ -46,7 +46,7 @@ const App = () => {
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
           <Route path="/place" element={<Place />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
-          <Route path="/signup/selection" element={<SignupSelection />} />
+          <Route path="/signup" element={<SignupSelection />} />
           <Route path="/signup/input" element={<SignupInput />} />
           <Route path="/findemail/" element={<FindEmail />} />
           <Route path="/findpassword" element={<FindPassword />} />
