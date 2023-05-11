@@ -60,7 +60,7 @@ public class MemberController {
     public ResponseEntity getFavorite() {
         List<ItemDto.favoriteItemResponse> favorites = memberService.findFavorites();
 
-        return new ResponseEntity<>(favorites,HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(favorites),HttpStatus.OK);
     }
 
 

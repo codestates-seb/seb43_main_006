@@ -32,15 +32,66 @@ public class ItemController {
     private final ItemMapper mapper;
     private final ReviewService reviewService;
     private final ReviewMapper reviewMapper;
+//    @GetMapping
+//    public ResponseEntity getItems(@Positive @RequestParam int page,
+//                                   @Positive @RequestParam int size){
+//
+//        Page<Item> pageItems = itemService.findItems(page, size);
+//        List<Item> items = pageItems.getContent();
+//
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+//    }
+
     @GetMapping
-    public ResponseEntity getItems(@Positive @RequestParam int page,
-                                   @Positive @RequestParam int size){
+    public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
+                                              @Positive @RequestParam int size,
+                                              @RequestParam(required = false) String category,
+                                              @RequestParam(required = false) String sortBy){
+        Page<Item> pageItems;
+        List<Item> items;
+        if(category != null){
+            pageItems = itemService.findItemsByCategory(page, size, category);
+            items = pageItems.getContent();
+        }else{
+            if(sortBy != null){
+                switch(sortBy){
+                    case "sales":
+                        pageItems = itemService.findItemsBySales(page,size);
+                        break;
+                    case "discountRate":
+                        pageItems = itemService.findItemsByDiscountRate(page,size);
+                        break;
+                    case "price":
+                        pageItems = itemService.findItemsByPrice(page,size);
+                        break;
+                    default:
+                        pageItems = itemService.findItems(page, size);
+                        break;
+                }
+            } else {
+                pageItems = itemService.findItems(page, size);
+            }
+            items = pageItems.getContent();
+        }
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+    }
 
-        Page<Item> pageItems = itemService.findItems(page, size);
-        List<Item> items = pageItems.getContent();
+    @GetMapping("/search")
+    public ResponseEntity searchTitle(@RequestParam @Positive int page,
+                                      @RequestParam @Positive int size,
+                                      @RequestParam(required = false) String title){
+        Page<Item> itemPage = itemService.searchByTitle(page, size, title);
+        List<Item> items = itemPage.getContent();
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),itemPage),HttpStatus.OK);
+    }
+
+    @GetMapping("/{item-id}")
+    public ResponseEntity getItem(@PathVariable("item-id") @Positive long itemId){
+        Item item = itemService.findItem(itemId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.itemToItemResponseDto(item)),HttpStatus.OK);
     }
 
     @PostMapping("/{item-id}/favorite")
@@ -73,7 +124,7 @@ public class ItemController {
                                     @PathVariable("review-id") @Positive long reviewId){
         Review review = reviewService.findReview(itemId, reviewId);
 
-        return new ResponseEntity<>(reviewMapper.reviewToReviewResponse(review),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewToReviewResponse(review)),HttpStatus.OK);
     }
 
     @GetMapping("/{item-id}/reviews")

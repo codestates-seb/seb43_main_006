@@ -20,9 +20,9 @@ public class Item extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-    private String title_Kor;
+    private String titleKor;
 
-    private String title_Eng;
+    private String titleEng;
 
     private String content;
 
@@ -43,9 +43,9 @@ public class Item extends Auditable {
 
     private String field;
 
-    private String sales;
+    private int sales;
     private int quantity;
-    private String discountRate;
+    private int discountRate;
 
     private String profile;
 
@@ -78,8 +78,8 @@ public class Item extends Auditable {
         }
     }
 
-    public Item(String title_Kor, int price, int capacity) {
-        this.title_Kor = title_Kor;
+    public Item(String titleKor, int price, int capacity) {
+        this.titleKor = titleKor;
         this.price = price;
         this.capacity = capacity;
     }

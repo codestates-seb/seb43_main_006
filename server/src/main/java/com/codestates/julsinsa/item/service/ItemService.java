@@ -25,11 +25,43 @@ public class ItemService {
     private final MemberRepository memberRepository;
 
 
+    // 최신순 정렬
     public Page<Item> findItems(int page,int size) {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("itemId").descending()));
     }
 
+    //판매순 정렬
+    public Page<Item> findItemsBySales(int page,int size) {
+        return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("sales").descending()));
+    }
 
+    //할인율 정렬
+    public Page<Item> findItemsByDiscountRate(int page,int size) {
+        return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("discountRate").descending()));
+    }
+
+    //가격순 정렬
+    public Page<Item> findItemsByPrice(int page,int size) {
+        return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("price").descending()));
+    }
+
+    // 카테고리별 술 찾기
+    public Page<Item> findItemsByCategory(int page,int size,String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("itemId").descending()));
+    }
+
+    // 술 검색
+    public Page<Item> searchByTitle(int page, int size, String title) {
+        if(title == null) title = "";
+
+        return itemRepository.findAllByTitleKorContaining(title,PageRequest.of(page-1,size,Sort.by("itemId").descending()));
+    }
+
+    // 술 상세 조회
+    public Item findItem(long itemId){
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        return optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+    }
 
     // 찜 하기
     public Item createFavorite(long itemId){

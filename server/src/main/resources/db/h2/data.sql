@@ -6,40 +6,76 @@ VALUES (1, 'ROLE_USER'),
        (2, 'ROLE_USER');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile ,review_count, review_rating)
-VALUES ('에페소', 'Effen', '부드러운 맛과 향을 지닌 프리미엄 보드카', 35000, 700, 35, '네덜란드', '천연 향료', '깔끔한 맛', '보드카', '수입 인기 상품', 20, '15%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/effen-rose-vodka.png','0','0.0');
+VALUES ('에페소', 'Effen', '부드러운 맛과 향을 지닌 프리미엄 보드카', 35000, 700, 35, '네덜란드', '천연 향료', '깔끔한 맛', '보드카', 32, 20, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/effen-rose-vodka.png','0','0.0');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('스미노프 레드', 'Smirnoff', '대표적인 보드카의 대명사', 16000, 750, 750, '러시아', '보리', '깔끔한 맛', '보드카', '대중적인 상품', 150, '0%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/vodka-smirnoff-vat-69-thumbnail.png','4','2.5');
+VALUES ('스미노프 레드', 'Smirnoff', '대표적인 보드카의 대명사', 16000, 750, 750, '러시아', '보리', '깔끔한 맛', '보드카', 22, 150, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/vodka-smirnoff-vat-69-thumbnail.png','4','2.5');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('앱솔루트', 'Absolut', '맛과 향을 최대한 살린 보드카', 28000, 700, 700, '스웨덴', '보리', '부드러운 맛', '보드카', '프리미엄 상품', 50, '10%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/absolut-vodka-thumbnail.png','2','5.0');
+VALUES ('앱솔루트', 'Absolut', '맛과 향을 최대한 살린 보드카', 28000, 700, 700, '스웨덴', '보리', '부드러운 맛', '보드카', 17, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/absolut-vodka-thumbnail.png','2','5.0');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('잭 다니엘스', 'Jack Daniels', '미국의 대표적인 버번 위스키', 50000, 700, 700, '미국', '바닐라, 메이플', '깊은 풍미', '위스키', '인기 상품', 80, '5%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/jack-daniels-bottle.png','15','4.8');
+VALUES ('잭 다니엘스', 'Jack Daniels', '미국의 대표적인 버번 위스키', 50000, 700, 700, '미국', '바닐라, 메이플', '깊은 풍미', '위스키', 10, 80, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/jack-daniels-bottle.png','15','4.8');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('매카랜', 'Macallan', '최고급 스코틀랜드 위스키', 80000, 700, 700, '스코틀랜드', '캐러멜, 과일', '부드러운 맛', '위스키', '프리미엄 상품', 30, '20%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/macallan-distillery-single-malt-whisky-whiskey-scotch-whisky-wine-whiskey-cask-distilled-beverage-wine-barrel.png','10','4.2');
+VALUES ('매카랜', 'Macallan', '최고급 스코틀랜드 위스키', 80000, 700, 700, '스코틀랜드', '캐러멜, 과일', '부드러운 맛', '위스키', 3, 30, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/macallan-distillery-single-malt-whisky-whiskey-scotch-whisky-wine-whiskey-cask-distilled-beverage-wine-barrel.png','10','4.2');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('말리부', 'Malibu', '코코넛 맛이 특징인 라미네이트 럼', 24000, 700, 20, '바베이도스', '코코넛', '달콤한 맛', '럼', '여름 분위기', 30, '0%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/malibu.png', '0', '0.0');
+VALUES ('말리부', 'Malibu', '코코넛 맛이 특징인 라미네이트 럼', 24000, 700, 20, '바베이도스', '코코넛', '달콤한 맛', '럼', 55, 30, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/malibu.png', '0', '0.0');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile,review_count, review_rating)
-VALUES ('스미노프 블루', 'Smirnoff Blue', '청량한 맛과 향이 특징인 보드카', 25000, 750, 750, '러시아', '알코올', '매운 맛', '보드카', '인기 있는 상품', 25, '0%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/smirnoffblue.png','4','5.0');
+VALUES ('스미노프 블루', 'Smirnoff Blue', '청량한 맛과 향이 특징인 보드카', 25000, 750, 750, '러시아', '알코올', '매운 맛', '보드카', 40, 25, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/smirnoffblue.png','4','5.0');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile,review_count, review_rating)
-VALUES ('벨벳 블랙', 'Velvet Black', '부드러운 맛과 진한 향이 특징인 위스키', 30000, 700, 700, '스코틀랜드', '차', '달콤한 맛', '위스키', '한정판 상품', 10, '10%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/black+velvet.png','12','4.7');
+VALUES ('벨벳 블랙', 'Velvet Black', '부드러운 맛과 진한 향이 특징인 위스키', 30000, 700, 700, '스코틀랜드', '차', '달콤한 맛', '위스키', 30, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/black+velvet.png','12','4.7');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile,review_count, review_rating)
-VALUES ('론디아즈', 'RonDiaz', '코코넛 향이 특징인 럼', 18000, 750, 750, '바베이도스', '코코넛', '달콤한 맛', '럼', '새로 출시된 상품', 35, '5%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/rondiaz.png','3','4.0');
+VALUES ('론디아즈', 'RonDiaz', '코코넛 향이 특징인 럼', 18000, 750, 750, '바베이도스', '코코넛', '달콤한 맛', '럼', 47, 35, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/rondiaz.png','3','4.0');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile,review_count, review_rating)
-VALUES ('레드 스트라이프', 'Red Stripe', '자연스러운 맛이 특징인 제조 방식의 다른 맥주', 8000, 330, 355, '자메이카', '보리', '빈티지한 맛', '맥주', '수입 상품', 20, '0%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/RedStripe.png', '4','4.8');
+VALUES ('레드 스트라이프', 'Red Stripe', '자연스러운 맛이 특징인 제조 방식의 다른 맥주', 8000, 330, 355, '자메이카', '보리', '빈티지한 맛', '맥주', 22, 20, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/RedStripe.png', '4','4.8');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('바카디 파인애플', 'Bacardi PainApple', '담백하면서도 진한 맛과 향을 지닌 파인애플향 보드카', 18000, 700, 700, '러시아', '파인애플', '신선한 맛', '보드카', '술도둑 인기 상품', 50, '10%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/bacardi.png', '2', '4.5');
+VALUES ('바카디 파인애플', 'Bacardi PainApple', '담백하면서도 진한 맛과 향을 지닌 파인애플향 보드카', 18000, 700, 700, '러시아', '파인애플', '신선한 맛', '보드카', 31, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/bacardi.png', '2', '4.5');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
-VALUES ('깔루아', 'Kahlua', '커피향이 나는 리큐르', 25000, 700, 700, '러시아', '커피', '달달한 맛', '리큐르', '수입 인기 상품', 10, '20%', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/kahlua.png', '1', '5.0');
+VALUES ('깔루아', 'Kahlua', '커피향이 나는 리큐르', 25000, 700, 700, '러시아', '커피', '달달한 맛', '리큐르', 59, 10, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/kahlua.png', '1', '5.0');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('화요25', 'Hwayo', '한국전통주 화요', 28000, 375, 41, '대한민국', '적고소한 향', '달콤하고 부드러운 맛', '전통주', 24, 20, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/HWAYO_25.png', '2', '4.5');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('짐빔 화이트', 'Jim Beam White', '밀, 옥수수의 풍미를 가진 버번 위스키', 30000, 1000, 700, '미국', '밀', '달콤하고 부드러운 맛', '버번 위스키', 38, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/jimbeam.png', '2', '4.5');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('커티 삭', 'Cutty Sark', '맛있는 스카치 위스키', 32000, 1000, 700, '스코틀랜드', '과일', '부드러운 맛', '스카치 위스키', 6, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/Cutty_Sark.png', '1', '5.0');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('미다이 위스키', 'Midori Whiskey', '과일향이 나는 위스키', 20000, 700, 700, '일본', '과일', '부드러운 맛', '위스키', 11, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/midai.png', '3', '4.3');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('클렌피딕', 'Klenfedik', '고급스러운 위스키의 대명사', 110000, 700, 700, '스코틀랜드', '복숭아와 과일', '부드러운 맛', '위스키', 12, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/glenfiddich.png', '1', '5.0');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('아페롤', 'Aperol', '허브와 오렌지 향의 캄파리와 달리 씁쓸한 맛의 아페리티프', 14000, 700, 700, '이탈리아', '오렌지', '씁쓸한 맛', '아페리티프', 23, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/Aperol.png', '1', '4.5');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('예거마이스터', 'Jägermeister', '허브와 스파이스의 향이 느껴지는 독일의 전통적인 리큐어', 25000, 700, 35, '독일', '허브와 스파이스', '씁쓸한 맛', '리큐어', 88, 100, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/jager.png', '1', '4.0');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('빌라 욜란다 모스카토 다스티', 'Villa Yolanda Moscato D Asti', '이탈리아의 피에몬테 지방에서 만들어지는 스파클링 와인. 화사한 꽃향과 달콤한 맛이 특징이다.', 18000, 750, 5, '이탈리아', '꽃', '달콤한 맛', '디저트 와인', 41, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/VillaJolanda.png', '3', '4.7');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('글렌 스코샤 더블 캐스크', 'Glen Scotia Double Cask', '두 가지 다른 오크통에서 숙성한 글렌 스코샤 위스키로 달콤하고 부드러운 맛과 풍부한 아로마를 느낄 수 있습니다.', 66000, 700, 46, '스코틀랜드', '과일, 허브', '달콤하고 부드러운 맛', '싱글몰트 위스키', 23, 30, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/glenscotia.png', '2', '4.5');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('제갈량가주', 'Jegalryang Rice Wine', '쌀의 순도와 깨끗한 맛이 일품인 제갈량가주입니다. 국내산 쌀만을 사용하여 산미와 달콤한 맛이 일품입니다.', 20000, 750, 16, '한국', '쌀', '산미와 달콤한 맛', '쌀주', 7, 100, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/Jegalryang.png', '5', '4.0');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('아키토라 준마이 다이긴죠', 'Akitora Junmai Daiginjo', '귀한 순도 50% 이상의 쌀로 만든 깨끗하고 깊은 맛의 일본 전통 막걸리입니다.', 44000, 720, 15, '일본', '과일, 꽃', '깨끗하고 깊은 맛', '막걸리', 3, 40, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/akitora-jun-maida.png', '3', '4.8');
+
+INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, review_count, review_rating)
+VALUES ('와일드 터키 101 1L', 'Wild Turkey 101 1L', '찐하고 무거운 맛이 특징인 위스키입니다. 고급스러운 맛과 향의 완성도를 자랑합니다.', 40000, 1000, 50, '미국', '버터 스카치, 바닐라', '찐하고 무거운 맛', '버번 위스키', 9, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/wild-turkey.png', '3', '4.0');
 
 INSERT INTO  ITEM_CATEGORIES (item_item_id, categories)
 VALUES (1, '보드카'),
@@ -53,4 +89,31 @@ VALUES (1, '보드카'),
        (9, '럼'),
        (10, '맥주'),
        (11, '보드카'),
-       (12, '리큐르');
+       (12, '리큐르'),
+       (13, '전통주'),
+       (14, '위스키'),
+       (15, '위스키'),
+       (16, '위스키'),
+       (17, '위스키'),
+       (18, '아페리티프'),
+       (19, '리큐르'),
+       (20, '와인'),
+       (21, '위스키'),
+       (22, '쌀주'),
+       (23, '막걸리'),
+       (24, '위스키');
+
+INSERT INTO  FAVORITE (favorite_id, item_id, member_id)
+VALUES (1, 1,1),
+       (2, 2,1),
+       (3, 3,1),
+       (4, 4,1),
+       (5, 5,1),
+       (6, 6,1),
+       (7, 7,1),
+       (8, 8,1),
+       (9, 9,1),
+       (10, 10,1),
+       (11, 11,1),
+       (12, 12,1),
+       (13, 13,1);

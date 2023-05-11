@@ -14,7 +14,9 @@ public interface ReviewMapper {
 
     Review reviewPatchToReview(ReviewDto.Patch requestBody);
 
+    @Mapping(source = "member.displayName",target = "displayName")
     ReviewDto.Response reviewToReviewResponse(Review review);
 
+    @Mapping(source = "member.displayName",target = "displayName")
     List<ReviewDto.Response> reviewsToReviewResponses(List<Review> reviews);
 }

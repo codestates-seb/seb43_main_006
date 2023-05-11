@@ -1,6 +1,8 @@
 package com.codestates.julsinsa.item.dto;
 
 import com.codestates.julsinsa.member.entity.Member;
+import com.codestates.julsinsa.review.dto.ReviewDto;
+import com.codestates.julsinsa.review.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +20,9 @@ public class ItemDto {
     public static class Response{
 
         private Long itemId;
-        private String title_Kor;
+        private String titleKor;
 
-        private String title_Eng;
+        private String titleEng;
 
         private String content;
 
@@ -40,21 +42,23 @@ public class ItemDto {
 
         private String field;
 
-        private String sales;
+        private int sales;
         private int quantity;
-        private String discountRate;
+        private int discountRate;
 
         private int reviewCount;
 
         private double reviewRating;
+
+        private List<ReviewDto.Response> reviews;
     }
 
     @Getter
     @Setter
     public static class ItemsResponse{
         private Long itemId;
-        private String title_Kor;
-        private String discountRate;
+        private String titleKor;
+        private int discountRate;
         private int price;
         private List<String> categories;
 
@@ -72,13 +76,15 @@ public class ItemDto {
     @Setter
     public static class favoriteItemResponse {
 
-        private String title_Kor;
+        private String titleKor;
         private int price;
 
         private int quantity;
         private int capacity;
 
         private double reviewRating;
+
+        private String profile;
 
     }
 }
