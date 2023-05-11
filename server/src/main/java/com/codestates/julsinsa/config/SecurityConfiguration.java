@@ -5,6 +5,7 @@ import com.codestates.julsinsa.auth.filter.JwtVerificationFilter;
 import com.codestates.julsinsa.auth.handler.*;
 import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
+import com.codestates.julsinsa.member.repository.MemberRepository;
 import com.codestates.julsinsa.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,8 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
 
     private final MemberService memberService;
+
+    private final MemberRepository memberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -101,7 +104,7 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils,memberRepository);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

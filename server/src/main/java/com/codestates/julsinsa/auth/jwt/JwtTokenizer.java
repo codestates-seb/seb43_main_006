@@ -1,5 +1,6 @@
 package com.codestates.julsinsa.auth.jwt;
 
+import com.codestates.julsinsa.member.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JwtTokenizer {
@@ -91,5 +93,31 @@ public class JwtTokenizer {
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
+    }
+
+    public String delegateAccessToken(Member member) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("memberId", member.getMemberId());
+        claims.put("username", member.getEmail());
+        claims.put("roles", member.getRoles());
+
+        String subject = member.getEmail();
+        Date expiration = getTokenExpiration(getAccessTokenExpirationMinutes());
+
+        String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
+
+        String accessToken = generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+
+        return accessToken;
+    }
+
+    public String delegateRefreshToken(Member member) {
+        String subject = member.getEmail();
+        Date expiration = getTokenExpiration(getRefreshTokenExpirationMinutes());
+        String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
+
+        String refreshToken = generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+
+        return refreshToken;
     }
 }
