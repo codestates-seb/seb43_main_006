@@ -173,8 +173,8 @@ const HomeContainer = styled.section`
     align-items : center;
     width:100%;
     height:1800px;
-    padding-left : 15vw;
-    padding-right : 15vw;
+    padding-left : 0;
+    padding-right : 12vw;
     padding-top : 900px;
     transition: all 0.5s ease-in-out;
   }
@@ -254,10 +254,12 @@ const HomeContainer = styled.section`
     align-items :center;
     justify-content : center;
     padding-top : 800px;
-    padding-left: 15vw;
+    padding-left: 14vw;
   }
  .glad3 {
   transition: all 0.5s ease-in-out;
+  padding-left: 0;
+  padding-right: 10vw;
  }
  .samplingimg {
   transition: all 0.5s ease-in-out;
