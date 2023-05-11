@@ -21,10 +21,11 @@ type TitleProps = {
 const Container = styled.div`
   height: 100vh;
   ${({ theme }) => theme.common.flexCenterCol};
-  gap: 20px;
 `;
 const ContentsContainer = styled.div`
-  width: 700px;
+  width: 600px;
+  position: absolute;
+  top: 15%;
 `;
 const Contour = styled.hr`
   width: 100%;
@@ -38,7 +39,7 @@ const TopContainer = styled.div`
   align-items: center;
   padding-bottom: 20px;
   gap: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
@@ -50,7 +51,7 @@ const MiddleContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  padding: 60px 70px;
+  padding: 50px 60px;
   border: 1px solid ${({ theme }) => theme.colors.border};
   background-color: white;
 `;
@@ -58,6 +59,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  width: 100%;
   gap: 20px;
   margin-bottom: 30px;
   .flex-col {
@@ -65,7 +67,7 @@ const LoginContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     input {
       border: 1px solid #b2b2b2;
       padding: 10px 10px;
@@ -79,6 +81,10 @@ const LoginContainer = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
+    gap: 30px;
+  }
+  .button {
+    width: 30%;
   }
 `;
 
@@ -92,7 +98,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   color: ${({ type }) => (type === "google" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
-    font-size: 22px;
+    font-size: 20px;
     width: calc(100% - 65px);
     text-align: center;
   }
@@ -160,7 +166,7 @@ const Login = () => {
     window.location.assign(`${url}oauth2/authorization/facebook`);
   };
   const GotoSign = () => {
-    navigate("/signup/selection");
+    navigate("/signup");
   };
   return (
     <Container>
@@ -181,8 +187,8 @@ const Login = () => {
                 <input placeholder="이메일" onChange={emailHandler} />
                 <input placeholder="비밀번호" type="password" onChange={passwordHandler} />
               </div>
-              <div>
-                <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
+              <div className="button">
+                <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
                   로그인
                 </ButtonDark>
               </div>
@@ -202,13 +208,13 @@ const Login = () => {
           </OAuthSignUpBox>
           <Contour />
           <BottomContainer>
-            <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={GotoSign}>
+            <ButtonDark width="150px" height="100%" fontSize="16px" fontWeight="500" onClick={GotoSign}>
               회원가입
             </ButtonDark>
             <ButtonLight
               width="150px"
               height="100%"
-              fontSize="18px"
+              fontSize="16px"
               fontWeight="500"
               onClick={() => {
                 navigate("/findemail");
@@ -219,7 +225,7 @@ const Login = () => {
             <ButtonLight
               width="150px"
               height="100%"
-              fontSize="18px"
+              fontSize="16px"
               fontWeight="500"
               onClick={() => {
                 navigate("/findpassword");

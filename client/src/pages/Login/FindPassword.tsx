@@ -6,9 +6,7 @@ import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import Alert from "../../components/Common/AlertModal";
 
 const url = "https://27b9-124-111-225-247.ngrok-free.app/";
-type StepProps = {
-  type: string;
-};
+
 type TitleProps = {
   fontSize: string;
   fontWeight: string;
@@ -21,7 +19,7 @@ const Container = styled.div`
 const ContentsContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
-  width: 700px;
+  width: 600px;
   padding-bottom: 60px;
   position: absolute;
   top: 25%;
@@ -37,12 +35,11 @@ const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  margin-bottom: 50px;
 `;
 const MiddleContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 2px;
-  padding: 70px 60px;
+  padding: 50px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,18 +58,6 @@ const MiddleContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    .front {
-      ${({ theme }) => theme.common.flexCenterRow};
-    }
-    .red {
-      color: #a84448;
-      margin-right: 5px;
-    }
-    .detail {
-      float: right;
-      font-size: 14px;
-      cursor: pointer;
-    }
   }
   .found {
     margin-top: 15px;
@@ -90,7 +75,7 @@ const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     input {
       border: 1px solid #b2b2b2;
       padding: 10px 10px;
@@ -98,12 +83,17 @@ const InputContainer = styled.div`
       width: 100%;
     }
   }
+
   .flex-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     height: 100%;
+    gap: 30px;
+    .button {
+      width: 30%;
+    }
   }
 `;
 const Contour = styled.hr`
@@ -123,7 +113,6 @@ const FindEmail = () => {
   const [email, setEmail] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [isFind, setIsFind] = useState("");
 
   const phoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
@@ -182,21 +171,13 @@ const FindEmail = () => {
                 <input placeholder="이메일" type="email" onChange={emailHandler} />
                 <input value={phone} placeholder="전화번호" onChange={phoneHandler} />
               </div>
-              <div>
-                <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={findEmailHandler}>
+              <div className="button">
+                <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={findEmailHandler}>
                   비밀번호 찾기
                 </ButtonDark>
               </div>
             </div>
           </InputContainer>
-          {isFind ? (
-            <>
-              <Contour />
-              <div>
-                가입된 이메일<div className="found">{isFind}</div>
-              </div>
-            </>
-          ) : null}
           <Contour />
           <BottomContainer>
             <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/findemail")}>
