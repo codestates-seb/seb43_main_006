@@ -2,10 +2,8 @@ import styled, { ThemeContext } from "styled-components";
 import { useContext, useState, ChangeEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Common/Button";
+import { ButtonDark } from "../components/Common/Button";
 import { ReactComponent as Logo } from "../assets/images/Logo.svg";
-import facebook from "../assets/images/facebook.png";
-import google from "../assets/images/google.png";
 import Maintop from "../assets/images/login-bg.png";
 import { Icon } from "../types/Interfaces";
 
@@ -169,29 +167,17 @@ const Login = () => {
                 className="input"
               ></input>
             </InputContainer>
-            <Button
-              width="100%"
-              height="45px"
-              bg={themeContext["themeColor"]}
-              color="white"
-              fontSize="18px"
-              borderRadious="7px"
-              onClick={handleLogin}
-            >
+            <ButtonDark width="100%" height="45px" fontSize="18px" borderRadious="7px" onClick={handleLogin}>
               Log In
-            </Button>
+            </ButtonDark>
           </div>
           <div className="oauth-container">
             <div onClick={googleOAuthHandler} className="oauth-content">
-              <div className="oauth-btn">
-                <OAuthButton icon={facebook} />
-              </div>
+              <div className="oauth-btn"></div>
               <div> 페이스북 로그인</div>
             </div>
             <div className="oauth-content">
-              <div onClick={facebookOAuthHandler} className="oauth-btn">
-                <OAuthButton icon={google} />
-              </div>
+              <div onClick={facebookOAuthHandler} className="oauth-btn"></div>
               <div> 구글 로그인</div>
             </div>
           </div>
