@@ -14,7 +14,6 @@ type TitleProps = {
   fontWeight: string;
 };
 const Container = styled.div`
-  margin-top: 60px;
   color: ${({ theme }) => theme.colors.fontColor};
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
@@ -37,7 +36,6 @@ const TopContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
   gap: 20px;
   /* border-bottom: 1px solid #434242; */
   margin-bottom: 50px;
@@ -55,12 +53,14 @@ const Step = styled.div<StepProps>`
   }
 `;
 const MiddleContainer = styled.div`
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  padding: 50px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 25px;
-  padding-bottom: 20px;
   width: 100%;
   .title {
     width: 100%;

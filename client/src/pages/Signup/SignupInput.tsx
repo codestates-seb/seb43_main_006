@@ -6,7 +6,8 @@ import { useContext, useState } from "react";
 import { ChangeEvent } from "react";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
-const url = "https://25ff-124-111-225-247.ngrok-free.app/";
+
+const url = "https://27b9-124-111-225-247.ngrok-free.app/";
 
 type TitleProps = {
   fontSize: string;
@@ -17,7 +18,6 @@ type StepProps = {
 };
 
 const Container = styled.div`
-  margin-top: 60px;
   color: ${({ theme }) => theme.colors.fontColor};
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
@@ -136,6 +136,7 @@ const SignupInput = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
   const [showAlert, setShowAlert] = useState(false);
+  const [ok, setOk] = useState(false);
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -153,15 +154,14 @@ const SignupInput = () => {
       age = age - 1;
     }
     if (age <= 18) {
-      setAlertMessage("선택하신 생년월일이 성인이 아닙니다!");
-      setBirth("");
+      setAlertMessage("성인이 아닙니다!");
+      setShowAlert(true);
     } else {
       setBirth(e.target.value);
     }
   };
 
   const onNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
     if (val) {
       setNumber(
@@ -193,6 +193,7 @@ const SignupInput = () => {
     if (password !== passwordCheck) {
       setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
     }
+
     const body = {
       realName: name,
       displayName: nick,
@@ -202,6 +203,7 @@ const SignupInput = () => {
       birthDate: birth,
       mailKey: code,
     };
+    console.log(body);
     axios
       .post(`${url}members/signup`, body, {
         headers: {
@@ -211,8 +213,10 @@ const SignupInput = () => {
       .then((res) => {
         setAlertMessage("회원가입 성공!");
         setShowAlert(true);
+        setOk(true);
       })
       .catch((err) => {
+        console.log(err);
         setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
         setShowAlert(true);
       });
@@ -238,9 +242,13 @@ const SignupInput = () => {
         console.log(err);
       });
   };
+  const okGotoMain = () => {
+    setShowAlert(false);
+    navigate("/");
+  };
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClick={ok ? okGotoMain : () => setShowAlert(false)} /> : null}
       <InputContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">
@@ -324,7 +332,7 @@ const SignupInput = () => {
             <SingleInfo>
               <div className="name">전화번호</div>
               <div className="input-container">
-                <input onChange={onNumber} />
+                <input value={number} onChange={onNumber} />
               </div>
             </SingleInfo>
           </InfoTable>
