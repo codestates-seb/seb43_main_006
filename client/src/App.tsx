@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import SignupInput from "./pages/Signup/SignupInput";
 import Likepage from "./pages/Mypage/likepage";
 import Buyend from "./pages/Mypage/buyend";
@@ -19,7 +19,8 @@ import Layout from "./layout/index";
 import HelpCenter from "./pages/HelpCenter";
 import SignupSelection from "./pages/Signup/SignupSelection";
 import SignupTerm from "./pages/Signup/SignupTerm";
-
+import FindEmail from "./pages/Login/FindEmail";
+import FindPassword from "./pages/Login/FindPassword";
 const BodyContainer = styled.div`
   min-height: 100vh;
   ${({ theme }) => theme.common.flexCol};
@@ -47,6 +48,8 @@ const App = () => {
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path="/signup/selection" element={<SignupSelection />} />
           <Route path="/signup/input" element={<SignupInput />} />
+          <Route path="/findemail/" element={<FindEmail />} />
+          <Route path="/findpassword" element={<FindPassword />} />
         </Routes>
       </Layout>
     </BodyContainer>
