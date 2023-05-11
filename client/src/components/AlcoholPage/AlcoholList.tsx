@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import useAxios from "../../hooks/useAxios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AlcoholListData } from "../../types/AlcholInterfaces";
 import { Link } from "react-router-dom";
 
 // components
 import AlcoholListItem from "./AlcoholListItem";
-// import Pagination from "./Pagination";
+import Pagination from "./Pagination";
 
 // 알코올 리스트
 const AlcoholListContainer = styled.div`
@@ -49,6 +49,7 @@ const AlcoholList = () => {
       page: currentPage,
       size,
     },
+    currentPage,
   });
 
   if (isLoading) {
@@ -75,16 +76,15 @@ const AlcoholList = () => {
           ))}
         </AlcoholListBox>
       )}
-      {/* 페이지 네이션 */}
-      {/* {data !== null ? (
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            itemsPerPage={size}
-            totalItems={totalData}
-            data={data}
-          />
-        ) : null} */}
+      <>{data ? console.log(totalData) : null}</>
+      {typeof totalData === "number" ? (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={size}
+          totalData={totalData}
+        />
+      ) : null}
     </AlcoholListContainer>
   );
 };

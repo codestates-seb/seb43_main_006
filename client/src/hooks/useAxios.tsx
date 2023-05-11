@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 interface UserAxiosProps {
   url: string;
   params?: object;
+  currentPage?: number;
 }
 const headers = {
   "Content-Type": "application/json",
@@ -18,7 +19,7 @@ interface UseAxiosState<T> {
   totalData?: number | null;
 }
 
-const useAxios = <T extends NonNullable<unknown>>({ url, params }: UserAxiosProps): UseAxiosState<T> => {
+const useAxios = <T extends NonNullable<unknown>>({ url, params, currentPage }: UserAxiosProps): UseAxiosState<T> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, serError] = useState<unknown>(null);
@@ -32,7 +33,7 @@ const useAxios = <T extends NonNullable<unknown>>({ url, params }: UserAxiosProp
 
   useEffect(() => {
     fetchData();
-  }, [url]);
+  }, [url, currentPage]);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -40,6 +41,7 @@ const useAxios = <T extends NonNullable<unknown>>({ url, params }: UserAxiosProp
     const response = await axios(url, options);
     try {
       const { data } = response;
+
       setData(data.data);
       setTotalData(data.pageInfo.totalElements);
     } catch (err) {
