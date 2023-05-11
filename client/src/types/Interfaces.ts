@@ -24,9 +24,7 @@ export interface BtnProps {
   children: string;
   width: string;
   height: string;
-  bg: string;
-  color: string;
-  fontSize: string;
+  fontSize?: string;
   fontWeight?: string;
   border?: string;
   borderRadious?: string;
@@ -35,4 +33,9 @@ export interface BtnProps {
 
 export interface Icon {
   icon: string;
+}
+
+export interface AlertProps {
+  text: string;
+  onClick: () => void;
 }
