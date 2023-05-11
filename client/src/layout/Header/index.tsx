@@ -33,9 +33,9 @@ const StyledList = styled.li<IHeaderContainerProps>`
 `;
 
 const HeaderContainer = styled.header<IHeaderContainerProps>`
-  width: 100%;
+  width: 100vw;
   position: fixed;
-  max-width: 1440px;
+  max-width: 100vw;
   transition: all 0.3s ease;
   opacity: 0.8;
   z-index: 999;
@@ -62,21 +62,21 @@ const LogoContainer = styled.div<IHeaderContainerProps>`
   position: absolute;
   max-height: 30px;
   top: 6px;
-  left: 100px;
+  left: 10vw;
 `;
 
 const Ulist = styled.div`
   display: flex;
-  position: absolute;
-  padding-left: 300px;
+  position: relative;
+  padding-left: 5vw;
   justify-content: center;
-  width: 1300px;
+  width: 100vw;
 
   & ul {
-    padding-left: 40px;
-    padding-top: 10px;
+    padding-left: 1vw;
+    padding-top: 1vh;
     font-size: 20px;
-    width: 150px;
+    width: 80vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -86,38 +86,43 @@ const Ulist = styled.div`
 
   & ul {
     & li {
-      padding-top: 15px;
+      padding-top: 2vh;
       font-size: 16px;
       font-weight: 400;
       flex-direction: row;
     }
   }
   .banner1 {
-    padding-left: 60px;
+    padding-left: 4vw;
+    width: 30vw;
   }
   .banner2 {
-    padding-left: 25px;
+    padding-left: 1vw;
+    width: 30vw;
   }
   & div {
-    padding-left: 50px;
-    width: 50px;
+    padding-left: 1vw;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     & * {
-      padding-left: 100px;
+      padding-left: 1vw;
     }
   }
   .banner3 {
     padding-left: 0px;
+    width: 30vw;
   }
   .banner4 {
     padding-left: 0px;
+    width: 30vw;
   }
   .banner5 {
     padding-left: 0px;
+
+    width: 30vw;
   }
   .banner6 {
-    padding-left: 100px;
     font-size: 16px;
   }
 `;
