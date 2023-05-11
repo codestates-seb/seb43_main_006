@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { TiSocialGooglePlus, TiSocialFacebook } from "react-icons/ti";
+import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 type TypeProps = {
   type: string;
@@ -33,13 +33,14 @@ const SelectionContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 2px;
   gap: 20px;
-  background-color: ${({ theme }) => theme.colors.themeColor};
+  background-color: white;
 `;
 const BasicSignupBox = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   width: 100%;
   padding: 25px 0px;
   height: 65px;
+  background-color: ${({ theme }) => theme.colors.themeColor};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 2px;
   cursor: pointer;
