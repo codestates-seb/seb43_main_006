@@ -5,6 +5,7 @@ import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.market.repository.MarketRepository;
+import com.nimbusds.oauth2.sdk.util.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,22 @@ public class MarketService {
         Page<Market> marketPage = marketRepository.findAll(pageable);
 
         return  marketPage;
+    }
+
+    public Page<Market> searchMarket(String nameKeyword, String addressKeyword, Pageable pageable) {
+        if (StringUtils.isBlank(nameKeyword) && StringUtils.isBlank(addressKeyword)) {
+            return marketRepository.findAll(pageable);
+        }
+        if (StringUtils.isNotBlank(nameKeyword) && StringUtils.isNotBlank(addressKeyword)) {
+            return marketRepository.findByNameContainingIgnoreCaseAndAddressContainingIgnoreCase(nameKeyword, addressKeyword, pageable);
+        }
+        else if (StringUtils.isNotBlank(nameKeyword)) {
+            return marketRepository.findByNameContainingIgnoreCase(nameKeyword, pageable);
+        }
+        else if (StringUtils.isNotBlank(addressKeyword)){
+            return marketRepository.findByAddressContainingIgnoreCase(addressKeyword,pageable);
+        }
+        return Page.empty();
     }
 
     public void deleteMarket(Long marketId) {

@@ -39,7 +39,7 @@ public class MarketController {
         return new ResponseEntity<>(mapper.marketToMarketResponseDto(market), HttpStatus.CREATED);
     }
 
-    @PatchMapping
+    @PatchMapping("/{market-id}")
     public ResponseEntity patchMarket(@PathVariable("market-id") @Positive long marketId,
                                       @RequestBody MarketPatchDto marketPatchDto){
         marketPatchDto.setMarketId(marketId);
@@ -49,13 +49,14 @@ public class MarketController {
         return new ResponseEntity<>(mapper.marketToMarketResponseDto(market), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/{market-id}")
     public ResponseEntity getMarket(@PathVariable("market-id") @Positive Long marketId) {
         Market market = marketService.findMarket(marketId);
 
         return new ResponseEntity<>(market, HttpStatus.OK);
     }
 
+    // 전체 목록 조회하기
     @GetMapping
     public ResponseEntity<Page<MarketResponseDto>> getMarkets(@PageableDefault(size = 30, page = 0, sort = "marketId",
                                                                 direction = Sort.Direction.DESC) Pageable pageable) {
@@ -64,7 +65,20 @@ public class MarketController {
         return  new ResponseEntity<>(marketResponseDtoPage, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    // 검색 기능
+    @GetMapping("/search")
+    public ResponseEntity<Page<MarketResponseDto>> searchMarket(@RequestParam(required = false) String name,
+                                                                @RequestParam(required = false) String address,
+                                                                @PageableDefault(size = 30, page = 0, sort = "marketId",
+                                                                direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Market> marketPage = marketService.searchMarket(name, address, pageable);
+        Page<MarketResponseDto> marketResponseDtoPage = mapper.marketPageToMarketResponseDto(marketPage);
+
+        return new ResponseEntity<>(marketResponseDtoPage, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/{market-id}")
     public ResponseEntity deleteMarket(@PathVariable("market-id") @Positive Long marketId) {
         marketService.deleteMarket(marketId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

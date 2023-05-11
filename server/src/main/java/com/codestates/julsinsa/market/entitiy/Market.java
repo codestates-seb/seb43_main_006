@@ -1,5 +1,6 @@
 package com.codestates.julsinsa.market.entitiy;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,15 +8,14 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "markets")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Market {
 
     @Id
-    @GeneratedValue
-    @Column(name = "market_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long marketId;
     private String name;
     private String phone;

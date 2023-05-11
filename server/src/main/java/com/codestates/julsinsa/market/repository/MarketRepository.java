@@ -10,7 +10,6 @@ import java.util.*;
 
 @Repository
 public interface MarketRepository extends JpaRepository<Market, Long> {
-    List<Market> findByMarket(Market market);
 
 //    name과 address 필드를 모두 포함하는 Market 엔티티를 검색하는 메서드
     Page<Market> findByNameContainingIgnoreCaseAndAddressContainingIgnoreCase(String name, String address, Pageable pageable);
