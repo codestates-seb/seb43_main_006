@@ -5,6 +5,7 @@ interface UserAxiosProps {
   url: string;
   params?: object;
   currentPage?: number;
+  currentTab?: number;
 }
 const headers = {
   "Content-Type": "application/json",
@@ -19,7 +20,12 @@ interface UseAxiosState<T> {
   totalData?: number | null;
 }
 
-const useAxios = <T extends NonNullable<unknown>>({ url, params, currentPage }: UserAxiosProps): UseAxiosState<T> => {
+const useAxios = <T extends NonNullable<unknown>>({
+  url,
+  params,
+  currentPage,
+  currentTab,
+}: UserAxiosProps): UseAxiosState<T> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, serError] = useState<unknown>(null);
@@ -33,7 +39,7 @@ const useAxios = <T extends NonNullable<unknown>>({ url, params, currentPage }: 
 
   useEffect(() => {
     fetchData();
-  }, [url, currentPage]);
+  }, [url, currentPage, currentTab]);
 
   const fetchData = async () => {
     setIsLoading(true);
