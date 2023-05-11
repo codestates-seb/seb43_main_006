@@ -20,6 +20,5 @@ export interface PaginationProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   itemsPerPage: number;
-  totalItems: number | 0;
-  data: AlcoholListData | null;
+  totalData: number;
 }
