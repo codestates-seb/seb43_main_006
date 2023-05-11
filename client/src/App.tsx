@@ -5,11 +5,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login/Login";
 import SignupInput from "./pages/Signup/SignupInput";
 import Likepage from "./pages/Mypage/likepage";
-import Buyend from "./pages/Mypage/buyend";
-import Infochange from "./pages/Mypage/infochange";
-import Notmember from "./pages/Mypage/notmember";
 import Orderpage from "./pages/Mypage/orderpage";
-
 import Payment from "./pages/Payment/Payment";
 import Place from "./pages/Place";
 import PaymentConfirm from "./pages/Payment/PaymentConfirm";
@@ -38,9 +34,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup/term" element={<SignupTerm />} />
           <Route path="/mypage/likepage" element={<Likepage />} />
-          <Route path="/mypage/buyend" element={<Buyend />} />
-          <Route path="/mypage/infochange" element={<Infochange />} />
-          <Route path="/mypage/notmember" element={<Notmember />} />
           <Route path="/mypage/orderpage" element={<Orderpage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
