@@ -40,6 +40,7 @@ public class MarketMapper {
     public MarketResponseDto marketToMarketResponseDto(Market market) {
         MarketResponseDto marketResponseDto = new MarketResponseDto();
 
+        marketResponseDto.setMarketId(market.getMarketId());
         marketResponseDto.setName(market.getName());
         marketResponseDto.setPhone(market.getPhone());
         marketResponseDto.setAddress(market.getAddress());
