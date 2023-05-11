@@ -1,42 +1,37 @@
 import styled from "styled-components";
 import { BtnProps } from "../../types/Interfaces";
 import React from "react";
-const Btn = styled.button<BtnProps>`
+const BtnDark = styled.button<BtnProps>`
   ${({ theme }) => theme.common.flexCenter};
-
+  padding: 14px 0;
+  letter-spacing: 1px;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
-  background-color: ${({ bg }) => bg};
-  border: ${({ border }) => border};
+  background-color: ${({ theme }) => theme.colors.themeColor};
+  color: white;
+  border: none;
   border-radius: ${({ borderRadious }) => borderRadious};
-  color: ${({ color }) => color};
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   cursor: pointer;
   &:hover {
     filter: brightness(80%);
   }
 `;
-
-const Button: React.FC<BtnProps> = ({
+const ButtonDark: React.FC<BtnProps> = ({
   children,
   width,
   height,
-  bg,
-  color,
-  fontSize,
+  fontSize = "14px",
   fontWeight = "500",
   border = "none",
-  borderRadious = "7px",
+  borderRadious = "2px",
   onClick,
 }: BtnProps) => {
   return (
-    <Btn
+    <BtnDark
       width={width}
       height={height}
-      bg={bg}
-      color={color}
       fontSize={fontSize}
       fontWeight={fontWeight}
       border={border}
@@ -44,8 +39,38 @@ const Button: React.FC<BtnProps> = ({
       onClick={onClick}
     >
       {children}
-    </Btn>
+    </BtnDark>
   );
 };
 
-export { Button };
+const BtnLight = styled(BtnDark)`
+  border: 1px solid lightgray;
+  background-color: white;
+  color: ${({ theme }) => theme.colors.themeColor};
+`;
+const ButtonLight: React.FC<BtnProps> = ({
+  children,
+  width,
+  height,
+  fontSize = "14px",
+  fontWeight = "500",
+  border = "none",
+  borderRadious = "2px",
+  onClick,
+}: BtnProps) => {
+  return (
+    <BtnLight
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      border={border}
+      borderRadious={borderRadious}
+      onClick={onClick}
+    >
+      {children}
+    </BtnLight>
+  );
+};
+
+export { ButtonLight, ButtonDark };
