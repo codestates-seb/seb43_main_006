@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import SignupInput from "./pages/Signup/SignupInput";
 import Likepage from "./pages/Mypage/likepage";
 import Buyend from "./pages/Mypage/buyend";
 import Infochange from "./pages/Mypage/infochange";
@@ -17,6 +17,8 @@ import Alcohol from "./pages/Alcohol";
 import AlcoholDetail from "./pages/AlcoholDetail";
 import Layout from "./layout/index";
 import HelpCenter from "./pages/HelpCenter";
+import SignupSelection from "./pages/Signup/SignupSelection";
+import SignupTerm from "./pages/Signup/SignupTerm";
 
 const BodyContainer = styled.div`
   min-height: 100vh;
@@ -33,7 +35,7 @@ const App = () => {
           <Route path="/alcohol/detail/:id" element={<AlcoholDetail />} />
           <Route path="/cart/" element={<Cart />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup/term" element={<SignupTerm />} />
           <Route path="/mypage/likepage" element={<Likepage />} />
           <Route path="/mypage/buyend" element={<Buyend />} />
           <Route path="/mypage/infochange" element={<Infochange />} />
@@ -43,6 +45,8 @@ const App = () => {
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
           <Route path="/place" element={<Place />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
+          <Route path="/signup/selection" element={<SignupSelection />} />
+          <Route path="/signup/input" element={<SignupInput />} />
         </Routes>
       </Layout>
     </BodyContainer>
