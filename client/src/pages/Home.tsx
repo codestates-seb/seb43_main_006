@@ -254,6 +254,7 @@ const HomeContainer = styled.section`
     align-items :center;
     justify-content : center;
     padding-top : 800px;
+    padding-left: 15vw;
   }
  .glad3 {
   transition: all 0.5s ease-in-out;
