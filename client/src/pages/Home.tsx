@@ -154,16 +154,17 @@ const HomeContainer = styled.section`
   color: ${({ theme }) => theme.colors.fontColor}
   flex-direction: column;
   align-items: flex-start;
-  max-width: 1440px;
+  max-width: 100vw;
   font-size: 96px;
-  overflow : hidden;
 
   .Maintop {
     position: relative;
     top: 0;
     padding-top: 0;
-    height: 840px;
-    width: 1440px;
+    height: 100vh;
+    width: 120vw;
+    background-repeat : no-repeat;
+        background-size : cover;
   }
 
   .Mainmiddle {
@@ -172,8 +173,8 @@ const HomeContainer = styled.section`
     align-items : center;
     width:100%;
     height:1800px;
-    padding-left : 95px;
-    padding-right : 95px;
+    padding-left : 15vw;
+    padding-right : 15vw;
     padding-top : 900px;
     transition: all 0.5s ease-in-out;
   }
@@ -181,13 +182,13 @@ const HomeContainer = styled.section`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    max-width: 1440px;
+    max-width: 100vw;
     height: 200px;
     color: ${({ theme }) => theme.colors.fontColor};
   }
   & div {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2vw;
+    padding-right: 2vw;
     display: flex;
   }
   .glad {
@@ -196,8 +197,8 @@ const HomeContainer = styled.section`
   }
   .smallglad {
     font-size: 16px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2vw;
+    padding-right: 2vw;
     font-weight: bold;
     align-items: flex-end;
     height: 100px;
@@ -205,13 +206,13 @@ const HomeContainer = styled.section`
   .glad2 {
     display : flex;
     align-items:center;
-    width: 550px;
+    width: 50vw;
     justify-content: center;
     flex-direction: column;
     font-size: 48px;
     padding-top: 300px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 2vw;
+    padding-right: 2vw;
     padding-bottom : 500px;
     transition: all 0.5s ease-in-out;
   }
@@ -223,7 +224,7 @@ const HomeContainer = styled.section`
   .firstbox {
     display: flex;
     font-size: 30px;
-    width: 1440px;
+    width: 100vw;
     padding-bottom: 100px;
     align-items: center;
     flex-direction: column;
@@ -231,15 +232,15 @@ const HomeContainer = styled.section`
     height : 400px;
   }
   .maju_list {
-    padding-left: 100px;
-    padding-bottom: 100px;
+    padding-left: 10vw;
+    padding-bottom: 10vw;
     flex-direction: column;
     height : 200px;
     overflow : visible;
   }
   .maju {
     padding-top: 30px;
-    padding-left: 30px;
+    padding-left: 5vw;
     font-size: 50px;
     height : 200px;
     color: ${({ theme }) => theme.colors.themeColor};
@@ -259,27 +260,30 @@ const HomeContainer = styled.section`
  }
  .samplingimg {
   transition: all 0.5s ease-in-out;
-  width : 800px;
-  height : 600px;
+  height : 80vh;
+  width: 100vw;
  }
  .glad4-item {
     flex-direction : row;
     display: flex;
     justify-content : center;
     padding-top : 550px;
+  padding-left : 10vw;
  }
  .glad4 {
   transition: all 0.5s ease-in-out;
-  width : 1250px;
-  display:flex;
+  width : 100vw;
+  display: flex;
   align-items : flex-start;
   flex-direction : row;
   justify-content: flex-start;
+  padding-left : 1vw;
  }
  .sales {
-  width : 1250px;
+  width : 100vw;
   display:flex;
   align-items : flex-start;
+  padding-left : 15vw;
   padding-top: 1000px;
   padding-bottom : 200px;
   flex-direction : row;
@@ -289,21 +293,21 @@ const HomeContainer = styled.section`
   transition: all 0.5s ease-in-out;
  }
  .saleslist {
-  max-width: 1250px;
+  max-width: 80vw;
   margin : 0;
   padding-top : 1600px;
   height : 1880px;
   flex-direction : column;
-  padding-left : 200px;
+  padding-left : 20vw;
   & a {
     font-size : 20px;
-    padding-left : 20px;
+    padding-left : 2vw;
     height : 30px;
   }
 }
 
 .1stsales {
-  max-width : 1250px;
+  max-width : 100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -312,7 +316,7 @@ const HomeContainer = styled.section`
 }
 
 .2ndsales {
-  max-width : 1250px;
+  max-width : 100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
