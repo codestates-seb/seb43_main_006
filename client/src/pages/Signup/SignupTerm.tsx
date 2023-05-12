@@ -316,7 +316,7 @@ const SignupTerm = () => {
             fontSize="18px"
             borderRadious="2px"
             border="solid 1px lightgray"
-            onClick={() => navigate("/signup/selection")}
+            onClick={() => navigate("/signup")}
           >
             이전
           </ButtonLight>
