@@ -10,6 +10,12 @@ export interface AlcoholListData {
   reviewRating: number;
 }
 
+// 주류 리스트 아이템 정렬 Props
+export interface SortItemsProps {
+  totalData: number;
+  setSortBy: React.Dispatch<React.SetStateAction<string>>;
+}
+
 // 주류 리스트 데이터 Props
 export interface AlcoholListProps {
   data: AlcoholListData[] | null;
