@@ -6,6 +6,7 @@ interface UserAxiosProps {
   params?: object;
   currentPage?: number;
   currentTab?: number;
+  sortBy?: string;
 }
 const headers = {
   "Content-Type": "application/json",
@@ -25,6 +26,7 @@ const useAxios = <T extends NonNullable<unknown>>({
   params,
   currentPage,
   currentTab,
+  sortBy,
 }: UserAxiosProps): UseAxiosState<T> => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,7 +41,7 @@ const useAxios = <T extends NonNullable<unknown>>({
 
   useEffect(() => {
     fetchData();
-  }, [url, currentPage, currentTab]);
+  }, [url, currentPage, currentTab, sortBy]);
 
   const fetchData = async () => {
     setIsLoading(true);

@@ -5,6 +5,7 @@ import { AlcoholListData } from "../types/AlcholInterfaces";
 
 // components
 import AlcoholList from "../components/AlcoholPage/AlcoholList";
+import SortingUtils from "../components/AlcoholPage/SortingUtils";
 
 // 전체적인 컨테이너
 const AlcoholContainer = styled.section`
@@ -17,7 +18,7 @@ const AlcoholContainer = styled.section`
   color: ${({ theme }) => theme.colors.fontColor};
 `;
 
-// 주류 카테고리
+// 주류 카테고리 Box
 const AlcoholTabNavBox = styled.div`
   margin-top: 3rem;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
@@ -31,6 +32,7 @@ const AlcoholTabNavBox = styled.div`
   }
 `;
 
+// 주류 카테고리 NavBar
 const TabNav = styled.ul`
   display: flex;
   align-items: center;
@@ -55,8 +57,10 @@ const TabNav = styled.ul`
 const Alcohol = () => {
   const size = 12;
   const [currentPage, setCurrentPage] = useState<number>(1);
+
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const tabCategories = ["전체", "위스키", "와인", "브랜디", "보드카", "럼", "테킬라", "사케", "럼", "기타"];
+  const tabCategories = ["전체", "위스키", "와인", "브랜디", "보드카", "럼", "테킬라", "사케", "기타"];
+  const [sortBy, setSortBy] = useState<string>("latest");
 
   const { data, isLoading, error, totalData } = useAxios<AlcoholListData[]>({
     url: `${process.env.REACT_APP_API_URL}/items`,
@@ -66,13 +70,16 @@ const Alcohol = () => {
             page: currentPage,
             size,
             category: tabCategories[currentTab],
+            sortBy,
           }
         : {
             page: currentPage,
             size,
+            sortBy,
           },
     currentPage,
     currentTab,
+    sortBy,
   });
 
   const handleClickTab = (idx: number): void => {
@@ -105,13 +112,16 @@ const Alcohol = () => {
         </TabNav>
       </AlcoholTabNavBox>
       {typeof totalData === "number" ? (
-        <AlcoholList
-          data={data}
-          totalData={totalData}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          size={size}
-        />
+        <>
+          <SortingUtils totalData={totalData} setSortBy={setSortBy} />
+          <AlcoholList
+            data={data}
+            totalData={totalData}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            size={size}
+          />
+        </>
       ) : null}
     </AlcoholContainer>
   );
