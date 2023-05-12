@@ -148,8 +148,9 @@ const Login = () => {
         },
       })
       .then((res) => {
+        console.log(res.headers);
         localStorage.setItem("authToken", res.headers.authorization);
-        localStorage.setItem("memberId", res.headers["X-Member-ID"]);
+        localStorage.setItem("memberId", res.headers["x-member-id"]);
         axios.defaults.headers.common["Authorization"] = res.headers.authorization;
         navigate("/");
       })
