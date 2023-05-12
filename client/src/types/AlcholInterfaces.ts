@@ -2,7 +2,7 @@
 export interface AlcoholListData {
   itemId: number;
   titleKor: string;
-  discountRate: string;
+  discountRate: number;
   price: number;
   categories: string[];
   profile: string;

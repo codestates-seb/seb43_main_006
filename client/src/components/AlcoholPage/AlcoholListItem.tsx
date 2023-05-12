@@ -12,7 +12,6 @@ interface ItemProps {
 }
 
 const AlcoholItemContainer = styled.div`
-  flex: 1 1 calc(100 / 3) %;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -22,7 +21,7 @@ const AlcoholItemContainer = styled.div`
   font-size: 15px;
 
   .item_img {
-    width: 300px;
+    width: 100%;
     height: 300px;
     ${({ theme }) => theme.common.flexCenter};
     border-bottom: 3.5px solid ${({ theme }) => theme.colors.bg};
@@ -73,7 +72,6 @@ const AlcoholItemContainer = styled.div`
       p {
         margin-top: 5px;
         font-size: 14px;
-        color: 
         font-weight: 600;
       }
     }
@@ -92,7 +90,7 @@ const AlcoholListItem = ({ item }: ItemProps) => {
       <div className="item_content">
         <p className="item_title">{item.titleKor}</p>
         <div>
-          <span className="item_discount_rate">{item.discountRate}</span>
+          <span className="item_discount_rate">{item.discountRate}%</span>
           <span className="item_price">
             <PriceRegular price={item.price} />원
           </span>

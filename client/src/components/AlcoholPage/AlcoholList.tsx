@@ -26,17 +26,36 @@ const SortingUtils = styled.div`
   border-bottom: 1px solid lightgray;
   font-size: 16px;
   font-weight: 700;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 // 알코올 리스트
 const AlcoholListBox = styled.ul`
   flex-direction: row;
   margin-top: 30px;
-  justify-content: center;
-  gap: 16px;
+  justify-content: flex-start;
   flex-wrap: wrap;
   display: flex;
   width: 100%;
+  box-sizing: border-box;
+
+  li {
+    width: 25%;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: 1297px) {
+      width: 33%;
+    }
+    @media screen and (max-width: 860px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 600px) {
+      width: 100%;
+    }
+  }
 `;
 
 const AlcoholList = ({ data, totalData, currentPage, setCurrentPage, size }: AlcoholListProps) => {
