@@ -40,9 +40,13 @@ public class ItemService {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("discountRate").descending()));
     }
 
-    //가격순 정렬
-    public Page<Item> findItemsByPrice(int page,int size) {
+    //높은 가격순 정렬
+    public Page<Item> findItemsByHighPrice(int page,int size) {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("price").descending()));
+    }
+    // 낮은 가격순 정렬
+    public Page<Item> findItemsByLowPrice(int page,int size) {
+        return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("price").ascending()));
     }
 
     // 카테고리별 술 찾기

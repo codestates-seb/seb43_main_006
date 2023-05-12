@@ -62,8 +62,11 @@ public class ItemController {
                     case "discountRate":
                         pageItems = itemService.findItemsByDiscountRate(page,size);
                         break;
-                    case "price":
-                        pageItems = itemService.findItemsByPrice(page,size);
+                    case "highPrice":
+                        pageItems = itemService.findItemsByHighPrice(page,size);
+                        break;
+                    case "lowPrice":
+                        pageItems = itemService.findItemsByLowPrice(page,size);
                         break;
                     default:
                         pageItems = itemService.findItems(page, size);
