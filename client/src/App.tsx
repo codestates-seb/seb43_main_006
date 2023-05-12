@@ -5,11 +5,8 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login/Login";
 import SignupInput from "./pages/Signup/SignupInput";
 import Likepage from "./pages/Mypage/likepage";
-import Buyend from "./pages/Mypage/buyend";
-import Infochange from "./pages/Mypage/infochange";
-import Notmember from "./pages/Mypage/notmember";
 import Orderpage from "./pages/Mypage/orderpage";
-
+import Changeinfopage from "./pages/Mypage/changeinfo";
 import Payment from "./pages/Payment/Payment";
 import Place from "./pages/Place";
 import PaymentConfirm from "./pages/Payment/PaymentConfirm";
@@ -25,7 +22,7 @@ const BodyContainer = styled.div`
   min-height: 100vh;
   ${({ theme }) => theme.common.flexCol};
 `;
-//0509 22:12
+
 const App = () => {
   return (
     <BodyContainer>
@@ -38,15 +35,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup/term" element={<SignupTerm />} />
           <Route path="/mypage/likepage" element={<Likepage />} />
-          <Route path="/mypage/buyend" element={<Buyend />} />
-          <Route path="/mypage/infochange" element={<Infochange />} />
-          <Route path="/mypage/notmember" element={<Notmember />} />
           <Route path="/mypage/orderpage" element={<Orderpage />} />
+          <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/payment/confirm" element={<PaymentConfirm />} />
           <Route path="/place" element={<Place />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
-          <Route path="/signup/selection" element={<SignupSelection />} />
+          <Route path="/signup" element={<SignupSelection />} />
           <Route path="/signup/input" element={<SignupInput />} />
           <Route path="/findemail/" element={<FindEmail />} />
           <Route path="/findpassword" element={<FindPassword />} />
