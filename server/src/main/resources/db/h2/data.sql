@@ -1,6 +1,6 @@
-INSERT INTO member (real_name, display_name, email, password, phone, birth_date, mail_key, member_status)
-VALUES ('홍길동', '길동', 'admin@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null, 'MEMBER_ACTIVE'),
-       ('테스트', '테테', 'test@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null, 'MEMBER_ACTIVE');
+INSERT INTO member (real_name, display_name, email, password, phone, birth_date, mail_key, password_issued ,oauth2registered ,member_status)
+VALUES ('홍길동', '길동', 'admin@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE'),
+       ('테스트', '테테', 'test@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE');
 INSERT INTO member_roles (member_member_id, roles)
 VALUES (1, 'ROLE_USER'),
        (2, 'ROLE_USER');

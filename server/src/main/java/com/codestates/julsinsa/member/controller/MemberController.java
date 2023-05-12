@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
@@ -40,6 +41,15 @@ public class MemberController {
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
 
         return ResponseEntity.created(location).build();
+    }
+
+
+    @GetMapping
+    public ResponseEntity getUser(){
+
+        Member member = memberService.findMember();
+
+        return new ResponseEntity(new SingleResponseDto<>(mapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
 
     @PatchMapping

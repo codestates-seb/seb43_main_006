@@ -45,32 +45,55 @@ public class MemberService {
 
     private final ApplicationEventPublisher publisher;
     private final FavoriteRepository favoriteRepository;
+    // 일반 회원 가입
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
 
-        // Oauth2 가입한 유저는 닉네임이 없기에 이메일로 설정
-        if(member.getDisplayName() == null) member.setDisplayName(member.getEmail());
+//        // Oauth2 가입한 유저는 닉네임이 없기에 이메일로 설정
+//        if(member.getDisplayName() == null) member.setDisplayName(member.getEmail());
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
         // Oauth2 가입한 유저는 비밀번호가 없기에 로직을 설정함
-        if(member.getPassword() != null) {
-            String encryptedPassword = passwordEncoder.encode(member.getPassword());
-            member.setPassword(encryptedPassword);
+//        if(member.getPassword() != null) {
+//            String encryptedPassword = passwordEncoder.encode(member.getPassword());
+//            member.setPassword(encryptedPassword);
+//
+//            if(!member.getMailKey().equals(authMap.get(member.getEmail()))){
+//                throw new BusinessLogicException(ExceptionCode.EMAIL_NOT_AUTHORIZED);
+//            }
+//
+//            verifyAuthKey(authMap.get(member.getEmail()), member.getEmail());
+//        }
 
-            if(!member.getMailKey().equals(authMap.get(member.getEmail()))){
-                throw new BusinessLogicException(ExceptionCode.EMAIL_NOT_AUTHORIZED);
-            }
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
 
-            verifyAuthKey(authMap.get(member.getEmail()), member.getEmail());
+        if(!member.getMailKey().equals(authMap.get(member.getEmail()))){
+            throw new BusinessLogicException(ExceptionCode.EMAIL_NOT_AUTHORIZED);
         }
+
+        verifyAuthKey(authMap.get(member.getEmail()), member.getEmail());
+
         Member savedMember = memberRepository.save(member);
 
         // 여기서 this는 MemberService
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
         return savedMember;
 
+    }
+
+    // oauth2로 회원가입 하는 로직
+    public Member createOauth2Member(Member member) {
+        verifyExistsEmail(member.getEmail());
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
+        member.setOauth2Registered(true);
+
+        Member savedMember = memberRepository.save(member);
+        return savedMember;
     }
 
     public Member updateMember(Member member){
@@ -86,8 +109,17 @@ public class MemberService {
         Optional.ofNullable(member.getPassword()).ifPresent(password -> findmember.setPassword(password));
         String encode = passwordEncoder.encode(findmember.getPassword());
         findmember.setPassword(encode);
+        if(findmember.isPasswordIssued()){ // 임시비밀번호 발급자는 false로 설정
+            findmember.setPasswordIssued(false);
+        }
 
         return memberRepository.save(findmember);
+    }
+
+    public Member findMember(){
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
+        return findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
     }
 
     public List<ItemDto.favoriteItemResponse> findFavorites(){
@@ -142,7 +174,7 @@ public class MemberService {
         String tempPassword = getTempPassword();
         String encryptedPassword = passwordEncoder.encode(tempPassword);
         member.setPassword(encryptedPassword);
-
+        member.setPasswordIssued(true);
         sendTempPassword(member,tempPassword);
 
 

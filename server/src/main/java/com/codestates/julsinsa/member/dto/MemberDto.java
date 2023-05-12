@@ -66,6 +66,10 @@ public class MemberDto {
         private Member.MemberStatus memberStatus;
 
         private LocalDate birthDate;
+
+        private boolean passwordIssued;
+
+        private boolean oauth2Registered;
     }
 
     @Getter

@@ -53,7 +53,28 @@ public class ItemService {
     public Page<Item> findItemsByCategory(int page,int size,String category) {
         return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("itemId").descending()));
     }
+    //////////////////////////////////////
+    // 카테고리와 판매량으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortBySales(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("sales").descending()));
+    }
 
+    // 카테고리와 할인율로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByDiscountRate(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("discountRate").descending()));
+    }
+
+    // 카테고리와 가격 오름차순으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByHighPrice(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("price").descending()));
+    }
+
+    // 카테고리와 가격 내림차순으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByLowPrice(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("price").ascending()));
+    }
+
+    /////////////////////////
     // 술 검색
     public Page<Item> searchByTitle(int page, int size, String title) {
         if(title == null) title = "";
