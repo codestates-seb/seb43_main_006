@@ -1,4 +1,4 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { useState, ChangeEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -148,7 +148,10 @@ const Login = () => {
         },
       })
       .then((res) => {
+        console.log(res.headers);
         localStorage.setItem("authToken", res.headers.authorization);
+        localStorage.setItem("memberId", res.headers["x-member-id"]);
+        axios.defaults.headers.common["Authorization"] = res.headers.authorization;
         navigate("/");
       })
       .catch((err) => {

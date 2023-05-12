@@ -1,24 +1,29 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const isLogin = createSlice({
-  //로그인 상태 관리를 위한 store, true시 로그인 상태 false시 로그아웃 상태
-  name: "isLogin",
-  initialState: false,
+const loginState = createSlice({
+  name: "login",
+  initialState: {
+    token: null,
+    isLogin: false,
+  },
   reducers: {
-    setLogin() {
-      return true;
+    setToken: (state, action) => {
+      state.token = action.payload;
     },
-    setLogout() {
-      return false;
+    setLogout: (state) => {
+      state.token = null;
+      state.isLogin = false;
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("memberId");
     },
   },
 });
 
-//reducer export
-export const { setLogin, setLogout } = isLogin.actions;
+export const { setToken, setLogout } = loginState.actions;
 
 export default configureStore({
   reducer: {
-    isLogin: isLogin.reducer,
+    loginState: loginState.reducer,
   },
 });
