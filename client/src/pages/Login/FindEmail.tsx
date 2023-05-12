@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import Alert from "../../components/Common/AlertModal";
 
-const url = "https://27b9-124-111-225-247.ngrok-free.app/";
-type StepProps = {
-  type: string;
-};
+const url = `${process.env.REACT_APP_API_URL}/`;
+
 type TitleProps = {
   fontSize: string;
   fontWeight: string;

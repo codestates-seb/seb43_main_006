@@ -7,7 +7,7 @@ import { ChangeEvent } from "react";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
 
-const url = "https://27b9-124-111-225-247.ngrok-free.app/";
+const url = `${process.env.REACT_APP_API_URL}/`;
 
 type TitleProps = {
   fontSize: string;
@@ -192,34 +192,36 @@ const SignupInput = () => {
   const onClickSign = () => {
     if (password !== passwordCheck) {
       setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
+    } else if (!(nick && code && name && birth && number)) {
+      setAlertMessage("모든 정보가 입려되어야 합니다!");
+    } else {
+      const body = {
+        realName: name,
+        displayName: nick,
+        email: email,
+        password: password,
+        phone: number,
+        birthDate: birth,
+        mailKey: code,
+      };
+      console.log(body);
+      axios
+        .post(`${url}members/signup`, body, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setAlertMessage("회원가입 성공!");
+          setShowAlert(true);
+          setOk(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
+          setShowAlert(true);
+        });
     }
-
-    const body = {
-      realName: name,
-      displayName: nick,
-      email: email,
-      password: password,
-      phone: number,
-      birthDate: birth,
-      mailKey: code,
-    };
-    console.log(body);
-    axios
-      .post(`${url}members/signup`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setAlertMessage("회원가입 성공!");
-        setShowAlert(true);
-        setOk(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
-        setShowAlert(true);
-      });
   };
   const getCode = () => {
     const body = {

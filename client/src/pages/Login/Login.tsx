@@ -7,7 +7,7 @@ import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import Alert from "../../components/Common/AlertModal";
 
-const url = "https://27b9-124-111-225-247.ngrok-free.app/";
+const url = `${process.env.REACT_APP_API_URL}/`;
 
 type TypeProps = {
   type: string;
@@ -98,7 +98,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   color: ${({ type }) => (type === "google" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
-    font-size: 20px;
+    font-size: 18px;
     width: calc(100% - 65px);
     text-align: center;
   }
@@ -196,19 +196,19 @@ const Login = () => {
           </LoginContainer>
           <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
             <OAuthIconContainer>
-              <FcGoogle size="50" color="black" />
+              <FcGoogle size="40" color="black" />
             </OAuthIconContainer>
-            <div className="desc">구글 아이디 로그인</div>
+            <div className="desc">구글로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={facebookOAuthHandler} type="facebook">
             <OAuthIconContainer>
-              <TiSocialFacebook size="50" color="white" />
+              <TiSocialFacebook size="40" color="white" />
             </OAuthIconContainer>
-            <div className="desc">페이스북 아이디 로그인</div>
+            <div className="desc">페이스북으로 시작하기</div>
           </OAuthSignUpBox>
           <Contour />
           <BottomContainer>
-            <ButtonDark width="150px" height="100%" fontSize="16px" fontWeight="500" onClick={GotoSign}>
+            <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={GotoSign}>
               회원가입
             </ButtonDark>
             <ButtonLight
