@@ -59,7 +59,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   color: ${({ type }) => (type === "google" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
-    font-size: 22px;
+    font-size: 18px;
     width: calc(100% - 65px);
     text-align: center;
   }
@@ -91,15 +91,15 @@ const SignupSelection = () => {
         <Contour />
         <OAuthSignUpBox onClick={toSignTerm} type="google">
           <OAuthIconContainer>
-            <FcGoogle size="50" color="black" />
+            <FcGoogle size="40" color="black" />
           </OAuthIconContainer>
-          <div className="desc">구글 아이디 회원가입</div>
+          <div className="desc">구글로 회원가입</div>
         </OAuthSignUpBox>
         <OAuthSignUpBox onClick={toSignTerm} type="facebook">
           <OAuthIconContainer>
-            <TiSocialFacebook size="50" color="white" />
+            <TiSocialFacebook size="40" color="white" />
           </OAuthIconContainer>
-          <div className="desc">페이스북 아이디 회원가입</div>
+          <div className="desc">페이스북으로 회원가입</div>
         </OAuthSignUpBox>
       </SelectionContainer>
       <div className="go-login">
