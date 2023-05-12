@@ -25,6 +25,10 @@ const AlcoholTabNavBox = styled.div`
   display: flex;
   font-size: 15px;
   height: 40px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 const TabNav = styled.ul`
