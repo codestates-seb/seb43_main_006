@@ -71,7 +71,7 @@ const StyledTd = styled.td`
   border: 1px solid black;
   vertical-align: middle;
 `;
-const StyledTh = styled.td`
+const StyledTh = styled.th`
   border: 1px solid black;
   vertical-align: middle;
   text-align: left;
@@ -82,47 +82,49 @@ const InfoTable = () => {
   return (
     <>
       <StyledTable>
-        <tr>
-          <StyledTh>이름</StyledTh>
-          <StyledTd>홍길동</StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>닉네임</StyledTh>
-          <StyledTd>
-            <input type="text"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>생년월일</StyledTh>
-          <StyledTd>1900-03-03</StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>휴대폰번호</StyledTh>
-          <StyledTd>
-            <input type="tel"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>이메일</StyledTh>
-          <StyledTd>abc@naver.com</StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>비밀번호</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>비밀번호확인</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
+        <tbody>
+          <tr>
+            <StyledTh>이름</StyledTh>
+            <StyledTd>홍길동</StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>닉네임</StyledTh>
+            <StyledTd>
+              <input type="text"></input>
+            </StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>생년월일</StyledTh>
+            <StyledTd>1900-03-03</StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>휴대폰번호</StyledTh>
+            <StyledTd>
+              <input type="tel"></input>
+            </StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>이메일</StyledTh>
+            <StyledTd>abc@naver.com</StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>비밀번호</StyledTh>
+            <StyledTd>
+              <input type="password" placeholder="비밀번호를 입력하세요"></input>
+            </StyledTd>
+          </tr>
+          <tr>
+            <StyledTh>비밀번호확인</StyledTh>
+            <StyledTd>
+              <input type="password" placeholder="비밀번호를 입력하세요"></input>
+            </StyledTd>
+          </tr>
+        </tbody>
       </StyledTable>
     </>
   );
 };
-
+/*------------------모달관련부분------------------------------*/
 const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -245,7 +247,7 @@ const Modal = () => {
     </>
   );
 };
-
+/*-------------------------------여기위까지모달-------------------------------------------*/
 const Changeinfopage: React.FC = () => {
   // const navigate = useNavigate();
   return (
