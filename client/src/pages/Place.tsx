@@ -1,52 +1,79 @@
+//지도페이지
+
 import React from "react";
 import styled from "styled-components";
+import MapComponent from "./Map";
 
-const PlaceContainer = styled.section`
-  border: 10px solid black;
-  max-width: 1250px;
-  // margin-left: 95px;
-  // margin-right: 95px;
-  // height: 700px;
+const TotalStyled = styled.section`
+  /* border: 10px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+`;
+const PlaceContainer = styled.div`
+  border: 5px solid black;
   width: 100vw;
   height: 100vh;
+  max-width: 1250px;
+  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  display: flex;
+  flex-direction: column;
 `;
-
-const SearchPartStyled = styled.section`
-  border: 2px solid blue;
-  // height: 150px;
-  height: 20vh;
+//상단검색부분
+const SearchPartStyled = styled.div`
+  border: 3px solid black;
+  flex-grow: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 `;
-
-const MapMainStyled = styled.section`
-  border: 2px solid red;
-  // height: 550px;
-  height: 70vh;
+//지도+리스트부분 전체묶은거
+const MapBodyStyled = styled.div`
+  border: 5px solid red;
   display: flex;
   flex-direction: row;
+  flex-grow: 7.5;
 `;
-const MapPartStyled = styled.section`
-  border: 5px solid black;
-  flex-grow: 6.5;
+//왼쪽지도부분
+const MapPartStyled = styled.div`
+  border: 3px solid blue;
+  flex-grow: 7;
 `;
-const StorePartStyled = styled.section`
-  border: 5px solid black;
-  flex-grow: 3.5;
+//오른쪽리스트부분
+const ListPartStyled = styled.div`
+  border: 3px solid black;
+  flex-grow: 3;
+`;
+const MapBottomStyled = styled.div`
+  border: 3px solid black;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Place: React.FC = () => {
+const Place = () => {
   return (
     <>
-      <PlaceContainer>
-        <SearchPartStyled>
-          <input></input>
-          <button>검색하자</button>
-        </SearchPartStyled>
-        <MapMainStyled>
-          <MapPartStyled>지도부분</MapPartStyled>
-          <StorePartStyled>가게리스트</StorePartStyled>
-        </MapMainStyled>
-        <button>선 택</button>
-      </PlaceContainer>
+      <TotalStyled>
+        <PlaceContainer>
+          <SearchPartStyled>
+            <input type="text" placeholder="매장을 검색하세요"></input>
+            <button>조회</button>
+          </SearchPartStyled>
+          <MapBodyStyled>
+            <MapPartStyled>
+              지도부분
+              <MapComponent />
+            </MapPartStyled>
+            <ListPartStyled>리스트부분</ListPartStyled>
+          </MapBodyStyled>
+          <MapBottomStyled>
+            <button>선택</button>
+          </MapBottomStyled>
+        </PlaceContainer>
+      </TotalStyled>
     </>
   );
 };
