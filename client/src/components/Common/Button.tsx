@@ -27,6 +27,7 @@ const ButtonDark: React.FC<BtnProps> = ({
   border = "none",
   borderRadious = "2px",
   onClick,
+  disabled,
 }: BtnProps) => {
   return (
     <BtnDark
@@ -37,6 +38,7 @@ const ButtonDark: React.FC<BtnProps> = ({
       border={border}
       borderRadious={borderRadious}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </BtnDark>
@@ -57,6 +59,7 @@ const ButtonLight: React.FC<BtnProps> = ({
   border = "none",
   borderRadious = "2px",
   onClick,
+  disabled,
 }: BtnProps) => {
   return (
     <BtnLight
@@ -67,6 +70,7 @@ const ButtonLight: React.FC<BtnProps> = ({
       border={border}
       borderRadious={borderRadious}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </BtnLight>

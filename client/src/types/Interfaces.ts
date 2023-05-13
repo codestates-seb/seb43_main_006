@@ -29,6 +29,7 @@ export interface BtnProps {
   border?: string;
   borderRadious?: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 export interface Icon {
