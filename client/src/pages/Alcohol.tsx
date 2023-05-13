@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import useAxios from "../hooks/useAxios";
 import { AlcoholListData } from "../types/AlcholInterfaces";
+import { getItemsList } from "../services/api";
 
 // components
 import AlcoholList from "../components/AlcoholPage/AlcoholList";
@@ -55,6 +55,9 @@ const TabNav = styled.ul`
 `;
 
 const Alcohol = () => {
+  const [data, setData] = useState<AlcoholListData[] | null>(null);
+  const [totalData, setTotalData] = useState<number | null>(null);
+
   const size = 12;
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -62,37 +65,25 @@ const Alcohol = () => {
   const tabCategories = ["전체", "위스키", "와인", "브랜디", "보드카", "럼", "테킬라", "사케", "기타"];
   const [sortBy, setSortBy] = useState<string>("latest");
 
-  const { data, isLoading, error, totalData } = useAxios<AlcoholListData[]>({
-    url: `${process.env.REACT_APP_API_URL}/items`,
-    params:
-      currentTab !== 0
-        ? {
-            page: currentPage,
-            size,
-            category: tabCategories[currentTab],
-            sortBy,
-          }
-        : {
-            page: currentPage,
-            size,
-            sortBy,
-          },
-    currentPage,
-    currentTab,
-    sortBy,
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getItemsList(currentPage, size, sortBy, tabCategories[currentTab]);
+      try {
+        const { data } = response;
+
+        setData(data.data);
+        setTotalData(data.pageInfo.totalElements);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, [size, currentPage, currentTab, sortBy]);
 
   const handleClickTab = (idx: number): void => {
     setCurrentTab(idx);
-    console.log(tabCategories[currentTab]);
   };
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-  if (error) {
-    return <div>Error</div>;
-  }
 
   return (
     <AlcoholContainer className="main">
