@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { useState, ChangeEvent } from "react";
-import axios from "axios";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import Alert from "../../components/Common/AlertModal";
-
+import useAxiosAll from "../../hooks/useAxiosAll";
+import axios from "axios";
 const url = `${process.env.REACT_APP_API_URL}/`;
 
 type TypeProps = {
@@ -16,6 +16,133 @@ type TypeProps = {
 type TitleProps = {
   fontSize: string;
   fontWeight: string;
+};
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [doAxios, data, err] = useAxiosAll();
+
+  const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+  const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = () => {
+    const body = {
+      username,
+      password,
+    };
+    axios
+      .post(`${url}auth/login`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const issued = res.headers["x-password-issued"];
+        localStorage.setItem("authToken", res.headers.authorization);
+        localStorage.setItem("memberId", res.headers["x-member-id"]);
+        console.log(issued);
+        if (issued === "false") {
+          navigate("/");
+        } else {
+          navigate("/mypage/changeinfo");
+        }
+      })
+      .catch((err) => {
+        console.log("실패", err);
+        setAlertMessage("이메일 혹은 비밀번호를 확인해주세요!");
+        setShowAlert(true);
+      });
+  };
+  const googleOAuthHandler = () => {
+    //오어스 인증링크로 이동
+    window.location.assign(`${url}oauth2/authorization/google`);
+  };
+  const facebookOAuthHandler = () => {
+    //오어스 인증링크로 이동
+    window.location.assign(`${url}oauth2/authorization/facebook`);
+  };
+  const GotoSign = () => {
+    navigate("/signup");
+  };
+  return (
+    <Container>
+      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
+      <ContentsContainer>
+        <TopContainer>
+          <Title fontSize="28px" fontWeight="500">
+            로그인
+          </Title>
+        </TopContainer>
+        <MiddleContainer>
+          <LoginContainer>
+            <Title fontSize="22px" fontWeight="400">
+              회원 로그인
+            </Title>
+            <div className="flex-row">
+              <div className="flex-col">
+                <input placeholder="이메일" onChange={emailHandler} />
+                <input placeholder="비밀번호" type="password" onChange={passwordHandler} />
+              </div>
+              <div className="button">
+                <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
+                  로그인
+                </ButtonDark>
+              </div>
+            </div>
+          </LoginContainer>
+          <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
+            <OAuthIconContainer>
+              <FcGoogle size="40" color="black" />
+            </OAuthIconContainer>
+            <div className="desc">구글로 시작하기</div>
+          </OAuthSignUpBox>
+          <OAuthSignUpBox onClick={facebookOAuthHandler} type="facebook">
+            <OAuthIconContainer>
+              <TiSocialFacebook size="40" color="white" />
+            </OAuthIconContainer>
+            <div className="desc">페이스북으로 시작하기</div>
+          </OAuthSignUpBox>
+          <Contour />
+          <BottomContainer>
+            <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={GotoSign}>
+              회원가입
+            </ButtonDark>
+            <ButtonLight
+              width="150px"
+              height="100%"
+              fontSize="16px"
+              fontWeight="500"
+              onClick={() => {
+                navigate("/findemail");
+              }}
+            >
+              이메일 찾기
+            </ButtonLight>
+            <ButtonLight
+              width="150px"
+              height="100%"
+              fontSize="16px"
+              fontWeight="500"
+              onClick={() => {
+                navigate("/findpassword");
+              }}
+            >
+              비밀번호 찾기
+            </ButtonLight>
+          </BottomContainer>
+        </MiddleContainer>
+      </ContentsContainer>
+    </Container>
+  );
 };
 
 const Container = styled.div`
@@ -121,126 +248,5 @@ const BottomContainer = styled.div`
   width: 100%;
   gap: 15px;
 `;
-
-const Login = () => {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-
-  const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-  const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const handleLogin = () => {
-    const body = {
-      username,
-      password,
-    };
-    console.log(body);
-    axios
-      .post(`${url}auth/login`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res.headers);
-        localStorage.setItem("authToken", res.headers.authorization);
-        localStorage.setItem("memberId", res.headers["x-member-id"]);
-        axios.defaults.headers.common["Authorization"] = res.headers.authorization;
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("실패", err);
-        setAlertMessage("이메일 혹은 비밀번호를 확인해주세요!");
-        setShowAlert(true);
-      });
-  };
-  const googleOAuthHandler = () => {
-    //오어스 인증링크로 이동
-    window.location.assign(`${url}oauth2/authorization/google`);
-  };
-  const facebookOAuthHandler = () => {
-    //오어스 인증링크로 이동
-    window.location.assign(`${url}oauth2/authorization/facebook`);
-  };
-  const GotoSign = () => {
-    navigate("/signup");
-  };
-  return (
-    <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
-      <ContentsContainer>
-        <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
-            로그인
-          </Title>
-        </TopContainer>
-        <MiddleContainer>
-          <LoginContainer>
-            <Title fontSize="22px" fontWeight="400">
-              회원 로그인
-            </Title>
-            <div className="flex-row">
-              <div className="flex-col">
-                <input placeholder="이메일" onChange={emailHandler} />
-                <input placeholder="비밀번호" type="password" onChange={passwordHandler} />
-              </div>
-              <div className="button">
-                <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
-                  로그인
-                </ButtonDark>
-              </div>
-            </div>
-          </LoginContainer>
-          <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
-            <OAuthIconContainer>
-              <FcGoogle size="40" color="black" />
-            </OAuthIconContainer>
-            <div className="desc">구글로 시작하기</div>
-          </OAuthSignUpBox>
-          <OAuthSignUpBox onClick={facebookOAuthHandler} type="facebook">
-            <OAuthIconContainer>
-              <TiSocialFacebook size="40" color="white" />
-            </OAuthIconContainer>
-            <div className="desc">페이스북으로 시작하기</div>
-          </OAuthSignUpBox>
-          <Contour />
-          <BottomContainer>
-            <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={GotoSign}>
-              회원가입
-            </ButtonDark>
-            <ButtonLight
-              width="150px"
-              height="100%"
-              fontSize="16px"
-              fontWeight="500"
-              onClick={() => {
-                navigate("/findemail");
-              }}
-            >
-              이메일 찾기
-            </ButtonLight>
-            <ButtonLight
-              width="150px"
-              height="100%"
-              fontSize="16px"
-              fontWeight="500"
-              onClick={() => {
-                navigate("/findpassword");
-              }}
-            >
-              비밀번호 찾기
-            </ButtonLight>
-          </BottomContainer>
-        </MiddleContainer>
-      </ContentsContainer>
-    </Container>
-  );
-};
 
 export default Login;

@@ -1,11 +1,12 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
-import { useContext, useState } from "react";
+import { useState, useEffect } from "react";
 import { ChangeEvent } from "react";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
+import useAxiosAll from "../../hooks/useAxiosAll";
 
 const url = `${process.env.REACT_APP_API_URL}/`;
 
@@ -123,7 +124,6 @@ const BottomContainer = styled.div`
 `;
 
 const SignupInput = () => {
-  const themeContext = useContext(ThemeContext).colors;
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [nick, setNick] = useState("");
@@ -136,7 +136,9 @@ const SignupInput = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
   const [showAlert, setShowAlert] = useState(false);
-  const [ok, setOk] = useState(false);
+  const [isOk, setIsOk] = useState(false);
+  const [doAxios, data, err, ok] = useAxiosAll();
+
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -189,6 +191,20 @@ const SignupInput = () => {
   const onPasswordCheck = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
+  useEffect(() => {
+    if (err) {
+      setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
+      setShowAlert(true);
+    }
+  }, [err]);
+  useEffect(() => {
+    console.log(ok);
+    if (ok) {
+      setAlertMessage("회원가입 성공!");
+      setShowAlert(true);
+      setIsOk(true);
+    }
+  }, [ok]);
   const onClickSign = () => {
     if (password !== passwordCheck) {
       setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
@@ -205,22 +221,23 @@ const SignupInput = () => {
         mailKey: code,
       };
       console.log(body);
-      axios
-        .post(`${url}members/signup`, body, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          setAlertMessage("회원가입 성공!");
-          setShowAlert(true);
-          setOk(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
-          setShowAlert(true);
-        });
+      doAxios("post", "/members/signup", body, false, false);
+      // axios
+      //   .post(`${url}members/signup`, body, {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     setAlertMessage("회원가입 성공!");
+      //     setShowAlert(true);
+      //     setIsOk(true);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
+      //     setShowAlert(true);
+      //   });
     }
   };
   const getCode = () => {
@@ -250,7 +267,7 @@ const SignupInput = () => {
   };
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={ok ? okGotoMain : () => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
       <InputContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">
