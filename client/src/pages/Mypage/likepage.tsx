@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { ButtonDark } from "../../components/Common/Button";
+import Pagination from "../../components/AlcoholPage/Pagination";
 
 //components
 interface Likeitem {
@@ -15,6 +16,11 @@ interface Likeitem {
   quantity: number;
   capacity: number;
   reviewRating: number;
+}
+
+//page에서 table로 내린애
+interface TableProps {
+  likelist: Likeitem[];
 }
 
 const TotalStyled = styled.div`
@@ -102,27 +108,15 @@ const StyledTd = styled.td`
   vertical-align: middle;
 `;
 
-const Table = () => {
-  const [likelist, setLikelist] = useState([]);
+//맨밑 페이지네이션부분
+const PigStyled = styled.div`
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
-        },
-      })
-
-      .then((res) => {
-        // console.log(res);
-        console.log(res.data.data);
-        setLikelist(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
+const Table = ({ likelist }: TableProps) => {
   return (
     <>
       <StyledTable>
@@ -155,8 +149,36 @@ const Table = () => {
   );
 };
 
-const Likepage: React.FC = () => {
+const Likepage = () => {
+  const [likelist, setLikelist] = useState<Likeitem[]>([]);
+  const [totalLength, setTotalLength] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
+
+  //나오는 총 페이지수
+  const totalPages = Math.ceil(totalLength / 5);
+  const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage);
+  // console.log(currentPage);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("authToken"),
+          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+        },
+      })
+
+      .then((res) => {
+        // console.log(res);
+        // console.log(res.data.data);
+        setLikelist(res.data.data);
+        // console.log(res.data.data.length);
+        setTotalLength(res.data.data.length);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -177,8 +199,11 @@ const Likepage: React.FC = () => {
                 선택상품 삭제
               </ButtonDark>
             </LikeBtnStyled>
-            <Table></Table>
+            <Table likelist={paginationData}></Table>
           </LikepageMainStyled>
+          <PigStyled>
+            <Pagination currentPage={1} setCurrentPage={setCurrentPage} itemsPerPage={5} totalData={15} />
+          </PigStyled>
         </LikepageContainer>
       </TotalStyled>
     </>
@@ -186,3 +211,4 @@ const Likepage: React.FC = () => {
 };
 
 export default Likepage;
+//0513 1404 페이지네이션구현한거 추가

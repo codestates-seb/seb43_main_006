@@ -1,10 +1,21 @@
 //개인정보수정 페이지이다.  회원탈퇴기능 안에 포함되어있음.
 
-import React from "react";
-import { useState } from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+const url = `${process.env.REACT_APP_API_URL}/`;
+
+type Data = "realName" | "displayName" | "birthDate" | "phone";
+interface UserInfo {
+  displayName: string;
+  birthDate: string;
+  email: string;
+  phone: string;
+  realName: string;
+}
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -26,20 +37,20 @@ const InfoContainer = styled.div`
 
 //테이블 전체부분
 const InfoBodyupStyled = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  > input {
-    /* width: 226px; */
-    background-color: red;
+
+  input {
+    font-size: 16px;
+    padding: 10px;
+    width: 80%;
   }
 `;
 //테이블밑의 버튼들 전체부분
 const InfoBodydownStyled = styled.div`
-  border: 1px solid blue;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -61,7 +72,7 @@ const ChangebtnStyled = styled.button`
 const StyledTable = styled.table`
   border: 2px solid #dedede;
   width: 800px;
-  height: 650px;
+  height: 900px;
   text-align: center;
   /* vertical-align: middle; */
   font-size: 16px;
@@ -70,8 +81,9 @@ const StyledTable = styled.table`
 const StyledTd = styled.td`
   border: 1px solid black;
   vertical-align: middle;
+  /* background-color: red; */
 `;
-const StyledTh = styled.td`
+const StyledTh = styled.th`
   border: 1px solid black;
   vertical-align: middle;
   text-align: left;
@@ -79,33 +91,74 @@ const StyledTh = styled.td`
   font-weight: 600;
 `;
 const InfoTable = () => {
+  const order = ["realName", "displayName", "birthDate", "phone"];
+  const subTitle = ["이름", "닉네임", "생년월일", "전화번호", "이메일"];
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    displayName: "",
+    birthDate: "",
+    email: "",
+    phone: "",
+    realName: "",
+  });
+  const [displayName, setDisplayName] = useState("");
+  const [phone, setPhone] = useState("");
+  console.log(phone);
+  const handleDisplay = (e: ChangeEvent<HTMLInputElement>) => {
+    setDisplayName(e.target.value);
+  };
+  const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
+  useEffect(() => {
+    axios
+      .get(`${url}members`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("authToken"),
+          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+        },
+      })
+      .then((res) => {
+        const data = res.data.data;
+        console.log(res.data);
+        const newData = {
+          realName: data.realName,
+          displayName: data.displayName,
+          birthDate: data.birthDate,
+          phone: data.phone,
+          email: data.email,
+        };
+        setPhone(newData.phone);
+        setDisplayName(newData.displayName);
+        setUserInfo(newData);
+        console.log(userInfo);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  // const goPatch=()=>{
+  //   axios.post(`${}`)
+  // }
   return (
-    <>
-      <StyledTable>
-        <tr>
-          <StyledTh>이름</StyledTh>
-          <StyledTd>홍길동</StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>닉네임</StyledTh>
-          <StyledTd>
-            <input type="text"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>생년월일</StyledTh>
-          <StyledTd>1900-03-03</StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>휴대폰번호</StyledTh>
-          <StyledTd>
-            <input type="tel"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>이메일</StyledTh>
-          <StyledTd>abc@naver.com</StyledTd>
-        </tr>
+    <StyledTable>
+      <tbody>
+        {Object.keys(userInfo).map((key, idx) => {
+          if (idx > 5) return null;
+          return (
+            <tr key={idx}>
+              <StyledTh>{subTitle[idx]}</StyledTh>
+              {key === "displayName" || key === "phone" ? (
+                <StyledTd>
+                  <input
+                    value={key === "phone" ? phone : displayName}
+                    onChange={key === "phone" ? handlePhone : handleDisplay}
+                  ></input>
+                </StyledTd>
+              ) : (
+                <StyledTd>{userInfo[key as keyof UserInfo]}</StyledTd>
+              )}
+            </tr>
+          );
+        })}
         <tr>
           <StyledTh>비밀번호</StyledTh>
           <StyledTd>
@@ -118,8 +171,8 @@ const InfoTable = () => {
             <input type="password" placeholder="비밀번호를 입력하세요"></input>
           </StyledTd>
         </tr>
-      </StyledTable>
-    </>
+      </tbody>
+    </StyledTable>
   );
 };
 
