@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ItemDto {
     public static class Response{
 
         private Long itemId;
+
         private String title_Kor;
 
         private String title_Eng;
@@ -74,11 +76,28 @@ public class ItemDto {
 
         private String title_Kor;
         private int price;
-
         private int quantity;
         private int capacity;
-
         private double reviewRating;
 
+    }
+
+    @Getter
+    @Setter
+    public static class Post {
+        private String title_Kor;
+        private String title_Eng;
+        private String content;
+        private List<String> categories;
+        private int price;
+        private int capacity;
+        private int volume;
+        private String country;
+        private String aroma;
+        private String taste;
+        private String field;
+        private int discountRate;
+        private String profile;
+        private int quantity;
     }
 }

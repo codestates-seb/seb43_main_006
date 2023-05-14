@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "item")
+@Table(name = "item")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,37 +21,55 @@ public class Item extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
+    @Column(nullable = false)
     private String title_Kor;
 
+    @Column(nullable = false)
     private String title_Eng;
 
+    @Column(nullable = false)
     private String content;
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> categories = new ArrayList<>();
 
+    @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
     private int capacity;
 
+    @Column(nullable = false)
     private int volume;
 
+    @Column(nullable = false)
     private String country;
 
+    @Column(nullable = false)
     private String aroma;
 
+    @Column(nullable = false)
     private String taste;
 
+    @Column(nullable = false)
     private String field;
 
+    @Column(nullable = false)
     private String sales;
+
+    @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
     private String discountRate;
 
+    @Column(nullable = false)
     private String profile;
 
+    @Column(nullable = false)
     private int reviewCount;
 
+    @Column(nullable = false)
     private double reviewRating;
 
     @OneToMany(mappedBy = "item")
