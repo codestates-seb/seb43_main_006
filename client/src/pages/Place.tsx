@@ -1,6 +1,6 @@
 //지도페이지
 
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MapComponent from "./Map";
 
@@ -54,18 +54,32 @@ const MapBottomStyled = styled.div`
 `;
 
 const Place = () => {
+  const [inputText, setInputText] = useState("");
+  const [searchPlace, setSearchPlace] = useState("");
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log(e.target.value);
+    setInputText(e.target.value);
+  };
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setSearchPlace(inputText);
+    // console.log(inputText);
+    setInputText("");
+  };
+
   return (
     <>
       <TotalStyled>
         <PlaceContainer>
           <SearchPartStyled>
-            <input type="text" placeholder="매장을 검색하세요"></input>
-            <button>조회</button>
+            <input type="text" placeholder="매장을 검색하세요" onChange={onChange} value={inputText}></input>
+            <button onClick={handleSubmit}>조회</button>
           </SearchPartStyled>
           <MapBodyStyled>
             <MapPartStyled>
               지도부분
-              <MapComponent />
+              <MapComponent Place={searchPlace} />
             </MapPartStyled>
             <ListPartStyled>리스트부분</ListPartStyled>
           </MapBodyStyled>
