@@ -2,6 +2,7 @@ package com.codestates.julsinsa.auth.jwt;
 
 import com.codestates.julsinsa.member.entity.Member;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -68,8 +69,11 @@ public class JwtTokenizer {
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jws);
+
+
         return claims;
     }
+
 
     // 단순히 검증만 하는 용도로 쓰일 경우
     public void verifySignature(String jws, String base64EncodedSecretKey) {
@@ -88,6 +92,7 @@ public class JwtTokenizer {
 
         return expiration;
     }
+
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -120,4 +125,5 @@ public class JwtTokenizer {
 
         return refreshToken;
     }
+
 }

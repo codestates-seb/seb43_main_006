@@ -3,6 +3,7 @@ package com.codestates.julsinsa.auth.handler;
 
 import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
+import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.service.MemberService;
 import org.springframework.security.core.Authentication;
@@ -62,8 +63,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private void saveMember(String email) {
         Member member = new Member(email);
-//        member.setStamp(new Stamp());
-        memberService.createMember(member);
+        member.setCart(new Cart());
+        memberService.createOauth2Member(member);
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {

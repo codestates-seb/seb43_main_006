@@ -128,7 +128,7 @@ public class ItemService {
 
         return findItem;
     }
-    private Item findVerifedItem(long itemId){
+    public Item findVerifedItem(long itemId){
         Optional<Item> findByItem = itemRepository.findById(itemId);
         return findByItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
     }

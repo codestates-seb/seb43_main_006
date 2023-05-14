@@ -12,6 +12,7 @@ import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.repository.FavoriteRepository;
 import com.codestates.julsinsa.member.dto.EmailRequest;
 import com.codestates.julsinsa.member.dto.FindDto;
+import com.codestates.julsinsa.member.dto.MemberDto;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -94,6 +95,22 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
         return savedMember;
+    }
+
+    public Member updateOAuth2Member(Member member){
+        // 로그인한 유저 불러오기
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
+        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+
+        findmember.setRealName(member.getRealName());
+        findmember.setDisplayName(member.getDisplayName());
+        findmember.setPhone(member.getPhone());
+        findmember.setBirthDate(member.getBirthDate());
+
+        return memberRepository.save(findmember);
+
     }
 
     public Member updateMember(Member member){
