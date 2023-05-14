@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import Alert from "../../components/Common/AlertModal";
-
+import useAxiosAll from "../../hooks/useAxiosAll";
 const url = `${process.env.REACT_APP_API_URL}/`;
 
 type TitleProps = {
@@ -113,6 +113,7 @@ const FindEmail = () => {
   const [email, setEmail] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [doAxios, data, err, ok] = useAxiosAll();
 
   const phoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
@@ -135,22 +136,35 @@ const FindEmail = () => {
       email,
     };
     console.log(body);
-    axios
-      .post(`${url}members/find-password`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setAlertMessage("해당 이메일로 임시 비밀번호를 발급했습니다!");
-        setShowAlert(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setAlertMessage("해당 정보로 가입된 회원정보가 없습니다!");
-        setShowAlert(true);
-      });
+    doAxios("post", "/members/find-password", body, false, false);
+    // axios
+    //   .post(`${url}members/find-password`, body, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setAlertMessage("해당 이메일로 임시 비밀번호를 발급했습니다!");
+    //     setShowAlert(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setAlertMessage("해당 정보로 가입된 회원정보가 없습니다!");
+    //     setShowAlert(true);
+    //   });
   };
+  useEffect(() => {
+    if (err) {
+      setAlertMessage("해당 정보로 가입된 회원정보가 없습니다!");
+      setShowAlert(true);
+    }
+  }, [err]);
+  useEffect(() => {
+    if (ok) {
+      setAlertMessage("해당 이메일로 임시 비밀번호를 발급했습니다!");
+      setShowAlert(true);
+    }
+  }, [ok]);
   return (
     <Container>
       {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}

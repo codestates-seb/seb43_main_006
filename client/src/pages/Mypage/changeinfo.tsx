@@ -1,11 +1,9 @@
 //개인정보수정 페이지이다.  회원탈퇴기능 안에 포함되어있음.
-
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import useAxiosAll from "../../hooks/useAxiosAll";
 const url = `${process.env.REACT_APP_API_URL}/`;
 
 type Data = "realName" | "displayName" | "birthDate" | "phone";
@@ -16,6 +14,77 @@ interface UserInfo {
   phone: string;
   realName: string;
 }
+
+const InfoTable = () => {
+  const order = ["realName", "displayName", "birthDate", "phone"];
+  const subTitle = ["이름", "닉네임", "생년월일", "전화번호", "이메일"];
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [displayName, setDisplayName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [doAxios, data, err] = useAxiosAll();
+  const handleDisplay = (e: ChangeEvent<HTMLInputElement>) => {
+    setDisplayName(e.target.value);
+  };
+  const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
+  useEffect(() => {
+    console.log(data);
+    if (data && "displayName" in data) {
+      setUserInfo(data as UserInfo);
+    }
+    // setPhone(newData.phone);
+    // setDisplayName(newData.displayName);
+  }, [data]);
+  useEffect(() => {
+    doAxios("get", "/members", {}, true, false);
+  }, []);
+  useEffect(() => {
+    if (userInfo) {
+      setPhone(userInfo.phone);
+      setDisplayName(userInfo.displayName);
+    }
+  }, [userInfo]);
+  return (
+    <StyledTable>
+      <tbody>
+        {userInfo === null
+          ? "loading"
+          : Object.keys(userInfo).map((key, idx) => {
+              if (idx > 5) return null;
+              return (
+                <tr key={idx}>
+                  <StyledTh>{subTitle[idx]}</StyledTh>
+                  {key === "displayName" || key === "phone" ? (
+                    <StyledTd>
+                      <input
+                        value={key === "phone" ? phone : displayName}
+                        onChange={key === "phone" ? handlePhone : handleDisplay}
+                      ></input>
+                    </StyledTd>
+                  ) : (
+                    <StyledTd>{userInfo[key as keyof UserInfo]}</StyledTd>
+                  )}
+                </tr>
+              );
+            })}
+        <tr>
+          <StyledTh>비밀번호</StyledTh>
+          <StyledTd>
+            <input type="password" placeholder="비밀번호를 입력하세요"></input>
+          </StyledTd>
+        </tr>
+        <tr>
+          <StyledTh>비밀번호확인</StyledTh>
+          <StyledTd>
+            <input type="password" placeholder="비밀번호를 입력하세요"></input>
+          </StyledTd>
+        </tr>
+      </tbody>
+    </StyledTable>
+  );
+};
+
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -90,91 +159,6 @@ const StyledTh = styled.th`
   padding-left: 20px;
   font-weight: 600;
 `;
-const InfoTable = () => {
-  const order = ["realName", "displayName", "birthDate", "phone"];
-  const subTitle = ["이름", "닉네임", "생년월일", "전화번호", "이메일"];
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    displayName: "",
-    birthDate: "",
-    email: "",
-    phone: "",
-    realName: "",
-  });
-  const [displayName, setDisplayName] = useState("");
-  const [phone, setPhone] = useState("");
-  console.log(phone);
-  const handleDisplay = (e: ChangeEvent<HTMLInputElement>) => {
-    setDisplayName(e.target.value);
-  };
-  const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-  };
-  useEffect(() => {
-    axios
-      .get(`${url}members`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
-        },
-      })
-      .then((res) => {
-        const data = res.data.data;
-        console.log(res.data);
-        const newData = {
-          realName: data.realName,
-          displayName: data.displayName,
-          birthDate: data.birthDate,
-          phone: data.phone,
-          email: data.email,
-        };
-        setPhone(newData.phone);
-        setDisplayName(newData.displayName);
-        setUserInfo(newData);
-        console.log(userInfo);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  // const goPatch=()=>{
-  //   axios.post(`${}`)
-  // }
-  return (
-    <StyledTable>
-      <tbody>
-        {Object.keys(userInfo).map((key, idx) => {
-          if (idx > 5) return null;
-          return (
-            <tr key={idx}>
-              <StyledTh>{subTitle[idx]}</StyledTh>
-              {key === "displayName" || key === "phone" ? (
-                <StyledTd>
-                  <input
-                    value={key === "phone" ? phone : displayName}
-                    onChange={key === "phone" ? handlePhone : handleDisplay}
-                  ></input>
-                </StyledTd>
-              ) : (
-                <StyledTd>{userInfo[key as keyof UserInfo]}</StyledTd>
-              )}
-            </tr>
-          );
-        })}
-        <tr>
-          <StyledTh>비밀번호</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>비밀번호확인</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
-      </tbody>
-    </StyledTable>
-  );
-};
 
 const ModalContainer = styled.div`
   display: flex;
