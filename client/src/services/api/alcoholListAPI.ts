@@ -25,3 +25,9 @@ export const getItemsList = async (page: number, size: number, sortBy: string, c
     headers,
   });
 };
+
+export const getItem = async (id: number) => {
+  return await axios.get(`${API_URL}/${id}`, {
+    headers,
+  });
+};
