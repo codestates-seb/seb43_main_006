@@ -4,52 +4,61 @@ import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAxiosAll from "../../hooks/useAxiosAll";
+import Alert from "../../components/Common/AlertModal";
+import theme from "../../styles/theme";
 
-interface UserInfo {
-  displayName: string;
-  birthDate: string;
-  email: string;
-  phone: string;
-  realName: string;
-}
+type TableProsp = {
+  setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
+  userInfo: Datatype | null;
+  isOauth: boolean;
+};
 
-const InfoTable = () => {
-  const order = ["realName", "displayName", "birthDate", "phone"];
+const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
   const subTitle = ["이름", "닉네임", "생년월일", "전화번호", "이메일"];
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [displayName, setDisplayName] = useState("");
   const [phone, setPhone] = useState("");
-  const [doAxios, data, err] = useAxiosAll();
-  const handleDisplay = (e: ChangeEvent<HTMLInputElement>) => {
-    setDisplayName(e.target.value);
-  };
-  const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-  };
-  useEffect(() => {
-    console.log(data);
-    if (data && "displayName" in data) {
-      setUserInfo(data as UserInfo);
-    }
-    // setPhone(newData.phone);
-    // setDisplayName(newData.displayName);
-  }, [data]);
-  useEffect(() => {
-    doAxios("get", "/members", {}, true);
-  }, []);
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
   useEffect(() => {
     if (userInfo) {
       setPhone(userInfo.phone);
       setDisplayName(userInfo.displayName);
     }
   }, [userInfo]);
+  useEffect(() => {
+    if (setBody) {
+      setBody({ phone, displayName, password, passwordCheck });
+    }
+  }, [phone, displayName, password, passwordCheck]);
+
+  const handleDisplay = (e: ChangeEvent<HTMLInputElement>) => {
+    setDisplayName(e.target.value);
+  };
+  const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
+  const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    if (val) {
+      // true
+      setPassword(e.target.value); // 비밀번호를 저장
+      setIsDisabled(false); // 비밀번호 확인 input disable 해제
+    } else {
+      //false
+      setIsDisabled(true); // 비밀번호 확인 input disable
+    }
+  };
+  const handlePasswordCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    setPasswordCheck(e.target.value);
+  };
   return (
     <StyledTable>
       <tbody>
         {userInfo === null
-          ? "loading"
+          ? null
           : Object.keys(userInfo).map((key, idx) => {
-              if (idx > 4) return null;
+              if (idx > 5) return null;
               return (
                 <tr key={idx}>
                   <StyledTh>{subTitle[idx]}</StyledTh>
@@ -61,23 +70,32 @@ const InfoTable = () => {
                       ></input>
                     </StyledTd>
                   ) : (
-                    <StyledTd>{userInfo[key as keyof UserInfo]}</StyledTd>
+                    <StyledTd>{userInfo[key as keyof Datatype]}</StyledTd>
                   )}
                 </tr>
               );
             })}
-        <tr>
-          <StyledTh>비밀번호</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
-        <tr>
-          <StyledTh>비밀번호확인</StyledTh>
-          <StyledTd>
-            <input type="password" placeholder="비밀번호를 입력하세요"></input>
-          </StyledTd>
-        </tr>
+        {isOauth ? null : (
+          <>
+            <tr>
+              <StyledTh>비밀번호</StyledTh>
+              <StyledTd>
+                <input onChange={handlePassword} type="password" placeholder="비밀번호를 입력하세요"></input>
+              </StyledTd>
+            </tr>
+            <tr>
+              <StyledTh>비밀번호확인</StyledTh>
+              <StyledTd>
+                <input
+                  disabled={isDisabled}
+                  onChange={handlePasswordCheck}
+                  type="password"
+                  placeholder="비밀번호를 입력하세요"
+                ></input>
+              </StyledTd>
+            </tr>
+          </>
+        )}
       </tbody>
     </StyledTable>
   );
@@ -212,9 +230,19 @@ const ModalView = styled.div`
   text-align: center;
   padding-top: 50px;
   > p {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 500;
     display: block;
+  }
+  .password-container {
+    ${({ theme }) => theme.common.flexCenterRow};
+  }
+  input {
+    margin: 30px;
+    border: 1px solid #b2b2b2;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 50%;
   }
 `;
 
@@ -223,7 +251,7 @@ const CloseBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 20px;
   /* margin-left: 180px; */
   /* margin-left: 30%; */
   gap: 70px;
@@ -254,23 +282,59 @@ const ModalCloseBtn = styled.div`
   cursor: pointer;
 `;
 
-const Modal = () => {
+const Modal = ({ email }: { email: string }) => {
   const [isOpen, setIsOpen] = useState(false); //false를 모달 닫힌걸로 생각함.
+  const [password, setPassword] = useState("");
+  const [doAxios, data, err, ok] = useAxiosAll();
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [isOk, setIsOk] = useState(false);
   const navigate = useNavigate();
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
+  const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const DeleteHandler = () => {
+    console.log(email, password);
+    doAxios("delete", "/members", { username: email, password });
+  };
+  useEffect(() => {
+    if (err) {
+      setAlertMessage("비밀번호가 틀렸습니다");
+      setShowAlert(true);
+    }
+  }, [err]);
+  useEffect(() => {
+    console.log(ok);
+    if (ok) {
+      setAlertMessage("탈퇴에 성공했습니다!");
+      setShowAlert(true);
+      setIsOk(true);
+    }
+  }, [ok]);
+  const okGotoMain = () => {
+    // 회원가입 성공시 알림창 확인 onClick 핸들러
+    setShowAlert(false);
+    navigate("/");
+  };
   return (
     <>
       <ModalContainer>
+        {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
         <ModalBtn onClick={openModalHandler}>회원탈퇴</ModalBtn>
         {isOpen ? (
           <ModalBackdrop onClick={openModalHandler}>
             <ModalView onClick={(event) => event.stopPropagation()}>
               <WindowCloseBtn onClick={openModalHandler}>X</WindowCloseBtn>
+              <div className="password-container">
+                비밀번호
+                <input type="password" onChange={passwordHandler}></input>
+              </div>
               <p>정말로 탈퇴하시겠습니까?</p>
               <CloseBtn>
-                <ModalCloseBtn>YES</ModalCloseBtn>
+                <ModalCloseBtn onClick={DeleteHandler}>YES</ModalCloseBtn>
                 <ModalCloseBtn onClick={() => navigate("/mypage/likepage")}>NO</ModalCloseBtn>
               </CloseBtn>
             </ModalView>
@@ -280,20 +344,99 @@ const Modal = () => {
     </>
   );
 };
+type Datatype = {
+  realName: string;
+  displayName: string;
+  birth: string;
+  phone: string;
+  email: string;
+};
+type Bodytype = {
+  displayName: string;
+  phone: string;
+  password: string;
+  passwordCheck: string;
+};
 
-const Changeinfopage: React.FC = () => {
-  // const navigate = useNavigate();
+const Changeinfopage = () => {
+  const navigate = useNavigate();
+  const [doAxios, data, err] = useAxiosAll();
+  const [body, setBody] = useState<Bodytype>({
+    displayName: "",
+    phone: "",
+    password: "",
+    passwordCheck: "",
+  });
+  const [userInfo, setUserInfo] = useState<Datatype | null>(null);
+  const [isOauth, setIsOauth] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [isOk, setIsOk] = useState(false);
+
+  useEffect(() => {
+    if (
+      "oauth2Registered" in data &&
+      "realName" in data &&
+      "displayName" in data &&
+      "birthDate" in data &&
+      "phone" in data &&
+      "email" in data
+    ) {
+      if (data.oauth2Registered) {
+        setIsOauth(true);
+      }
+      const formData = {
+        realName: data.realName,
+        displayName: data.displayName,
+        birth: data.birthDate,
+        phone: data.phone,
+        email: data.email,
+      };
+      setUserInfo(formData as Datatype);
+    }
+    // setPhone(newData.phone);
+    // setDisplayName(newData.displayName);
+  }, [data]);
+  useEffect(() => {
+    doAxios("get", "/members", {}, true);
+  }, []);
+  const patchOnclick = () => {
+    console.log(body);
+
+    if (body && body.password) {
+      if (body.password === body.passwordCheck) {
+        doAxios("patch", "/members", body, true);
+        setAlertMessage("정보수정을 성공했습니다!");
+        setShowAlert(true);
+        setIsOk(true);
+      } else {
+        setAlertMessage("비밀번호와 비밀번호 확인이 일치 않거나 정보가 모두 기입되지 않았습니다!");
+        setShowAlert(true);
+      }
+    } else {
+      doAxios("patch", "/members", { displayName: body?.displayName, phone: body?.phone }, true);
+      setAlertMessage("정보수정을 성공했습니다!");
+      setShowAlert(true);
+      setIsOk(true);
+    }
+  };
+  const okGotoMain = () => {
+    // 수정 성공시 알림창 확인 onClick 핸들러
+    setShowAlert(false);
+    navigate("/");
+  };
   return (
     <>
       <TotalStyled>
+        {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
         <InfoContainer>
           <p>회원정보수정</p>
           <InfoBodyupStyled>
-            <InfoTable></InfoTable>
+            <InfoTable setBody={setBody} userInfo={userInfo} isOauth={isOauth}></InfoTable>
           </InfoBodyupStyled>
           <InfoBodydownStyled>
-            <ChangebtnStyled>정보 수정</ChangebtnStyled>
-            <Modal></Modal>
+            <ChangebtnStyled onClick={patchOnclick}>정보 수정</ChangebtnStyled>
+            {userInfo ? <Modal email={userInfo.email}></Modal> : null}
           </InfoBodydownStyled>
         </InfoContainer>
       </TotalStyled>
