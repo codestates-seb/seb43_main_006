@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, ChangeEvent, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import Alert from "../../components/Common/AlertModal";
