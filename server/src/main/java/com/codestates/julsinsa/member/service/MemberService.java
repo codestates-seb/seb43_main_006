@@ -87,22 +87,22 @@ public class MemberService {
 
     // oauth2로 회원가입 하는 로직
     public Member createOauth2Member(Member member) {
-
-        List<String> roles = authorityUtils.createRoles(member.getEmail());
-        member.setRoles(roles);
         member.setOauth2Registered(true);
 
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
 
+
+    // oauth2 가입시 닉네임 설정시 권한 부여
     public Member updateOAuth2Member(Member member){
         // 로그인한 유저 불러오기
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
         findmember.setRealName(member.getRealName());
         findmember.setDisplayName(member.getDisplayName());
         findmember.setPhone(member.getPhone());
