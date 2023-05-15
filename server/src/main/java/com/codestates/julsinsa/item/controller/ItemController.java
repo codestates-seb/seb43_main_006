@@ -43,27 +43,96 @@ public class ItemController {
 //                new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
 //    }
 
+//    @GetMapping
+//    public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
+//                                              @Positive @RequestParam int size,
+//                                              @RequestParam(required = false) String category,
+//                                              @RequestParam(required = false) String sortBy){
+//        Page<Item> pageItems;
+//        List<Item> items;
+//        if(category != null){
+//            pageItems = itemService.findItemsByCategory(page, size, category);
+//            items = pageItems.getContent();
+//        }else{
+//            if(sortBy != null){
+//                switch(sortBy){
+//                    case "sales":
+//                        pageItems = itemService.findItemsBySales(page,size);
+//                        break;
+//                    case "discountRate":
+//                        pageItems = itemService.findItemsByDiscountRate(page,size);
+//                        break;
+//                    case "highPrice":
+//                        pageItems = itemService.findItemsByHighPrice(page,size);
+//                        break;
+//                    case "lowPrice":
+//                        pageItems = itemService.findItemsByLowPrice(page,size);
+//                        break;
+//                    case "latest":
+//                        pageItems = itemService.findItems(page, size);
+//                        break;
+//                    default:
+//                        pageItems = itemService.findItems(page, size);
+//                        break;
+//                }
+//            } else {
+//                pageItems = itemService.findItems(page, size);
+//            }
+//            items = pageItems.getContent();
+//        }
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+//    }
+
     @GetMapping
     public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
                                               @Positive @RequestParam int size,
                                               @RequestParam(required = false) String category,
-                                              @RequestParam(required = false) String sortBy){
+                                              @RequestParam(required = false) String sortBy) {
         Page<Item> pageItems;
         List<Item> items;
-        if(category != null){
-            pageItems = itemService.findItemsByCategory(page, size, category);
-            items = pageItems.getContent();
-        }else{
-            if(sortBy != null){
-                switch(sortBy){
+
+        if (category != null) {
+            if (sortBy != null) {
+                switch (sortBy) {
                     case "sales":
-                        pageItems = itemService.findItemsBySales(page,size);
+                        pageItems = itemService.findItemsByCategoryAndSortBySales(page, size, category);
                         break;
                     case "discountRate":
-                        pageItems = itemService.findItemsByDiscountRate(page,size);
+                        pageItems = itemService.findItemsByCategoryAndSortByDiscountRate(page, size, category);
                         break;
-                    case "price":
-                        pageItems = itemService.findItemsByPrice(page,size);
+                    case "highPrice":
+                        pageItems = itemService.findItemsByCategoryAndSortByHighPrice(page, size, category);
+                        break;
+                    case "lowPrice":
+                        pageItems = itemService.findItemsByCategoryAndSortByLowPrice(page, size, category);
+                        break;
+                    case "latest":
+                        pageItems = itemService.findItemsByCategory(page, size, category);
+                        break;
+                    default:
+                        pageItems = itemService.findItemsByCategory(page, size, category);
+                        break;
+                }
+            } else {
+                pageItems = itemService.findItemsByCategory(page, size, category);
+            }
+        } else {
+            if (sortBy != null) {
+                switch (sortBy) {
+                    case "sales":
+                        pageItems = itemService.findItemsBySales(page, size);
+                        break;
+                    case "discountRate":
+                        pageItems = itemService.findItemsByDiscountRate(page, size);
+                        break;
+                    case "highPrice":
+                        pageItems = itemService.findItemsByHighPrice(page, size);
+                        break;
+                    case "lowPrice":
+                        pageItems = itemService.findItemsByLowPrice(page, size);
+                        break;
+                    case "latest":
+                        pageItems = itemService.findItems(page, size);
                         break;
                     default:
                         pageItems = itemService.findItems(page, size);
@@ -72,10 +141,12 @@ public class ItemController {
             } else {
                 pageItems = itemService.findItems(page, size);
             }
-            items = pageItems.getContent();
         }
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+
+        items = pageItems.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items), pageItems), HttpStatus.OK);
     }
+
 
     @GetMapping("/search")
     public ResponseEntity searchTitle(@RequestParam @Positive int page,

@@ -20,6 +20,7 @@ public enum ExceptionCode {
 
     MARKET_NOT_FOUND(404, "Market Not Found"),
 
+    CART_NOT_FOUND(404, "Cart Not Found"),
     // 수정 할 것
     IMAGE_NOT_CONVERTED(404,"이미지 변환에 실패했습니다."),
     IMAGE_NOT_UPLOADED(404, "파일을 업로드 하던 중 에러가 발생했습니다"),

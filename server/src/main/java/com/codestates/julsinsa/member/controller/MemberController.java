@@ -1,6 +1,7 @@
 package com.codestates.julsinsa.member.controller;
 
 import com.codestates.julsinsa.auth.dto.LoginDto;
+import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.dto.SingleResponseDto;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Item;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
@@ -35,11 +37,32 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid MemberDto.Post requestBody){
-        Member member = memberService.createMember(mapper.memberPostToMember(requestBody));
+        Member member = mapper.memberPostToMember(requestBody);
+        member.setCart(new Cart());
+        Member createdmember = memberService.createMember(member);
+
+
+        URI location = UriCreator.createUri(USER_DEFAULT_URL, createdmember.getMemberId());
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/oauth2-signup")
+    public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody){
+        Member member = memberService.updateOAuth2Member(mapper.oauth2MemberPostToMember(requestBody));
 
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
 
         return ResponseEntity.created(location).build();
+
+    }
+
+    @GetMapping
+    public ResponseEntity getUser(){
+
+        Member member = memberService.findMember();
+
+        return new ResponseEntity(new SingleResponseDto<>(mapper.memberToMemberResponse(member)),HttpStatus.OK);
     }
 
     @PatchMapping

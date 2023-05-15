@@ -1,8 +1,13 @@
-INSERT INTO member (real_name, display_name, email, password, phone, birth_date, mail_key, member_status)
-VALUES ('홍길동', '길동', 'admin@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null, 'MEMBER_ACTIVE'),
-       ('테스트', '테테', 'test@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null, 'MEMBER_ACTIVE');
+INSERT INTO CART (cart_id, total_price, total_quantity)
+VALUES (101, 211000,6),
+       (102, 0,0);
+
+INSERT INTO member (real_name, display_name, email, password, phone, birth_date, mail_key, password_issued ,oauth2registered ,member_status, cart_id)
+VALUES ('홍길동', '길동', 'admin@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE',101),
+       ('테스트', '테테', 'test@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE',102);
 INSERT INTO member_roles (member_member_id, roles)
 VALUES (1, 'ROLE_USER'),
+       (1, 'ROLE_ADMIN'),
        (2, 'ROLE_USER');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile ,review_count, review_rating)
@@ -117,3 +122,8 @@ VALUES (1, 1,1),
        (11, 11,1),
        (12, 12,1),
        (13, 13,1);
+
+INSERT INTO ITEM_CART (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
+VALUES (1,2, 101,3),
+       (2,1,101,5),
+       (3,3, 101,7);

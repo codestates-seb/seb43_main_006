@@ -40,16 +40,41 @@ public class ItemService {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("discountRate").descending()));
     }
 
-    //가격순 정렬
-    public Page<Item> findItemsByPrice(int page,int size) {
+    //높은 가격순 정렬
+    public Page<Item> findItemsByHighPrice(int page,int size) {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("price").descending()));
+    }
+    // 낮은 가격순 정렬
+    public Page<Item> findItemsByLowPrice(int page,int size) {
+        return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("price").ascending()));
     }
 
     // 카테고리별 술 찾기
     public Page<Item> findItemsByCategory(int page,int size,String category) {
         return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("itemId").descending()));
     }
+    //////////////////////////////////////
+    // 카테고리와 판매량으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortBySales(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("sales").descending()));
+    }
 
+    // 카테고리와 할인율로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByDiscountRate(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("discountRate").descending()));
+    }
+
+    // 카테고리와 가격 오름차순으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByHighPrice(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("price").descending()));
+    }
+
+    // 카테고리와 가격 내림차순으로 아이템 필터링
+    public Page<Item> findItemsByCategoryAndSortByLowPrice(int page, int size, String category) {
+        return itemRepository.findAllByCategories(category,PageRequest.of(page-1,size, Sort.by("price").ascending()));
+    }
+
+    /////////////////////////
     // 술 검색
     public Page<Item> searchByTitle(int page, int size, String title) {
         if(title == null) title = "";
@@ -103,7 +128,7 @@ public class ItemService {
 
         return findItem;
     }
-    private Item findVerifedItem(long itemId){
+    public Item findVerifedItem(long itemId){
         Optional<Item> findByItem = itemRepository.findById(itemId);
         return findByItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
     }

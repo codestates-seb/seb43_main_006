@@ -1,6 +1,7 @@
 package com.codestates.julsinsa.member.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.review.entity.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,6 +56,12 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CART_ID")
+    private Cart cart;
+    private boolean passwordIssued = false;
+
+    private boolean oauth2Registered = false;
 
     //관계 편의 메서드
     public void addFavorite(Favorite favorite){
@@ -68,6 +75,13 @@ public class Member extends Auditable {
         reviews.add(review);
         if(review.getMember() != this) {
             review.setMember(this);
+        }
+    }
+
+    public void setCart(Cart cart){
+        this.cart = cart;
+        if(cart.getMember() != this){
+            cart.setMember(this);
         }
     }
 

@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .antMatchers(HttpMethod.GET, "/members").hasAnyRole("ROLE_USER","ROLE_ADMIN")
                                 .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
