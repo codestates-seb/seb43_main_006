@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
+
+//Pages
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login/Login";
@@ -18,6 +20,7 @@ import SignupSelection from "./pages/Signup/SignupSelection";
 import SignupTerm from "./pages/Signup/SignupTerm";
 import FindEmail from "./pages/Login/FindEmail";
 import FindPassword from "./pages/Login/FindPassword";
+
 const BodyContainer = styled.div`
   min-height: 100vh;
   ${({ theme }) => theme.common.flexCol};
