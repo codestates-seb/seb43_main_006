@@ -18,144 +18,45 @@ type StepProps = {
   type: string;
 };
 
-const Container = styled.div`
-  color: ${({ theme }) => theme.colors.fontColor};
-  ${({ theme }) => theme.common.flexCenterCol};
-  gap: 20px;
-`;
-
-const InputContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenterCol};
-  width: 700px;
-  gap: 40px;
-  position: absolute;
-  top: 25%;
-  .title {
-    width: 100%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #434242;
-  }
-  .code {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 35%;
-  }
-  padding-bottom: 60px;
-`;
-
-const Title = styled.div<TitleProps>`
-  font-size: ${({ fontSize }) => fontSize};
-  font-weight: ${({ fontWeight }) => fontWeight};
-`;
-const TopContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
-  gap: 20px;
-  margin-bottom: 50px;
-`;
-const StepContainer = styled.div`
-  font-size: 18px;
-  ${({ theme }) => theme.common.flexCenterRow};
-`;
-const Step = styled.div<StepProps>`
-  ${({ theme }) => theme.common.flexCenterRow};
-  color: ${({ type }) => (type === "on" ? "#A84448" : "#b2b2b2")};
-  .text {
-    margin-left: 5px;
-    font-size: 14px;
-  }
-`;
-const MiddleContainer = styled.div`
-  width: 100%;
-`;
-const InfoTable = styled.div`
-  padding-top: 20px;
-  ${({ theme }) => theme.common.flexCenterCol};
-  width: 100%;
-`;
-const SingleInfo = styled.div`
-  position: relative;
-  width: 100%;
-  ${({ theme }) => theme.common.flexCenterRow};
-  font-size: 16px;
-  border-bottom: 1px solid #b2b2b2;
-  p {
-    width: 50%;
-  }
-  .name {
-    display: flex;
-    align-items: center;
-    width: 190px;
-    padding: 20px;
-    background-color: #ededed;
-    &.email {
-      height: 90px;
-    }
-  }
-  .code-pos {
-    position: absolute;
-    right: 5%;
-    top: 10%;
-  }
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
-    width: calc(100% - 190px);
-    padding: 10px;
-    input {
-      border: 1px solid #b2b2b2;
-      padding: 5px 10px;
-      font-size: 16px;
-      width: 80%;
-    }
-  }
-`;
-const BottomContainer = styled.div`
-  ${({ theme }) => theme.common.flexCenterRow}
-  gap: 15px;
-`;
-
 const SignupInput = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [nick, setNick] = useState("");
-  const [birth, setBirth] = useState("");
-  const [number, setNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+
+  const [name, setName] = useState(""); // 이름 input 상태
+  const [nick, setNick] = useState(""); // 닉네임 input 상태
+  const [birth, setBirth] = useState(""); // 생일 input 상태
+  const [number, setNumber] = useState(""); // 전화번호 input 상태
+  const [email, setEmail] = useState(""); // 이메일 input 상태
+  const [code, setCode] = useState(""); // 코드 input 상태
+  const [password, setPassword] = useState(""); // 비밀번호 input 상태
+  const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인 input 상태
+  const [alertMessage, setAlertMessage] = useState(""); // 알람 메시지 상태
   const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
-  const [showAlert, setShowAlert] = useState(false);
-  const [isOk, setIsOk] = useState(false);
-  const [doAxios, data, err, ok] = useAxiosAll();
+  const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
+  const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
+  const [doAxios, data, err, ok] = useAxiosAll(); // axios 요청 응답 에러여부 확인
 
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
+    // 이름 onChange 핸들러
     setName(e.target.value);
   };
   const onNick = (e: ChangeEvent<HTMLInputElement>) => {
+    // 닉네임 onChange 핸들러
     setNick(e.target.value);
   };
   const onBirth = (e: ChangeEvent<HTMLInputElement>) => {
+    // 이름 onChange 핸들러
     const today = new Date();
     const birthDay = new Date(e.target.value);
-    let age = today.getFullYear() - birthDay.getFullYear();
+    let age = today.getFullYear() - birthDay.getFullYear(); // 현재 Year과 입력한 Year로만 계산한 나이
     if (
+      //월, 일 까지 계산해 만 나이 적용
       birthDay.getMonth() > today.getMonth() ||
       (birthDay.getMonth() === today.getMonth() && birthDay.getDate() > today.getDate())
     ) {
       age = age - 1;
     }
     if (age <= 18) {
+      // 만 18 이상인지 아닌지 확인
       setAlertMessage("성인이 아닙니다!");
       setShowAlert(true);
     } else {
@@ -164,41 +65,47 @@ const SignupInput = () => {
   };
 
   const onNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+    const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/); // 숫자만 입력 가능, 배열로서 앞의 3개, 4개, 4개 숫자 저장
     if (val) {
       setNumber(
-        !val[2] ? val[1] : val[3] ? `${val[1]}-${val[2]}-${val[3]}` : val[2] ? `${val[1]}-${val[2]}` : `${val[1]}`,
+        !val[2] ? val[1] : val[3] ? `${val[1]}-${val[2]}-${val[3]}` : val[2] ? `${val[1]}-${val[2]}` : `${val[1]}`, // 전화번호 형식의 문자열로 숫자 저장되도록 함
       );
-    } else {
     }
   };
   const onEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    // 이메일 onChange 핸들러
     setEmail(e.target.value);
   };
   const onCode = (e: ChangeEvent<HTMLInputElement>) => {
+    // 인증코드 onChange 핸들러
     setCode(e.target.value);
   };
   const onPassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value);
-    console.log(isDisabled, e.target.value, val);
+    // 비밀번호 onChange 핸들러
+    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+
     if (val) {
-      setPassword(e.target.value);
-      setIsDisabled(false);
+      // true
+      setPassword(e.target.value); // 비밀번호를 저장
+      setIsDisabled(false); // 비밀번호 확인 input disable 해제
     } else {
-      setIsDisabled(true);
+      //false
+      setIsDisabled(true); // 비밀번호 확인 input disable
     }
   };
   const onPasswordCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    // 비밀번호 확인 onChange 핸들러
     setPasswordCheck(e.target.value);
   };
   useEffect(() => {
     if (err) {
+      // 에러 발생 시
       setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
       setShowAlert(true);
     }
   }, [err]);
   useEffect(() => {
-    console.log(ok);
+    // 회원가입 요청에 성공 시
     if (ok) {
       setAlertMessage("회원가입 성공!");
       setShowAlert(true);
@@ -206,11 +113,15 @@ const SignupInput = () => {
     }
   }, [ok]);
   const onClickSign = () => {
+    // 회원가입 버튼 클릭 시
     if (password !== passwordCheck) {
+      // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
       setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
     } else if (!(nick && code && name && birth && number)) {
-      setAlertMessage("모든 정보가 입려되어야 합니다!");
+      // 모든 정보가 입력이 안되었을 경우
+      setAlertMessage("모든 정보가 입력되어야 합니다!");
     } else {
+      // 요청 body
       const body = {
         realName: name,
         displayName: nick,
@@ -220,27 +131,12 @@ const SignupInput = () => {
         birthDate: birth,
         mailKey: code,
       };
-      console.log(body);
-      doAxios("post", "/members/signup", body, false, false);
-      // axios
-      //   .post(`${url}members/signup`, body, {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   })
-      //   .then((res) => {
-      //     setAlertMessage("회원가입 성공!");
-      //     setShowAlert(true);
-      //     setIsOk(true);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
-      //     setShowAlert(true);
-      //   });
+
+      doAxios("post", "/members/signup", body, false); // post 요청으로 바디를 담아 회원가입 요청
     }
   };
   const getCode = () => {
+    // 인증 코드 요청 axios
     const body = {
       email,
     };
@@ -251,17 +147,20 @@ const SignupInput = () => {
         },
       })
       .then((res) => {
+        // 인증 코드 요청 성공시 알람창
         setAlertMessage("이메일 코드가 전송되었습니다!");
         setShowAlert(true);
         console.log(res);
       })
       .catch((err) => {
+        // 인증 코드 요청 실패시 알람창
         setAlertMessage("없는 이메일 입니다!");
         setShowAlert(true);
         console.log(err);
       });
   };
   const okGotoMain = () => {
+    // 회원가입 성공시 알림창 확인 onClick 핸들러
     setShowAlert(false);
     navigate("/");
   };
@@ -374,5 +273,110 @@ const SignupInput = () => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  color: ${({ theme }) => theme.colors.fontColor};
+  ${({ theme }) => theme.common.flexCenterCol};
+  gap: 20px;
+`;
+
+const InputContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenterCol};
+  width: 700px;
+  gap: 40px;
+  position: absolute;
+  top: 25%;
+  .title {
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #434242;
+  }
+  .code {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 35%;
+  }
+  padding-bottom: 60px;
+`;
+
+const Title = styled.div<TitleProps>`
+  font-size: ${({ fontSize }) => fontSize};
+  font-weight: ${({ fontWeight }) => fontWeight};
+`;
+const TopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  gap: 20px;
+  margin-bottom: 50px;
+`;
+const StepContainer = styled.div`
+  font-size: 18px;
+  ${({ theme }) => theme.common.flexCenterRow};
+`;
+const Step = styled.div<StepProps>`
+  ${({ theme }) => theme.common.flexCenterRow};
+  color: ${({ type }) => (type === "on" ? "#A84448" : "#b2b2b2")};
+  .text {
+    margin-left: 5px;
+    font-size: 14px;
+  }
+`;
+const MiddleContainer = styled.div`
+  width: 100%;
+`;
+const InfoTable = styled.div`
+  padding-top: 20px;
+  ${({ theme }) => theme.common.flexCenterCol};
+  width: 100%;
+`;
+const SingleInfo = styled.div`
+  position: relative;
+  width: 100%;
+  ${({ theme }) => theme.common.flexCenterRow};
+  font-size: 16px;
+  border-bottom: 1px solid #b2b2b2;
+  p {
+    width: 50%;
+  }
+  .name {
+    display: flex;
+    align-items: center;
+    width: 190px;
+    padding: 20px;
+    background-color: #ededed;
+    &.email {
+      height: 90px;
+    }
+  }
+  .code-pos {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+  }
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: calc(100% - 190px);
+    padding: 10px;
+    input {
+      border: 1px solid #b2b2b2;
+      padding: 5px 10px;
+      font-size: 16px;
+      width: 80%;
+    }
+  }
+`;
+const BottomContainer = styled.div`
+  ${({ theme }) => theme.common.flexCenterRow}
+  gap: 15px;
+`;
 
 export default SignupInput;

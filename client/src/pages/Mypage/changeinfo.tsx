@@ -4,9 +4,7 @@ import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAxiosAll from "../../hooks/useAxiosAll";
-const url = `${process.env.REACT_APP_API_URL}/`;
 
-type Data = "realName" | "displayName" | "birthDate" | "phone";
 interface UserInfo {
   displayName: string;
   birthDate: string;
@@ -37,7 +35,7 @@ const InfoTable = () => {
     // setDisplayName(newData.displayName);
   }, [data]);
   useEffect(() => {
-    doAxios("get", "/members", {}, true, false);
+    doAxios("get", "/members", {}, true);
   }, []);
   useEffect(() => {
     if (userInfo) {
@@ -51,7 +49,7 @@ const InfoTable = () => {
         {userInfo === null
           ? "loading"
           : Object.keys(userInfo).map((key, idx) => {
-              if (idx > 5) return null;
+              if (idx > 4) return null;
               return (
                 <tr key={idx}>
                   <StyledTh>{subTitle[idx]}</StyledTh>
