@@ -15,6 +15,7 @@ const loginState = createSlice({
       state.isLogin = false;
       localStorage.removeItem("authToken");
       localStorage.removeItem("isLogin");
+      localStorage.removeItem("refresh");
       localStorage.removeItem("memberId");
     },
   },
