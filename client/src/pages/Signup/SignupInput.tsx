@@ -159,14 +159,14 @@ const SignupInput = () => {
         console.log(err);
       });
   };
-  const okGotoMain = () => {
+  const okGotoLogin = () => {
     // 회원가입 성공시 알림창 확인 onClick 핸들러
     setShowAlert(false);
-    navigate("/");
+    navigate("/login");
   };
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoLogin : () => setShowAlert(false)} /> : null}
       <InputContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">
