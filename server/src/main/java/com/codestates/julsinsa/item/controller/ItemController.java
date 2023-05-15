@@ -2,6 +2,7 @@ package com.codestates.julsinsa.item.controller;
 
 import com.codestates.julsinsa.dto.MultiResponseDto;
 import com.codestates.julsinsa.dto.SingleResponseDto;
+import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.mapper.ItemMapper;
 import com.codestates.julsinsa.item.service.ItemService;
@@ -177,6 +178,15 @@ public class ItemController {
         Item item = itemService.cancleFavorite(itemId);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{item-id}/is-favorite")
+    public ResponseEntity checkFavoriteStatus(@PathVariable("item-id") @Positive long itemId) {
+
+        // 아이템의 찜 여부 조회
+        ItemDto.FavoriteStatusDto favoriteStatusDto = itemService.checkFavoriteStatus(itemId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(favoriteStatusDto),HttpStatus.OK);
     }
 
     @PostMapping("/{item-id}/reviews")

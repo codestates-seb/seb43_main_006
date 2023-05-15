@@ -87,7 +87,6 @@ public class MemberService {
 
     // oauth2로 회원가입 하는 로직
     public Member createOauth2Member(Member member) {
-        verifyExistsEmail(member.getEmail());
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
@@ -149,7 +148,7 @@ public class MemberService {
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
         List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
         for (Object[] objects : resultList) {
-            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((String) objects[0], (int) objects[1],(int) objects[2], (int) objects[3], (double) objects[4],(String) objects[5]);
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6]);
             itemList.add(item);
         }
 

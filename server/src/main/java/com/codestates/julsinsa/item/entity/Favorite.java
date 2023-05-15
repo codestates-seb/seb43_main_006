@@ -25,6 +25,8 @@ public class Favorite {
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
+
+
     // 관계 편의 메서드
     public void addMember(Member member){
         this.member = member;

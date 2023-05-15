@@ -45,7 +45,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         if(!memberService.checkByEmail(email)) { // 디비에 있으면 회원가입x
             saveMember(email);  // (5)
-            redirect(request, response, email, authorities);  // (6)
+            redirectSignup(request, response, email, authorities);  // (6)
         }else{
 //            Member member = memberService.findByEmail(email);
 //
@@ -67,6 +67,20 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         memberService.createOauth2Member(member);
     }
 
+    private void redirectSignup(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
+        String accessToken = delegateAccessToken(username, authorities);  // (6-1)
+        String refreshToken = delegateRefreshToken(username);     // (6-2)
+        String addedAccessToken = "Bearer " + accessToken;
+
+        response.setHeader("Authorization", addedAccessToken);
+        response.setHeader("Refresh", refreshToken);
+
+        String uri = createSignupURI(addedAccessToken, refreshToken).toString();   // (6-3)
+        getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
+//        response.sendRedirect("http://localhost:3000/signup/term");
+
+    }
+
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
@@ -75,8 +89,10 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
 
-        String uri = createURI(accessToken, refreshToken).toString();   // (6-3)
+        String uri = createURI(addedAccessToken, refreshToken).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
+//        response.sendRedirect("http://localhost:3000/signup/term");
+
     }
 
     private String delegateAccessToken(String username, List<String> authorities) {
@@ -130,6 +146,24 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         return refreshToken;
     }
+
+    //회원가입시 실행
+    private URI createSignupURI(String accessToken, String refreshToken) {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("access_token", accessToken);
+        queryParams.add("refresh_token", refreshToken);
+
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(3000)
+                .path("/signup/term")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
+    }
+    // 로그인
     private URI createURI(String accessToken, String refreshToken) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
@@ -139,11 +173,10 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-//                .port(80)
+                .port(3000)
                 .path("/")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
     }
-
 }

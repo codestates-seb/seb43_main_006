@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -80,8 +81,15 @@ public class CartService {
         Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
         List<Long> itemIdsToDelete = requestBody.getItemIds(); // 삭제할 아이템 ID 목록
+//
+////        member.getCart().getItemCarts().removeIf(itemCart -> itemIdsToDelete.contains(itemCart.getItem().getItemId()));
 
-        member.getCart().getItemCarts().removeIf(itemCart -> itemIdsToDelete.contains(itemCart.getItem().getItemId()));
+        List<ItemCart> itemCartsToDelete = member.getCart().getItemCarts().stream()
+                .filter(itemCart -> itemIdsToDelete.contains(itemCart.getItem().getItemId()))
+                .collect(Collectors.toList());
+
+        member.getCart().getItemCarts().removeAll(itemCartsToDelete);
+        itemCartsToDelete.forEach(itemCart -> itemCart.setCart(null)); // 양방향 관계 업데이트
 
         // 장바구니 저장
         return cartRepository.save(member.getCart());

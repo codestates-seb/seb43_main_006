@@ -6,9 +6,9 @@ INSERT INTO member (real_name, display_name, email, password, phone, birth_date,
 VALUES ('홍길동', '길동', 'admin@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE',101),
        ('테스트', '테테', 'test@gmail.com', '{bcrypt}$2a$10$DMjG9h.SPH/1bGNTwkqGIer/zvubR//qasrkLdLin3cNDDOmZzW96', '010-1234-5678', '1990-01-01', null,false,false, 'MEMBER_ACTIVE',102);
 INSERT INTO member_roles (member_member_id, roles)
-VALUES (1, 'ROLE_USER'),
-       (1, 'ROLE_ADMIN'),
-       (2, 'ROLE_USER');
+VALUES (1, 'USER'),
+       (1, 'ADMIN'),
+       (2, 'USER');
 
 INSERT INTO item (title_kor, title_eng, content, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile ,review_count, review_rating)
 VALUES ('에페소', 'Effen', '부드러운 맛과 향을 지닌 프리미엄 보드카', 35000, 700, 35, '네덜란드', '천연 향료', '깔끔한 맛', '보드카', 32, 20, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/effen-rose-vodka.png','0','0.0');
@@ -127,3 +127,22 @@ INSERT INTO ITEM_CART (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
 VALUES (1,2, 101,3),
        (2,1,101,5),
        (3,3, 101,7);
+
+
+INSERT INTO MARKET (market_id, name, phone, address, work_Time, comment)
+VALUES
+    ('1', '고래맥주창고 하안점', '0507-1305-0730', '서울 광명시 하안동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('2', '고래맥주창고 독산점', '0507-1362-1706', '서울 금천구 독산동', '오후 4시 영업', '매주 월요일 휴무'),
+    ('3', '고래맥주창고 오류점', '0507-1420-3528', '서울 구로구 오류동', '오후 7시 10분 영업', '매주 월요일 휴무'),
+    ('4', '고래맥주창고 노량진점', '02-3280-1078', '서울시 동작구 노량진동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('5', '고래맥주창고 평촌도서관점', '0507-1394-2884', '안양시 동안구 관양동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('6', '고래맥주창고 단원점', '0507-1346-3101', '안산 단원구 원곡동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('7', '고래맥주창고 부평구청점', '0507-1330-3567', '인천 부평구 청천동', '오후 4시 영업', '매주 월요일 휴무'),
+    ('8', '고래맥주창고 마곡점', '0507-1386-6553', '서울 강서구 마곡동', '오전 11시 오픈', '매주 월요일 휴무'),
+    ('9', '고래맥주창고 은평새절점', '010-3914-2904', '서울 은평구 신사동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('10', '고래맥주창고 가좌점', '0507-1426-3359', '서울 서대문구 남가좌동', '오후 3시 영업', '매주 월요일 휴무'),
+    ('11', '고래맥주창고 종암점', '070-8729-2345', '서울특별시 성북구 종암동', '오후 5시 영업', '매주 월요일 휴무'),
+    ('12', '고래맥주창고 인천테크노밸리점', '0507-1331-5834', '인천 부평구 갈산동', '오후 2시 영업', '매주 월요일 휴무'),
+    ('13', '고래맥주창고 간석점', '010-5899-4750', '인천 남동구 간석동', '오후 5시 오픈', '매주 월요일 휴무'),
+    ('14', '고래맥주창고 도내점', '0507-1316-2655', '고양시 덕양구 도내동', '오후 4시 영업', '매주 월요일 휴무'),
+    ('15', '고래맥주창고 인천시청점', '0507-1366-1520', '인천 남동구 구월동', '오후 2시 영업', '매주 월요일 휴무');

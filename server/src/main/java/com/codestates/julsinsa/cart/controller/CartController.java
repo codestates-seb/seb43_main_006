@@ -28,7 +28,7 @@ public class CartController {
     public ResponseEntity postCart(@Valid @RequestBody CartDto.Post requestBody){
         Cart createCart = cartService.createCart(requestBody);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping

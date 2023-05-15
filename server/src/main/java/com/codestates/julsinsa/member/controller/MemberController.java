@@ -47,6 +47,7 @@ public class MemberController {
         return ResponseEntity.created(location).build();
     }
 
+
     @PostMapping("/oauth2-signup")
     public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody){
         Member member = memberService.updateOAuth2Member(mapper.oauth2MemberPostToMember(requestBody));
