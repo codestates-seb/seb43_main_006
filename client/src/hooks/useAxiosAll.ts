@@ -66,8 +66,9 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
 
           localStorage.setItem("authToken", err.response.headers.authorization); // 토큰 재저장
           localStorage.setItem("refresh", err.response.headers.refresh); // 리프레쉬 재저장
+
           if (needToken) {
-            // 토큰 필요시 토큰 포함
+            // 토큰 필요시 엑세스 & 리프레쉬 토큰 포함
             header = {
               Refresh: localStorage.getItem("refresh"),
               "Content-Type": "application/json",
