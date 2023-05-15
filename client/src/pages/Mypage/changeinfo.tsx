@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAxiosAll from "../../hooks/useAxiosAll";
 import Alert from "../../components/Common/AlertModal";
-import theme from "../../styles/theme";
-
 type TableProsp = {
   setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
   userInfo: Datatype | null;
@@ -322,7 +320,7 @@ const Modal = ({ email }: { email: string }) => {
   return (
     <>
       <ModalContainer>
-        {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
+        {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
         <ModalBtn onClick={openModalHandler}>회원탈퇴</ModalBtn>
         {isOpen ? (
           <ModalBackdrop onClick={openModalHandler}>
@@ -428,7 +426,7 @@ const Changeinfopage = () => {
   return (
     <>
       <TotalStyled>
-        {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
+        {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
         <InfoContainer>
           <p>회원정보수정</p>
           <InfoBodyupStyled>
