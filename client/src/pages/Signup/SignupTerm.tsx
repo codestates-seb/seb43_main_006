@@ -1,10 +1,11 @@
-import styled, { ThemeContext } from "styled-components";
+import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
-import { useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "../../components/Common/AlertModal";
+
 // 05110209
 type StepProps = {
   type: string;
@@ -115,8 +116,6 @@ const SignupTerm = () => {
   const [detail, setDetail] = useState([false, false, false]);
   const [isNext, setIsNext] = useState(false);
   const [isAgreed, setIsAgreed] = useState([false, false, false, false]);
-
-  const themeContext = useContext(ThemeContext).colors;
   const detailData = [
     `[서비스 이용약관 동의서]
 
@@ -227,6 +226,35 @@ const SignupTerm = () => {
 1.서비스 이용에 대한 수수료는 회사가 별도로 정한 바에 따릅니다.
 `,
   ];
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("access_token");
+    const refreshToken = urlParams.get("refresh_token");
+    if (accessToken && refreshToken) {
+      localStorage.setItem("authToken", accessToken); // 토큰 저장
+      localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
+
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/members`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("authToken"),
+            "ngrok-skip-browser-warning": "69420",
+          },
+        })
+        .then((res) => {
+          navigate("/");
+          console.log("유저임");
+        })
+        .catch((err) => {
+          console.log("유저아님");
+          localStorage.setItem("oauthSign", "true"); // 오어스로 회원가입 시도
+        });
+    } else {
+      localStorage.setItem("oauthSign", "false"); // 일반 회원가입 시도
+    }
+  }, []);
   const clickDetail = (pos: number) => {
     const newDetail = detail.slice();
     newDetail[pos] = !detail[pos];
@@ -238,7 +266,6 @@ const SignupTerm = () => {
     setIsAgreed(newCheck);
   };
   const onClickNext = () => {
-    console.log(isAgreed);
     if (isAgreed[0] && isAgreed[1] && isAgreed[2] && isAgreed[3]) {
       navigate("/signup/input");
     } else {
@@ -247,7 +274,7 @@ const SignupTerm = () => {
   };
   return (
     <Container>
-      {isNext ? <Alert text="모든 약관을 동의해 주세요!" onClick={() => setIsNext(false)} /> : null}
+      {isNext ? <Alert text="모든 약관을 동의해 주세요!" onClickOk={() => setIsNext(false)} /> : null}
       <TermContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">

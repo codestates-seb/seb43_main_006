@@ -38,5 +38,6 @@ export interface Icon {
 
 export interface AlertProps {
   text: string;
-  onClick: () => void;
+  onClickOk: () => void;
+  onClickCancel?: () => void;
 }
