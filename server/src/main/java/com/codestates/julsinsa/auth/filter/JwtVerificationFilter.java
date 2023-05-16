@@ -77,6 +77,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             String refreshToken = jwtTokenizer.delegateRefreshToken(member);
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
+
         } catch (SignatureException se) {
             request.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {

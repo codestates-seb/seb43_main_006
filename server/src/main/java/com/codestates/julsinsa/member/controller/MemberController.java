@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
@@ -112,5 +114,10 @@ public class MemberController {
         Member member = memberService.findMemberPassword(requestBody);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/token")
+    public void getToken(HttpServletRequest request, HttpServletResponse response){
+        memberService.getToekn(request,response);
     }
 }

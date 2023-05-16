@@ -108,20 +108,6 @@ VALUES (1, '보드카'),
        (23, '막걸리'),
        (24, '위스키');
 
-INSERT INTO  FAVORITE (favorite_id, item_id, member_id)
-VALUES (1, 1,1),
-       (2, 2,1),
-       (3, 3,1),
-       (4, 4,1),
-       (5, 5,1),
-       (6, 6,1),
-       (7, 7,1),
-       (8, 8,1),
-       (9, 9,1),
-       (10, 10,1),
-       (11, 11,1),
-       (12, 12,1),
-       (13, 13,1);
 
 INSERT INTO ITEM_CART (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
 VALUES (1,2, 101,3),

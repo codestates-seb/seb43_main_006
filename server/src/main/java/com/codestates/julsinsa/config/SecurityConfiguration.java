@@ -76,6 +76,7 @@ public class SecurityConfiguration {
                                 .antMatchers(HttpMethod.GET, "/members/favorite").hasAnyRole("USER","ADMIN") // 찜 목록보기
                                 .antMatchers(HttpMethod.POST, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 하기
                                 .antMatchers(HttpMethod.DELETE, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 삭제
+                                .antMatchers(HttpMethod.GET, "/items/*/is-favorite").hasAnyRole("USER","ADMIN") // 찜 여부 확인
                                 .antMatchers(HttpMethod.POST, "/items/*/reviews").hasAnyRole("USER","ADMIN") // 리뷰작성
                                 .antMatchers(HttpMethod.PATCH, "/items/*/reviews/*").hasAnyRole("USER","ADMIN")// 리뷰수정
                                 .antMatchers(HttpMethod.DELETE, "/items/*/reviews/*").hasAnyRole("USER","ADMIN") // 리뷰삭제
