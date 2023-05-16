@@ -35,15 +35,6 @@ const AlcoholItemContainer = styled.div`
       border: none;
       border-bottom: 3.5px solid ${({ theme }) => theme.colors.themeColor};
     }
-    .item_like {
-      display: none;
-    }
-    img:hover ~ .item_like {
-      display: block;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
   }
   .item_content {
     padding: 3px 0 0 5px;
@@ -83,9 +74,6 @@ const AlcoholListItem = ({ item }: ItemProps) => {
     <AlcoholItemContainer>
       <div className="item_img">
         <img src={item.profile} />
-        <div className="item_like">
-          <ClickFavoriteItem icon={AiFillHeart} color="#e4e5e9" activeColor="#D43635" size={20} />
-        </div>
       </div>
       <div className="item_content">
         <p className="item_title">{item.titleKor}</p>
