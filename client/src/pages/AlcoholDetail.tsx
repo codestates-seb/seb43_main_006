@@ -5,7 +5,9 @@ import { AlcoholData } from "../types/AlcholInterfaces";
 import { useParams } from "react-router-dom";
 
 // components
-import AlcoholItem from "../components/AlcoholDetailPage/AlcoholItem";
+import AlcoholItemBuy from "../components/AlcoholDetailPage/AlcoholItemBuy";
+import AlcoholItemReview from "../components/AlcoholDetailPage/AlcohoIItemReview";
+import AlcoholItemContent from "../components/AlcoholDetailPage/AlcohoItemContent";
 
 const AlcoholDetailContainer = styled.section`
   display: flex;
@@ -36,7 +38,17 @@ const AlcoholDetail = () => {
     fetchData();
   }, []);
 
-  return <AlcoholDetailContainer className="main">{data && <AlcoholItem data={data} />}</AlcoholDetailContainer>;
+  return (
+    <AlcoholDetailContainer className="main">
+      {data && (
+        <>
+          <AlcoholItemBuy data={data} />
+          <AlcoholItemReview reviews={data.reviews}></AlcoholItemReview>
+          <AlcoholItemContent data={data} />
+        </>
+      )}
+    </AlcoholDetailContainer>
+  );
 };
 
 export default AlcoholDetail;

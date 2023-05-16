@@ -30,7 +30,7 @@ export interface AlcoholData {
   discountRate: string;
   reviewCount: number;
   reviewRating: number;
-  reviews: string[];
+  reviews: ItemReviewsType[];
 }
 
 // 주류 리스트 아이템 정렬 Props
@@ -86,4 +86,16 @@ export interface UserProps {
 export interface CheckoutProps {
   onClose?: () => void;
   onPaymentRequest?: () => Promise<void>;
+}
+
+// 주류 상세 페이지 리뷰 조회
+export interface ItemReviewsType {
+  reviewId: number;
+  title: string;
+  content: string;
+  rating: number;
+  displayName: string;
+  createdAt: string;
+  modifiedAt: string;
+  reviewImages: string[];
 }
