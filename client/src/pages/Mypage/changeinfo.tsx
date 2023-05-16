@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAxiosAll from "../../hooks/useAxiosAll";
 import Alert from "../../components/Common/AlertModal";
+import axios from "axios";
 type TableProsp = {
   setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
   userInfo: Datatype | null;
@@ -88,7 +89,7 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
                   disabled={isDisabled}
                   onChange={handlePasswordCheck}
                   type="password"
-                  placeholder="비밀번호를 입력하세요"
+                  placeholder="비밀번호를 먼저 옳바르게 입력하세요"
                 ></input>
               </StyledTd>
             </tr>
@@ -305,7 +306,6 @@ const Modal = ({ email }: { email: string }) => {
     }
   }, [err]);
   useEffect(() => {
-    console.log(ok);
     if (ok) {
       setAlertMessage("탈퇴에 성공했습니다!");
       setShowAlert(true);
@@ -370,7 +370,12 @@ const Changeinfopage = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [isOk, setIsOk] = useState(false);
-
+  useEffect(() => {
+    if (err) {
+      setAlertMessage("로그인 후 접근해주세요!");
+      setShowAlert(true);
+    }
+  }, [err]);
   useEffect(() => {
     if (
       "oauth2Registered" in data &&
@@ -392,9 +397,8 @@ const Changeinfopage = () => {
       };
       setUserInfo(formData as Datatype);
     }
-    // setPhone(newData.phone);
-    // setDisplayName(newData.displayName);
   }, [data]);
+
   useEffect(() => {
     doAxios("get", "/members", {}, true);
   }, []);

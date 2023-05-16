@@ -7,7 +7,6 @@ import { ChangeEvent } from "react";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
 import useAxiosAll from "../../hooks/useAxiosAll";
-import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_API_URL}/`;
 
@@ -18,11 +17,8 @@ type TitleProps = {
 type StepProps = {
   type: string;
 };
-interface OauthState {
-  oauthSign: boolean;
-}
+
 const SignupInput = () => {
-  const IsOauth = useSelector((state: OauthState) => state.oauthSign);
   const navigate = useNavigate();
 
   const [name, setName] = useState(""); // 이름 input 상태
@@ -40,12 +36,10 @@ const SignupInput = () => {
   const [doAxios, data, err, ok] = useAxiosAll(); // axios 요청 응답 에러여부 확인
   const [type, setType] = useState<string | null>(null);
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
-    // 이름 onChange 핸들러
-    setName(e.target.value);
+    setName(e.target.value); // 이름 onChange 핸들러
   };
   const onNick = (e: ChangeEvent<HTMLInputElement>) => {
-    // 닉네임 onChange 핸들러
-    setNick(e.target.value);
+    setNick(e.target.value); // 닉네임 onChange 핸들러
   };
   const onBirth = (e: ChangeEvent<HTMLInputElement>) => {
     // 이름 onChange 핸들러
@@ -53,9 +47,8 @@ const SignupInput = () => {
     const birthDay = new Date(e.target.value);
     let age = today.getFullYear() - birthDay.getFullYear(); // 현재 Year과 입력한 Year로만 계산한 나이
     if (
-      //월, 일 까지 계산해 만 나이 적용
       birthDay.getMonth() > today.getMonth() ||
-      (birthDay.getMonth() === today.getMonth() && birthDay.getDate() > today.getDate())
+      (birthDay.getMonth() === today.getMonth() && birthDay.getDate() > today.getDate()) //월, 일 까지 계산해 만 나이 적용
     ) {
       age = age - 1;
     }
@@ -223,14 +216,7 @@ const SignupInput = () => {
                   <SingleInfo>
                     <div className="name email">이메일</div>
                     <div className="code-pos">
-                      <ButtonDark
-                        width="60px"
-                        height="30px"
-                        fontSize="12px"
-                        fontWeight="500"
-                        borderRadious="30px"
-                        onClick={getCode}
-                      >
+                      <ButtonDark width="60px" height="30px" fontSize="12px" borderRadious="30px" onClick={getCode}>
                         인증요청
                       </ButtonDark>
                     </div>
@@ -290,13 +276,7 @@ const SignupInput = () => {
             </InfoTable>
           </MiddleContainer>
           <BottomContainer>
-            <ButtonLight
-              width="150px"
-              height="45px"
-              fontSize="18px"
-              borderRadious="2px"
-              onClick={() => navigate("/signup/term")}
-            >
+            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup/term")}>
               이전
             </ButtonLight>
             <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
@@ -320,7 +300,7 @@ const InputContainer = styled.div`
   width: 700px;
   gap: 40px;
   position: absolute;
-  top: 25%;
+  top: 15%;
   .title {
     width: 100%;
     padding-bottom: 20px;

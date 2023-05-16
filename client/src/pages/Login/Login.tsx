@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
-import Alert from "../../components/Common/AlertModal";
+import { RiKakaoTalkFill } from "react-icons/ri";
 import axios from "axios";
+//components
+import Alert from "../../components/Common/AlertModal";
+import { ButtonDark, ButtonLight } from "../../components/Common/Button";
+
 const url = `${process.env.REACT_APP_API_URL}`;
 
 type TypeProps = {
@@ -25,8 +28,8 @@ const Login = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
-  const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    // 이메일 핸들러
+  const userNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    // 아이디 핸들러
     setUsername(e.target.value);
   };
   const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +55,8 @@ const Login = () => {
         localStorage.setItem("authToken", res.headers.authorization); // 토큰 저장
         localStorage.setItem("memberId", res.headers["x-member-id"]); // 멤버id 저장
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
+        localStorage.setItem("exp", res.headers.exp); // 토큰 만료시간 저장
+        localStorage.setItem("iat", res.headers.iat); // refresh 토큰 생성 시간 저장
         console.log(issued);
         if (issued === "false") {
           // 임시 비밀번호로 접근 x
@@ -76,6 +81,9 @@ const Login = () => {
     //오어스 페이스북 인증링크로 이동
     window.location.assign(`${url}/oauth2/authorization/facebook`);
   };
+  const kakaoOAuthHandler = () => {
+    window.location.assign(`${url}/oauth2/authorization/kakao`);
+  };
   const GotoSign = () => {
     // 회원가입 버튼 클릭 시
     navigate("/signup");
@@ -96,7 +104,7 @@ const Login = () => {
             </Title>
             <div className="flex-row">
               <div className="flex-col">
-                <input placeholder="이메일" onChange={emailHandler} />
+                <input placeholder="이메일" onChange={userNameHandler} />
                 <input placeholder="비밀번호" type="password" onChange={passwordHandler} />
               </div>
               <div className="button">
@@ -118,6 +126,12 @@ const Login = () => {
             </OAuthIconContainer>
             <div className="desc">페이스북으로 시작하기</div>
           </OAuthSignUpBox>
+          <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
+            <OAuthIconContainer>
+              <RiKakaoTalkFill size="40" color="black" />
+            </OAuthIconContainer>
+            <div className="desc">카카오톡으로 시작하기</div>
+          </OAuthSignUpBox>
           <Contour />
           <BottomContainer>
             <ButtonDark width="150px" height="100%" fontSize="18px" fontWeight="500" onClick={GotoSign}>
@@ -129,10 +143,10 @@ const Login = () => {
               fontSize="16px"
               fontWeight="500"
               onClick={() => {
-                navigate("/findemail");
+                navigate("/findid");
               }}
             >
-              이메일 찾기
+              아이디 찾기
             </ButtonLight>
             <ButtonLight
               width="150px"
@@ -228,8 +242,8 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : "#4566a0")};
-  color: ${({ type }) => (type === "google" ? "black" : "white")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "facebook" ? "#4566a0" : "#ffeb00")};
+  color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
     font-size: 18px;
