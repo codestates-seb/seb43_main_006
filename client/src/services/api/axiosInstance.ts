@@ -42,11 +42,11 @@ instance.interceptors.response.use(
 
       return axios
         .post(
-          "members/token",
+          `${process.env.REACT_APP_API_URL}/members/token`,
           {},
           {
             headers: {
-              Refresh: localStorage.getItem("refresh"),
+              refresh: localStorage.getItem("refresh"),
               Authorization: localStorage.getItem("authToken"),
             },
           },
