@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
-
+import { RiKakaoTalkFill } from "react-icons/ri";
 const url = `${process.env.REACT_APP_API_URL}`;
 
 type TypeProps = {
@@ -58,8 +58,8 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : "#4566a0")};
-  color: ${({ type }) => (type === "google" ? "black" : "white")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "facebook" ? "#4566a0" : "#ffeb00")};
+  color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
     font-size: 18px;
@@ -95,6 +95,9 @@ const SignupSelection = () => {
     //오어스 페이스북 인증링크로 이동
     // window.location.assign(`${url}/oauth2/authorization/facebook`);
   };
+  const kakaoOAuthHandler = () => {
+    window.location.assign(`${url}/oauth2/authorization/kakao`);
+  };
   return (
     <Container>
       <SelectionContainer>
@@ -111,6 +114,12 @@ const SignupSelection = () => {
             <TiSocialFacebook size="40" color="white" />
           </OAuthIconContainer>
           <div className="desc">페이스북으로 회원가입</div>
+        </OAuthSignUpBox>
+        <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
+          <OAuthIconContainer>
+            <RiKakaoTalkFill size="40" color="black" />
+          </OAuthIconContainer>
+          <div className="desc">카카오톡으로 시작하기</div>
         </OAuthSignUpBox>
       </SelectionContainer>
       <div className="go-login">

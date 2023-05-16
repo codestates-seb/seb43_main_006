@@ -94,21 +94,7 @@ const SignupInput = () => {
     // 비밀번호 확인 onChange 핸들러
     setPasswordCheck(e.target.value);
   };
-  useEffect(() => {
-    if (err) {
-      // 에러 발생 시
-      setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
-      setShowAlert(true);
-    }
-  }, [err]);
-  useEffect(() => {
-    // 회원가입 요청에 성공 시
-    if (ok) {
-      setAlertMessage("회원가입 성공!");
-      setShowAlert(true);
-      setIsOk(true);
-    }
-  }, [ok]);
+
   const onClickSign = () => {
     // 회원가입 버튼 클릭 시
     if (type === "oauth") {
@@ -119,7 +105,23 @@ const SignupInput = () => {
         birthDate: birth,
       };
       console.log(body);
-      doAxios("post", "/members/oauth2-signup", body, true);
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/members/oauth2-signup`, body, {
+          headers: {
+            Authorization: localStorage.getItem("authToken"),
+            refresh: localStorage.getItem("refresh"),
+            "ngrok-skip-browser-warning": "69420",
+          },
+        })
+        .then((res) => {
+          setAlertMessage("회원가입 성공!");
+          setShowAlert(true);
+          setIsOk(true);
+        })
+        .catch((err) => {
+          setAlertMessage("모든 정보를 기입하였는지 확인하세요!");
+          setShowAlert(true);
+        });
     } else {
       if (password !== passwordCheck) {
         // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
@@ -139,7 +141,23 @@ const SignupInput = () => {
           mailKey: code,
         };
         console.log(body);
-        doAxios("post", "/members/signup", body, false); // post 요청으로 바디를 담아 회원가입 요청
+        axios
+          .post(`${process.env.REACT_APP_API_URL}/members/signup`, body, {
+            headers: {
+              Authorization: localStorage.getItem("authToken"),
+              refresh: localStorage.getItem("refresh"),
+              "ngrok-skip-browser-warning": "69420",
+            },
+          })
+          .then((res) => {
+            setAlertMessage("회원가입 성공!");
+            setShowAlert(true);
+            setIsOk(true);
+          })
+          .catch((err) => {
+            setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
+            setShowAlert(true);
+          });
       }
     }
   };

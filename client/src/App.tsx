@@ -22,6 +22,7 @@ import FindEmail from "./pages/Login/FindEmail";
 import FindPassword from "./pages/Login/FindPassword";
 import FailPage from "./pages/Payment/Fail";
 import Checkout from "./pages/Payment/Checkout";
+import ChatComponent from "./components/Chat/ChatComponent";
 
 const BodyContainer = styled.div`
   min-height: 100vh;
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/findemail/" element={<FindEmail />} />
           <Route path="/findpassword" element={<FindPassword />} />
         </Routes>
+        <ChatComponent />
       </Layout>
     </BodyContainer>
   );
