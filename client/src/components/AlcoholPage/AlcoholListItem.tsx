@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { AlcoholListData } from "../../types/AlcholInterfaces";
-import { AiFillHeart } from "react-icons/ai";
 
 // components
 import ReviewRating from "../Common/ReviewRating";
 import PriceRegular from "../Common/PriceRegular";
-import ClickFavoriteItem from "../Common/ClickFavoriteItem";
 
 interface ItemProps {
   item: AlcoholListData;

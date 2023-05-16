@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import alcohol from "../../assets/images/alcohol.png";
 import { AiFillHeart } from "react-icons/ai";
 import { AlcoholData, ItemOrder } from "../../types/AlcholInterfaces";
 
@@ -16,7 +15,7 @@ interface ItemDatailProps {
   data: AlcoholData;
 }
 
-const AlcoholItemContainer = styled.div`
+const AlcoholItemBuyContainer = styled.div`
   margin-top: 30px;
   display: flex;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
@@ -30,11 +29,12 @@ const StyledItemImgBox = styled.div`
   padding: 0 20px;
 
   img {
-    margin: auto;
+    /* margin: auto; */
     height: 550px;
     max-width: 100%;
     object-fit: scale-down;
-    width: auto;
+    min-width: 400px;
+    width: 80%;
   }
 `;
 
@@ -130,7 +130,7 @@ const StyledItemBuyBox = styled.div`
   }
 `;
 
-const AlcoholItem = ({ data }: ItemDatailProps) => {
+const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleQuantityChange = (newQuantity: number) => {
@@ -153,7 +153,7 @@ const AlcoholItem = ({ data }: ItemDatailProps) => {
   };
 
   return (
-    <AlcoholItemContainer>
+    <AlcoholItemBuyContainer>
       <StyledItemImgBox>
         <img src={data.profile} />
       </StyledItemImgBox>
@@ -198,8 +198,8 @@ const AlcoholItem = ({ data }: ItemDatailProps) => {
           </ButtonDark>
         </div>
       </StyledItemBuyBox>
-    </AlcoholItemContainer>
+    </AlcoholItemBuyContainer>
   );
 };
 
-export default AlcoholItem;
+export default AlcoholItemBuy;
