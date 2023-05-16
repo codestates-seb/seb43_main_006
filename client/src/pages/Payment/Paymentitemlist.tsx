@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { Item } from "../../types/AlcholInterfaces";
+import { ItemOrder } from "../../types/AlcholInterfaces";
 
 export default function Itemlist() {
   const location = useLocation();
@@ -17,7 +17,7 @@ export default function Itemlist() {
           <div className="eachtitle">개수</div>
           <div className="pricetitle">가격</div>
         </div>
-        {items.map((item: Item) => (
+        {items.map((item: ItemOrder) => (
           <div key={item.itemId} className="cartitem">
             <div className="imglist">
               <img src={item.profile} alt={item.titleKor} />

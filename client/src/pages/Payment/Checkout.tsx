@@ -3,7 +3,7 @@ import { PaymentWidgetInstance, loadPaymentWidget } from "@tosspayments/payment-
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Item } from "../../types/AlcholInterfaces";
+import { ItemOrder } from "../../types/AlcholInterfaces";
 
 const selector = "#payment-widget";
 const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
@@ -22,7 +22,7 @@ export default function Checkout() {
   console.log(user);
 
   const { totalPrice } = items.reduce(
-    (acc: { totalquantity: number; totalPrice: number }, item: Item) => {
+    (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {
       acc.totalquantity += item.quantity;
       acc.totalPrice += item.price * item.quantity;
       return acc;

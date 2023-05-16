@@ -66,13 +66,13 @@ export interface ItemOrder {
 }
 // 장바구니 => 결제페이지로 정제된 Props
 export interface Props {
-  items: Item[];
+  items: ItemOrder[];
   cartId?: number;
 }
 // 장바구니에 담긴 Props 배열
 export interface CartItemsProps {
   cartId?: number;
-  itemCarts: Item[];
+  itemCarts: ItemOrder[];
 }
 
 // 결제 페이지 UserProps

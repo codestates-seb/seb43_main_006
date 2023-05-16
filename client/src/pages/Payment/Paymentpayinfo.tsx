@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { Item } from "../../types/AlcholInterfaces";
+import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ export default function Payinfo() {
   const items = location.state ? location.state.items : [];
 
   const { totalquantity, totalPrice } = items.reduce(
-    (acc: { totalquantity: number; totalPrice: number }, item: Item) => {
+    (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {
       acc.totalquantity += item.quantity;
       acc.totalPrice += item.price * item.quantity;
       return acc;
