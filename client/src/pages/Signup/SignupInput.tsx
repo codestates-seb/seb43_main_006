@@ -119,7 +119,7 @@ const SignupInput = () => {
           setIsOk(true);
         })
         .catch((err) => {
-          setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
+          setAlertMessage("모든 정보를 기입하였는지 확인하세요!");
           setShowAlert(true);
         });
     } else {
