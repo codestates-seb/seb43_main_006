@@ -4,6 +4,7 @@ import samplingimg from "../assets/images/samplingimg.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import samplelist from "../assets/images/samplelist.png";
+import GptComponent from "../components/Chat/ChatComponent";
 
 interface ScrollState {
   x: number;
@@ -23,9 +24,20 @@ const Home: React.FC = () => {
   };
   const { y } = useScroll();
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("access_token");
+    const refreshToken = urlParams.get("refresh_token");
+    if (accessToken && refreshToken) {
+      localStorage.setItem("authToken", accessToken); // 토큰 저장
+      localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
+    }
+  }, []);
+
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
+      <GptComponent></GptComponent>
       <div className="glad" style={{ opacity: y > 650 ? (y > 1250 ? "0" : "1") : "0" }}>
         <div>Welcome</div>
         <div>To</div>
@@ -151,7 +163,7 @@ const Home: React.FC = () => {
 export default Home;
 
 const HomeContainer = styled.section`
-  color: ${({ theme }) => theme.colors.fontColor}
+  color: ${({ theme }) => theme.colors.fontColor};
   flex-direction: column;
   align-items: flex-start;
   max-width: 100vw;
@@ -163,19 +175,19 @@ const HomeContainer = styled.section`
     padding-top: 0;
     height: 100vh;
     width: 120vw;
-    background-repeat : no-repeat;
-        background-size : cover;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .Mainmiddle {
     display: flex;
-    justify-content :center;
-    align-items : center;
-    width:100%;
-    height:1800px;
-    padding-left : 0;
-    padding-right : 12vw;
-    padding-top : 900px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 1800px;
+    padding-left: 0;
+    padding-right: 12vw;
+    padding-top: 900px;
     transition: all 0.5s ease-in-out;
   }
   & * {
@@ -204,8 +216,8 @@ const HomeContainer = styled.section`
     height: 100px;
   }
   .glad2 {
-    display : flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     width: 50vw;
     justify-content: center;
     flex-direction: column;
@@ -213,7 +225,7 @@ const HomeContainer = styled.section`
     padding-top: 300px;
     padding-left: 2vw;
     padding-right: 2vw;
-    padding-bottom : 500px;
+    padding-bottom: 500px;
     transition: all 0.5s ease-in-out;
   }
   .smallglad2 {
@@ -229,112 +241,112 @@ const HomeContainer = styled.section`
     align-items: center;
     flex-direction: column;
     transition: all 0.5s ease-in-out;
-    height : 400px;
+    height: 400px;
   }
   .maju_list {
     padding-left: 10vw;
     padding-bottom: 10vw;
     flex-direction: column;
-    height : 200px;
-    overflow : visible;
+    height: 200px;
+    overflow: visible;
   }
   .maju {
     padding-top: 30px;
     padding-left: 5vw;
     font-size: 50px;
-    height : 200px;
+    height: 200px;
     color: ${({ theme }) => theme.colors.themeColor};
   }
   .list_maju {
     padding-top: 30px;
   }
   .glad3-item {
-    flex-direction : column;
+    flex-direction: column;
     display: flex;
-    align-items :center;
-    justify-content : center;
-    padding-top : 800px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 800px;
     padding-left: 14vw;
   }
- .glad3 {
-  transition: all 0.5s ease-in-out;
-  padding-left: 0;
-  padding-right: 10vw;
- }
- .samplingimg {
-  transition: all 0.5s ease-in-out;
-  height : 80vh;
-  width: 100vw;
- }
- .glad4-item {
-    flex-direction : row;
-    display: flex;
-    justify-content : center;
-    padding-top : 550px;
-  padding-left : 10vw;
- }
- .glad4 {
-  transition: all 0.5s ease-in-out;
-  width : 100vw;
-  display: flex;
-  align-items : flex-start;
-  flex-direction : row;
-  justify-content: flex-start;
-  padding-left : 1vw;
- }
- .sales {
-  width : 100vw;
-  display:flex;
-  align-items : flex-start;
-  padding-left : 15vw;
-  padding-top: 1000px;
-  padding-bottom : 200px;
-  flex-direction : row;
-  justify-content: flex-start;
-  font-size : 48px;
-  color : ${({ theme }) => theme.colors.themeColor};
-  transition: all 0.5s ease-in-out;
- }
- .saleslist {
-  max-width: 80vw;
-  margin : 0;
-  padding-top : 1600px;
-  height : 1880px;
-  flex-direction : column;
-  padding-left : 20vw;
-  & a {
-    font-size : 20px;
-    padding-left : 2vw;
-    height : 30px;
+  .glad3 {
+    transition: all 0.5s ease-in-out;
+    padding-left: 0;
+    padding-right: 10vw;
   }
-}
+  .samplingimg {
+    transition: all 0.5s ease-in-out;
+    height: 80vh;
+    width: 100vw;
+  }
+  .glad4-item {
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    padding-top: 550px;
+    padding-left: 10vw;
+  }
+  .glad4 {
+    transition: all 0.5s ease-in-out;
+    width: 100vw;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 1vw;
+  }
+  .sales {
+    width: 100vw;
+    display: flex;
+    align-items: flex-start;
+    padding-left: 15vw;
+    padding-top: 1000px;
+    padding-bottom: 200px;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 48px;
+    color: ${({ theme }) => theme.colors.themeColor};
+    transition: all 0.5s ease-in-out;
+  }
+  .saleslist {
+    max-width: 80vw;
+    margin: 0;
+    padding-top: 1600px;
+    height: 1880px;
+    flex-direction: column;
+    padding-left: 20vw;
+    & a {
+      font-size: 20px;
+      padding-left: 2vw;
+      height: 30px;
+    }
+  }
 
-.1stsales {
-  max-width : 100vw;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height : 1200px;
-}
+  .1stsales {
+    max-width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 1200px;
+  }
 
-.2ndsales {
-  max-width : 100vw;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height : 1200px;
-}
-.slist {
-  width: 158px;
-  height: 158px;
-  margin: 10px;
-  object-fit: cover;
-}
+  .2ndsales {
+    max-width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 1200px;
+  }
+  .slist {
+    width: 158px;
+    height: 158px;
+    margin: 10px;
+    object-fit: cover;
+  }
   & ul {
-    overflow-x :scroll;
-    height : 220px;
+    overflow-x: scroll;
+    height: 220px;
     &li {
     }
   }
