@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
+
+const url = `${process.env.REACT_APP_API_URL}`;
+
 type TypeProps = {
   type: string;
 };
@@ -84,12 +87,20 @@ const SignupSelection = () => {
   const toSignTerm = () => {
     navigate("/signup/term");
   };
+  const googleOAuthHandler = () => {
+    //오어스 구글 인증링크 이동
+    window.location.assign(`${url}/oauth2/authorization/google`);
+  };
+  const facebookOAuthHandler = () => {
+    //오어스 페이스북 인증링크로 이동
+    // window.location.assign(`${url}/oauth2/authorization/facebook`);
+  };
   return (
     <Container>
       <SelectionContainer>
         <BasicSignupBox onClick={toSignTerm}>쇼핑몰 회원가입</BasicSignupBox>
         <Contour />
-        <OAuthSignUpBox onClick={toSignTerm} type="google">
+        <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
           <OAuthIconContainer>
             <FcGoogle size="40" color="black" />
           </OAuthIconContainer>

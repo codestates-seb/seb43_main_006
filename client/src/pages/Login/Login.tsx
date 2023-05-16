@@ -6,7 +6,7 @@ import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
-const url = `${process.env.REACT_APP_API_URL}/`;
+const url = `${process.env.REACT_APP_API_URL}`;
 
 type TypeProps = {
   type: string;
@@ -41,7 +41,7 @@ const Login = () => {
       password,
     };
     axios
-      .post(`${url}auth/login`, body, {
+      .post(`${url}/auth/login`, body, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,7 +51,7 @@ const Login = () => {
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
         localStorage.setItem("authToken", res.headers.authorization); // 토큰 저장
         localStorage.setItem("memberId", res.headers["x-member-id"]); // 멤버id 저장
-        localStorage.setItem("refresh", res.headers.refresh); // 멤버id 저장
+        localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
         console.log(issued);
         if (issued === "false") {
           // 임시 비밀번호로 접근 x
@@ -70,11 +70,11 @@ const Login = () => {
   };
   const googleOAuthHandler = () => {
     //오어스 구글 인증링크 이동
-    window.location.assign(`${url}oauth2/authorization/google`);
+    window.location.assign(`${url}/oauth2/authorization/google`);
   };
   const facebookOAuthHandler = () => {
     //오어스 페이스북 인증링크로 이동
-    window.location.assign(`${url}oauth2/authorization/facebook`);
+    window.location.assign(`${url}/oauth2/authorization/facebook`);
   };
   const GotoSign = () => {
     // 회원가입 버튼 클릭 시
@@ -82,7 +82,7 @@ const Login = () => {
   };
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">

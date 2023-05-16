@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, ChangeEvent, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
 import Alert from "../../components/Common/AlertModal";
@@ -63,7 +62,7 @@ const FindPassword = () => {
   }, [ok]);
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">

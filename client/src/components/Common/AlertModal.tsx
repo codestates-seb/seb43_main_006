@@ -1,35 +1,73 @@
 import styled from "styled-components";
 import { AlertProps } from "../../types/Interfaces";
-const AlertContainer = styled.div`
+import { ButtonLight, ButtonDark } from "./Button";
+
+const Container = styled.div`
   z-index: 1;
-  ${({ theme }) => theme.common.flexCenterCol};
-  gap: 15px;
   position: fixed;
-  top: 150px;
-  background-color: white;
-  border: 1px solid gray;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 20px 20px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 1px 1px, rgba(0, 0, 0, 0.09) 0px -2px 3px;
-  height: 100px;
-  width: 360px;
-  padding: 30px;
-  .ok {
-    padding: 5px 10px;
-    background-color: #1a73e8;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+`;
+
+const AlertContainer = styled.div`
+  z-index: 2;
+  ${({ theme }) => theme.common.flexCenterCol};
+  gap: 30px;
+  position: fixed;
+  top: 30%;
+  left: calc(50% - 250px);
+  background-color: #f0f0f0;
+
+  border-radius: 2px;
+  width: 500px;
+  padding: 70px 40px;
+  .two-buttons {
+    ${({ theme }) => theme.common.flexCenterRow};
+    gap: 20px;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 500;
   }
 `;
-const Alert = ({ text, onClick }: AlertProps) => {
+const Alert = ({ title = "", text, onClickOk, onClickCancel }: AlertProps) => {
+  // text 내려주실 때 개행하실 부분을 \한번만 넣어주세요!
+  const splittedText = text.split("\\");
+
   return (
-    <AlertContainer>
-      {text}
-      <div className="ok" onClick={onClick}>
-        확인
-      </div>
-    </AlertContainer>
+    <Container>
+      <AlertContainer>
+        {title !== "" ? <div className="title">{title}</div> : null}
+        {splittedText.map((el, idx) => (
+          <p key={idx}>{el}</p>
+        ))}
+
+        {onClickCancel ? (
+          <div className="two-buttons">
+            <ButtonLight
+              width="150px"
+              height="45px"
+              fontSize="18px"
+              borderRadious="2px"
+              border="solid 1px lightgray"
+              onClick={onClickOk}
+            >
+              취소
+            </ButtonLight>
+            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickCancel}>
+              확인
+            </ButtonDark>
+          </div>
+        ) : (
+          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickOk}>
+            확인
+          </ButtonDark>
+        )}
+      </AlertContainer>
+    </Container>
   );
 };
 export default Alert;

@@ -7,6 +7,7 @@ import { ChangeEvent } from "react";
 import Alert from "../../components/Common/AlertModal";
 import axios from "axios";
 import useAxiosAll from "../../hooks/useAxiosAll";
+import { useSelector } from "react-redux";
 
 const url = `${process.env.REACT_APP_API_URL}/`;
 
@@ -17,8 +18,11 @@ type TitleProps = {
 type StepProps = {
   type: string;
 };
-
+interface OauthState {
+  oauthSign: boolean;
+}
 const SignupInput = () => {
+  const IsOauth = useSelector((state: OauthState) => state.oauthSign);
   const navigate = useNavigate();
 
   const [name, setName] = useState(""); // 이름 input 상태
@@ -34,7 +38,7 @@ const SignupInput = () => {
   const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
   const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
   const [doAxios, data, err, ok] = useAxiosAll(); // axios 요청 응답 에러여부 확인
-
+  const [type, setType] = useState<string | null>(null);
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     // 이름 onChange 핸들러
     setName(e.target.value);
@@ -100,7 +104,7 @@ const SignupInput = () => {
   useEffect(() => {
     if (err) {
       // 에러 발생 시
-      setAlertMessage("자신의 나이 혹은 이메일을 확인해주세요!");
+      setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
       setShowAlert(true);
     }
   }, [err]);
@@ -114,25 +118,36 @@ const SignupInput = () => {
   }, [ok]);
   const onClickSign = () => {
     // 회원가입 버튼 클릭 시
-    if (password !== passwordCheck) {
-      // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
-      setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
-    } else if (!(nick && code && name && birth && number)) {
-      // 모든 정보가 입력이 안되었을 경우
-      setAlertMessage("모든 정보가 입력되어야 합니다!");
-    } else {
-      // 요청 body
+    if (type === "oauth") {
       const body = {
         realName: name,
         displayName: nick,
-        email: email,
-        password: password,
         phone: number,
         birthDate: birth,
-        mailKey: code,
       };
-
-      doAxios("post", "/members/signup", body, false); // post 요청으로 바디를 담아 회원가입 요청
+      console.log(body);
+      doAxios("post", "/members/oauth2-signup", body, true);
+    } else {
+      if (password !== passwordCheck) {
+        // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
+        setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
+      } else if (!(nick && code && name && birth && number)) {
+        // 모든 정보가 입력이 안되었을 경우
+        setAlertMessage("모든 정보가 입력되어야 합니다!");
+      } else {
+        // 요청 body
+        const body = {
+          realName: name,
+          displayName: nick,
+          email: email,
+          password: password,
+          phone: number,
+          birthDate: birth,
+          mailKey: code,
+        };
+        console.log(body);
+        doAxios("post", "/members/signup", body, false); // post 요청으로 바디를 담아 회원가입 요청
+      }
     }
   };
   const getCode = () => {
@@ -159,117 +174,137 @@ const SignupInput = () => {
         console.log(err);
       });
   };
-  const okGotoMain = () => {
+  const okGotoLogin = () => {
     // 회원가입 성공시 알림창 확인 onClick 핸들러
     setShowAlert(false);
-    navigate("/");
+    navigate("/login");
   };
+  useEffect(() => {
+    const style = localStorage.getItem("oauthSign");
+    if (style === "true") {
+      setType("oauth");
+    } else if (style === "false") {
+      setType("normal");
+    } else {
+      setType(null);
+      setAlertMessage("잘못된 경로로 접근함!");
+      setShowAlert(true);
+    }
+    localStorage.removeItem("oauthSign");
+  }, []);
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
-      <InputContainer>
-        <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
-            회원가입
-          </Title>
-          <StepContainer>
-            <Step type="off">
-              01<p className="text">약관동의</p>
-            </Step>
-            <MdOutlineKeyboardArrowRight size="22px" color="#A84448" />
-            <Step type="on">
-              02<p className="text">정보 입력</p>
-            </Step>
-          </StepContainer>
-        </TopContainer>
-        <MiddleContainer>
-          <div className="title">
-            <Title fontSize="22px" fontWeight="400">
-              기본정보
+      {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoLogin : () => setShowAlert(false)} /> : null}
+      {type ? (
+        <InputContainer>
+          <TopContainer>
+            <Title fontSize="28px" fontWeight="500">
+              회원가입
             </Title>
-          </div>
-          <InfoTable>
-            <SingleInfo>
-              <div className="name email">이메일</div>
-              <div className="code-pos">
-                <ButtonDark
-                  width="60px"
-                  height="30px"
-                  fontSize="12px"
-                  fontWeight="500"
-                  borderRadious="30px"
-                  onClick={getCode}
-                >
-                  인증요청
-                </ButtonDark>
-              </div>
-              <div className="input-container">
-                <input onChange={onEmail} />
-                <div className="code">
-                  <p>인증코드</p>
-                  <input onChange={onCode} className="code-input" />
+            <StepContainer>
+              <Step type="off">
+                01<p className="text">약관동의</p>
+              </Step>
+              <MdOutlineKeyboardArrowRight size="22px" color="#A84448" />
+              <Step type="on">
+                02<p className="text">정보 입력</p>
+              </Step>
+            </StepContainer>
+          </TopContainer>
+          <MiddleContainer>
+            <div className="title">
+              <Title fontSize="22px" fontWeight="400">
+                기본정보
+              </Title>
+            </div>
+            <InfoTable>
+              {type === "oauth" ? null : (
+                <>
+                  <SingleInfo>
+                    <div className="name email">이메일</div>
+                    <div className="code-pos">
+                      <ButtonDark
+                        width="60px"
+                        height="30px"
+                        fontSize="12px"
+                        fontWeight="500"
+                        borderRadious="30px"
+                        onClick={getCode}
+                      >
+                        인증요청
+                      </ButtonDark>
+                    </div>
+                    <div className="input-container">
+                      <input onChange={onEmail} />
+                      <div className="code">
+                        <p>인증코드</p>
+                        <input onChange={onCode} className="code-input" />
+                      </div>
+                    </div>
+                  </SingleInfo>
+                  <SingleInfo>
+                    <div className="name">비밀번호</div>
+                    <div className="input-container">
+                      <input type="password" placeholder="문자, 숫자를 결합해 8자 이상" onChange={onPassword} />
+                    </div>
+                  </SingleInfo>
+                  <SingleInfo>
+                    <div className="name">비밀번호 확인</div>
+                    <div className="input-container">
+                      <input
+                        className={isDisabled ? "disable" : ""}
+                        type="password"
+                        placeholder={isDisabled ? "비밀번호를 먼저 옳바르게 입력하세요" : ""}
+                        disabled={isDisabled}
+                        onChange={onPasswordCheck}
+                      />
+                    </div>
+                  </SingleInfo>
+                </>
+              )}
+
+              <SingleInfo>
+                <div className="name">이름</div>
+                <div className="input-container">
+                  <input onChange={onName} />
                 </div>
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">비밀번호</div>
-              <div className="input-container">
-                <input type="password" placeholder="문자, 숫자를 결합해 8자 이상" onChange={onPassword} />
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">비밀번호 확인</div>
-              <div className="input-container">
-                <input
-                  className={isDisabled ? "disable" : ""}
-                  type="password"
-                  placeholder={isDisabled ? "비밀번호를 먼저 옳바르게 입력하세요" : ""}
-                  disabled={isDisabled}
-                  onChange={onPasswordCheck}
-                />
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">이름</div>
-              <div className="input-container">
-                <input onChange={onName} />
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">닉네임</div>
-              <div className="input-container">
-                <input onChange={onNick} />
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">생년월일</div>
-              <div className="input-container">
-                <input value={birth} type="date" onChange={onBirth} />
-              </div>
-            </SingleInfo>
-            <SingleInfo>
-              <div className="name">전화번호</div>
-              <div className="input-container">
-                <input value={number} onChange={onNumber} />
-              </div>
-            </SingleInfo>
-          </InfoTable>
-        </MiddleContainer>
-        <BottomContainer>
-          <ButtonLight
-            width="150px"
-            height="45px"
-            fontSize="18px"
-            borderRadious="2px"
-            onClick={() => navigate("/signup/term")}
-          >
-            이전
-          </ButtonLight>
-          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
-            회원가입
-          </ButtonDark>
-        </BottomContainer>
-      </InputContainer>
+              </SingleInfo>
+              <SingleInfo>
+                <div className="name">닉네임</div>
+                <div className="input-container">
+                  <input onChange={onNick} />
+                </div>
+              </SingleInfo>
+              <SingleInfo>
+                <div className="name">생년월일</div>
+                <div className="input-container">
+                  <input value={birth} type="date" onChange={onBirth} />
+                </div>
+              </SingleInfo>
+              <SingleInfo>
+                <div className="name">전화번호</div>
+                <div className="input-container">
+                  <input value={number} onChange={onNumber} />
+                </div>
+              </SingleInfo>
+            </InfoTable>
+          </MiddleContainer>
+          <BottomContainer>
+            <ButtonLight
+              width="150px"
+              height="45px"
+              fontSize="18px"
+              borderRadious="2px"
+              onClick={() => navigate("/signup/term")}
+            >
+              이전
+            </ButtonLight>
+            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
+              회원가입
+            </ButtonDark>
+          </BottomContainer>
+        </InputContainer>
+      ) : null}
     </Container>
   );
 };

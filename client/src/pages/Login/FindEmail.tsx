@@ -72,7 +72,7 @@ const FindEmail = () => {
   };
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClick={() => setShowAlert(false)} /> : null}
+      {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
           <Title fontSize="28px" fontWeight="500">
