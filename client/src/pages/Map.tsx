@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { markerdata } from "./MarkerData";
+
+// import { markerdata } from "./MarkerData";
 
 declare global {
   interface Window {
@@ -7,8 +8,23 @@ declare global {
     closeOverlay: () => void;
   }
 }
+interface Shopitem {
+  address: string;
+  choice: boolean;
+  comment: string;
+  lat: number;
+  lng: number;
+  marketId: number;
+  name: string;
+  phone: string;
+  workTime: string;
+}
+interface ShopProps {
+  shoplist: Shopitem[];
+}
 
-const MapComponent = () => {
+const MapComponent = ({ shoplist }: ShopProps) => {
+  // console.log(shoplist);
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
@@ -36,6 +52,7 @@ const MapComponent = () => {
 
       displayMarker(locPosition, message);
     }
+
     function displayMarker(locPosition: any, message: any) {
       const marker = new window.kakao.maps.Marker({
         map: map,
@@ -52,15 +69,15 @@ const MapComponent = () => {
       map.setCenter(locPosition);
     }
 
-    markerdata.forEach((el) => {
+    shoplist.forEach((el: any) => {
       const marker = new window.kakao.maps.Marker({
         map: map,
         position: new window.kakao.maps.LatLng(el.lat, el.lng),
       });
       const content =
         '<div className="overlayContainer" style="background-color: red;">' +
-        `<div  style="color: black;" >${el.title}</div>` +
-        `<div className="shopPhone">${el.telphone}</div>` +
+        `<div  style="color: black;" >${el.name}</div>` +
+        `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
 
       const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -77,10 +94,10 @@ const MapComponent = () => {
         customOverlay.setMap(null);
       });
     });
-  }, []);
+  }, [shoplist]);
 
   return <div id="map" style={{ width: "800px", height: "500px" }}></div>;
 };
 
 export default MapComponent;
-//0516 17:28pm
+//0516 20:38pm
