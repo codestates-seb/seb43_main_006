@@ -9,6 +9,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class MarketPostDto {
 
+    private Long lat;
+    private Long lng;
+    private boolean choice;
     private String name;
     private String phone;
     private String address;
