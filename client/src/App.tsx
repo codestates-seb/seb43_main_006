@@ -20,6 +20,8 @@ import SignupSelection from "./pages/Signup/SignupSelection";
 import SignupTerm from "./pages/Signup/SignupTerm";
 import FindEmail from "./pages/Login/FindEmail";
 import FindPassword from "./pages/Login/FindPassword";
+import FailPage from "./pages/Payment/Fail";
+import Checkout from "./pages/Payment/Checkout";
 import ChatComponent from "./components/Chat/ChatComponent";
 
 const BodyContainer = styled.div`
@@ -42,7 +44,9 @@ const App = () => {
           <Route path="/mypage/orderpage" element={<Orderpage />} />
           <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/payment/confirm" element={<PaymentConfirm />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/paymentconfirm" element={<PaymentConfirm />} />
+          <Route path="/fail" element={<FailPage />} />
           <Route path="/place" element={<Place />} />
           <Route path="/helpcenter" element={<HelpCenter />} />
           <Route path="/signup" element={<SignupSelection />} />

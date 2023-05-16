@@ -64,3 +64,26 @@ export interface ItemOrder {
   profile: string;
   quantity: number;
 }
+// 장바구니 => 결제페이지로 정제된 Props
+export interface Props {
+  items: ItemOrder[];
+  cartId?: number;
+}
+// 장바구니에 담긴 Props 배열
+export interface CartItemsProps {
+  cartId?: number;
+  itemCarts: ItemOrder[];
+}
+
+// 결제 페이지 UserProps
+export interface UserProps {
+  id?: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+}
+
+export interface CheckoutProps {
+  onClose?: () => void;
+  onPaymentRequest?: () => Promise<void>;
+}
