@@ -1,26 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { IconType } from "react-icons";
-import styled from "styled-components";
+import { getItemLike, createItemLike, deleteItemLike } from "../../services/api";
 
 interface ClickFavoriteCProps {
+  itemId: number;
   icon: IconType;
   color: string;
   activeColor: string;
   size: number;
 }
 
-const ClickFavoriteItem: React.FC<ClickFavoriteCProps> = ({ icon: Icon, color, activeColor, size }) => {
-  const [isActive, setIsActive] = useState(false); // 찜 여부 데이터 들어와야 함
+const ClickFavoriteItem = ({ itemId, icon: Icon, color, activeColor, size }: ClickFavoriteCProps) => {
+  const memberId = localStorage.getItem("memberId");
+  const [isFavorited, setIsFavorited] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = useCallback(async () => {
+    if (memberId !== null) {
+      const response = await getItemLike(itemId);
+      try {
+        setIsFavorited(response.data.data.like);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, []);
 
   const onClickActive = () => {
-    setIsActive(!isActive);
+    if (isFavorited) {
+      deleteItemLike(itemId);
+    } else {
+      createItemLike(itemId);
+    }
+    setIsFavorited(!isFavorited);
   };
 
   return (
     <Icon
       onClick={onClickActive}
       color={color}
-      style={{ color: isActive ? activeColor : color, cursor: "pointer" }}
+      style={{ color: isFavorited ? activeColor : color, cursor: "pointer" }}
       size={size}
     />
   );

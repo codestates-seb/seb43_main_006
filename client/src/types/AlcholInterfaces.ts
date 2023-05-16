@@ -57,10 +57,10 @@ export interface PaginationProps {
 }
 
 // 결제 페이지 아이템 Props
-export interface ItemOreder {
+export interface ItemOrder {
   itemId: number;
   titleKor: string;
   price: number;
-  capacity: number;
+  profile: string;
   quantity: number;
 }
