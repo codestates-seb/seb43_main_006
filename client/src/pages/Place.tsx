@@ -1,6 +1,7 @@
 //지도페이지
 
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MapComponent from "./Map";
 
@@ -20,14 +21,7 @@ const PlaceContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-//상단검색부분
-const SearchPartStyled = styled.div`
-  border: 3px solid black;
-  flex-grow: 1.5;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-`;
+
 //지도+리스트부분 전체묶은거
 const MapBodyStyled = styled.div`
   border: 5px solid red;
@@ -54,37 +48,21 @@ const MapBottomStyled = styled.div`
 `;
 
 const Place = () => {
-  const [inputText, setInputText] = useState("");
-  const [searchPlace, setSearchPlace] = useState("");
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
-    setInputText(e.target.value);
-  };
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setSearchPlace(inputText);
-    // console.log(inputText);
-    setInputText("");
-  };
+  const navigate = useNavigate();
 
   return (
     <>
       <TotalStyled>
         <PlaceContainer>
-          <SearchPartStyled>
-            <input type="text" placeholder="매장을 검색하세요" onChange={onChange} value={inputText}></input>
-            <button onClick={handleSubmit}>조회</button>
-          </SearchPartStyled>
           <MapBodyStyled>
             <MapPartStyled>
               지도부분
-              <MapComponent Place={searchPlace} />
+              <MapComponent />
             </MapPartStyled>
             <ListPartStyled>리스트부분</ListPartStyled>
           </MapBodyStyled>
           <MapBottomStyled>
-            <button>선택</button>
+            <button onClick={() => navigate("/cart")}>선택</button>
           </MapBottomStyled>
         </PlaceContainer>
       </TotalStyled>
