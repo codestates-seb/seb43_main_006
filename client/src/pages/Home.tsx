@@ -4,7 +4,6 @@ import samplingimg from "../assets/images/samplingimg.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import samplelist from "../assets/images/samplelist.png";
-import GptComponent from "../components/Chat/ChatComponent";
 
 interface ScrollState {
   x: number;
@@ -37,7 +36,6 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <GptComponent></GptComponent>
       <div className="glad" style={{ opacity: y > 650 ? (y > 1250 ? "0" : "1") : "0" }}>
         <div>Welcome</div>
         <div>To</div>
