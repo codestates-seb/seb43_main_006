@@ -111,8 +111,8 @@ public class MemberService {
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-        List<String> roles = authorityUtils.createRoles(member.getEmail());
-        member.setRoles(roles);
+        List<String> roles = new ArrayList<>(authorityUtils.createRoles(findmember.getEmail()));
+        findmember.setRoles(roles);
         findmember.setRealName(member.getRealName());
         findmember.setDisplayName(member.getDisplayName());
         findmember.setPhone(member.getPhone());
@@ -322,20 +322,6 @@ public class MemberService {
     }
 
     public void getToekn(HttpServletRequest request, HttpServletResponse response){
-//        String refreshJws = request.getHeader("Refresh");
-//        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-//
-//
-//        Jws<Claims> claims = jwtTokenizer.getClaims(refreshJws, base64EncodedSecretKey);// refresh 토큰 검증
-//        //리프레시 토큰 유효 -> 액세스 토큰 재발급.
-//        String email = claims.getBody().getSubject();
-//        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-//        Member member = optionalMember.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//
-//        String accessToken = jwtTokenizer.delegateAccessToken(member);
-//        String refreshToken = jwtTokenizer.delegateRefreshToken(member);
-//        response.setHeader("Authorization", "Bearer " + accessToken);
-//        response.setHeader("Refresh", refreshToken);
 
         try {
             String refreshJws = request.getHeader("Refresh");
@@ -369,4 +355,18 @@ public class MemberService {
             request.setAttribute("exception", e);
         }
     }
+    public void oauthgetToekn(Member member,HttpServletResponse response){
+
+        String accessToken = jwtTokenizer.delegateAccessToken(member);
+        String refreshToken = jwtTokenizer.delegateRefreshToken(member);
+        Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date issuedAtTime = Calendar.getInstance().getTime();
+
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        response.setHeader("Refresh", refreshToken);
+        response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
+        response.setHeader("exp", String.valueOf(expirationTime));
+        response.setHeader("iat", String.valueOf(issuedAtTime));
+    }
+
 }

@@ -51,8 +51,10 @@ public class MemberController {
 
 
     @PostMapping("/oauth2-signup")
-    public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody){
+    public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody,HttpServletResponse response){
         Member member = memberService.updateOAuth2Member(mapper.oauth2MemberPostToMember(requestBody));
+
+        memberService.oauthgetToekn(member,response);
 
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
 

@@ -7,6 +7,7 @@ import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.service.MemberService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.LinkedMultiValueMap;
@@ -37,8 +38,22 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
-        String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
-        List<String> authorities = authorityUtils.createRoles(email);          // (4)
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
+        String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,facebook,kakao
+
+        String email;
+
+        if(clientRegistrationId.equals("kakao")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
+            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+            email = (String) kakaoAccount.get("email");
+        }else{
+            email = String.valueOf(oAuth2User.getAttributes().get("email"));
+        }
+
+
+       // (4)
         Member member;
 
         if(!memberService.checkByEmail(email)) { // 디비에 있으면 회원가입x
@@ -48,8 +63,10 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         }
 
         if(member.getDisplayName() == null){ // 닉네임 설정 안되어 있으면 약관페이지로 리다이렉트
+            List<String> authorities = List.of("ANONYMOUS"); // 익명의 권한 부여
             redirectSignup(request, response, email, authorities);  // (6)
         }else{
+            List<String> authorities = authorityUtils.createRoles(email);
             redirect(request, response, email, authorities);
         }
 
