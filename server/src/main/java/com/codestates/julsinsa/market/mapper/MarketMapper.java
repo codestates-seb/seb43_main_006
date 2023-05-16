@@ -15,6 +15,9 @@ public class MarketMapper {
     public Market marketPostDtoToMarket(MarketPostDto marketPostDto) {
         Market market = new Market();
 
+        market.setLat(marketPostDto.getLat());
+        market.setLng(marketPostDto.getLng());
+        market.setChoice(marketPostDto.isChoice());
         market.setName(marketPostDto.getName());
         market.setPhone(marketPostDto.getPhone());
         market.setAddress(marketPostDto.getAddress());
@@ -41,6 +44,9 @@ public class MarketMapper {
         MarketResponseDto marketResponseDto = new MarketResponseDto();
 
         marketResponseDto.setMarketId(market.getMarketId());
+        marketResponseDto.setLat(market.getLat());
+        marketResponseDto.setLng(market.getLng());
+        marketResponseDto.setChoice(market.isChoice());
         marketResponseDto.setName(market.getName());
         marketResponseDto.setPhone(market.getPhone());
         marketResponseDto.setAddress(market.getAddress());
