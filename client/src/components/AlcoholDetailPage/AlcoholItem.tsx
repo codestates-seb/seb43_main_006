@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import alcohol from "../../assets/images/alcohol.png";
 import { AiFillHeart } from "react-icons/ai";
-import { AlcoholData, ItemOreder } from "../../types/AlcholInterfaces";
+import { AlcoholData, ItemOrder } from "../../types/AlcholInterfaces";
 
 // components
 // import ReviewRating from "../Common/ReviewRating";
@@ -139,16 +139,16 @@ const AlcoholItem = ({ data }: ItemDatailProps) => {
 
   const navigate = useNavigate();
   // const HandlerClickCart = () => {};
-  const HandlerClickhistory = (): void => {
-    const props: ItemOreder = {
+  const HandlerClickOrder = (): void => {
+    const items: ItemOrder = {
       itemId: data.itemId,
       titleKor: data.titleKor,
       price: data.price * quantity,
-      capacity: data.capacity,
+      profile: data.profile,
       quantity,
     };
     navigate("/payment", {
-      state: props,
+      state: items,
     });
   };
 
@@ -161,7 +161,13 @@ const AlcoholItem = ({ data }: ItemDatailProps) => {
         <div className="buy_titlebox">
           <p className="buy_title">{data.titleKor}</p>
           <div className="item_like">
-            <ClickFavoriteItem icon={AiFillHeart} color="#e4e5e9" activeColor="#D43635" size={30} />
+            <ClickFavoriteItem
+              itemId={data.itemId}
+              icon={AiFillHeart}
+              color="#e4e5e9"
+              activeColor="#D43635"
+              size={30}
+            />
           </div>
         </div>
         <div className="buy_price">
@@ -187,7 +193,7 @@ const AlcoholItem = ({ data }: ItemDatailProps) => {
         </div>
         <div className="buy_cart">
           <button className="cart_btn">장바구니</button>
-          <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickhistory}>
+          <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickOrder}>
             구매하기
           </ButtonDark>
         </div>
