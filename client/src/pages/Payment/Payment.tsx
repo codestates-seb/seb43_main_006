@@ -17,8 +17,8 @@ const Payment = () => {
 
   const [userInfo, setUserInfo] = useState<UserProps>({
     id: "84",
-    name: "John Doe",
-    email: "johndoe@example.com",
+    name: "양선우",
+    email: "sunwoo020@naver.com",
     phoneNumber: "010-1234-5678",
   });
 
@@ -26,8 +26,6 @@ const Payment = () => {
     setUserInfo(user);
   };
 
-  console.log(userInfo);
-  console.log(items);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -50,8 +48,11 @@ const Payment = () => {
   //     .catch((err) => console.log(err));
   // }, []);
 
+  // const handlePayment = () => {
+  //   navigate("/checkout", { state: { items: items, user: userInfo } });
+  // };
   const handlePayment = () => {
-    navigate("/checkout", { state: { items: items, user: userInfo } });
+    navigate("/CheckoutChang", { state: { items: items, user: userInfo } });
   };
 
   return (

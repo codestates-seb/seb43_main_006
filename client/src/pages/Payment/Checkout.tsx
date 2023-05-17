@@ -17,8 +17,6 @@ export default function Checkout() {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const user = location.state ? location.state.user : [];
-  console.log(items);
-  console.log(user);
 
   const { totalPrice } = items.reduce(
     (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {

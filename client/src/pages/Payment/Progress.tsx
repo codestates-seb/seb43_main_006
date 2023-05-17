@@ -90,7 +90,7 @@ const Progressn = styled.div`
     }
     & li.third {
       ${({ theme }) =>
-        useLocation().pathname === "/success" &&
+        useLocation().pathname === "/paymentconfirm" &&
         `
       color: #a84448;
     `}
