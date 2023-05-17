@@ -1,12 +1,12 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import axios from "axios";
 //assets & icons
-import spinner from "../../assets/gif/spinner.gif";
+import spinner from "@assets/gif/spinner.gif";
 import { IoMdSend } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
 //components
-import { ButtonDark, ButtonLight } from "../Common/Button";
+import { ButtonDark } from "@components/Common/Button";
 
 const ChatComponent = () => {
   const [input, setInput] = useState("null");

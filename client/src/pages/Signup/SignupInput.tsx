@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { ButtonDark, ButtonLight } from "../../components/Common/Button";
-import { useState, useEffect } from "react";
-import { ChangeEvent } from "react";
-import Alert from "../../components/Common/AlertModal";
+import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
-import useAxiosAll from "../../hooks/useAxiosAll";
+//hooks
+import useAxiosAll from "@hooks/useAxiosAll";
+//components
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
+import Alert from "@components/Common/AlertModal";
 
 const url = `${process.env.REACT_APP_API_URL}/`;
 
