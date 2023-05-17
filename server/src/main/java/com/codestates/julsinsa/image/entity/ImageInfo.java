@@ -28,5 +28,5 @@ public class ImageInfo {
 
     // JPA에서 엔티티에 매핑되지 않는 속성을 나타내는 애너테이션
     @Transient
-    private final String baseUrl = "http://jusinsa-project.s3-website.ap-northeast-2.amazonaws.com";
+    private final String baseUrl = "https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/";
 }

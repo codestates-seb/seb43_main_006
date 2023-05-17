@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +44,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
+        Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date issuedAtTime = Calendar.getInstance().getTime();
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("X-Member-ID", String.valueOf(member.getMemberId())); // 헤더에 멤버 아이디 추가
         response.setHeader("X-Password-Issued", String.valueOf(member.isPasswordIssued()));
+        response.setHeader("exp", String.valueOf(expirationTime));
+        response.setHeader("iat", String.valueOf(issuedAtTime));
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 
     }

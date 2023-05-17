@@ -2,6 +2,7 @@ package com.codestates.julsinsa.item.service;
 
 import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.repository.ItemRepository;
@@ -105,6 +106,13 @@ public class ItemService {
             }
         }
 
+//        Favorite newFavorite = new Favorite();
+//        newFavorite.setMember(findmember);
+//        newFavorite.setItem(findItem);
+//        newFavorite.setLiked(true); // 찜한 상태로 설정
+//
+//        findmember.getFavorites().add(newFavorite); // 회원의 찜 목록에 추가
+
         itemRepository.upFavorite(findItem.getItemId(), findmember.getMemberId());
 
         return findItem;
@@ -127,6 +135,22 @@ public class ItemService {
         itemRepository.downFavorite(findItem.getItemId(), findmember.getMemberId());
 
         return findItem;
+    }
+
+    public ItemDto.FavoriteStatusDto checkFavoriteStatus(long itemId){
+        // 로그인한 유저 불러오기
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
+        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+
+        boolean like = item.getFavorites().stream()
+                .anyMatch(favorite -> favorite.getMember().getMemberId().equals(member.getMemberId()));
+
+        return new ItemDto.FavoriteStatusDto(like);
+
     }
     public Item findVerifedItem(long itemId){
         Optional<Item> findByItem = itemRepository.findById(itemId);

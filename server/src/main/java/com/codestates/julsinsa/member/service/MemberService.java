@@ -1,6 +1,7 @@
 package com.codestates.julsinsa.member.service;
 
 import com.codestates.julsinsa.auth.dto.LoginDto;
+import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
 import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
@@ -15,6 +16,10 @@ import com.codestates.julsinsa.member.dto.FindDto;
 import com.codestates.julsinsa.member.dto.MemberDto;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,6 +30,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -46,6 +53,9 @@ public class MemberService {
 
     private final ApplicationEventPublisher publisher;
     private final FavoriteRepository favoriteRepository;
+
+    private final JwtTokenizer jwtTokenizer;
+
     // 일반 회원 가입
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
@@ -87,23 +97,22 @@ public class MemberService {
 
     // oauth2로 회원가입 하는 로직
     public Member createOauth2Member(Member member) {
-        verifyExistsEmail(member.getEmail());
-
-        List<String> roles = authorityUtils.createRoles(member.getEmail());
-        member.setRoles(roles);
         member.setOauth2Registered(true);
 
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
 
+
+    // oauth2 가입시 닉네임 설정시 권한 부여
     public Member updateOAuth2Member(Member member){
         // 로그인한 유저 불러오기
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-
+        List<String> roles = new ArrayList<>(authorityUtils.createRoles(findmember.getEmail()));
+        findmember.setRoles(roles);
         findmember.setRealName(member.getRealName());
         findmember.setDisplayName(member.getDisplayName());
         findmember.setPhone(member.getPhone());
@@ -149,7 +158,7 @@ public class MemberService {
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
         List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
         for (Object[] objects : resultList) {
-            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((String) objects[0], (int) objects[1],(int) objects[2], (int) objects[3], (double) objects[4],(String) objects[5]);
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6]);
             itemList.add(item);
         }
 
@@ -311,4 +320,53 @@ public class MemberService {
         }
         return str;
     }
+
+    public void getToekn(HttpServletRequest request, HttpServletResponse response){
+
+        try {
+            String refreshJws = request.getHeader("Refresh");
+            String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+            Jws<Claims> claims = jwtTokenizer.getClaims(refreshJws, base64EncodedSecretKey); // refresh 토큰 검증
+            // 리프레시 토큰 유효 -> 액세스 토큰 재발급.
+            String email = claims.getBody().getSubject();
+            Optional<Member> optionalMember = memberRepository.findByEmail(email);
+            Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+            String accessToken = jwtTokenizer.delegateAccessToken(member);
+            String refreshToken = jwtTokenizer.delegateRefreshToken(member);
+            Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+            Date issuedAtTime = Calendar.getInstance().getTime();
+
+            new Date();
+            response.setHeader("Authorization", "Bearer " + accessToken);
+            response.setHeader("Refresh", refreshToken);
+            response.setHeader("exp", String.valueOf(expirationTime));
+            response.setHeader("iat", String.valueOf(issuedAtTime));
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (SignatureException se) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            request.setAttribute("exception", se);
+        } catch (ExpiredJwtException ee) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            request.setAttribute("exception", ee);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute("exception", e);
+        }
+    }
+    public void oauthgetToekn(Member member,HttpServletResponse response){
+
+        String accessToken = jwtTokenizer.delegateAccessToken(member);
+        String refreshToken = jwtTokenizer.delegateRefreshToken(member);
+        Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        Date issuedAtTime = Calendar.getInstance().getTime();
+
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        response.setHeader("Refresh", refreshToken);
+        response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
+        response.setHeader("exp", String.valueOf(expirationTime));
+        response.setHeader("iat", String.valueOf(issuedAtTime));
+    }
+
 }

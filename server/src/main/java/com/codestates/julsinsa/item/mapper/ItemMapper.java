@@ -19,9 +19,11 @@ public interface ItemMapper {
 
     List<ItemDto.ItemsResponse> itemsToItemResponseDtos(List<Item> items);
 
+    @Mapping(source = "member.memberId",target = "memberId")
     @Mapping(source = "member.displayName",target = "displayName")
     List<ReviewDto.Response> reviewsToReviewResponses(List<Review> reviews);
 
+    @Mapping(source = "member.memberId",target = "memberId")
     @Mapping(source = "member.displayName",target = "displayName")
     ReviewDto.Response reviewToReviewResponse(Review review);
 

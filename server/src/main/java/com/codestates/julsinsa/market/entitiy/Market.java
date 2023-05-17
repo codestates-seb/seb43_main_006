@@ -18,8 +18,8 @@ public class Market {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long marketId;
 
-    private Long lat;
-    private Long lng;
+    private double lat;
+    private double lng;
     private boolean choice;
     private String name;
     private String phone;

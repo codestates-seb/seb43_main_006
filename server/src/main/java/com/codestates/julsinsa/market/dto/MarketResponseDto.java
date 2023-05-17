@@ -12,8 +12,8 @@ import lombok.Setter;
 public class MarketResponseDto {
 
     private Long marketId;
-    private Long lat;
-    private Long lng;
+    private double lat;
+    private double lng;
     private boolean choice;
     private String name;
     private String phone;

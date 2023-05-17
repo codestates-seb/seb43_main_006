@@ -2,6 +2,7 @@ package com.codestates.julsinsa.item.controller;
 
 import com.codestates.julsinsa.dto.MultiResponseDto;
 import com.codestates.julsinsa.dto.SingleResponseDto;
+import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.mapper.ItemMapper;
 import com.codestates.julsinsa.item.service.ItemService;
@@ -179,6 +180,15 @@ public class ItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{item-id}/is-favorite")
+    public ResponseEntity checkFavoriteStatus(@PathVariable("item-id") @Positive long itemId) {
+
+        // 아이템의 찜 여부 조회
+        ItemDto.FavoriteStatusDto favoriteStatusDto = itemService.checkFavoriteStatus(itemId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(favoriteStatusDto),HttpStatus.OK);
+    }
+
     @PostMapping("/{item-id}/reviews")
     public ResponseEntity postReview(@PathVariable("item-id") @Positive long itemId,
                                      @RequestPart(value = "requestBody") @Valid ReviewDto.Post requestBody,
@@ -198,14 +208,24 @@ public class ItemController {
         return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewToReviewResponse(review)),HttpStatus.OK);
     }
 
-    @GetMapping("/{item-id}/reviews")
-    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId,
-                                    @Positive @RequestParam int page,
-                                     @Positive @RequestParam int size){
-        Page<Review> reviewPage = reviewService.findReviews(itemId, page, size);
-        List<Review> reviews = reviewPage.getContent();
+    // 리뷰 페이지네이션 처리
+//    @GetMapping("/{item-id}/reviews")
+//    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId,
+//                                    @Positive @RequestParam int page,
+//                                     @Positive @RequestParam int size){
+//        Page<Review> reviewPage = reviewService.findReviews(itemId, page, size);
+//        List<Review> reviews = reviewPage.getContent();
+//
+//        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews),reviewPage),HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews),reviewPage),HttpStatus.OK);
+
+    @GetMapping("/{item-id}/reviews")
+    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId){
+        List<Review> reviews = reviewService.findReviews(itemId);
+
+
+        return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews)),HttpStatus.OK);
     }
 
     @PatchMapping("/{item-id}/reviews/{review-id}")
