@@ -13,6 +13,7 @@
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
+    "@types/redux": "^3.6.0",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "nanoid": "^4.0.2",
@@ -22,6 +23,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
+    "redux": "^4.1.1",
     "styled-components": "^5.3.10",
     "styled-reset": "^4.4.6",
     "typescript": "^4.9.5",
@@ -60,6 +62,8 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "craco": "^0.0.3",
+    "craco-alias": "^3.0.1",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -68,5 +72,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.8",
     "tsconfig-paths-webpack-plugin": "^4.0.1"
+  },
+  "exports": {
+    "import": "./dist/redux-toolkit.esm.mjs",
+    "require": "./dist/index.js"
   }
 }
