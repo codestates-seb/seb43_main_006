@@ -112,6 +112,7 @@ const ScrollBtn = styled.button`
 `;
 
 const SuggestionBox = styled.ul`
+  width: 100%;
   display: flex;
   overflow: auto;
   white-space: nowrap;
@@ -219,9 +220,11 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
         </SuggestionTitle>
         {itemData && (
           <ScrollContainer>
-            <ScrollBtn onClick={() => HandleScroll("left")}>
-              <FaArrowAltCircleLeft size={45} color="lightgray" />
-            </ScrollBtn>
+            {itemData.length >= 4 ? (
+              <ScrollBtn onClick={() => HandleScroll("left")}>
+                <FaArrowAltCircleLeft size={45} color="lightgray" />
+              </ScrollBtn>
+            ) : null}
             <SuggestionBox ref={scrollRef}>
               {itemData.map((item) => (
                 <li key={item.itemId} onClick={() => HandleClickItem(item.itemId)}>
@@ -229,9 +232,11 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
                 </li>
               ))}
             </SuggestionBox>
-            <ScrollBtn onClick={() => HandleScroll("right")}>
-              <FaArrowAltCircleRight size={45} color="lightgray" />
-            </ScrollBtn>
+            {itemData.length >= 4 ? (
+              <ScrollBtn onClick={() => HandleScroll("right")}>
+                <FaArrowAltCircleRight size={45} color="lightgray" />
+              </ScrollBtn>
+            ) : null}
           </ScrollContainer>
         )}
       </div>
