@@ -47,7 +47,6 @@ const SortingUtilsContainer = styled.div`
       background-color: ${({ theme }) => theme.colors.bg};
       position: absolute;
       width: 100%;
-      /* min-width: 160px; */
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
 
@@ -69,28 +68,25 @@ const SortingUtilsContainer = styled.div`
   }
 `;
 
-type SortItemType = "최신순" | "할인순" | "낮은 가격순" | "높은 가격순" | "판매순";
+const SortItemType = ["최신순", "할인순", "낮은 가격순", "높은 가격순", "판매순"];
+type SortItem = (typeof SortItemType)[number];
+
+const sortOptions: Record<SortItem, string> = {
+  최신순: "latest",
+  할인순: "discountRate",
+  "낮은 가격순": "lowPrice",
+  "높은 가격순": "highPrice",
+  판매순: "sales",
+};
 
 const SortingUtils = ({ totalData, setSortBy }: SortItemsProps) => {
   const [isSortTab, setIsSortTab] = useState<boolean>(false);
-  const [sortTab, setSortTab] = useState<SortItemType>("최신순");
-  const sortItems: SortItemType[] = ["최신순", "할인순", "낮은 가격순", "높은 가격순", "판매순"];
+  const [sortTab, setSortTab] = useState<SortItem>("최신순");
 
-  const handleClickSortItems = (item: SortItemType): void => {
+  const handleClickSortItems = (item: SortItem): void => {
     setSortTab(item);
     setIsSortTab(false);
-
-    if (item === "할인순") {
-      setSortBy("discountRate");
-    } else if (item === "높은 가격순") {
-      setSortBy("highPrice");
-    } else if (item === "낮은 가격순") {
-      setSortBy("lowPrice");
-    } else if (item === "판매순") {
-      setSortBy("sales");
-    } else {
-      setSortBy("latest");
-    }
+    setSortBy(sortOptions[item]);
   };
 
   return (
@@ -103,13 +99,11 @@ const SortingUtils = ({ totalData, setSortBy }: SortItemsProps) => {
         </button>
         {isSortTab && (
           <ul>
-            {sortItems
-              .filter((item) => item !== sortTab)
-              .map((item) => (
-                <li key={item} onClick={() => handleClickSortItems(item)}>
-                  {item}
-                </li>
-              ))}
+            {SortItemType.filter((item) => item !== sortTab).map((item) => (
+              <li key={item} onClick={() => handleClickSortItems(item)}>
+                {item}
+              </li>
+            ))}
           </ul>
         )}
       </div>
