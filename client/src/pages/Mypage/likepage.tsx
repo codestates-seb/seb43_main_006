@@ -114,6 +114,7 @@ const PigStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 20px;
 `;
 
 const Table = ({ likelist }: TableProps) => {
@@ -202,7 +203,7 @@ const Likepage = () => {
             <Table likelist={paginationData}></Table>
           </LikepageMainStyled>
           <PigStyled>
-            <Pagination currentPage={1} setCurrentPage={setCurrentPage} itemsPerPage={5} totalData={15} />
+            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={5} totalData={15} />
           </PigStyled>
         </LikepageContainer>
       </TotalStyled>
