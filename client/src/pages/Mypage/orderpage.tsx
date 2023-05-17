@@ -1,9 +1,23 @@
 //주문페이지
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { ButtonDark } from "../../components/Common/Button";
+import Pagination from "../../components/AlcoholPage/Pagination";
 
+interface Orderitem {
+  orderId: number;
+  name: string;
+  phone: number;
+  orderStatus: string;
+}
+//table로 내린애
+interface OrderTableProps {
+  orderlist: Orderitem[];
+}
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -21,14 +35,23 @@ const OrderContainer = styled.div`
   flex-direction: column;
 `;
 
+const PageTitle = styled.div`
+  /* border: 1px solid black; */
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 30px;
+`;
+
 //누구누구님 등급써있는부분
 const OrderpageHeadStyled = styled.div`
   /* border: 3px solid black; */
   flex-grow: 1;
   font-size: 18px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  /* justify-content: center; */
   background-color: #dedede;
   > p {
     margin-left: 10px;
@@ -36,10 +59,12 @@ const OrderpageHeadStyled = styled.div`
     color: #181818;
     font-weight: 600;
   }
+  > div
 `;
 
 //주문내역써있는부분
 const OrderpageMainStyled = styled.div`
+  /* border: 3px solid black; */
   flex-grow: 0.5;
   display: flex;
   flex-direction: column;
@@ -74,7 +99,6 @@ const PeriodStyled = styled.div`
     height: 52px;
     width: 120px;
     border-radius: 7px;
-    background-color: #222222;
     color: whitesmoke;
     /* font-weight: 600; */
     font-size: 20px;
@@ -97,6 +121,14 @@ const OrderlistStyled = styled.div`
     margin-bottom: 10px;
   }
 `;
+//맨밑 페이지네이션부분
+const PigStyled = styled.div`
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
 
 const StyledTable = styled.table`
   border: 1px solid black;
@@ -118,7 +150,7 @@ const StyledTd = styled.td`
   vertical-align: middle;
 `;
 
-const OrderTable = () => {
+const OrderTable = ({ orderlist }: OrderTableProps) => {
   return (
     <>
       <StyledTable>
@@ -132,33 +164,61 @@ const OrderTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <StyledTd>2023-03-31</StyledTd>
-            <StyledTd>앱솔루트</StyledTd>
-            <StyledTd>10</StyledTd>
-            <StyledTd>20,000</StyledTd>
-            <StyledTd>픽업완료</StyledTd>
-          </tr>
-          <tr>
-            <StyledTd>2023-04-01</StyledTd>
-            <StyledTd>앱솔루트</StyledTd>
-            <StyledTd>2</StyledTd>
-            <StyledTd>20,000</StyledTd>
-            <StyledTd>주문완료</StyledTd>
-          </tr>
+          {orderlist.map((el: Orderitem, idx: number) => {
+            return (
+              <tr key={idx}>
+                <StyledTd>2023-03-31</StyledTd>
+                <StyledTd>{el.name}</StyledTd>
+                <StyledTd>{el.name}</StyledTd>
+                <StyledTd>{el.phone}</StyledTd>
+                <StyledTd>{el.orderStatus}</StyledTd>
+              </tr>
+            );
+          })}
         </tbody>
       </StyledTable>
     </>
   );
 };
-const Orderpage: React.FC = () => {
+const Orderpage = () => {
   // const navigate = useNavigate();
+  const [orderlist, setOrderlist] = useState<Orderitem[]>([]);
+  const [totalLength, setTotalLength] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const totalPg = Math.ceil(totalLength / 5);
+  const pageData = orderlist.slice(5 * (currentPage - 1), 5 * currentPage);
+  console.log(currentPage);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/members/orders`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("authToken"),
+          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+        },
+      })
+
+      .then((res) => {
+        console.log(res.data.data);
+        setOrderlist(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <TotalStyled>
         <OrderContainer>
+          <PageTitle>
+            <div>My Page</div>
+            <MdOutlineKeyboardArrowRight size="20px" />
+            <div>주문내역</div>
+          </PageTitle>
           <OrderpageHeadStyled>
             <p>찐영이야님의 등급은 Green입니다.</p>
+            <div>찜 3개</div>
+            <div>찜 3개</div>
           </OrderpageHeadStyled>
           <OrderpageMainStyled>주문내역</OrderpageMainStyled>
           <PeriodStyled>
@@ -166,12 +226,22 @@ const Orderpage: React.FC = () => {
             <input type="date"></input>
             <p>~</p>
             <input type="date"></input>
-            <button>조 회</button>
+            <ButtonDark width="150px" height="100%" onClick={() => console.log("메롱")}>
+              조 회
+            </ButtonDark>
           </PeriodStyled>
           <OrderlistStyled>
-            <p>총 2건</p>
-            <OrderTable></OrderTable>
+            <p>총 {orderlist.length}건</p>
+            <OrderTable orderlist={pageData}></OrderTable>
           </OrderlistStyled>
+          <PigStyled>
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={5}
+              totalData={10}
+            ></Pagination>
+          </PigStyled>
         </OrderContainer>
       </TotalStyled>
     </>
@@ -179,5 +249,3 @@ const Orderpage: React.FC = () => {
 };
 
 export default Orderpage;
-
-//0512 02:17
