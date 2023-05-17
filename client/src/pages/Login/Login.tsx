@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import axios from "axios";
 //components
-import Alert from "../../components/Common/AlertModal";
-import { ButtonDark, ButtonLight } from "../../components/Common/Button";
+import Alert from "@components/Common/AlertModal";
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
 
 const url = `${process.env.REACT_APP_API_URL}`;
 
@@ -39,6 +39,9 @@ const Login = () => {
 
   const handleLogin = () => {
     // 로그인 요청
+    LoginAxios();
+  };
+  const LoginAxios = () => {
     const body = {
       username,
       password,
@@ -57,7 +60,7 @@ const Login = () => {
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
         localStorage.setItem("exp", res.headers.exp); // 토큰 만료시간 저장
         localStorage.setItem("iat", res.headers.iat); // refresh 토큰 생성 시간 저장
-        console.log(issued);
+
         if (issued === "false") {
           // 임시 비밀번호로 접근 x
           navigate("/");
@@ -88,6 +91,12 @@ const Login = () => {
     // 회원가입 버튼 클릭 시
     navigate("/signup");
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      LoginAxios();
+    }
+  };
   return (
     <Container>
       {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
@@ -104,8 +113,8 @@ const Login = () => {
             </Title>
             <div className="flex-row">
               <div className="flex-col">
-                <input placeholder="이메일" onChange={userNameHandler} />
-                <input placeholder="비밀번호" type="password" onChange={passwordHandler} />
+                <input placeholder="이메일" type="email" onChange={userNameHandler} onKeyDown={handleKeyDown} />
+                <input placeholder="비밀번호" type="password" onChange={passwordHandler} onKeyDown={handleKeyDown} />
               </div>
               <div className="button">
                 <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
@@ -143,10 +152,10 @@ const Login = () => {
               fontSize="16px"
               fontWeight="500"
               onClick={() => {
-                navigate("/findid");
+                navigate("/findemail");
               }}
             >
-              아이디 찾기
+              이메일 찾기
             </ButtonLight>
             <ButtonLight
               width="150px"

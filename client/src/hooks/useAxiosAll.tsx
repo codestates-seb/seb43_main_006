@@ -17,6 +17,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       const dateString = localStorage.getItem("exp")?.replace("KST", "") as string; // 만료시간 형 변환
       const expSeconds = Math.floor(new Date(dateString).getTime() / 1000); // 만료시간 초 변환
       const nowSeconds = Math.floor(new Date().getTime() / 1000); // 현재시간 초 변환
+
       if (expSeconds < nowSeconds) {
         // 만료시간이 지난 경우
         console.log("토큰 만료된 경우");

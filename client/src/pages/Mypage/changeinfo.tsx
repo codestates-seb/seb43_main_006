@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useAxiosAll from "../../hooks/useAxiosAll";
-import Alert from "../../components/Common/AlertModal";
-import axios from "axios";
+//hooks
+import useAxiosAll from "@hooks/useAxiosAll";
+//components
+import Alert from "@components/Common/AlertModal";
+
 type TableProsp = {
   setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
   userInfo: Datatype | null;

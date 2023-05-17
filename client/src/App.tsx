@@ -2,27 +2,27 @@ import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
 //Pages
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import Login from "./pages/Login/Login";
-import SignupInput from "./pages/Signup/SignupInput";
-import Likepage from "./pages/Mypage/likepage";
-import Orderpage from "./pages/Mypage/orderpage";
-import Changeinfopage from "./pages/Mypage/changeinfo";
-import Payment from "./pages/Payment/Payment";
-import Place from "./pages/Place";
-import PaymentConfirm from "./pages/Payment/PaymentConfirm";
-import Alcohol from "./pages/Alcohol";
-import AlcoholDetail from "./pages/AlcoholDetail";
-import Layout from "./layout/index";
-import HelpCenter from "./pages/HelpCenter";
-import SignupSelection from "./pages/Signup/SignupSelection";
-import SignupTerm from "./pages/Signup/SignupTerm";
-import FindEmail from "./pages/Login/FindEmail";
-import FindPassword from "./pages/Login/FindPassword";
-import FailPage from "./pages/Payment/Fail";
-import Checkout from "./pages/Payment/Checkout";
-import ChatComponent from "./components/Chat/ChatComponent";
+import Home from "@pages/Home";
+import Cart from "@pages/Cart";
+import Place from "@pages/Place";
+import Alcohol from "@pages/Alcohol";
+import HelpCenter from "@pages/HelpCenter";
+import AlcoholDetail from "@pages/AlcoholDetail";
+import Login from "@Loginpages/Login";
+import FindEmail from "@Loginpages/FindEmail";
+import FindPassword from "@Loginpages/FindPassword";
+import SignupInput from "@Signuppages/SignupInput";
+import SignupSelection from "@Signuppages/SignupSelection";
+import SignupTerm from "@Signuppages/SignupTerm";
+import Likepage from "@Mypagepages/likepage";
+import Orderpage from "@Mypagepages/orderpage";
+import Changeinfopage from "@Mypagepages/changeinfo";
+import Payment from "@Paymentpages/Payment";
+import PaymentConfirm from "@Paymentpages/PaymentConfirm";
+import FailPage from "@Paymentpages/Fail";
+import Checkout from "@Paymentpages/Checkout";
+import ChatComponent from "@components/Chat/ChatComponent";
+import Layout from "@layout/index";
 
 const BodyContainer = styled.div`
   min-height: 100vh;

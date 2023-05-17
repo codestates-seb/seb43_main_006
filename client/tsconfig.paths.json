@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@layout/*": ["layout/*"],
+
+      "@pages/*": ["pages/*"],
+      "@Loginpages/*": ["pages/Login/*"],
+      "@Signuppages/*": ["pages/Signup/*"],
+      "@Mypagepages/*": ["pages/Mypage/*"],
+      "@Paymentpages/*": ["pages/Payment/*"],
+
+      "@redux/*": ["redux/*"],
+      "@services/*": ["services/*"],
+      "@styles/*": ["styles/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
+    }
+  }
+}

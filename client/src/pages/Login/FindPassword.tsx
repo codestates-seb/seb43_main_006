@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ButtonDark, ButtonLight } from "../../components/Common/Button";
-import Alert from "../../components/Common/AlertModal";
-import useAxiosAll from "../../hooks/useAxiosAll";
+import useAxiosAll from "@hooks/useAxiosAll";
+// components
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
+import Alert from "@components/Common/AlertModal";
 
 type TitleProps = {
   fontSize: string;
