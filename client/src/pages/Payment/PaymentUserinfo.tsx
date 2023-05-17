@@ -1,16 +1,15 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UserProps } from "../../types/AlcholInterfaces";
+import { useNavigate } from "react-router-dom";
 
-const dummyUser: UserProps = {
-  id: "84",
-  name: "John Doe",
-  email: "johndoe@example.com",
-  phoneNumber: "010-1234-5678",
-};
+interface ChildComponentProps {
+  userInfo: UserProps;
+  updateUserInfo: (user: UserProps) => void;
+}
 
-export default function PaymnetUserInfo() {
-  const [user, setUser] = useState<UserProps>(dummyUser);
+export default function PaymnetUserInfo({ userInfo, updateUserInfo }: ChildComponentProps) {
+  const [user, setUser] = useState<UserProps>(userInfo);
   const [newPhoneNumber, setNewPhoneNumber] = useState<string>("");
   const [newName, setNewName] = useState<string>("");
   const [newEmail, setNewEmail] = useState<string>("");
@@ -18,6 +17,11 @@ export default function PaymnetUserInfo() {
   const [isPhoneEditOpen, setIsPhoneEditOpen] = useState(false);
   const [isNameEditOpen, setIsNameEditOpen] = useState(false);
   const [isEmailEditOpen, setIsEmailEditOpen] = useState(false);
+
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   navigate("/checkout", { state: user });
+  // }, [user, navigate]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;

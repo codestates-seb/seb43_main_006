@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 
-const selector = "#payment-widget";
 const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
 const customerKey = "YbX2HuSlsC9uVJW6NMRMj";
 
@@ -17,7 +16,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
   const items = location.state ? location.state.items : [];
-  const user = location.state;
+  const user = location.state ? location.state.user : [];
   console.log(items);
   console.log(user);
 
@@ -34,7 +33,7 @@ export default function Checkout() {
     (async () => {
       const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
 
-      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(selector, totalPrice);
+      const paymentMethodsWidget = paymentWidget.renderPaymentMethods("#payment-widget", totalPrice);
 
       paymentWidgetRef.current = paymentWidget;
       paymentMethodsWidgetRef.current = paymentMethodsWidget;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonDark, ButtonLight } from "../../components/Common/Button";
@@ -8,14 +8,26 @@ import Progress from "./Progress";
 import PaymnetUserInfo from "./PaymentUserinfo";
 import Itemlist from "./Paymentitemlist";
 import Payinfo from "./Paymentpayinfo";
+import { UserProps } from "../../types/AlcholInterfaces";
 
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
-  const user = location.state;
-
   const navigate = useNavigate();
 
+  const [userInfo, setUserInfo] = useState<UserProps>({
+    id: "84",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    phoneNumber: "010-1234-5678",
+  });
+
+  const updateUserInfo = (user: UserProps) => {
+    setUserInfo(user);
+  };
+
+  console.log(userInfo);
+  console.log(items);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -39,7 +51,7 @@ const Payment = () => {
   // }, []);
 
   const handlePayment = () => {
-    navigate("/checkout", { state: { items: items, user: user } });
+    navigate("/checkout", { state: { items: items, user: userInfo } });
   };
 
   return (
@@ -47,7 +59,7 @@ const Payment = () => {
       <h2 className="payment">결제 페이지</h2>
       <div className="main">
         <Progress />
-        <PaymnetUserInfo />
+        <PaymnetUserInfo userInfo={userInfo} updateUserInfo={updateUserInfo} />
         <Itemlist />
         <Payinfo />
         <div className="button">
