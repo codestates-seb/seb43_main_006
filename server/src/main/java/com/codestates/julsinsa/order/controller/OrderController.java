@@ -32,10 +32,14 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity confirmPayment(@RequestBody OrderPostDto orderPostDto) {
-        Order order = orderService.createOrder()
+        Order order = orderService.createOrder();
 
-
-        return new ResponseEntity<>(, HttpStatus.CREATED);
+        if(order.getOrderStatus() == Order.OrderStatus.ORDER_COMPLETE) {
+            return new ResponseEntity<>(,HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -50,8 +54,7 @@ public class OrderController {
     public ResponseEntity cancelOrder(@PathVariable String paymentKey,
                                       @RequestParam String cancelReason) throws IOException, InterruptedException {
     Order order = orderService.cancelOrder();
-    String response = orderService.paymentCancel(paymentKey,cancelReason);
 
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT)
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

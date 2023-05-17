@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
 public class OrderService {
     private final MemberService memberService;
@@ -50,18 +51,21 @@ public class OrderService {
         itemOrderList.stream().
                 forEach(itemOrder -> {itemService.findVerifedItem(itemOrder.getItem().getItemId());});
 
-        paymentConfirm(order);
+        if(order.getItem().getPrice() == order.getAmount()) {
+            paymentConfirm(order);
+        }
+        else {
+            throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
+        }
 
         return orderRepository.save(order) ;
     }
 
 
-
-
     public Order findOrder(Long orderId) {
         return findVerifiedOrder(orderId);
     }
-    
+
 
 //    public Page<Order> findOrders(Pageable pageable) {
 //        Page<Order> orderPage = orderRepository.findAll(pageable);
@@ -69,9 +73,9 @@ public class OrderService {
 //        return  orderPage;
 //    }
 
-    public void cancelOrder(Long orderId) {
-        Order order = findVerifiedOrder(orderId);
-
+    public void cancelOrder(Long ordersId, String paymentKey, String cancelReason) throws IOException, InterruptedException {
+        Order order = findVerifiedOrder(ordersId);
+        paymentCancel(paymentKey, cancelReason);
         order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
     }
 
@@ -81,7 +85,7 @@ public class OrderService {
         return order;
     }
 
-    public Order paymentConfirm(Order order) {
+    public Order paymentConfirm(Order order){
         try {
             String encodedAuth = Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
             String requestBody = "{\"paymentKey\":\"" + order.getPaymentKey() + "\",\"amount\":" + order.getAmount() + ",\"orderId\":\"" + order.getOrderId() + "\"}";
@@ -95,13 +99,13 @@ public class OrderService {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                String responseBody = response.body();
-                return responseBody;
+                order.setOrderStatus(Order.OrderStatus.ORDER_COMPLETE);
+                return order;
             } else {
-                return "결제 승인에 실패했습니다. 응답 코드: " + response.statusCode();
+                throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
             }
         } catch (Exception e) {
-            return "결제 승인 중에 오류가 발생했습니다: " + e.getMessage();
+            throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
         }
     }
 
