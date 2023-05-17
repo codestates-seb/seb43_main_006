@@ -52,7 +52,7 @@ public class OrderService {
                 forEach(itemOrder -> {itemService.findVerifedItem(itemOrder.getItem().getItemId());});
 
         if(order.getItem().getPrice() == order.getAmount()) {
-            paymentConfirm(order);
+            order = paymentConfirm(order);
         }
         else {
             throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
