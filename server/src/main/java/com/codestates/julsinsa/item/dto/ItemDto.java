@@ -26,6 +26,8 @@ public class ItemDto {
 
         private String profile;
 
+        private String detailedProfile;
+
         private String content;
 
         private List<String> categories;
@@ -34,7 +36,7 @@ public class ItemDto {
 
         private int capacity;
 
-        private int volume;
+        private double volume;
 
         private String country;
 
@@ -52,7 +54,6 @@ public class ItemDto {
 
         private double reviewRating;
 
-        private List<ReviewDto.Response> reviews;
 
     }
 

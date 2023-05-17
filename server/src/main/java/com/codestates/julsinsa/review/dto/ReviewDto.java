@@ -49,6 +49,7 @@ public class ReviewDto {
 
         private double rating;
 
+        private Long memberId;
         private String displayName;
 
         private LocalDateTime createdAt;

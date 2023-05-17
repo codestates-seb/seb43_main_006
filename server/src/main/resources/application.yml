@@ -34,7 +34,7 @@ spring:
           google:
             clientId: ${G_CLIENT_ID}
             clientSecret: ${G_CLIENT_SECRET}
-            redirect-uri: https://156d-124-111-225-247.ngrok-free.app/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
+            redirect-uri: https://9b00-124-111-225-247.ngrok-free.app/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
             scope:
               - email
               - profile
@@ -56,7 +56,7 @@ spring:
           kakao:
             client-id: 7c67eb4ba631e8116081b968377e35d6
             client-secret: NWGmTyHL3wzQB2SdDDYAAeJdEmtom3Lw
-            redirect-uri: https://156d-124-111-225-247.ngrok-free.app/login/oauth2/code/kakao
+            redirect-uri: https://9b00-124-111-225-247.ngrok-free.app/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao

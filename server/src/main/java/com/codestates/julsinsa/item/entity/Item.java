@@ -34,7 +34,7 @@ public class Item extends Auditable {
 
     private int capacity;
 
-    private int volume;
+    private double volume;
 
     private String country;
 
@@ -49,6 +49,8 @@ public class Item extends Auditable {
     private int discountRate;
 
     private String profile;
+
+    private String detailedProfile;
 
     private int reviewCount;
 

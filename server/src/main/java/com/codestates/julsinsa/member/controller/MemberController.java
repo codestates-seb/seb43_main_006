@@ -11,6 +11,9 @@ import com.codestates.julsinsa.member.dto.MemberDto;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.mapper.MemberMapper;
 import com.codestates.julsinsa.member.service.MemberService;
+import com.codestates.julsinsa.order.entity.Order;
+import com.codestates.julsinsa.order.mapper.OrderMapper;
+import com.codestates.julsinsa.order.service.OrderService;
 import com.codestates.julsinsa.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,6 +40,10 @@ public class MemberController {
 
     private final static String USER_DEFAULT_URL = "/users";
 
+    private final OrderService orderService;
+
+    private final OrderMapper orderMapper;
+
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid MemberDto.Post requestBody){
         Member member = mapper.memberPostToMember(requestBody);
@@ -51,10 +58,10 @@ public class MemberController {
 
 
     @PostMapping("/oauth2-signup")
-    public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody,HttpServletResponse response){
+    public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody){
         Member member = memberService.updateOAuth2Member(mapper.oauth2MemberPostToMember(requestBody));
 
-        memberService.oauthgetToekn(member,response);
+//        memberService.oauthgetToekn(member,response);
 
         URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
 
@@ -91,6 +98,12 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(favorites),HttpStatus.OK);
     }
 
+    @GetMapping("/orders")
+    public ResponseEntity getOrders() {
+        List<Order> orders = orderService.getOrders();
+
+        return new ResponseEntity<>(new SingleResponseDto<>(orderMapper.ordersToOrderResponses(orders)),HttpStatus.OK);
+    }
 
     @PostMapping("/email")
     public ResponseEntity sendEmail(@RequestBody EmailRequest requestBody){

@@ -13,10 +13,11 @@ public interface ReviewMapper {
     Review reviewPostToReview(ReviewDto.Post requestBody);
 
     Review reviewPatchToReview(ReviewDto.Patch requestBody);
-
+    @Mapping(source = "member.memberId",target = "memberId")
     @Mapping(source = "member.displayName",target = "displayName")
     ReviewDto.Response reviewToReviewResponse(Review review);
 
+    @Mapping(source = "member.memberId",target = "memberId")
     @Mapping(source = "member.displayName",target = "displayName")
     List<ReviewDto.Response> reviewsToReviewResponses(List<Review> reviews);
 }
