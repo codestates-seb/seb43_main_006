@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { UserProps } from "../../types/AlcholInterfaces";
-import { useNavigate } from "react-router-dom";
 
 interface ChildComponentProps {
   userInfo: UserProps;
   updateUserInfo: (user: UserProps) => void;
 }
 
-export default function PaymnetUserInfo({ userInfo, updateUserInfo }: ChildComponentProps) {
+export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
   const [user, setUser] = useState<UserProps>(userInfo);
   const [newPhoneNumber, setNewPhoneNumber] = useState<string>("");
   const [newName, setNewName] = useState<string>("");

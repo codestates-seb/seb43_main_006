@@ -21,6 +21,7 @@ import Payment from "@Paymentpages/Payment";
 import PaymentConfirm from "@Paymentpages/PaymentConfirm";
 import FailPage from "@Paymentpages/Fail";
 import Checkout from "@Paymentpages/Checkout";
+import CheckoutChang from "@pages/Payment/CheckoutChang";
 import ChatComponent from "@components/Chat/ChatComponent";
 import Layout from "@layout/index";
 
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkoutChang" element={<CheckoutChang />} />
           <Route path="/paymentconfirm" element={<PaymentConfirm />} />
           <Route path="/fail" element={<FailPage />} />
           <Route path="/place" element={<Place />} />
