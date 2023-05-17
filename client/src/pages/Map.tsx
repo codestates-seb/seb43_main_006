@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 // import { useSelector } from "react-redux";
-// import { markerdata } from "./MarkerData";
 
 declare global {
   interface Window {
@@ -112,4 +111,4 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
 };
 
 export default MapComponent;
-//0517 10:59
+//0517 11:23
