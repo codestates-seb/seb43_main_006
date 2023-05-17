@@ -7,8 +7,8 @@ import { AlcoholData, ItemOrder } from "../../types/AlcholInterfaces";
 // components
 // import ReviewRating from "../Common/ReviewRating";
 import ClickFavoriteItem from "../Common/ClickFavoriteItem";
-import PriceRegular from "../Common/PriceRegular";
-import { ButtonDark, ButtonLight } from "../Common/Button";
+import PriceDisplay from "../Common/PriceDisplay";
+import { ButtonDark } from "../Common/Button";
 import QuantityControl from "./QuantityControl";
 
 interface ItemDatailProps {
@@ -174,7 +174,7 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
           <div className="buy_item_content">
             <span className="buy_item_content_title">판매가</span>
             <span className="buy_price_text">
-              <PriceRegular price={data.price} />원
+              <PriceDisplay price={data.price} />원
             </span>
           </div>
           <div className="buy_item_content">
@@ -187,7 +187,7 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
           <div className="quantity_box">
             <QuantityControl quantity={quantity} maxQuantity={data.quantity} onQuantityChange={handleQuantityChange} />
             <div className="item_price">
-              <PriceRegular price={data.price * quantity} />원
+              <PriceDisplay price={data.price * quantity} />원
             </div>
           </div>
         </div>
