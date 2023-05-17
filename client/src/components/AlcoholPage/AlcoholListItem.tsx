@@ -3,7 +3,7 @@ import { AlcoholListData } from "../../types/AlcholInterfaces";
 
 // components
 import ReviewRating from "../Common/ReviewRating";
-import PriceRegular from "../Common/PriceRegular";
+import PriceDisplay from "../Common/PriceDisplay";
 
 interface ItemProps {
   item: AlcoholListData;
@@ -78,7 +78,7 @@ const AlcoholListItem = ({ item }: ItemProps) => {
         <div>
           <span className="item_discount_rate">{item.discountRate}%</span>
           <span className="item_price">
-            <PriceRegular price={item.price} />원
+            <PriceDisplay price={item.price} />원
           </span>
         </div>
         <div className="item_review_rating">
