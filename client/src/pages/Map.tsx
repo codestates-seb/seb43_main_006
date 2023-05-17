@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+// import { useSelector } from "react-redux";
 // import { markerdata } from "./MarkerData";
 
 declare global {
@@ -21,17 +21,23 @@ interface Shopitem {
 }
 interface ShopProps {
   shoplist: Shopitem[];
+  setSelect: React.Dispatch<React.SetStateAction<Shopitem | null>>;
 }
+// interface SelectProps {
+//   setSelect: React.Dispatch<React.SetStateAction<string>>;
+// }
 
-const MapComponent = ({ shoplist }: ShopProps) => {
-  // console.log(shoplist);
+const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
+  // const selectdata = useSelector((state) => state);
+  // console.log(selectdata);
+
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
       center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804),
       level: 2,
     };
-
+    // console.log(setSelect);
     const map = new window.kakao.maps.Map(container, options);
 
     //사용자 현재위치 정보
@@ -73,10 +79,12 @@ const MapComponent = ({ shoplist }: ShopProps) => {
       const marker = new window.kakao.maps.Marker({
         map: map,
         position: new window.kakao.maps.LatLng(el.lat, el.lng),
+        data: el.data,
       });
+
       const content =
-        '<div className="overlayContainer" style="background-color: red;">' +
-        `<div  style="color: black;" >${el.name}</div>` +
+        '<div onClick={handleChoice} className="overlayContainer" style="background-color: red;">' +
+        `<div style="color: black;" >${el.name}</div>` +
         `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
 
@@ -93,6 +101,10 @@ const MapComponent = ({ shoplist }: ShopProps) => {
       window.kakao.maps.event.addListener(marker, "mouseout", () => {
         customOverlay.setMap(null);
       });
+      window.kakao.maps.event.addListener(marker, "click", () => {
+        setSelect(el);
+        // console.log(el);
+      });
     });
   }, [shoplist]);
 
@@ -100,4 +112,4 @@ const MapComponent = ({ shoplist }: ShopProps) => {
 };
 
 export default MapComponent;
-//0516 20:38pm
+//0517 10:59

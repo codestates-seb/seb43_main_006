@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { ButtonDark } from "../components/Common/Button";
+import { useDispatch } from "react-redux";
+import { setMarker } from "../redux/slice/store";
 // import MapComponent from "./Map";
 const MapComponent = lazy(() => import("./Map"));
 
@@ -66,8 +68,10 @@ interface Shopitem {
 }
 /*-----------------------------------------------------------------------*/
 const Place = () => {
+  const dispatch = useDispatch();
   const [shoplist, setShoplist] = useState<Shopitem[]>([]);
   const navigate = useNavigate();
+  const [select, setSelect] = useState<Shopitem | null>(null);
 
   const King = async () => {
     await axios
@@ -88,6 +92,12 @@ const Place = () => {
     King();
   }, []);
 
+  const handleSelect = () => {
+    // console.log(select);
+    dispatch(setMarker(select));
+    navigate("/cart");
+  };
+
   return (
     <>
       <TotalStyled>
@@ -95,11 +105,12 @@ const Place = () => {
           <MapBodyStyled>
             <MapArticleStyled>픽업 매장을 선택하세요</MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
-              <MapComponent shoplist={shoplist} />
+              <MapComponent shoplist={shoplist} setSelect={setSelect} />
+              {/* <MapComponent shoplist={shoplist} /> */}
             </Suspense>
           </MapBodyStyled>
           <MapBottomStyled>
-            <ButtonDark width="350px" height="50%" onClick={() => navigate("/cart")}>
+            <ButtonDark width="350px" height="50%" onClick={handleSelect}>
               선택
             </ButtonDark>
           </MapBottomStyled>
