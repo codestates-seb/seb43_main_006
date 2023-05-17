@@ -104,7 +104,7 @@ public class OrderService {
             } else {
                 throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
             }
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
         }
     }
