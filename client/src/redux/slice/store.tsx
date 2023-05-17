@@ -21,10 +21,32 @@ const loginState = createSlice({
   },
 });
 
+const markerState = createSlice({
+  name: "markerState",
+  initialState: {
+    address: "",
+    choice: false,
+    comment: "",
+    lat: 1,
+    lng: 1,
+    marketId: 1,
+    name: "",
+    phone: "",
+    workTime: "",
+  },
+  reducers: {
+    setMarker: (state, action) => {
+      return action.payload;
+    },
+  },
+});
+
 export const { setToken, setLogout } = loginState.actions;
+export const { setMarker } = markerState.actions;
 
 export default configureStore({
   reducer: {
     loginState: loginState.reducer,
+    markerState: markerState.reducer,
   },
 });
