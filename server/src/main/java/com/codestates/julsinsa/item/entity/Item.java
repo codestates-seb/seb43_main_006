@@ -21,21 +21,27 @@ public class Item extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
+    @Column(nullable = false)
     private String titleKor;
 
     private String titleEng;
 
+    @Column(nullable = false)
     private String content;
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> categories = new ArrayList<>();
 
+    @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
     private int capacity;
 
+    @Column(nullable = false)
     private double volume;
 
+    @Column(nullable = false)
     private String country;
 
     private String aroma;
@@ -44,16 +50,25 @@ public class Item extends Auditable {
 
     private String field;
 
+    @Column(nullable = false)
     private int sales;
+
+    @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
     private int discountRate;
 
+    @Column(nullable = false)
     private String profile;
 
+    @Column(nullable = false)
     private String detailedProfile;
 
+    @Column(nullable = false)
     private int reviewCount;
 
+    @Column(nullable = false)
     private double reviewRating;
 
     @OneToMany(mappedBy = "item")

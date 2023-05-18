@@ -25,8 +25,8 @@ public class Favorite {
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
-
-    private boolean isChecked = false; // 프론트에서 체크박스 여부 확인한다고 만들어 달라함
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isChecked; // 프론트에서 체크박스 여부 확인한다고 만들어 달라함
 
     // 관계 편의 메서드
     public void addMember(Member member){

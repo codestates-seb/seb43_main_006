@@ -15,21 +15,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CartMapper {
 
-//    default Cart cartPostToCart(CartDto.Post requestBody) {
-//        Cart cart = new Cart();
-//        List<ItemCart> itemCarts = requestBody.getItemCarts().stream()
-//                .map(itemCartDto -> {
-//                    ItemCart itemCart = new ItemCart();
-//                    Item item = new Item();
-//                    item.setItemId(itemCartDto.getItemId());
-//                    itemCart.setCart(cart);
-//                    itemCart.setItem(item);
-//                    itemCart.setQuantity(itemCartDto.getQuantity());
-//                    return itemCart;
-//                }).collect(Collectors.toList());
-//        cart.setItemCarts(itemCarts);
-//        return cart;
-//    }
     Cart cartPostToCart(CartDto.Post requestBody);
 
     CartDto.Response cartToCartResponse(Cart cart);
