@@ -24,7 +24,8 @@ public class Order extends Auditable {
     private String name;
     private String phone;
 
-    private boolean isChecked = false;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isChecked;
 
     @Enumerated(value = EnumType.STRING)
     @Column

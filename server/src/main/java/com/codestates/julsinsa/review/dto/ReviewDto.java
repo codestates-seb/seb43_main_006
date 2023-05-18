@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class ReviewDto {
         @NotBlank
         private String content;
 
-
+        @Positive
         private double rating;
     }
 

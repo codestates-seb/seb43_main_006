@@ -16,6 +16,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,15 +47,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
-        Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        Date issuedAtTime = Calendar.getInstance().getTime();
+        Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        LocalDateTime issuedDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
+        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("X-Member-ID", String.valueOf(member.getMemberId())); // 헤더에 멤버 아이디 추가
         response.setHeader("X-Password-Issued", String.valueOf(member.isPasswordIssued()));
-        response.setHeader("exp", String.valueOf(expirationTime));
-        response.setHeader("iat", String.valueOf(issuedAtTime));
+        response.setHeader("exp", formattedExpirationDateTime);
+        response.setHeader("iat", issuedDateTime.format(formatter));
+
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 
     }
