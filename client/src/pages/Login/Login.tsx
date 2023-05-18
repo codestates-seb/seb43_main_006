@@ -54,8 +54,9 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
+        const token = res.headers.authorization;
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
-        localStorage.setItem("authToken", res.headers.authorization); // 토큰 저장
+        localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
         localStorage.setItem("memberId", res.headers["x-member-id"]); // 멤버id 저장
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
         localStorage.setItem("exp", res.headers.exp); // 토큰 만료시간 저장

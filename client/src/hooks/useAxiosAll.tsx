@@ -22,38 +22,40 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
         // 만료시간이 지난 경우
         console.log("토큰 만료된 경우");
         // 엑세스 토큰 갱신
+        const access_token = `Bearer ${localStorage.getItem("authToken")}`;
         await axios
           .post(
             `${process.env.REACT_APP_API_URL}/members/token`,
             {},
             {
               headers: {
-                Authorization: localStorage.getItem("authToken"),
+                Authorization: access_token,
                 refresh: localStorage.getItem("refresh"),
               },
             },
           )
           .then((res) => {
             console.log(res.headers);
-            localStorage.setItem("authToken", res.headers.authorization); // 토큰 저장
+            const token = res.headers.authorization;
+            localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
             localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
           })
           .catch((err) => console.log(err));
+      }
+      if (needToken) {
+        // 토큰 필요시 토큰 포함
+        const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+        header = {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420",
+        };
       } else {
-        if (needToken) {
-          // 토큰 필요시 토큰 포함
-          header = {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("authToken"),
-            "ngrok-skip-browser-warning": "69420",
-          };
-        } else {
-          // 토큰 미포함
-          header = {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "69420",
-          };
-        }
+        // 토큰 미포함
+        header = {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        };
       }
     }
 
@@ -74,7 +76,6 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       };
     }
 
-    console.log("본 요청 실시");
     axios
       .request(requestCon)
       .then((res) => {
