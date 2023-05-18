@@ -1,8 +1,8 @@
 package com.codestates.julsinsa.image.service;
 
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.image.entity.ImageInfo;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.image.repository.ReviewImageRepository;

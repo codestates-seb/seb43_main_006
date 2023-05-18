@@ -1,4 +1,4 @@
-package com.codestates.julsinsa.utils;
+package com.codestates.julsinsa.global.utils;
 
 import org.springframework.web.util.UriComponentsBuilder;
 

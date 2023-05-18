@@ -53,8 +53,6 @@ public class ItemDto {
         private int reviewCount;
 
         private double reviewRating;
-
-
     }
 
     @Getter

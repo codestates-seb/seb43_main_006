@@ -1,11 +1,10 @@
 package com.codestates.julsinsa.member.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.review.entity.Review;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

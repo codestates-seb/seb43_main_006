@@ -1,11 +1,10 @@
 package com.codestates.julsinsa.review.service;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.image.service.ImageService;
 import com.codestates.julsinsa.item.entity.Item;
-import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.repository.OrderRepository;
 import com.codestates.julsinsa.review.entity.Review;
 import com.codestates.julsinsa.item.repository.ItemRepository;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;

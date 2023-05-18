@@ -1,4 +1,4 @@
-package com.codestates.julsinsa.audit;
+package com.codestates.julsinsa.global.audit;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

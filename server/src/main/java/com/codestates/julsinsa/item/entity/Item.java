@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.item.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.ItemCart;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.Getter;

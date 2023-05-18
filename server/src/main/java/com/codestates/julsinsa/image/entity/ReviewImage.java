@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.image.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.*;
 

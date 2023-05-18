@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.order.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonValue;

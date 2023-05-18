@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.auth.utills;
 
-import com.codestates.julsinsa.response.ErrorResponse;
+import com.codestates.julsinsa.global.response.ErrorResponse;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
