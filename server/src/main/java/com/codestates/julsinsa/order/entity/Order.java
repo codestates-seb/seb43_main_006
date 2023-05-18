@@ -4,6 +4,7 @@ import com.codestates.julsinsa.audit.Auditable;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,13 +28,13 @@ public class Order extends Auditable {
     private Long amount;
     private String name;
     private String email;
-
+    private boolean isChecked = false;
     @Enumerated(value = EnumType.STRING)
     @Column
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<ItemOrder> itemOrder = new ArrayList<>();
+    private List<ItemOrder> itemOrders = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -63,6 +64,12 @@ public class Order extends Auditable {
 
         OrderStatus(String orderDec) {
             this.orderDec = orderDec;
+        }
+
+        // @JsonValue 어노테이션을 사용하여 필드를 한글로 직렬화
+        @JsonValue
+        public String getOrderDec() {
+            return orderDec;
         }
     }
 
