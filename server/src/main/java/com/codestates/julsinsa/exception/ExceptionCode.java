@@ -22,6 +22,9 @@ public enum ExceptionCode {
 
     ORDER_NOT_FOUND(404, "Order Not Found"),
 
+    ORDER_REQUEST_FAIL(404, "Order Request Fail"),
+
+    ORDER_AMOUNT_NOT_MATCHED(404, "Order Amount Not Match"),
 
     // 수정 할 것
     IMAGE_NOT_CONVERTED(404,"이미지 변환에 실패했습니다."),
