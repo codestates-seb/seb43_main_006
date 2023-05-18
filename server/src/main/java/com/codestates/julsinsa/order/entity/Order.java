@@ -27,8 +27,10 @@ public class Order extends Auditable {
     private String orderId;
     private Long amount;
     private String name;
-    private String email;
+    private String phone;
+
     private boolean isChecked = false;
+
     @Enumerated(value = EnumType.STRING)
     @Column
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
@@ -65,6 +67,7 @@ public class Order extends Auditable {
         OrderStatus(String orderDec) {
             this.orderDec = orderDec;
         }
+
 
         // @JsonValue 어노테이션을 사용하여 필드를 한글로 직렬화
         @JsonValue

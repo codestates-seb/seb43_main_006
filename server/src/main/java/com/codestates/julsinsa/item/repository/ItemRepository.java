@@ -25,4 +25,17 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     Page<Item> findAllByCategories(String category, Pageable pageable);
 
     Page<Item> findAllByTitleKorContaining(String titleKor, Pageable pageable);
+
+//    // 판매량에 따라 아이템 정렬
+//    // 카테고리와 판매량에 따라 아이템 필터링 및 정렬
+//    Page<Item> findAllByCategoriesAndSortBySales(String category, Pageable pageable);
+//
+//    // 카테고리와 할인율에 따라 아이템 필터링 및 정렬
+//    Page<Item> findAllByCategoriesAndSortByDiscountRate(String category, Pageable pageable);
+//
+//    // 카테고리와 가격 오름차순으로 아이템 필터링
+//    Page<Item> findAllByCategoriesAndSortByPriceAsc(String category, Pageable pageable);
+//
+//    // 카테고리와 가격 내림차순으로 아이템 필터링
+//    Page<Item> findAllByCategoriesAndSortByPriceDesc(String category, Pageable pageable);
 }

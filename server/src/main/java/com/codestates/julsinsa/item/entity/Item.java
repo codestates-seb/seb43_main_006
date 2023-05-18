@@ -1,6 +1,7 @@
 package com.codestates.julsinsa.item.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.cart.entity.ItemCart;
 import com.codestates.julsinsa.image.entity.ItemImage;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class Item extends Auditable {
 
     private int capacity;
 
-    private int volume;
+    private double volume;
 
     private String country;
 
@@ -49,6 +50,8 @@ public class Item extends Auditable {
 
     private String profile;
 
+    private String detailedProfile;
+
     private int reviewCount;
 
     private double reviewRating;
@@ -62,6 +65,9 @@ public class Item extends Auditable {
     @OneToMany(mappedBy = "item")
     private List<ItemImage> images = new ArrayList<>();
     //아이템카트, 아이템오더
+
+    @OneToMany(mappedBy = "item")
+    private List<ItemCart> itemCarts = new ArrayList<>();
 
     //관계 편의 메서드
     public void addFavorite(Favorite favorite){

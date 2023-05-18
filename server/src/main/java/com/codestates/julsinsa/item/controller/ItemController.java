@@ -2,6 +2,7 @@ package com.codestates.julsinsa.item.controller;
 
 import com.codestates.julsinsa.dto.MultiResponseDto;
 import com.codestates.julsinsa.dto.SingleResponseDto;
+import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.mapper.ItemMapper;
 import com.codestates.julsinsa.item.service.ItemService;
@@ -43,27 +44,96 @@ public class ItemController {
 //                new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
 //    }
 
+//    @GetMapping
+//    public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
+//                                              @Positive @RequestParam int size,
+//                                              @RequestParam(required = false) String category,
+//                                              @RequestParam(required = false) String sortBy){
+//        Page<Item> pageItems;
+//        List<Item> items;
+//        if(category != null){
+//            pageItems = itemService.findItemsByCategory(page, size, category);
+//            items = pageItems.getContent();
+//        }else{
+//            if(sortBy != null){
+//                switch(sortBy){
+//                    case "sales":
+//                        pageItems = itemService.findItemsBySales(page,size);
+//                        break;
+//                    case "discountRate":
+//                        pageItems = itemService.findItemsByDiscountRate(page,size);
+//                        break;
+//                    case "highPrice":
+//                        pageItems = itemService.findItemsByHighPrice(page,size);
+//                        break;
+//                    case "lowPrice":
+//                        pageItems = itemService.findItemsByLowPrice(page,size);
+//                        break;
+//                    case "latest":
+//                        pageItems = itemService.findItems(page, size);
+//                        break;
+//                    default:
+//                        pageItems = itemService.findItems(page, size);
+//                        break;
+//                }
+//            } else {
+//                pageItems = itemService.findItems(page, size);
+//            }
+//            items = pageItems.getContent();
+//        }
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+//    }
+
     @GetMapping
     public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
                                               @Positive @RequestParam int size,
                                               @RequestParam(required = false) String category,
-                                              @RequestParam(required = false) String sortBy){
+                                              @RequestParam(required = false) String sortBy) {
         Page<Item> pageItems;
         List<Item> items;
-        if(category != null){
-            pageItems = itemService.findItemsByCategory(page, size, category);
-            items = pageItems.getContent();
-        }else{
-            if(sortBy != null){
-                switch(sortBy){
+
+        if (category != null) {
+            if (sortBy != null) {
+                switch (sortBy) {
                     case "sales":
-                        pageItems = itemService.findItemsBySales(page,size);
+                        pageItems = itemService.findItemsByCategoryAndSortBySales(page, size, category);
                         break;
                     case "discountRate":
-                        pageItems = itemService.findItemsByDiscountRate(page,size);
+                        pageItems = itemService.findItemsByCategoryAndSortByDiscountRate(page, size, category);
                         break;
-                    case "price":
-                        pageItems = itemService.findItemsByPrice(page,size);
+                    case "highPrice":
+                        pageItems = itemService.findItemsByCategoryAndSortByHighPrice(page, size, category);
+                        break;
+                    case "lowPrice":
+                        pageItems = itemService.findItemsByCategoryAndSortByLowPrice(page, size, category);
+                        break;
+                    case "latest":
+                        pageItems = itemService.findItemsByCategory(page, size, category);
+                        break;
+                    default:
+                        pageItems = itemService.findItemsByCategory(page, size, category);
+                        break;
+                }
+            } else {
+                pageItems = itemService.findItemsByCategory(page, size, category);
+            }
+        } else {
+            if (sortBy != null) {
+                switch (sortBy) {
+                    case "sales":
+                        pageItems = itemService.findItemsBySales(page, size);
+                        break;
+                    case "discountRate":
+                        pageItems = itemService.findItemsByDiscountRate(page, size);
+                        break;
+                    case "highPrice":
+                        pageItems = itemService.findItemsByHighPrice(page, size);
+                        break;
+                    case "lowPrice":
+                        pageItems = itemService.findItemsByLowPrice(page, size);
+                        break;
+                    case "latest":
+                        pageItems = itemService.findItems(page, size);
                         break;
                     default:
                         pageItems = itemService.findItems(page, size);
@@ -72,10 +142,12 @@ public class ItemController {
             } else {
                 pageItems = itemService.findItems(page, size);
             }
-            items = pageItems.getContent();
         }
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items),pageItems),HttpStatus.OK);
+
+        items = pageItems.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.itemsToItemResponseDtos(items), pageItems), HttpStatus.OK);
     }
+
 
     @GetMapping("/search")
     public ResponseEntity searchTitle(@RequestParam @Positive int page,
@@ -108,6 +180,15 @@ public class ItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{item-id}/is-favorite")
+    public ResponseEntity checkFavoriteStatus(@PathVariable("item-id") @Positive long itemId) {
+
+        // 아이템의 찜 여부 조회
+        ItemDto.FavoriteStatusDto favoriteStatusDto = itemService.checkFavoriteStatus(itemId);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(favoriteStatusDto),HttpStatus.OK);
+    }
+
     @PostMapping("/{item-id}/reviews")
     public ResponseEntity postReview(@PathVariable("item-id") @Positive long itemId,
                                      @RequestPart(value = "requestBody") @Valid ReviewDto.Post requestBody,
@@ -127,14 +208,24 @@ public class ItemController {
         return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewToReviewResponse(review)),HttpStatus.OK);
     }
 
-    @GetMapping("/{item-id}/reviews")
-    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId,
-                                    @Positive @RequestParam int page,
-                                     @Positive @RequestParam int size){
-        Page<Review> reviewPage = reviewService.findReviews(itemId, page, size);
-        List<Review> reviews = reviewPage.getContent();
+    // 리뷰 페이지네이션 처리
+//    @GetMapping("/{item-id}/reviews")
+//    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId,
+//                                    @Positive @RequestParam int page,
+//                                     @Positive @RequestParam int size){
+//        Page<Review> reviewPage = reviewService.findReviews(itemId, page, size);
+//        List<Review> reviews = reviewPage.getContent();
+//
+//        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews),reviewPage),HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews),reviewPage),HttpStatus.OK);
+
+    @GetMapping("/{item-id}/reviews")
+    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId){
+        List<Review> reviews = reviewService.findReviews(itemId);
+
+
+        return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews)),HttpStatus.OK);
     }
 
     @PatchMapping("/{item-id}/reviews/{review-id}")

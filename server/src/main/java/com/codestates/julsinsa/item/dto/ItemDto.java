@@ -24,6 +24,10 @@ public class ItemDto {
 
         private String titleEng;
 
+        private String profile;
+
+        private String detailedProfile;
+
         private String content;
 
         private List<String> categories;
@@ -32,7 +36,7 @@ public class ItemDto {
 
         private int capacity;
 
-        private int volume;
+        private double volume;
 
         private String country;
 
@@ -50,7 +54,7 @@ public class ItemDto {
 
         private double reviewRating;
 
-        private List<ReviewDto.Response> reviews;
+
     }
 
     @Getter
@@ -76,6 +80,7 @@ public class ItemDto {
     @Setter
     public static class favoriteItemResponse {
 
+        private Long itemId;
         private String titleKor;
         private int price;
 
@@ -86,5 +91,12 @@ public class ItemDto {
 
         private String profile;
 
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class FavoriteStatusDto{
+        private boolean like;
     }
 }

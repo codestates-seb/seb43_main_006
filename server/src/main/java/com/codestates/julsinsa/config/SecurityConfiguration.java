@@ -70,6 +70,17 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .antMatchers(HttpMethod.GET, "/members").hasAnyRole("USER","ADMIN") // 회원 조회
+                                .antMatchers(HttpMethod.PATCH, "/members").hasAnyRole("USER","ADMIN") // 회원 수정
+                                .antMatchers(HttpMethod.DELETE, "/members").hasAnyRole("USER","ADMIN") // 회원 탈퇴
+                                .antMatchers(HttpMethod.GET, "/members/favorite").hasAnyRole("USER","ADMIN") // 찜 목록보기
+                                .antMatchers(HttpMethod.POST, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 하기
+                                .antMatchers(HttpMethod.DELETE, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 삭제
+                                .antMatchers(HttpMethod.GET, "/items/*/is-favorite").hasAnyRole("USER","ADMIN") // 찜 여부 확인
+                                .antMatchers(HttpMethod.POST, "/items/*/reviews").hasAnyRole("USER","ADMIN") // 리뷰작성
+                                .antMatchers(HttpMethod.PATCH, "/items/*/reviews/*").hasAnyRole("USER","ADMIN")// 리뷰수정
+                                .antMatchers(HttpMethod.DELETE, "/items/*/reviews/*").hasAnyRole("USER","ADMIN") // 리뷰삭제
+                                .antMatchers(HttpMethod.GET, "/items/*/cart").hasAnyRole("USER","ADMIN") // 장바구니 조회
                                 .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

@@ -80,11 +80,20 @@ public class ReviewService {
         else throw new BusinessLogicException(ExceptionCode.DO_NOT_MATCH);
     }
 
+    //  리뷰 페이지네이션 처리
     public Page<Review> findReviews(long itemId , int page, int size){
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
         return reviewRepository.findAllByItem(item,PageRequest.of(page -1 , size, Sort.by("reviewId").descending()));
+    }
+
+    public List<Review> findReviews(long itemId){
+        Optional<Item> findItem = itemRepository.findById(itemId);
+        Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "reviewId");
+        return reviewRepository.findAllByItem(item,sort);
     }
 
     public Review updateReview(long itemId, Review review){

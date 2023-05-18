@@ -10,6 +10,9 @@ import org.mapstruct.ReportingPolicy;
 public interface MemberMapper {
 
     Member memberPostToMember(MemberDto.Post requestBody);
+
+    Member oauth2MemberPostToMember(MemberDto.Oath2Post requestBody);
+
     Member memberPatchToMember(MemberDto.Patch requestBody);
 
     MemberDto.Response memberToMemberResponse(Member member);
