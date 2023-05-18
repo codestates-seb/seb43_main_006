@@ -22,14 +22,28 @@ const Home: React.FC = () => {
     return state;
   };
   const { y } = useScroll();
+  function convertToSeconds(dateString: string): string {
+    // dateString을 Date 객체로 변환합니다.
+    const date = new Date(dateString);
 
+    // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
+    const seconds = Math.floor(date.getTime() / 1000);
+
+    return `${seconds}`;
+  }
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get("access_token");
     const refreshToken = urlParams.get("refresh_token");
-    if (accessToken && refreshToken) {
-      localStorage.setItem("authToken", accessToken); // 토큰 저장
+    const iatDate = urlParams.get("iat");
+    const expDate = urlParams.get("exp");
+    if (accessToken && refreshToken && iatDate && expDate) {
+      localStorage.setItem("authToken", accessToken.replace(/^Bearer\s/, "")); // 토큰 저장
       localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
+      const iat_sec = convertToSeconds(iatDate);
+      const exp_sec = convertToSeconds(expDate);
+      localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
+      localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
     }
   }, []);
 

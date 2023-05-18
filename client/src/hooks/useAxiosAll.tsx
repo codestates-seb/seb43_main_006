@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type DoAxiosFunction = (method: string, path: string, body?: object, needToken?: boolean) => void;
 
@@ -8,14 +9,14 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
   const [data, setData] = useState({});
   const [err, setErr] = useState(false);
   const [ok, setOk] = useState(false);
+  const navigate = useNavigate();
 
   const doAxios = async (method: string, path: string, body: object = {}, needToken = true): Promise<void> => {
     let header = {};
     let requestCon = {};
 
     if (needToken) {
-      const dateString = localStorage.getItem("exp")?.replace("KST", "") as string; // 만료시간 형 변환
-      const expSeconds = Math.floor(new Date(dateString).getTime() / 1000); // 만료시간 초 변환
+      const expSeconds = Number(localStorage.getItem("exp"));
       const nowSeconds = Math.floor(new Date().getTime() / 1000); // 현재시간 초 변환
 
       if (expSeconds < nowSeconds) {
@@ -40,7 +41,10 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
             localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
             localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.error(err);
+            navigate("/login");
+          });
       }
       if (needToken) {
         // 토큰 필요시 토큰 포함
