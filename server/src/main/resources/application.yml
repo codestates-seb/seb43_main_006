@@ -120,6 +120,6 @@ cloud:
   aws:
     credentials.access-key: ${S3_ACCESS_KEY}
     credentials.secret-key: ${S3_SECRET_KEY}
-    s3.bucket: jusinsa-project
+    s3.bucket: jusinsa.kr
     region.static: ap-northeast-2
     stack.auto: false
