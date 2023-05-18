@@ -47,7 +47,7 @@ public class OrderService {
         order.addMember(member);
 
         // 해당 상품이 존재하는지 조회
-        List<ItemOrder> itemOrderList = order.getItemOrder();
+        List<ItemOrder> itemOrderList = order.getItemOrders();
         itemOrderList.stream().
                 forEach(itemOrder -> {itemService.findVerifedItem(itemOrder.getItem().getItemId());});
 
