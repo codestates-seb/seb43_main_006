@@ -26,7 +26,7 @@ public class Favorite {
     private Item item;
 
 
-
+    private boolean isChecked = false; // 프론트에서 체크박스 여부 확인한다고 만들어 달라함
 
     // 관계 편의 메서드
     public void addMember(Member member){
