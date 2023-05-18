@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 public class MemberDto {
     @Getter
+    @AllArgsConstructor // 테스트용
     public static class Post {
 
         @NotBlank
