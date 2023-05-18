@@ -4,7 +4,9 @@ import styled from "styled-components";
 type LayoutProps = {
   children: ReactNode;
 };
-const MainContainer = styled.main``;
+const MainContainer = styled.main`
+  max-width: 100%;
+`;
 const Main = ({ children }: LayoutProps) => {
   return <MainContainer>{children}</MainContainer>;
 };
