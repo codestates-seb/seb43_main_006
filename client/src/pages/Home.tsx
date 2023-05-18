@@ -4,12 +4,14 @@ import samplingimg from "../assets/images/samplingimg.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import samplelist from "../assets/images/samplelist.png";
+import { useNavigate } from "react-router-dom";
 
 interface ScrollState {
   x: number;
   y: number;
 }
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   const useScroll = (): ScrollState => {
     const [state, setState] = useState<ScrollState>({ x: 0, y: 0 });
     const onScroll = (): void => {
@@ -44,6 +46,7 @@ const Home: React.FC = () => {
       const exp_sec = convertToSeconds(expDate);
       localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
       localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
+      navigate("/");
     }
   }, []);
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BtnProps } from "../../types/Interfaces";
+import { BtnProps } from "types/Interfaces";
 import React from "react";
 const BtnDark = styled.button<BtnProps>`
   ${({ theme }) => theme.common.flexCenter};
@@ -18,6 +18,7 @@ const BtnDark = styled.button<BtnProps>`
     filter: brightness(80%);
   }
 `;
+
 const ButtonDark: React.FC<BtnProps> = ({
   children,
   width,

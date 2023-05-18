@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AlertProps } from "../../types/Interfaces";
+import { AlertProps } from "types/Interfaces";
 import { ButtonLight, ButtonDark } from "./Button";
 
 const Container = styled.div`
