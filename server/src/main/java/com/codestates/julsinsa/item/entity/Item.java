@@ -2,7 +2,6 @@ package com.codestates.julsinsa.item.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.ItemCart;
-import com.codestates.julsinsa.image.entity.ItemImage;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -77,9 +76,8 @@ public class Item extends Auditable {
     @OneToMany(mappedBy = "item")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
-    private List<ItemImage> images = new ArrayList<>();
-    //아이템카트, 아이템오더
+//    @OneToMany(mappedBy = "item")
+//    private List<ItemImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private List<ItemCart> itemCarts = new ArrayList<>();
