@@ -5,8 +5,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import axios from "axios";
-import { ButtonDark } from "../../components/Common/Button";
+// import { ButtonDark } from "../../components/Common/Button";
 import Pagination from "../../components/AlcoholPage/Pagination";
 
 //components
@@ -16,18 +17,33 @@ interface Likeitem {
   quantity: number;
   capacity: number;
   reviewRating: number;
+  itemId: number;
+  checked: boolean;
+  profile: string;
 }
+// interface Newitem {
+//   [title: string]: number;
+// }
+// type SelectType = Array<{ [key: string]: number }>;
 
 //page에서 table로 내린애
-interface TableProps {
-  likelist: Likeitem[];
-}
+// interface TableProps {
+//   likelist: Likeitem[];
+// }
 
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f7f7f7;
+`;
+const PageTitle = styled.div`
+  /* border: 1px solid black; */
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 30px;
 `;
 
 const LikepageContainer = styled.div`
@@ -72,21 +88,6 @@ const LikepageMainStyled = styled.div`
     margin-left: 60px;
   }
 `;
-//선택상품 장바구니, 삭제 버튼
-const LikeBtnStyled = styled.div`
-  margin-top: 20px;
-  margin-right: 37px;
-  display: flex;
-  flex-direction: row;
-  float: right;
-  gap: 37px;
-  height: 52px;
-  border-radius: 7px;
-  > button {
-    background-color: #222222;
-    color: whitesmoke;
-  }
-`;
 
 const StyledTable = styled.table`
   border: 1px solid black;
@@ -106,63 +107,73 @@ const StyledTd = styled.td`
   padding: 8px;
   text-align: center;
   vertical-align: middle;
+  > img {
+    width: 50%;
+    height: 80px;
+  }
 `;
 
 //맨밑 페이지네이션부분
 const PigStyled = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 20px;
 `;
 
-const Table = ({ likelist }: TableProps) => {
-  return (
-    <>
-      <StyledTable>
-        <thead>
-          <tr>
-            <StyledTh>
-              <input type="checkbox" />
-            </StyledTh>
-            <StyledTh>상품 목록</StyledTh>
-            <StyledTh>수 량(개)</StyledTh>
-            <StyledTh>가 격(원)</StyledTh>
-          </tr>
-        </thead>
-        <tbody>
-          {likelist.map((el: Likeitem, idx: number) => {
-            return (
-              <tr key={idx}>
-                <StyledTd>
-                  <input type="checkbox" />
-                </StyledTd>
-                <StyledTd>{el.titleKor}</StyledTd>
-                <StyledTd>{el.quantity}</StyledTd>
-                <StyledTd>{el.price}</StyledTd>
-              </tr>
-            );
-          })}
-        </tbody>
-      </StyledTable>
-    </>
-  );
-};
+// const Table = ({ likelist }: TableProps) => {
+//   return (
+//     <>
+//       {console.log(likelist)}
+//       <StyledTable>
+//         <thead>
+//           <tr>
+//             <StyledTh>
+//               <input type="checkbox" />
+//             </StyledTh>
+//             <StyledTh>상품 목록</StyledTh>
+//             <StyledTh>수 량(개)</StyledTh>
+//             <StyledTh>가 격(원)</StyledTh>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {likelist.map((el: Likeitem, idx: number) => {
+//             return (
+//               <tr key={idx}>
+//                 <StyledTd>
+//                   <input type="checkbox" />
+//                 </StyledTd>
+//                 <StyledTd>{el.titleKor}</StyledTd>
+//                 <StyledTd>{el.quantity}</StyledTd>
+//                 <StyledTd>{el.price}</StyledTd>
+//               </tr>
+//             );
+//           })}
+//         </tbody>
+//       </StyledTable>
+//     </>
+//   );
+// };
 
 const Likepage = () => {
   const [likelist, setLikelist] = useState<Likeitem[]>([]);
   const [totalLength, setTotalLength] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  // const [select, setSelect] = useState<number[] | null>(null);
   const navigate = useNavigate();
 
-  //나오는 총 페이지수
-  const totalPages = Math.ceil(totalLength / 5);
-  const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage);
-  // console.log(currentPage);
+  const totalPages = Math.ceil(totalLength / 5); //나오는 총 페이지수
+  const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage); //각페이지에서 보이는내용
+  console.log(currentPage);
+  // console.log(likelist);
+  // console.log(totalpages);
+  // console.log(itemsPerPage);
+  console.log(paginationData);
 
-  useEffect(() => {
+  const LikeGetHandle = () => {
     axios
+      // .get(`http://localhost:8081/favorite`, {
       .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
         headers: {
           "Content-Type": "application/json",
@@ -173,37 +184,113 @@ const Likepage = () => {
 
       .then((res) => {
         // console.log(res);
+        // console.log(res.data.data[0]);
         // console.log(res.data.data);
         setLikelist(res.data.data);
         // console.log(res.data.data.length);
         setTotalLength(res.data.data.length);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    LikeGetHandle();
   }, []);
+
+  const handleDeleteBtn = (itemId: number) => {
+    axios
+      // .delete(`http://localhost:8081/${itemId}/favorite`, {
+      .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("authToken"),
+          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+        },
+      })
+      .then((res) => {
+        LikeGetHandle();
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleCartBtn = (itemId: number) => {
+    // console.log("ddd");
+    // console.log(itemId);
+    axios
+      // .post(  `http://localhost:8081/cart`,
+      .post(
+        `${process.env.REACT_APP_API_URL}/cart`,
+        {
+          itemId: itemId,
+          quantity: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("authToken"),
+            "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          },
+        },
+      )
+      .then((res) => navigate("/cart"))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <TotalStyled>
         <LikepageContainer>
+          <PageTitle>
+            <div>My Page</div>
+            <MdOutlineKeyboardArrowRight size="20px" />
+            <div>주문내역</div>
+          </PageTitle>
           <LikepageHeadStyled>
             <p>찐영이야님의 등급은 Green입니다.</p>
           </LikepageHeadStyled>
           <LikepageMainStyled>
             <p>찜리스트</p>
-            <LikeBtnStyled>
-              <ButtonDark width="150px" height="100%" onClick={() => navigate("/mypage/likepage")}>
-                선택상품 장바구니
-              </ButtonDark>
-              {/* <button>선택상품 장바구니</button> */}
-              {/* 아무주소나 이동하게 해둠 */}
-              <ButtonDark width="150px" height="100%" onClick={() => navigate("/mypage/likepage")}>
-                선택상품 삭제
-              </ButtonDark>
-            </LikeBtnStyled>
-            <Table likelist={paginationData}></Table>
+
+            <StyledTable>
+              <thead>
+                <tr>
+                  <StyledTh></StyledTh>
+                  <StyledTh>상품 목록</StyledTh>
+                  <StyledTh>수 량(개)</StyledTh>
+                  <StyledTh>가 격(원)</StyledTh>
+                  <StyledTh></StyledTh>
+                  <StyledTh></StyledTh>
+                </tr>
+              </thead>
+              <tbody>
+                {paginationData.map((el: Likeitem, idx: number) => {
+                  return (
+                    <tr key={idx}>
+                      <StyledTd>
+                        <img src={el.profile} />
+                      </StyledTd>
+                      <StyledTd>{el.titleKor}</StyledTd>
+                      <StyledTd>{el.quantity}</StyledTd>
+                      <StyledTd>{el.price}</StyledTd>
+                      <StyledTd>
+                        <button onClick={() => handleCartBtn(el.itemId)}>장바구니</button>
+                      </StyledTd>
+                      <StyledTd>
+                        <button onClick={() => handleDeleteBtn(el.itemId)}>지워</button>
+                      </StyledTd>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </StyledTable>
           </LikepageMainStyled>
           <PigStyled>
-            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={5} totalData={15} />
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={5}
+              totalData={likelist.length}
+            />
           </PigStyled>
         </LikepageContainer>
       </TotalStyled>
@@ -212,3 +299,4 @@ const Likepage = () => {
 };
 
 export default Likepage;
+//0518 18:49
