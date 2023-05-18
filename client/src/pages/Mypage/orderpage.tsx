@@ -8,16 +8,27 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark } from "../../components/Common/Button";
 import Pagination from "../../components/AlcoholPage/Pagination";
 
+type Dfdf = {
+  itemId: number;
+  quantity: number;
+  titleKor: string;
+};
+
 interface Orderitem {
   orderId: number;
-  name: string;
   phone: number;
   orderStatus: string;
+  createdAt: string;
+  itemOrders: Dfdf[];
+  checked: boolean;
+  name: string;
+  totalQuantity: number;
 }
 //table로 내린애
 interface OrderTableProps {
   orderlist: Orderitem[];
 }
+
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -59,7 +70,7 @@ const OrderpageHeadStyled = styled.div`
     color: #181818;
     font-weight: 600;
   }
-  > div
+  /* > div */
 `;
 
 //주문내역써있는부분
@@ -149,31 +160,66 @@ const StyledTd = styled.td`
   text-align: center;
   vertical-align: middle;
 `;
+// console.log(orderlist);
+// const filterData = ()=>{
+//   //들어온 데이터와 이름이 같은지 확인하는 부분
+//   //이름이 같으면 그거의 데이터를 밑의 테이블에 뿌릴거다.
+//   for(let i=0; i< )
+// }
 
 const OrderTable = ({ orderlist }: OrderTableProps) => {
+  const realOrderList = orderlist; //진짜데이터에서는 어차피 하나만 들어오니까 필요없는 로직이 될것이다.
+  console.log(orderlist);
+  // console.log(realOrderList); //원래 들어오는 오더
+  // const filterData = orderlist[0].itemOrders;
+  const date = orderlist[0].createdAt;
+  const orderStatus = orderlist[0].orderStatus;
   return (
     <>
+      {/* {console.log(orderlist[0].itemOrders)} */}
+      {console.log(orderlist)}
+      {/* {console.log(filterData)} */}
+      {/* {console.log(realOrderList)} */}
       <StyledTable>
         <thead>
           <tr>
             <StyledTh>날짜</StyledTh>
             <StyledTh>구매목록</StyledTh>
             <StyledTh>수량</StyledTh>
-            <StyledTh>가격</StyledTh>
+
             <StyledTh>상태</StyledTh>
           </tr>
         </thead>
         <tbody>
-          {orderlist.map((el: Orderitem, idx: number) => {
+          {/* {realOrderList.map((el: Orderitem, idx: number) => {
             return (
               <tr key={idx}>
-                <StyledTd>2023-03-31</StyledTd>
-                <StyledTd>{el.name}</StyledTd>
-                <StyledTd>{el.name}</StyledTd>
-                <StyledTd>{el.phone}</StyledTd>
-                <StyledTd>{el.orderStatus}</StyledTd>
+                <StyledTd>{realOrderList.createdAt}</StyledTd>
               </tr>
             );
+          })} */}
+          {/* {realOrderList.map((el: Dfdf, idx: number) => {
+            return (
+              <tr key={idx}>
+                <StyledTd>{date}</StyledTd>
+                <StyledTd>{el.titleKor}</StyledTd>
+                <StyledTd>{el.itemId}</StyledTd>
+                <StyledTd>{el.quantity}</StyledTd>
+                <StyledTd>{orderStatus}</StyledTd>
+              </tr>
+            );
+          })} */}
+          {orderlist.map((el: Orderitem, idx: number) => {
+            return el.itemOrders.map((item, idx) => {
+              return (
+                <tr key={idx}>
+                  <StyledTd>{el.createdAt}</StyledTd>
+                  <StyledTd>{item.titleKor}</StyledTd>
+                  <StyledTd>{item.quantity}</StyledTd>
+                  <StyledTd>{el.orderStatus}</StyledTd>
+                </tr>
+              );
+            });
           })}
         </tbody>
       </StyledTable>
@@ -183,14 +229,25 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
 const Orderpage = () => {
   // const navigate = useNavigate();
   const [orderlist, setOrderlist] = useState<Orderitem[]>([]);
-  const [totalLength, setTotalLength] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [totalLength, setTotalLength] = useState<number>(0); //페이지네이션관련
+  const [currentPage, setCurrentPage] = useState<number>(1); //페이지네이션관련
+  // const [choiceFronDay, setChoiceFronDay] = useState<number>(0); //조회할때 선택하는 날짜앞부분
+  // const [choiceBackDay, setChoiceBackDay] = useState<number>(0); //조회할때 선택하는 날짜뒷부분
+  //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = orderlist.slice(5 * (currentPage - 1), 5 * currentPage);
-  console.log(currentPage);
+  // console.log(currentPage);
+  //조회버튼 함수
+  const Search = () => {
+    console.log("a");
+  };
+  //   // orderlist의 날짜 들어오면 그거랑
+  // };
+  // console.log(orderlist);
+
   useEffect(() => {
     axios
+      // .get(`http://localhost:8081/orders`, {
       .get(`${process.env.REACT_APP_API_URL}/members/orders`, {
         headers: {
           "Content-Type": "application/json",
@@ -200,11 +257,14 @@ const Orderpage = () => {
       })
 
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setOrderlist(res.data.data);
       })
       .catch((err) => console.log(err));
   }, []);
+  // console.log(orderlist[0].itemOrders);
+  // const filterlist = orderlist.filter((obj) => obj === obj.name);
+  // console.log(filterlist);
 
   return (
     <>
@@ -223,16 +283,19 @@ const Orderpage = () => {
           <OrderpageMainStyled>주문내역</OrderpageMainStyled>
           <PeriodStyled>
             <p>조회기간</p>
-            <input type="date"></input>
+            <input type="date" onChange={(e) => console.log(e.target.value)}></input>
             <p>~</p>
             <input type="date"></input>
-            <ButtonDark width="150px" height="100%" onClick={() => console.log("메롱")}>
+            <ButtonDark width="150px" height="100%" onClick={Search}>
               조 회
             </ButtonDark>
+            {/* <ButtonDark width="150px" height="100%" onClick={() => console.log("메롱")}> */}
+            {/* 조 회
+            </ButtonDark> */}
           </PeriodStyled>
           <OrderlistStyled>
             <p>총 {orderlist.length}건</p>
-            <OrderTable orderlist={pageData}></OrderTable>
+            {orderlist.length !== 0 ? <OrderTable orderlist={pageData}></OrderTable> : <div>주문내역이 없습니다.</div>}
           </OrderlistStyled>
           <PigStyled>
             <Pagination

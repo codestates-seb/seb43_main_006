@@ -111,4 +111,3 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
 };
 
 export default MapComponent;
-//0517 11:23
