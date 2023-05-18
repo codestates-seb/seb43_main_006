@@ -9,11 +9,11 @@ import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.entity.ItemOrder;
 import com.codestates.julsinsa.order.repository.OrderRepository;
 import lombok.Value;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,7 +30,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemService itemService;
 
-    @Value("${toss.secret-key}")
+//    @Value("${toss.secret-key}")
     private String SECRET_KEY;
 
 
@@ -41,7 +41,7 @@ public class OrderService {
     }
 
 
-    public Order createOrder(Order order) {
+    public Order singleOrder(Order order) {
         // 해당 멤버가 존재하는지 조회
         Member member = memberService.findVerifiedMember(order.getMember().getMemberId());
         order.addMember(member);
@@ -55,7 +55,26 @@ public class OrderService {
             order = paymentConfirm(order);
         }
         else {
-            throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
+            throw new BusinessLogicException(ExceptionCode.ORDER_AMOUNT_NOT_MATCHED);
+        }
+
+        return orderRepository.save(order) ;
+    }
+
+    public Order cartOrder(Order order) {
+        Member member = memberService.findVerifiedMember(order.getMember().getMemberId());
+        order.addMember(member);
+
+        // 해당 상품이 존재하는지 조회
+        List<ItemOrder> itemOrderList = order.getItemOrders();
+        itemOrderList.stream().
+                forEach(itemOrder -> {itemService.findVerifedItem(itemOrder.getItem().getItemId());});
+
+        if(order.getCart().getPrice() == order.getAmount()) {
+            order = paymentConfirm(order);
+        }
+        else {
+            throw new BusinessLogicException(ExceptionCode.ORDER_AMOUNT_NOT_MATCHED);
         }
 
         return orderRepository.save(order) ;
@@ -73,10 +92,17 @@ public class OrderService {
 //        return  orderPage;
 //    }
 
-    public void cancelOrder(Long ordersId, String paymentKey, String cancelReason) throws IOException, InterruptedException {
+    public void cancelOrder(Long ordersId, String cancelReason){
         Order order = findVerifiedOrder(ordersId);
-        paymentCancel(paymentKey, cancelReason);
-        order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+
+        boolean response = paymentCancel(order.getPaymentKey(), cancelReason);
+
+        if (response) {
+            order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+        }
+        else {
+            throw new BusinessLogicException(ExceptionCode.ORDER_REQUEST_FAIL);
+        }
     }
 
     private Order findVerifiedOrder(Long orderId) {
@@ -85,7 +111,7 @@ public class OrderService {
         return order;
     }
 
-    public Order paymentConfirm(Order order){
+    private Order paymentConfirm(Order order){
         try {
             String encodedAuth = Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
             String requestBody = "{\"paymentKey\":\"" + order.getPaymentKey() + "\",\"amount\":" + order.getAmount() + ",\"orderId\":\"" + order.getOrderId() + "\"}";
@@ -102,25 +128,35 @@ public class OrderService {
                 order.setOrderStatus(Order.OrderStatus.ORDER_COMPLETE);
                 return order;
             } else {
-                throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
+                throw new BusinessLogicException(ExceptionCode.ORDER_REQUEST_FAIL);
             }
         } catch (IOException | InterruptedException e) {
-            throw new BusinessLogicException(ExceptionCode.ORDER_FAIL);
+            throw new BusinessLogicException(ExceptionCode.ORDER_REQUEST_FAIL);
         }
     }
 
-    public String paymentCancel(String paymentKey,String cancelReason) throws IOException, InterruptedException {
-        String encodedAuth = Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
+    private boolean paymentCancel(String paymentKey,String cancelReason){
+        try {
+            String encodedAuth = Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
-                .header("Authorization", "Basic " + encodedAuth)
-                .header("Content-Type", "application/json")
-                .method("POST", HttpRequest.BodyPublishers.ofString("{\"결제 취소 사유\":\"" + cancelReason + "\"}"))
-                .build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
+                    .header("Authorization", "Basic " + encodedAuth)
+                    .header("Content-Type", "application/json")
+                    .method("POST", HttpRequest.BodyPublishers.ofString("{\"결제 취소 사유\":\"" + cancelReason + "\"}"))
+                    .build();
 
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-        return response.body();
+            if (response.statusCode() == 200) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (IOException | InterruptedException e) {
+            throw new BusinessLogicException(ExceptionCode.ORDER_REQUEST_FAIL);
+        }
     }
 }
