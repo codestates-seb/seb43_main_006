@@ -28,6 +28,16 @@ const Login = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
+  function convertToSeconds(dateString: string): string {
+    // dateString을 Date 객체로 변환합니다.
+    const date = new Date(dateString);
+
+    // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
+    const seconds = Math.floor(date.getTime() / 1000);
+
+    return `${seconds}`;
+  }
+
   const userNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     // 아이디 핸들러
     setUsername(e.target.value);
@@ -54,12 +64,14 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
+        const token = res.headers.authorization;
+        const iat_sec = convertToSeconds(res.headers.iat);
+        const exp_sec = convertToSeconds(res.headers.exp);
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
-        localStorage.setItem("authToken", res.headers.authorization); // 토큰 저장
-        localStorage.setItem("memberId", res.headers["x-member-id"]); // 멤버id 저장
+        localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
-        localStorage.setItem("exp", res.headers.exp); // 토큰 만료시간 저장
-        localStorage.setItem("iat", res.headers.iat); // refresh 토큰 생성 시간 저장
+        localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
+        localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
 
         if (issued === "false") {
           // 임시 비밀번호로 접근 x
