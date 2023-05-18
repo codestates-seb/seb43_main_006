@@ -66,8 +66,6 @@ public class ReviewService {
 //        }
 
 
-
-
         // 파일 첨부 된거 저장하기
         if(files != null){
             List<ReviewImage> reviewImage = imageService.uploadReviewImage(files, review);
