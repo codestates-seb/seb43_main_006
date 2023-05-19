@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.order.dto;
 
-import com.codestates.julsinsa.order.entity.Order;
+import com.codestates.julsinsa.order.entity.ItemOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPostDto {
-    private List<Order> orderList;
+    private List<ItemOrder> orderList;
 }
