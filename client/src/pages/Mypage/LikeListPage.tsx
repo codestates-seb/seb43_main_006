@@ -1,7 +1,3 @@
-//마이페이지의 첫화면, 찜리스트 페이지
-
-//grid 활용하는거 생각해보기!!!!
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -201,7 +197,6 @@ const LikePage = () => {
   const handleDeleteBtn = (itemId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
-      // .delete(`http://localhost:8081/${itemId}/favorite`, {
       .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +215,6 @@ const LikePage = () => {
     // console.log(itemId);
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
-      // .post(  `http://localhost:8081/cart`,
       .post(
         `${process.env.REACT_APP_API_URL}/cart`,
         {
@@ -253,7 +247,6 @@ const LikePage = () => {
           </LikepageHeadStyled>
           <LikepageMainStyled>
             <p>찜리스트</p>
-
             <StyledTable>
               <thead>
                 <tr>
