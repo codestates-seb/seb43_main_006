@@ -3,6 +3,7 @@ package com.codestates.julsinsa.order.entity;
 import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
+import com.codestates.julsinsa.payment.entity.Payment;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,11 +47,15 @@ public class Order extends Auditable {
     @JoinColumn(name = "market_id")
     private Market market;
 
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
 
     public enum OrderStatus {
         ORDER_REQUEST("주문 요청"),
-        ORDER_CONFIRM("주문 승인"),
         ORDER_COMPLETE("주문 완료"),
+        PICKUP_COMPLETE("픽업 완료"),
         ORDER_CANCEL("주문 취소");
 
         @Getter
