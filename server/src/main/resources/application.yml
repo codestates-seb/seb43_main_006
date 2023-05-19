@@ -34,20 +34,21 @@ spring:
           google:
             clientId: ${G_CLIENT_ID}
             clientSecret: ${G_CLIENT_SECRET}
-            redirect-uri: https://4a69-124-111-225-247.ngrok-free.app/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
+            redirect-uri: http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
             scope:
               - email
               - profile
           facebook:
             client-id: ${F_CLIENT_ID}
             client-secret: ${F_CLIENT_SECRET}
+            redirect-uri: http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/facebook
             scope:
               - email
               - public_profile
           kakao:
             client-id: ${C_CLIENT_ID}
             client-secret: ${C_CLIENT_SECRET}
-            redirect-uri: https://9b00-124-111-225-247.ngrok-free.app/login/oauth2/code/kakao
+            redirect-uri: http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
@@ -108,4 +109,4 @@ cloud:
     stack.auto: false
 
 toss:
-  secret-key: test_sk_YoEjb0gm23P1O1BQ7WgVpGwBJn5e
+  secret-key: ${TOSS_SECRET}
