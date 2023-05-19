@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {   // (1)
@@ -81,10 +84,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private void redirectSignup(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
+
         String addedAccessToken = "Bearer " + accessToken;
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
+
 
         String uri = createSignupURI(addedAccessToken, refreshToken).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
@@ -95,6 +100,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
+
         String addedAccessToken = "Bearer " + accessToken;
 
         response.setHeader("Authorization", addedAccessToken);
@@ -161,8 +167,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     //회원가입시 실행
     private URI createSignupURI(String accessToken, String refreshToken) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        LocalDateTime issuedDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
+        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+        queryParams.add("exp", formattedExpirationDateTime);
+        queryParams.add("iat", issuedDateTime.format(formatter));
 
         return UriComponentsBuilder
                 .newInstance()
@@ -177,8 +189,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     // 로그인
     private URI createURI(String accessToken, String refreshToken) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+        LocalDateTime issuedDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
+        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+        queryParams.add("exp", formattedExpirationDateTime);
+        queryParams.add("iat", issuedDateTime.format(formatter));
 
         return UriComponentsBuilder
                 .newInstance()

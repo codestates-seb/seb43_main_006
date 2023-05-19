@@ -33,6 +33,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -158,7 +161,7 @@ public class MemberService {
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
         List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
         for (Object[] objects : resultList) {
-            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6]);
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6],(boolean) objects[7]);
             itemList.add(item);
         }
 
@@ -335,14 +338,16 @@ public class MemberService {
 
             String accessToken = jwtTokenizer.delegateAccessToken(member);
             String refreshToken = jwtTokenizer.delegateRefreshToken(member);
-            Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-            Date issuedAtTime = Calendar.getInstance().getTime();
+            Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+            LocalDateTime issuedDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
+            String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
 
             new Date();
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
-            response.setHeader("exp", String.valueOf(expirationTime));
-            response.setHeader("iat", String.valueOf(issuedAtTime));
+            response.setHeader("exp", formattedExpirationDateTime);
+            response.setHeader("iat", issuedDateTime.format(formatter));
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (SignatureException se) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

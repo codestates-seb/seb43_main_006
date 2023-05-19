@@ -1,10 +1,8 @@
 package com.codestates.julsinsa.order.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
-import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
-import com.codestates.julsinsa.payment.entity.Payment;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +21,10 @@ public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isChecked;
 
     @Enumerated(value = EnumType.STRING)
     @Column

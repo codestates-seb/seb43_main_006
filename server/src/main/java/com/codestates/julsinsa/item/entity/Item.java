@@ -2,7 +2,6 @@ package com.codestates.julsinsa.item.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.ItemCart;
-import com.codestates.julsinsa.image.entity.ItemImage;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,21 +20,27 @@ public class Item extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
+    @Column(nullable = false)
     private String titleKor;
 
     private String titleEng;
 
+    @Column(nullable = false)
     private String content;
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> categories = new ArrayList<>();
 
+    @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
     private int capacity;
 
+    @Column(nullable = false)
     private double volume;
 
+    @Column(nullable = false)
     private String country;
 
     private String aroma;
@@ -44,16 +49,25 @@ public class Item extends Auditable {
 
     private String field;
 
+    @Column(nullable = false)
     private int sales;
+
+    @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
     private int discountRate;
 
+    @Column(nullable = false)
     private String profile;
 
+    @Column(nullable = false)
     private String detailedProfile;
 
+    @Column(nullable = false)
     private int reviewCount;
 
+    @Column(nullable = false)
     private double reviewRating;
 
     @OneToMany(mappedBy = "item")
@@ -62,9 +76,8 @@ public class Item extends Auditable {
     @OneToMany(mappedBy = "item")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
-    private List<ItemImage> images = new ArrayList<>();
-    //아이템카트, 아이템오더
+//    @OneToMany(mappedBy = "item")
+//    private List<ItemImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private List<ItemCart> itemCarts = new ArrayList<>();
