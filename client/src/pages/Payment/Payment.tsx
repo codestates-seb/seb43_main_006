@@ -9,48 +9,36 @@ import PaymnetUserInfo from "./PaymentUserinfo";
 import Itemlist from "./Paymentitemlist";
 import Payinfo from "./Paymentpayinfo";
 import { UserProps } from "../../types/AlcholInterfaces";
+import useAxiosAll from "@hooks/useAxiosAll";
 
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
+  const [doAxios, data] = useAxiosAll();
 
   const [userInfo, setUserInfo] = useState<UserProps>({
-    id: "84",
-    name: "양선우",
-    email: "sunwoo020@naver.com",
-    phoneNumber: "010-1234-5678",
-  });
+    memberId: "",
+    realName: "",
+    displayName: "",
+    email: "",
+    phone: "",
+  } as UserProps);
 
-  const updateUserInfo = (user: UserProps) => {
-    setUserInfo(user);
+  console.log(userInfo);
+  const updateUserInfo = () => {
+    setUserInfo(data as UserProps);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    doAxios("get", "/members", {}, true);
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}/payment`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: localStorage.getItem("authToken"),
-  //         "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
-  //       },
-  //     })
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
-  //     .then((res) => {
-  //       // console.log(res);
-  //       console.log(res.data.data);
-  //       setUser(res.data.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  // const handlePayment = () => {
-  //   navigate("/checkout", { state: { items: items, user: userInfo } });
-  // };
   const handlePayment = () => {
     navigate("/CheckoutChang", { state: { items: items, user: userInfo } });
   };

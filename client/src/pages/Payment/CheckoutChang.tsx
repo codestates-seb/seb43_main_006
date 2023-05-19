@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 
-const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
 const CheckoutChang = () => {
   const location = useLocation();
@@ -20,6 +20,7 @@ const CheckoutChang = () => {
     },
     { totalquantity: 0, totalPrice: 0 },
   );
+
   console.log(totalPrice);
   console.log(user.name);
   console.log(orderName);
@@ -35,7 +36,8 @@ const CheckoutChang = () => {
           // 결제 정보 파라미터
           // 더 많은 결제 정보 파라미터는 결제창 Javascript SDK에서 확인하세요.
           // https://docs.tosspayments.com/reference/js-sdk
-          amount: totalPrice, // 결제 금액
+          // amount: totalPrice, // 결제 금액
+          amount: 1,
           orderId: nanoid(), // 주문 ID
           orderName: orderName, // 주문명
           customerName: user.name, // 구매자 이름
