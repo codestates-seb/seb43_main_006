@@ -23,6 +23,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderMapper mapper;
 
+    @PostMapping
     public ResponseEntity postOrder(@RequestBody OrderPostDto orderPostDto) {
         Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
 
