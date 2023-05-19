@@ -33,7 +33,7 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
-      center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804),
+      center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804), //죽전역
       level: 2,
     };
     // console.log(setSelect);
