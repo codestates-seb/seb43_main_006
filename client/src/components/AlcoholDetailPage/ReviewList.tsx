@@ -49,9 +49,11 @@ const ReviewListContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 13px;
       margin-bottom: 20px;
 
+      .font_small {
+        font-size: 13px;
+      }
       .gap {
         display: inline-block;
         font-size: 0;
@@ -140,9 +142,9 @@ const ReviewList = ({ reviews, itemId }: ItemReviewListProps) => {
             <li key={review.reviewId}>
               <div className="review_title">
                 <div>
-                  <span>{review.displayName}</span>
+                  <span className="font_small">{review.displayName}</span>
                   <span className="gap">|</span>
-                  <span>{FormattedDate(review.createdAt)}</span>
+                  <span className="font_small">{FormattedDate(review.createdAt)}</span>
                   <span className="gap">|</span>
                   <ReviewRating size={15} reviewRating={review.rating} />
                 </div>
