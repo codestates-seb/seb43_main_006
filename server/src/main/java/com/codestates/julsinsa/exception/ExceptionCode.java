@@ -22,9 +22,7 @@ public enum ExceptionCode {
 
     ORDER_NOT_FOUND(404, "Order Not Found"),
 
-    ORDER_REQUEST_FAIL(404, "Order Request Fail"),
-
-    ORDER_AMOUNT_NOT_MATCHED(404, "Order Amount Not Match"),
+    PAYMENT_REQUEST_FAIL(404, "Payment Request Fail"),
 
     CART_NOT_FOUND(404, "Cart Not Found"),
     // 수정 할 것
