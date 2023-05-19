@@ -1,4 +1,4 @@
-package com.codestates.julsinsa.exception;
+package com.codestates.julsinsa.global.exception;
 
 import lombok.Getter;
 

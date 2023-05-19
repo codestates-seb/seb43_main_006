@@ -1,7 +1,7 @@
 package com.codestates.julsinsa.order.service;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import com.codestates.julsinsa.order.dto.OrderResponseDto;
@@ -37,7 +37,7 @@ public class OrderService {
         return findVerifiedOrder(orderId);
     }
 
-    public List<OrderResponseDto> getOrders() {
+    public List<Order> getOrders() {
 
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
@@ -45,17 +45,8 @@ public class OrderService {
 
         List<Order> orders = orderRepository.findAllByMember(member);
 
-        List<OrderResponseDto> responseDtoList = orders.stream()
-                .map(order -> {
-                    Order verifiedOrder = findVerifiedOrder(order.getOrderId());
-                    OrderResponseDto responseDto = new OrderResponseDto();
-                    responseDto.setOrderList(verifiedOrder.getItemOrders());
-                    responseDto.setOrderStatus(verifiedOrder.getOrderStatus());
-                    responseDto.setCreatedAt(verifiedOrder.getCreatedAt());
-                    return responseDto;
-                }).collect(Collectors.toList());
 
-        return responseDtoList;
+        return orders;
     }
 
     public void cancelOrder(Long orderId){

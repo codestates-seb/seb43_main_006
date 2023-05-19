@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.image.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class ReviewImage extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ITEM_IMAGE_ID")
+    @Column(name = "REVIEW_IMAGE_ID")
     private Long id;
 
     @Embedded

@@ -1,7 +1,7 @@
-package com.codestates.julsinsa.advice;
+package com.codestates.julsinsa.global.advice;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.response.ErrorResponse;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

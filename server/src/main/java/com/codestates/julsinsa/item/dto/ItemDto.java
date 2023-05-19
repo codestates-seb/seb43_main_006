@@ -28,8 +28,6 @@ public class ItemDto {
 
         private String detailedProfile;
 
-        private String content;
-
         private List<String> categories;
 
         private int price;
@@ -53,8 +51,6 @@ public class ItemDto {
         private int reviewCount;
 
         private double reviewRating;
-
-
     }
 
     @Getter

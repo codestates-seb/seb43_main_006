@@ -1,21 +1,16 @@
 package com.codestates.julsinsa.cart.service;
 
 import com.codestates.julsinsa.cart.dto.CartDto;
-import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.cart.entity.ItemCart;
 import com.codestates.julsinsa.cart.repository.CartRepository;
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.item.entity.Item;
-import com.codestates.julsinsa.item.repository.ItemRepository;
 import com.codestates.julsinsa.item.service.ItemService;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

@@ -1,16 +1,16 @@
 package com.codestates.julsinsa.member.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.review.entity.Review;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ public class Member extends Auditable {
 
     private String displayName;
 
+    @Email
     private String email;
 
     public Member(String email) {
@@ -52,7 +53,6 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member")
     private List<Favorite> favorites = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
@@ -84,7 +84,7 @@ public class Member extends Auditable {
         }
     }
 
-    public void setCart(Cart cart){
+    public void addCart(Cart cart){
         this.cart = cart;
         if(cart.getMember() != this){
             cart.setMember(this);

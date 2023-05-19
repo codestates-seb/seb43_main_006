@@ -2,9 +2,8 @@ package com.codestates.julsinsa.member.controller;
 
 import com.codestates.julsinsa.auth.dto.LoginDto;
 import com.codestates.julsinsa.cart.entity.Cart;
-import com.codestates.julsinsa.dto.SingleResponseDto;
+import com.codestates.julsinsa.global.dto.SingleResponseDto;
 import com.codestates.julsinsa.item.dto.ItemDto;
-import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.member.dto.EmailRequest;
 import com.codestates.julsinsa.member.dto.FindDto;
 import com.codestates.julsinsa.member.dto.MemberDto;
@@ -14,7 +13,7 @@ import com.codestates.julsinsa.member.service.MemberService;
 import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.mapper.OrderMapper;
 import com.codestates.julsinsa.order.service.OrderService;
-import com.codestates.julsinsa.utils.UriCreator;
+import com.codestates.julsinsa.global.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
@@ -47,7 +45,7 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid MemberDto.Post requestBody){
         Member member = mapper.memberPostToMember(requestBody);
-        member.setCart(new Cart());
+        member.addCart(new Cart());
         Member createdmember = memberService.createMember(member);
 
 

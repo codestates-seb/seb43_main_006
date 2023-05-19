@@ -1,10 +1,9 @@
 package com.codestates.julsinsa.review.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.member.entity.Member;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -62,5 +61,11 @@ public class Review extends Auditable {
         if(!item.getReviews().contains(this)) {
             item.getReviews().add(this);
         }
+    }
+
+    // 기존에 연결된 이미지 모두 제거 하고 연결 정보 업데이트
+    public void clearImages() {
+        reviewImages.forEach(image -> image.setReview(null));
+        reviewImages.clear();
     }
 }
