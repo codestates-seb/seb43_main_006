@@ -3,17 +3,14 @@ package com.codestates.julsinsa.member.service;
 import com.codestates.julsinsa.auth.dto.LoginDto;
 import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.helper.email.HtmlEmailSendable;
 import com.codestates.julsinsa.item.dto.ItemDto;
-import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.helper.event.MemberRegistrationApplicationEvent;
-import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.repository.FavoriteRepository;
 import com.codestates.julsinsa.member.dto.EmailRequest;
 import com.codestates.julsinsa.member.dto.FindDto;
-import com.codestates.julsinsa.member.dto.MemberDto;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -23,7 +20,6 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,23 +59,8 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
 
-//        // Oauth2 가입한 유저는 닉네임이 없기에 이메일로 설정
-//        if(member.getDisplayName() == null) member.setDisplayName(member.getEmail());
-
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
-
-        // Oauth2 가입한 유저는 비밀번호가 없기에 로직을 설정함
-//        if(member.getPassword() != null) {
-//            String encryptedPassword = passwordEncoder.encode(member.getPassword());
-//            member.setPassword(encryptedPassword);
-//
-//            if(!member.getMailKey().equals(authMap.get(member.getEmail()))){
-//                throw new BusinessLogicException(ExceptionCode.EMAIL_NOT_AUTHORIZED);
-//            }
-//
-//            verifyAuthKey(authMap.get(member.getEmail()), member.getEmail());
-//        }
 
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -125,6 +106,7 @@ public class MemberService {
 
     }
 
+    // 회원 수정
     public Member updateMember(Member member){
 
         // 로그인한 유저 불러오기
@@ -145,12 +127,14 @@ public class MemberService {
         return memberRepository.save(findmember);
     }
 
+    // 회원 조회
     public Member findMember(){
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         return findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
     }
 
+    // 찜 목록 불러오기
     public List<ItemDto.favoriteItemResponse> findFavorites(){
         // 로그인한 유저 불러오기
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
@@ -167,6 +151,7 @@ public class MemberService {
 
         return itemList;
     }
+
     // 이메일 전송 실패시 회원 삭제
     public void deleteMember(long memberId){
         Member member = findVerifiedMember(memberId);
@@ -180,11 +165,9 @@ public class MemberService {
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-
         if(!(findmember.getEmail().equals(member.getUsername()) && passwordEncoder.matches(member.getPassword(), findmember.getPassword()))){
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHORIZED);
         }
-
 
         memberRepository.delete(findmember);
     }
@@ -254,13 +237,6 @@ public class MemberService {
                 + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
                 + "</div></body></html>";
 
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(request.getEmail());
-//        message.setSubject(subject);
-//        message.setText(text);
-//
-//        javaMailSender.send(message);
-
         HtmlEmailSendable htmlEmailSender = new HtmlEmailSendable(javaMailSender);
         try {
             htmlEmailSender.send(new String[]{request.getEmail()}, subject, text, null);
@@ -279,12 +255,6 @@ public class MemberService {
                 + "<p style='font-size: 14px; line-height: 24px;'>임시 비밀번호는 <span style='font-weight: bold;'>" + tempPassword + "</span> 입니다.</p>"
                 + "<p style='font-size:12px; color:gray;'>본 이메일은 발신 전용입니다. 회신하실 경우 답변이 되돌아 갈 수 없습니다.</p>"
                 + "</body></html>";
-
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(member.getEmail());
-//        message.setSubject(subject);
-//        message.setText(text);
-//        javaMailSender.send(message);
 
         HtmlEmailSendable htmlEmailSender = new HtmlEmailSendable(javaMailSender);
         try {
@@ -309,6 +279,7 @@ public class MemberService {
         return false;
     }
 
+    // 임시비밀번호 발급 메서드
     public String getTempPassword(){
         char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
@@ -346,6 +317,7 @@ public class MemberService {
             new Date();
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
+            response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
             response.setHeader("exp", formattedExpirationDateTime);
             response.setHeader("iat", issuedDateTime.format(formatter));
             response.setStatus(HttpServletResponse.SC_OK);
@@ -359,19 +331,6 @@ public class MemberService {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             request.setAttribute("exception", e);
         }
-    }
-    public void oauthgetToekn(Member member,HttpServletResponse response){
-
-        String accessToken = jwtTokenizer.delegateAccessToken(member);
-        String refreshToken = jwtTokenizer.delegateRefreshToken(member);
-        Date expirationTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        Date issuedAtTime = Calendar.getInstance().getTime();
-
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
-        response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
-        response.setHeader("exp", String.valueOf(expirationTime));
-        response.setHeader("iat", String.valueOf(issuedAtTime));
     }
 
 }

@@ -1,11 +1,10 @@
 package com.codestates.julsinsa.cart.controller;
 
 import com.codestates.julsinsa.cart.dto.CartDto;
-import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.cart.mapper.CartMapper;
 import com.codestates.julsinsa.cart.service.CartService;
-import com.codestates.julsinsa.dto.SingleResponseDto;
+import com.codestates.julsinsa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 @RequestMapping("/cart")
 @RestController

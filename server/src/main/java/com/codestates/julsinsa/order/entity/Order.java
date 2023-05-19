@@ -1,7 +1,6 @@
 package com.codestates.julsinsa.order.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
-import com.codestates.julsinsa.item.entity.Item;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.payment.entity.Payment;
@@ -23,6 +22,11 @@ public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+    private String name;
+    private String phone;
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isChecked;
 
     @Enumerated(value = EnumType.STRING)
     @Column
@@ -34,10 +38,6 @@ public class Order extends Auditable {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
 
     public void addMember(Member member) {
         this.member = member;

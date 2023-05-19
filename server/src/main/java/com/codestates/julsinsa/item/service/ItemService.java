@@ -1,7 +1,7 @@
 package com.codestates.julsinsa.item.service;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.item.entity.Item;

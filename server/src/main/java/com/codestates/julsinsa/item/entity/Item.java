@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.item.entity;
 
-import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.global.audit.Auditable;
 import com.codestates.julsinsa.cart.entity.ItemCart;
 import com.codestates.julsinsa.review.entity.Review;
 import lombok.Getter;
@@ -24,9 +24,6 @@ public class Item extends Auditable {
     private String titleKor;
 
     private String titleEng;
-
-    @Column(nullable = false)
-    private String content;
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> categories = new ArrayList<>();

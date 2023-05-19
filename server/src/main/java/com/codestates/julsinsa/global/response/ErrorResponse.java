@@ -1,6 +1,6 @@
-package com.codestates.julsinsa.response;
+package com.codestates.julsinsa.global.response;
 
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

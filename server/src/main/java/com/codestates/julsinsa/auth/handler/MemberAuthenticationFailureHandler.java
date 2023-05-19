@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.auth.handler;
 
-import com.codestates.julsinsa.response.ErrorResponse;
+import com.codestates.julsinsa.global.response.ErrorResponse;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

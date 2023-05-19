@@ -1,7 +1,7 @@
 package com.codestates.julsinsa.payment.service;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.payment.entity.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

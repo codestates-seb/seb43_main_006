@@ -1,4 +1,4 @@
-package com.codestates.julsinsa.dto;
+package com.codestates.julsinsa.global.dto;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;

@@ -1,8 +1,8 @@
 package com.codestates.julsinsa.market.service;
 
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.market.repository.MarketRepository;
 import com.nimbusds.oauth2.sdk.util.StringUtils;

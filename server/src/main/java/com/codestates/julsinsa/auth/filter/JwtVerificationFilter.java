@@ -2,13 +2,8 @@ package com.codestates.julsinsa.auth.filter;
 
 import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
-import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtVerificationFilter extends OncePerRequestFilter {

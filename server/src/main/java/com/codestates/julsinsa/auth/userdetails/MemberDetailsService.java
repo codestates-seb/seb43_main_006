@@ -1,8 +1,8 @@
 package com.codestates.julsinsa.auth.userdetails;
 
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

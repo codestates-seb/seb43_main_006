@@ -1,11 +1,10 @@
 package com.codestates.julsinsa.review.service;
 
-import com.codestates.julsinsa.exception.BusinessLogicException;
-import com.codestates.julsinsa.exception.ExceptionCode;
+import com.codestates.julsinsa.global.exception.BusinessLogicException;
+import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.image.service.ImageService;
 import com.codestates.julsinsa.item.entity.Item;
-import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.repository.OrderRepository;
 import com.codestates.julsinsa.review.entity.Review;
 import com.codestates.julsinsa.item.repository.ItemRepository;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
@@ -112,7 +110,7 @@ public class ReviewService {
         return reviewRepository.findAllByItem(item,sort);
     }
 
-    public Review updateReview(long itemId, Review review){
+    public Review updateReview(long itemId, Review review,MultipartFile[] files){
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
@@ -136,6 +134,14 @@ public class ReviewService {
             reviewRating = (reviewRating * reviewCount - oldRating + newRating) / reviewCount;
             item.setReviewRating(reviewRating);
         });
+
+        if(files != null){
+            List<ReviewImage> reviewImage = imageService.uploadReviewImage(files, review);
+
+            findReview.clearImages();
+
+            findReview.addImage(reviewImage);
+        }
 
         return reviewRepository.save(findReview);
     }
