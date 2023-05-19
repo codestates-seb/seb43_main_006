@@ -21,6 +21,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
 
+    Order orderPostDtoToOrder(OrderPostDto orderPostDto);
+    OrderResponseDto orderToOrderResponseDto(Order order);
     OrderDto.Response orderToOrderResponse(Order order);
 
     @Mapping(source = "item.itemId", target = "itemId")
@@ -66,6 +68,4 @@ public interface OrderMapper {
 //    @Mapping(target = "itemList", ignore = true)
 //    @Mapping(target = "totalPrice", ignore = true)
 //    List<OrderDto.Response> ordersToOrderResponses(List<Order> orders);
-    Order orderPostDtoToOrder(OrderPostDto orderPostDto);
-    OrderResponseDto orderToOrderResponseDto(Order order);
 }
