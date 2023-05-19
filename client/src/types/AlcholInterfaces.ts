@@ -16,6 +16,7 @@ export interface AlcoholData {
   titleKor: string;
   titleEng: string;
   profile: string;
+  detailedProfile: string;
   content: string;
   categories: string[];
   price: number;
@@ -30,7 +31,6 @@ export interface AlcoholData {
   discountRate: string;
   reviewCount: number;
   reviewRating: number;
-  reviews: ItemReviewsType[];
 }
 
 // 주류 리스트 아이템 정렬 Props
@@ -89,8 +89,9 @@ export interface CheckoutProps {
   onPaymentRequest?: () => Promise<void>;
 }
 
-// 주류 상세 페이지 리뷰 조회
+// 아이템 리뷰 리스트 조회
 export interface ItemReviewsType {
+  memberId: number;
   reviewId: number;
   title: string;
   content: string;
@@ -99,4 +100,11 @@ export interface ItemReviewsType {
   createdAt: string;
   modifiedAt: string;
   reviewImages: string[];
+}
+
+// 리뷰 수정 데이터 Type
+export interface RequestData {
+  title: string;
+  content: string;
+  rating: number;
 }

@@ -3,7 +3,11 @@
     "baseUrl": "src",
     "paths": {
       "@assets/*": ["assets/*"],
+
       "@components/*": ["components/*"],
+      "@AlcoholDetailPage/*": ["components/AlcoholDetailPage/*"],
+      "@AlcoholPage/*": ["components/AlcoholPage/*"],
+
       "@hooks/*": ["hooks/*"],
       "@layout/*": ["layout/*"],
 
