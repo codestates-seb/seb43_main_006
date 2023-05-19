@@ -6,6 +6,7 @@ import com.codestates.julsinsa.exception.ExceptionCode;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.market.repository.MarketRepository;
 import com.nimbusds.oauth2.sdk.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MarketService {
     MarketRepository marketRepository;
-
-    public MarketService(MarketRepository marketRepository) {
-        this.marketRepository = marketRepository;
-    }
 
     public Market createMarket(Market market) {
         return marketRepository.save(market);
