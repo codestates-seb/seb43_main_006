@@ -75,7 +75,8 @@ const Place = () => {
 
   const King = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/marts`, {
+      // .get(`${process.env.REACT_APP_API_URL}/marts`, {
+      .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/marts`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
