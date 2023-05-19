@@ -145,7 +145,7 @@ public class MemberService {
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
         List<ItemDto.favoriteItemResponse> itemList = new ArrayList<>();
         for (Object[] objects : resultList) {
-            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6],(boolean) objects[7]);
+            ItemDto.favoriteItemResponse item = new ItemDto.favoriteItemResponse((Long)objects[0], (String) objects[1], (int) objects[2],(int) objects[3], (int) objects[4], (double) objects[5],(String) objects[6]);
             itemList.add(item);
         }
 
