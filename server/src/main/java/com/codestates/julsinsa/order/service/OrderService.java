@@ -29,6 +29,7 @@ public class OrderService {
 
         order.setOrderStatus(Order.OrderStatus.ORDER_COMPLETE);
         order.setMember(member);
+
         return orderRepository.save(order);
     }
 
