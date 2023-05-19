@@ -71,6 +71,7 @@ const Login = () => {
         localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
         localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
+        localStorage.setItem("memberId", res.headers["x-member-id"]); // member id 저장
         localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
         if (issued === "false") {
           // 임시 비밀번호로 접근 x

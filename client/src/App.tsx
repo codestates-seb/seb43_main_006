@@ -14,8 +14,8 @@ import FindPassword from "@Loginpages/FindPassword";
 import SignupInput from "@Signuppages/SignupInput";
 import SignupSelection from "@Signuppages/SignupSelection";
 import SignupTerm from "@Signuppages/SignupTerm";
-import Likepage from "@Mypagepages/likepage";
-import Orderpage from "@Mypagepages/orderpage";
+import LikePage from "@Mypagepages/LikePage";
+import OrderPage from "@Mypagepages/OrderPage";
 import Changeinfopage from "@Mypagepages/changeinfo";
 import Payment from "@Paymentpages/Payment";
 import PaymentConfirm from "@Paymentpages/PaymentConfirm";
@@ -43,8 +43,8 @@ const App = () => {
           <Route path="/cart/" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup/term" element={<SignupTerm />} />
-          <Route path="/mypage/likepage" element={<Likepage />} />
-          <Route path="/mypage/orderpage" element={<Orderpage />} />
+          <Route path="/mypage/likepage" element={<LikePage />} />
+          <Route path="/mypage/orderpage" element={<OrderPage />} />
           <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/checkout" element={<Checkout />} />
