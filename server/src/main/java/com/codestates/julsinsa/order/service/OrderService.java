@@ -23,7 +23,13 @@ public class OrderService {
     private final MemberRepository memberRepository;
 
     public Order createOrder(Order order) {
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
+        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
         order.setOrderStatus(Order.OrderStatus.ORDER_COMPLETE);
+        order.setMember(member);
+
         return orderRepository.save(order);
     }
 
