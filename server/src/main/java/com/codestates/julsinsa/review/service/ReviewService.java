@@ -5,6 +5,8 @@ import com.codestates.julsinsa.exception.ExceptionCode;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.image.service.ImageService;
 import com.codestates.julsinsa.item.entity.Item;
+import com.codestates.julsinsa.order.entity.Order;
+import com.codestates.julsinsa.order.repository.OrderRepository;
 import com.codestates.julsinsa.review.entity.Review;
 import com.codestates.julsinsa.item.repository.ItemRepository;
 import com.codestates.julsinsa.review.repository.ReviewRepository;
@@ -35,19 +37,33 @@ public class ReviewService {
 
     private final ImageService imageService;
 
+    private final OrderRepository orderRepository;
+
     public Review createReview(Review review , long itemId,
                                MultipartFile[] files){
-        // 구매내역이 있는지 검증하는 로직 추가할것. + 단 1회만 작성 가능
-
-
         // 로그인한 유저 불러오기
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
+//        // 구매내역이 있는지 검증하는 로직 추가할것. + 단 1회만 작성 가능
+//        List<Order> findOrders = orderRepository.findByMember(findmember);
+//        boolean isItemOrdered = findOrders.stream()
+//                .anyMatch(order -> order.getItemOrders().stream()
+//                        .anyMatch(itemOrder -> itemOrder.getItem().getItemId() == itemId));
+//        if (!isItemOrdered) {
+//            throw new BusinessLogicException(ExceptionCode.LIKE_NOT_CANCEL);
+//        }
+
         // 아이템 아이디로 아이템 찾기
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+
+//        // 이미 리뷰를 작성 했는지 확인
+//        Optional<Review> existingReview = reviewRepository.findByItemAndMember(item, findmember);
+//        if(existingReview.isPresent()){
+//            throw new BusinessLogicException(ExceptionCode.LIKE_NOT_TWICE);
+//        }
 
 
         // 파일 첨부 된거 저장하기
@@ -136,14 +152,18 @@ public class ReviewService {
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-        if(review.getMember().getMemberId() != findmember.getMemberId()) throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHORIZED);
+        // 관리자면 모든 게시글 지우기 가능 , 로그인계정과 작성자가 같지않다면 401
+        if (findmember.getRoles().containsAll(List.of("ADMIN", "USER")) || review.getMember().getMemberId() == findmember.getMemberId()) {
+            int newReviewCount = item.getReviews().size() - 1;
+            double newReviewRating = (item.getReviewRating() * item.getReviews().size() - review.getRating()) / newReviewCount;
+            item.setReviewCount(newReviewCount);
+            item.setReviewRating(newReviewRating);
 
-        int newReviewCount = item.getReviews().size() - 1;
-        double newReviewRating = (item.getReviewRating() * item.getReviews().size() - review.getRating()) / newReviewCount;
-        item.setReviewCount(newReviewCount);
-        item.setReviewRating(newReviewRating);
+            reviewRepository.delete(review);
+        } else {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHORIZED);
+        }
 
 
-        reviewRepository.delete(review);
     }
 }
