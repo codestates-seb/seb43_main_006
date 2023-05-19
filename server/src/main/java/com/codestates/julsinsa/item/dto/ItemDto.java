@@ -87,8 +87,6 @@ public class ItemDto {
 
         private String profile;
 
-        private boolean isChecked;
-
     }
 
     @Getter

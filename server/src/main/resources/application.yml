@@ -108,4 +108,4 @@ cloud:
     stack.auto: false
 
 toss:
-  secret-key: ${TOSS_SECRET}
+  secret-key: test_sk_YoEjb0gm23P1O1BQ7WgVpGwBJn5e
