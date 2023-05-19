@@ -14,16 +14,16 @@ import javax.persistence.*;
 public class ItemOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderItemId;
+    public Long itemOrderId;
 
     @Column(nullable = false)
-    private int quantity;
+    public int quantity;
 
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
-    private Order order;
+    public Order order;
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
-    private Item item;
+    public Item item;
 }

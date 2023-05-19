@@ -1,8 +1,10 @@
 package com.codestates.julsinsa.order.entity;
 
 import com.codestates.julsinsa.audit.Auditable;
+import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
+import com.codestates.julsinsa.payment.entity.Payment;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +23,6 @@ public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
-    private String name;
-    private String phone;
-
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean isChecked;
 
     @Enumerated(value = EnumType.STRING)
     @Column
@@ -38,6 +35,10 @@ public class Order extends Auditable {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
+
     public void addMember(Member member) {
         this.member = member;
     }
@@ -46,11 +47,15 @@ public class Order extends Auditable {
     @JoinColumn(name = "market_id")
     private Market market;
 
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
 
     public enum OrderStatus {
         ORDER_REQUEST("주문 요청"),
-        ORDER_CONFIRM("주문 승인"),
         ORDER_COMPLETE("주문 완료"),
+        PICKUP_COMPLETE("픽업 완료"),
         ORDER_CANCEL("주문 취소");
 
         @Getter
