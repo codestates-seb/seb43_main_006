@@ -62,4 +62,10 @@ public class Review extends Auditable {
             item.getReviews().add(this);
         }
     }
+
+    // 기존에 연결된 이미지 모두 제거 하고 연결 정보 업데이트
+    public void clearImages() {
+        reviewImages.forEach(image -> image.setReview(null));
+        reviewImages.clear();
+    }
 }

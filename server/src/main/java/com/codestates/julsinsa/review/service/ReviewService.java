@@ -110,7 +110,7 @@ public class ReviewService {
         return reviewRepository.findAllByItem(item,sort);
     }
 
-    public Review updateReview(long itemId, Review review){
+    public Review updateReview(long itemId, Review review,MultipartFile[] files){
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
@@ -134,6 +134,14 @@ public class ReviewService {
             reviewRating = (reviewRating * reviewCount - oldRating + newRating) / reviewCount;
             item.setReviewRating(reviewRating);
         });
+
+        if(files != null){
+            List<ReviewImage> reviewImage = imageService.uploadReviewImage(files, review);
+
+            findReview.clearImages();
+
+            findReview.addImage(reviewImage);
+        }
 
         return reviewRepository.save(findReview);
     }

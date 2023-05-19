@@ -25,9 +25,6 @@ public class Item extends Auditable {
 
     private String titleEng;
 
-    @Column(nullable = false)
-    private String content;
-
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> categories = new ArrayList<>();
 

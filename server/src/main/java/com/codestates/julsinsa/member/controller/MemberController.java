@@ -45,7 +45,7 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid MemberDto.Post requestBody){
         Member member = mapper.memberPostToMember(requestBody);
-        member.setCart(new Cart());
+        member.addCart(new Cart());
         Member createdmember = memberService.createMember(member);
 
 

@@ -66,9 +66,10 @@ public class ReviewController {
     @PatchMapping("/{item-id}/reviews/{review-id}")
     public ResponseEntity patchReview(@PathVariable("item-id") @Positive long itemId,
                                       @PathVariable("review-id") @Positive long reviewId,
-                                      @RequestBody @Valid ReviewDto.Patch requestBody){
+                                      @RequestPart(value = "requestBody") @Valid ReviewDto.Patch requestBody,
+                                      @RequestPart(value = "file",required = false) MultipartFile[] files){
         requestBody.setReviewId(reviewId);
-        Review review = reviewService.updateReview(itemId, reviewMapper.reviewPatchToReview(requestBody));
+        Review review = reviewService.updateReview(itemId, reviewMapper.reviewPatchToReview(requestBody),files);
 
         return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewToReviewResponse(review)),HttpStatus.OK);
     }

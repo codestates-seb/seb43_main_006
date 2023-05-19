@@ -34,7 +34,7 @@ spring:
           google:
             clientId: ${G_CLIENT_ID}
             clientSecret: ${G_CLIENT_SECRET}
-            redirect-uri: https://040e-124-111-225-247.ngrok-free.app/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
+            redirect-uri: https://08d3-124-111-225-247.ngrok-free.app/login/oauth2/code/google # 이건 주소 바뀔때마다 수정해야함
             scope:
               - email
               - profile

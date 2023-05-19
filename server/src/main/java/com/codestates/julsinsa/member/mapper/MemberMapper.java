@@ -18,5 +18,5 @@ public interface MemberMapper {
     MemberDto.Response memberToMemberResponse(Member member);
 
     FindDto.ResponseId memberToFindResponseId(Member member);
-//    Member memberDeleteToMember(MemberDto.Delete requestBody);
+
 }

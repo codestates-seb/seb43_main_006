@@ -84,6 +84,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private void redirectSignup(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
+        Member member = memberService.findByEmail(username);
 
         String addedAccessToken = "Bearer " + accessToken;
 
@@ -91,7 +92,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.setHeader("Refresh", refreshToken);
 
 
-        String uri = createSignupURI(addedAccessToken, refreshToken).toString();   // (6-3)
+        String uri = createSignupURI(addedAccessToken, refreshToken,member).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
 //        response.sendRedirect("http://localhost:3000/signup/term");
 
@@ -100,13 +101,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
-
+        Member member = memberService.findByEmail(username);
         String addedAccessToken = "Bearer " + accessToken;
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
 
-        String uri = createURI(addedAccessToken, refreshToken).toString();   // (6-3)
+        String uri = createURI(addedAccessToken, refreshToken,member).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
 //        response.sendRedirect("http://localhost:3000/signup/term");
 
@@ -165,7 +166,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     }
 
     //회원가입시 실행
-    private URI createSignupURI(String accessToken, String refreshToken) {
+    private URI createSignupURI(String accessToken, String refreshToken,Member member) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         LocalDateTime issuedDateTime = LocalDateTime.now();
@@ -175,6 +176,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("refresh_token", refreshToken);
         queryParams.add("exp", formattedExpirationDateTime);
         queryParams.add("iat", issuedDateTime.format(formatter));
+        queryParams.add("X-Member-ID", String.valueOf(member.getMemberId()));
 
         return UriComponentsBuilder
                 .newInstance()
@@ -187,7 +189,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .toUri();
     }
     // 로그인
-    private URI createURI(String accessToken, String refreshToken) {
+    private URI createURI(String accessToken, String refreshToken,Member member) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         LocalDateTime issuedDateTime = LocalDateTime.now();
@@ -197,6 +199,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("refresh_token", refreshToken);
         queryParams.add("exp", formattedExpirationDateTime);
         queryParams.add("iat", issuedDateTime.format(formatter));
+        queryParams.add("X-Member-ID", String.valueOf(member.getMemberId()));
 
         return UriComponentsBuilder
                 .newInstance()

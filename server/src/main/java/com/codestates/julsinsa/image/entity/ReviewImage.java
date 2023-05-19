@@ -16,7 +16,7 @@ public class ReviewImage extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ITEM_IMAGE_ID")
+    @Column(name = "REVIEW_IMAGE_ID")
     private Long id;
 
     @Embedded
