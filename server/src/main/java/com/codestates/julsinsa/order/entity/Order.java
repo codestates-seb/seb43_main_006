@@ -4,6 +4,7 @@ import com.codestates.julsinsa.audit.Auditable;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.market.entitiy.Market;
 import com.codestates.julsinsa.member.entity.Member;
+import com.codestates.julsinsa.payment.entity.Payment;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +22,7 @@ import java.util.*;
 public class Order extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ordersId;
-    private String paymentKey;
-    // 토스 페이먼트 결제 id
-    private String orderId;
-    private Long amount;
-    private String name;
-    private String phone;
-
-    private boolean isChecked = false;
+    private Long orderId;
 
     @Enumerated(value = EnumType.STRING)
     @Column
@@ -53,6 +46,10 @@ public class Order extends Auditable {
     @OneToOne
     @JoinColumn(name = "market_id")
     private Market market;
+
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
 
     public enum OrderStatus {
