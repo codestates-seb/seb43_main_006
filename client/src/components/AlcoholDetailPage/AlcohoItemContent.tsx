@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { AlcoholData, AlcoholListData } from "../../types/AlcholInterfaces";
-import { useEffect, useState, useRef } from "react";
-import { getItemsList } from "../../services/api";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
-
-import AlcoholListItem from "../AlcoholPage/AlcoholListItem";
+import { useEffect, useState, useRef } from "react";
+import { AlcoholData, AlcoholListData } from "types/AlcholInterfaces";
+import { getItemsList } from "@services/api";
+import AlcoholListItem from "@AlcoholPage/AlcoholListItem";
 
 interface ItemDatailProps {
   data: AlcoholData;
@@ -74,7 +73,18 @@ const ContentBox = styled.div`
 `;
 
 const DetailInfoBox = styled.div`
-  display: flex;
+  margin-top: 60px;
+  ${({ theme }) => theme.common.flexCenterCol};
+
+  img {
+    max-width: 1000px;
+  }
+  /* .info_img_box {
+    img {
+      width: 80%;
+      height: auto;
+    }
+  }
 
   .info_text_box {
     width: 100%;
@@ -85,14 +95,14 @@ const DetailInfoBox = styled.div`
     height: 300px;
     font-size: 20px;
     padding: 0px 50px;
-  }
+  } */
 `;
 
 const SuggestionTitle = styled.div`
   display: flex;
   width: 100%;
   font-weight: 400;
-  margin: 1rem 0;
+  margin: 8rem 0 1rem 0;
 
   .content_titletext {
     font-size: 1.5rem;
@@ -124,7 +134,8 @@ const SuggestionBox = styled.ul`
   li {
     flex: none;
     margin-right: 10px;
-    width: 300px;
+    width: 230px;
+    cursor: pointer;
   }
 `;
 
@@ -210,9 +221,9 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
           </div>
         </ContentBox>
         <DetailInfoBox>
-          {/* <div className="info_img_box">
-            <img src={data.profile} />
-          </div> */}
+          <div className="info_img_box">
+            <img src={data.detailedProfile} />
+          </div>
           <div className="info_text_box">{data.content}</div>
         </DetailInfoBox>
         <SuggestionTitle>
@@ -220,7 +231,7 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
         </SuggestionTitle>
         {itemData && (
           <ScrollContainer>
-            {itemData.length >= 4 ? (
+            {itemData.length >= 5 ? (
               <ScrollBtn onClick={() => HandleScroll("left")}>
                 <FaArrowAltCircleLeft size={45} color="lightgray" />
               </ScrollBtn>

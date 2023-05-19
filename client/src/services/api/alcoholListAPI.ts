@@ -1,4 +1,5 @@
 import instance from "./axiosInstance";
+import { RequestData } from "types/AlcholInterfaces";
 
 export const getItemsList = (page: number, size: number, sortBy: string, category: string) => {
   const params: { page: number; size: number; sortBy: string; category?: string } = { page, size, sortBy };
@@ -11,8 +12,8 @@ export const getItemsList = (page: number, size: number, sortBy: string, categor
   });
 };
 
-export const getItem = (id: number) => {
-  return instance.get(`/items/${id}`, {
+export const getItem = (itemId: number) => {
+  return instance.get(`/items/${itemId}`, {
     headers: { "No-Auth": "True" },
   });
 };
@@ -28,3 +29,36 @@ export const createItemLike = (itemId: number) => {
 export const deleteItemLike = (itemId: number) => {
   return instance.delete(`items/${itemId}/favorite`);
 };
+
+export const getItemReview = (itemId: number) => {
+  return instance.get(`/items/${itemId}/reviews`, {
+    headers: { "No-Auth": "True" },
+  });
+};
+
+export const getReviewDetail = (itemId: number, reviewId: number) => {
+  return instance.get(`/items/${itemId}/reviews/${reviewId}`);
+};
+export const deleteItemReview = (itemId: number, reviewId: number) => {
+  return instance.delete(`/items/${itemId}/reviews/${reviewId}`);
+};
+
+export const updateItemReview = (itemId: number, reviewId: number, formData: FormData) => {
+  return instance.patch(`/items/${itemId}/reviews/${reviewId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export const createItemReview = (itemId: number, formData: FormData) => {
+  return instance.post(`/items/${itemId}/reviews`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+// export const getOrderItem = () => {
+//   return instance.get(`/orders/orders`);
+// };

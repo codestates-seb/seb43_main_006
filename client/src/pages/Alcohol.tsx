@@ -9,10 +9,7 @@ import SortingUtils from "../components/AlcoholPage/SortingUtils";
 
 // 전체적인 컨테이너
 const AlcoholContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  ${({ theme }) => theme.common.flexCenterCol}
   height: 100%;
   padding: 0 25px;
   color: ${({ theme }) => theme.colors.fontColor};
@@ -83,6 +80,7 @@ const Alcohol = () => {
 
   const handleClickTab = (idx: number): void => {
     setCurrentTab(idx);
+    setCurrentPage(1);
   };
 
   return (

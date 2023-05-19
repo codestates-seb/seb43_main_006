@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-import { AlcoholData, ItemOrder } from "../../types/AlcholInterfaces";
+import { AlcoholData, ItemOrder } from "types/AlcholInterfaces";
 
 // components
-// import ReviewRating from "../Common/ReviewRating";
-import ClickFavoriteItem from "../Common/ClickFavoriteItem";
-import PriceDisplay from "../Common/PriceDisplay";
-import { ButtonDark } from "../Common/Button";
-import QuantityControl from "./QuantityControl";
+import ClickFavoriteItem from "@components/Common/ClickFavoriteItem";
+import PriceDisplay from "@components/Common/PriceDisplay";
+import { ButtonDark } from "@components/Common/Button";
+import QuantityControl from "@components/AlcoholDetailPage/QuantityControl";
 
 interface ItemDatailProps {
   data: AlcoholData;
