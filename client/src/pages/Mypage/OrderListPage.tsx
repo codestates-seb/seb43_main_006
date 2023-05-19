@@ -169,6 +169,52 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
   // const filterData = orderlist[0].itemOrders;
   // const date = orderlist[0].createdAt;
   const orderStatus = orderlist[0].orderStatus;
+
+  // const OrderPatchHandle = (itemId: number) => {
+  //   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  //   axios
+  //     .patch(
+  //       `${process.env.REACT_APP_API_URL}/orders/${itemId}`,
+  //       {
+  //         orderStatus: "주문 취소",
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: access_token,
+  //           "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+  //         },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  // const OrderPatchHandle = (orders-id: number) => {
+  //   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  //   axios
+  //     .patch(
+  //       `${process.env.REACT_APP_API_URL}/${orders-id}/cancel`,
+  //       {
+  //         orderStatus: "주문 취소",
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: access_token,
+  //           "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+  //         },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       window.location.reload();
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   return (
     <>
       {/* {console.log(orderlist[0].itemOrders)} */}
@@ -182,6 +228,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
             <StyledTh>구매목록</StyledTh>
             <StyledTh>수량</StyledTh>
             <StyledTh>상태</StyledTh>
+            <StyledTh>취소</StyledTh>
           </tr>
         </thead>
         <tbody>
@@ -210,6 +257,14 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
                 <StyledTd>{el.titleKor}</StyledTd>
                 <StyledTd>{el.quantity}</StyledTd>
                 <StyledTd>{el.orderStatus}</StyledTd>
+                {/* <button
+                  onClick={() => {
+                    OrderPatchHandle(el.itemId);
+                  }}
+                >
+                  취소
+                </button> */}
+                {/* <ButtonDark width="150px" height="100%" onClick={OrderPatchHandle}></ButtonDark> */}
               </tr>
             );
           })}
@@ -226,12 +281,13 @@ const OrderPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1); //페이지네이션관련
   const [choiceFronDay, setChoiceFronDay] = useState<string>(""); //조회할때 선택하는 날짜앞부분
   const [choiceBackDay, setChoiceBackDay] = useState<string>(""); //조회할때 선택하는 날짜뒷부분
-  const [filterlist, setFilterlist] = useState<Orderitem[]>([]);
+  const [filterlist, setFilterlist] = useState<Orderitem[]>([]); //정신없는 데이터를 새로 정제한것.
+  const [userName, setUserName] = useState<string>("");
   //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
   // console.log(orderlist);
-  console.log(pageData);
+  // console.log(pageData);
   //조회버튼 함수
   const Search = () => {
     console.log("a");
@@ -245,7 +301,8 @@ const OrderPage = () => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
       // .get(`http://localhost:8081/orders`, {
-      .get(`${process.env.REACT_APP_API_URL}/members/orders`, {
+      // .get(`${process.env.REACT_APP_API_URL}/members/orders`, {
+      .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/orders`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -270,10 +327,44 @@ const OrderPage = () => {
         setFilterlist(newData);
       })
       .catch((err) => console.log(err));
+
+    axios
+      // .get(`${process.env.REACT_APP_API_URL}/members`, {
+      .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+        },
+      })
+      .then((res) => setUserName(res.data.data.displayName))
+      .catch((err) => console.error(err));
   }, []);
+
   // console.log(orderlist[0].itemOrders);
   // const filterlist = orderlist.filter((obj) => obj === obj.name);
   // console.log(filterlist);
+  // const OrderPatchHandle = (itemId: number) => {
+  //   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  //   axios
+  //     .patch(
+  //       `${process.env.REACT_APP_API_URL}/orders/${itemId}`,
+  //       {
+  //         orderStatus: "주문 취소",
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: access_token,
+  //           "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+  //         },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <>
@@ -285,7 +376,7 @@ const OrderPage = () => {
             <div>주문내역</div>
           </PageTitle>
           <OrderpageHeadStyled>
-            <p>찐영이야님의 등급은 Green입니다.</p>
+            <p>{userName}님의 등급은 Green입니다.</p>
             <div>찜 3개</div>
             <div>찜 3개</div>
           </OrderpageHeadStyled>
@@ -298,9 +389,6 @@ const OrderPage = () => {
             <ButtonDark width="150px" height="100%" onClick={Search}>
               조 회
             </ButtonDark>
-            {/* <ButtonDark width="150px" height="100%" onClick={() => console.log("메롱")}> */}
-            {/* 조 회
-            </ButtonDark> */}
           </PeriodStyled>
           <OrderlistStyled>
             <p>총 {orderlist.length}건</p>

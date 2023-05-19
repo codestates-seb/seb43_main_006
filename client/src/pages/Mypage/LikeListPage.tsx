@@ -161,17 +161,18 @@ const LikePage = () => {
 
   const totalPages = Math.ceil(totalLength / 5); //나오는 총 페이지수
   const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage); //각페이지에서 보이는내용
-  console.log(currentPage);
+  // console.log(currentPage);
   // console.log(likelist);
   // console.log(totalpages);
   // console.log(itemsPerPage);
-  console.log(paginationData);
+  // console.log(paginationData);
 
   const LikeGetHandle = () => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
       // .get(`http://localhost:8081/favorite`, {
-      .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
+      // .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
+      .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/favorite`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -197,7 +198,8 @@ const LikePage = () => {
   const handleDeleteBtn = (itemId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
+      // .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
+      .delete(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/items/${itemId}/favorite`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -215,8 +217,9 @@ const LikePage = () => {
     // console.log(itemId);
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
+      // .post( `${process.env.REACT_APP_API_URL}/cart`,
       .post(
-        `${process.env.REACT_APP_API_URL}/cart`,
+        `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/cart`,
         {
           itemId: itemId,
           quantity: 1,
@@ -272,7 +275,7 @@ const LikePage = () => {
                         <button onClick={() => handleCartBtn(el.itemId)}>장바구니</button>
                       </StyledTd>
                       <StyledTd>
-                        <button onClick={() => handleDeleteBtn(el.itemId)}>지워</button>
+                        <button onClick={() => handleDeleteBtn(el.itemId)}>삭제</button>
                       </StyledTd>
                     </tr>
                   );
@@ -295,3 +298,5 @@ const LikePage = () => {
 };
 
 export default LikePage;
+
+// 0519 10:05pm
