@@ -30,7 +30,6 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
             {},
             {
               headers: {
-                Authorization: access_token,
                 refresh: localStorage.getItem("refresh"),
               },
             },
@@ -43,6 +42,11 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
           })
           .catch((err) => {
             console.error(err);
+            localStorage.removeItem("authToken"); // 토큰 지우기
+            localStorage.removeItem("refresh"); // refresh 지우기
+            localStorage.removeItem("memberId"); //
+            localStorage.removeItem("exp");
+            localStorage.removeItem("iat");
             navigate("/login");
           });
       }
