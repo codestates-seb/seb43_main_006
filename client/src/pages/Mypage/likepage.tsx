@@ -156,7 +156,7 @@ const PigStyled = styled.div`
 //   );
 // };
 
-const Likepage = () => {
+const LikePage = () => {
   const [likelist, setLikelist] = useState<Likeitem[]>([]);
   const [totalLength, setTotalLength] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -172,12 +172,13 @@ const Likepage = () => {
   console.log(paginationData);
 
   const LikeGetHandle = () => {
+    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
       // .get(`http://localhost:8081/favorite`, {
       .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("authToken"),
+          Authorization: access_token,
           "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
         },
       })
@@ -198,12 +199,13 @@ const Likepage = () => {
   }, []);
 
   const handleDeleteBtn = (itemId: number) => {
+    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
       // .delete(`http://localhost:8081/${itemId}/favorite`, {
       .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("authToken"),
+          Authorization: access_token,
           "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
         },
       })
@@ -216,6 +218,7 @@ const Likepage = () => {
   const handleCartBtn = (itemId: number) => {
     // console.log("ddd");
     // console.log(itemId);
+    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
       // .post(  `http://localhost:8081/cart`,
       .post(
@@ -227,7 +230,7 @@ const Likepage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("authToken"),
+            Authorization: access_token,
             "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
           },
         },
@@ -298,5 +301,4 @@ const Likepage = () => {
   );
 };
 
-export default Likepage;
-//0518 18:49
+export default LikePage;
