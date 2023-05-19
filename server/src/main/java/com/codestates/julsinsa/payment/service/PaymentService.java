@@ -4,6 +4,7 @@ import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
 import com.codestates.julsinsa.payment.entity.Payment;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class PaymentService {
 
-    //    @Value("${toss.secret-key}")
+    @Value("${toss.secret-key}")
     private String SECRET_KEY;
 
     public void paymentConfirm(Payment payment) {
