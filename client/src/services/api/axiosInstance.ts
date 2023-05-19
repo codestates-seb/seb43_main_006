@@ -2,7 +2,8 @@ import axios from "axios";
 
 // Axios instance 생성
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URL}`,
+  baseURL: `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080`,
+  // baseURL: `${process.env.REACT_APP_API_URL}`,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
