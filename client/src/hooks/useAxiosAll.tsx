@@ -26,7 +26,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
         const access_token = `Bearer ${localStorage.getItem("authToken")}`;
         await axios
           .post(
-            `${process.env.REACT_APP_API_URL}/members/token`,
+            `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/token`,
             {},
             {
               headers: {
@@ -71,7 +71,8 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       // body 필요시 body 포함 요청 구성
       requestCon = {
         method: method,
-        url: `${process.env.REACT_APP_API_URL}${path}`,
+        // url: `${process.env.REACT_APP_API_URL}${path}`,
+        url: `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080${path}`,
         headers: header,
         data: body,
       };
@@ -79,7 +80,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       // body 필요시 body 미포함 요청 구성
       requestCon = {
         method: method,
-        url: `${process.env.REACT_APP_API_URL}${path}`,
+        url: `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080${path}`,
         headers: header,
       };
     }
