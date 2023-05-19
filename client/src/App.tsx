@@ -24,6 +24,7 @@ import Checkout from "@Paymentpages/Checkout";
 import CheckoutChang from "@pages/Payment/CheckoutChang";
 import ChatComponent from "@components/Chat/ChatComponent";
 import Layout from "@layout/index";
+import ReviewEdit from "@pages/ReviewEdit";
 
 const BodyContainer = styled.div`
   min-height: 100vh;
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/alcohol" element={<Alcohol />} />
           <Route path="/alcohol/detail/:id" element={<AlcoholDetail />} />
+          <Route path="/review/edit" element={<ReviewEdit />} />
           <Route path="/cart/" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup/term" element={<SignupTerm />} />
