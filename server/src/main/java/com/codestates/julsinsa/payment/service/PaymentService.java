@@ -4,7 +4,7 @@ import com.codestates.julsinsa.exception.BusinessLogicException;
 import com.codestates.julsinsa.exception.ExceptionCode;
 import com.codestates.julsinsa.payment.entity.Payment;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
