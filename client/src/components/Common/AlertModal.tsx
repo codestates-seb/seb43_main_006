@@ -53,11 +53,11 @@ const Alert = ({ title = "", text, onClickOk, onClickCancel }: AlertProps) => {
               fontSize="18px"
               borderRadious="2px"
               border="solid 1px lightgray"
-              onClick={onClickOk}
+              onClick={onClickCancel}
             >
               취소
             </ButtonLight>
-            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickCancel}>
+            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickOk}>
               확인
             </ButtonDark>
           </div>
