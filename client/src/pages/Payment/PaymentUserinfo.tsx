@@ -1,88 +1,19 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { UserProps } from "../../types/AlcholInterfaces";
 
 interface ChildComponentProps {
   userInfo: UserProps;
-  updateUserInfo: (user: UserProps) => void;
+  updateUserInfo: (user: UserdataType) => void;
 }
+type UserdataType = {
+  memberId: string;
+  displayName: string;
+  realName: string;
+  phone: string;
+  email: string;
+};
 
 export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
-  const [user, setUser] = useState<UserProps>(userInfo);
-  const [newPhoneNumber, setNewPhoneNumber] = useState<string>("");
-  const [newName, setNewName] = useState<string>("");
-  const [newEmail, setNewEmail] = useState<string>("");
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  const [isPhoneEditOpen, setIsPhoneEditOpen] = useState(false);
-  const [isNameEditOpen, setIsNameEditOpen] = useState(false);
-  const [isEmailEditOpen, setIsEmailEditOpen] = useState(false);
-
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   navigate("/checkout", { state: user });
-  // }, [user, navigate]);
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setNewName(inputValue);
-    setUser({
-      ...user,
-      name: inputValue,
-    });
-  };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setNewEmail(inputValue);
-    setUser({
-      ...user,
-      email: inputValue,
-    });
-  };
-
-  const handlePhoneNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value.replace(/[^0-9]/g, "").slice(0, 11);
-    setNewPhoneNumber(inputValue);
-    setErrorMsg(""); // 입력값이 변경될 때마다 오류 메시지 초기화
-  };
-
-  const handleNameUpdate = () => {
-    setUser({
-      ...user,
-      name: newName,
-    });
-    setNewName("");
-    setIsNameEditOpen(false);
-  };
-
-  const handleEmailUpdate = () => {
-    setUser({
-      ...user,
-      email: newEmail,
-    });
-    setNewEmail("");
-    setIsEmailEditOpen(false);
-  };
-
-  const handlePhoneNumberUpdate = () => {
-    if (newPhoneNumber.length < 11) {
-      setErrorMsg("전화번호는 11자리 이상 입력해주세요."); // 상태값 변경
-      return;
-    }
-    if (!/^010/.test(newPhoneNumber)) {
-      setErrorMsg("전화번호는 010으로 시작해야 합니다."); // 상태값 변경
-      return;
-    }
-
-    setUser({
-      ...user,
-      phoneNumber: newPhoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"),
-    });
-
-    setNewPhoneNumber("");
-    setIsPhoneEditOpen(false);
-  };
-
   return (
     <BuyerInfo>
       <div className="userinfo">
@@ -90,95 +21,14 @@ export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
           <div className="title">구매자 정보</div>
           <div className="buyername">
             <div className="buyer">이름 </div>
-            {isNameEditOpen ? (
-              <div className="editName">
-                <input
-                  type="text"
-                  value={newName}
-                  onChange={handleNameChange}
-                  placeholder="이름을 입력하세요"
-                  className="putname"
-                />
-                <button className="putbutton" onClick={handleNameUpdate}>
-                  이름 수정
-                </button>
-                <button
-                  className="putbutton"
-                  onClick={() => {
-                    setIsNameEditOpen(false);
-                    setNewName("");
-                  }}
-                >
-                  취소
-                </button>
-              </div>
-            ) : (
-              <div className="username" onClick={() => setIsNameEditOpen(true)}>
-                {user.name}
-              </div>
-            )}
+            <div className="username">{userInfo.realName}</div>
           </div>
           <div className="buyeremail">
             <div className="email">이메일 </div>
-            {isEmailEditOpen ? (
-              <div className="editEmail">
-                <input
-                  type="text"
-                  value={newEmail}
-                  onChange={handleEmailChange}
-                  placeholder="이메일을 입력하세요"
-                  className="putemail"
-                />
-                <button className="putbutton" onClick={handleEmailUpdate}>
-                  이메일 수정
-                </button>
-                <button
-                  className="putbutton"
-                  onClick={() => {
-                    setIsEmailEditOpen(false);
-                    setNewEmail("");
-                  }}
-                >
-                  취소
-                </button>
-              </div>
-            ) : (
-              <div className="useremail" onClick={() => setIsEmailEditOpen(true)}>
-                {user.email}
-              </div>
-            )}
+            <div className="useremail">{userInfo.email}</div>
           </div>
-          <div className="buyerphoneNumber">
-            <div className="phone">휴대폰 번호</div>
-            {isPhoneEditOpen ? (
-              <div className="editPhone">
-                <input
-                  type="text"
-                  value={newPhoneNumber}
-                  onChange={handlePhoneNumberChange}
-                  placeholder="숫자만 입력하세요"
-                  className="putnumber"
-                />
-                <div className="errmsg">{errorMsg}</div>
-                <button className="putbutton" onClick={handlePhoneNumberUpdate} disabled={newPhoneNumber.length < 11}>
-                  전화번호 수정
-                </button>
-                <button
-                  className="putbutton"
-                  onClick={() => {
-                    setIsPhoneEditOpen(false);
-                    setNewPhoneNumber("");
-                  }}
-                >
-                  취소
-                </button>
-              </div>
-            ) : (
-              <div className="userphone" onClick={() => setIsPhoneEditOpen(!isPhoneEditOpen)}>
-                {user.phoneNumber}
-              </div>
-            )}
-          </div>
+
+          <div className="userphone">{userInfo.phone}</div>
         </div>
       </div>
     </BuyerInfo>
