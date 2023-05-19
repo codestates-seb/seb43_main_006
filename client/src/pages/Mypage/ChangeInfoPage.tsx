@@ -358,7 +358,7 @@ type Bodytype = {
   passwordCheck: string;
 };
 
-const Changeinfopage = () => {
+const ChangeInfoPage = () => {
   const navigate = useNavigate();
   const [doAxios, data, err] = useAxiosAll();
   const [body, setBody] = useState<Bodytype>({
@@ -448,4 +448,4 @@ const Changeinfopage = () => {
   );
 };
 
-export default Changeinfopage;
+export default ChangeInfoPage;

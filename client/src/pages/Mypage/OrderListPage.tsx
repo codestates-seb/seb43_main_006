@@ -1,5 +1,3 @@
-//주문페이지
-
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -163,12 +161,6 @@ const StyledTd = styled.td`
   text-align: center;
   vertical-align: middle;
 `;
-// console.log(orderlist);
-// const filterData = ()=>{
-//   //들어온 데이터와 이름이 같은지 확인하는 부분
-//   //이름이 같으면 그거의 데이터를 밑의 테이블에 뿌릴거다.
-//   for(let i=0; i< )
-// }
 
 const OrderTable = ({ orderlist }: OrderTableProps) => {
   const realOrderList = orderlist; //진짜데이터에서는 어차피 하나만 들어오니까 필요없는 로직이 될것이다.
@@ -189,7 +181,6 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
             <StyledTh>날짜</StyledTh>
             <StyledTh>구매목록</StyledTh>
             <StyledTh>수량</StyledTh>
-
             <StyledTh>상태</StyledTh>
           </tr>
         </thead>

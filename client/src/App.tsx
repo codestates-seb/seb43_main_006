@@ -14,9 +14,9 @@ import FindPassword from "@Loginpages/FindPassword";
 import SignupInput from "@Signuppages/SignupInput";
 import SignupSelection from "@Signuppages/SignupSelection";
 import SignupTerm from "@Signuppages/SignupTerm";
-import LikePage from "@Mypagepages/LikePage";
-import OrderPage from "@Mypagepages/OrderPage";
-import Changeinfopage from "@Mypagepages/changeinfo";
+import LikePage from "@pages/Mypage/LikeListPage";
+import OrderPage from "@pages/Mypage/OrderListPage";
+import ChangeInfoPage from "@pages/Mypage/ChangeInfoPage";
 import Payment from "@Paymentpages/Payment";
 import PaymentConfirm from "@Paymentpages/PaymentConfirm";
 import FailPage from "@Paymentpages/Fail";
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/signup/term" element={<SignupTerm />} />
           <Route path="/mypage/likepage" element={<LikePage />} />
           <Route path="/mypage/orderpage" element={<OrderPage />} />
-          <Route path="/mypage/changeinfo" element={<Changeinfopage />} />
+          <Route path="/mypage/changeinfo" element={<ChangeInfoPage />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkoutChang" element={<CheckoutChang />} />
