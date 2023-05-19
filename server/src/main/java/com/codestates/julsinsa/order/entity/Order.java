@@ -24,10 +24,6 @@ public class Order extends Auditable {
     private Long orderId;
     private String name;
     private String phone;
-
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean isChecked;
-
     @Enumerated(value = EnumType.STRING)
     @Column
     private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
