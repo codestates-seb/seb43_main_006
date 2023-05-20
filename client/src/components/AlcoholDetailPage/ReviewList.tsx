@@ -86,9 +86,19 @@ const ReviewListContainer = styled.div`
 
       .review_img {
         display: flex;
-        overflow: hidden;
+        overflow: auto;
         flex-direction: row;
         gap: 10px;
+
+        &::-webkit-scrollbar {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: none;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: lightgray;
+        }
 
         img {
           margin-bottom: 1rem;
