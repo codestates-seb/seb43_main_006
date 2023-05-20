@@ -1,10 +1,9 @@
 import maintop from "../assets/images/Maintop.png";
-import mainmiddle from "../assets/images/Mainmiddle.png";
-import samplingimg from "../assets/images/samplingimg.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import samplelist from "../assets/images/samplelist.png";
 import { useNavigate } from "react-router-dom";
+import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
 
 interface ScrollState {
   x: number;
@@ -55,61 +54,30 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="glad" style={{ opacity: y > 650 ? (y > 1250 ? "0" : "1") : "0" }}>
-        <div>Welcome</div>
-        <div>To</div>
-        <div className="smallglad">매주 매일 매년 함께</div>
-        <div>Meju Meju</div>
+      <div className="layout1" style={{ opacity: y > 900 ? (y > 1600 ? "0" : "1") : "0" }}>
+        <Homelayout1 />
       </div>
-      <div className="glad2" style={{ opacity: y > 900 ? (y > 1500 ? "0" : "1") : "0" }}>
-        <div>매주 함께하는 우리</div>
-        <div className="smallglad2">어서 오세요!</div>
+      <div className="space"></div>
+      <div className="layout2" style={{ opacity: y > 2300 ? (y > 2900 ? "0" : "1") : "0" }}>
+        <Homelayout2 />
       </div>
-      <div className="firstbox" style={{ opacity: y > 1500 ? (y > 2100 ? "0" : "1") : "0" }}>
-        <li>저희 매주매주는 술을 사랑하는 여러분들을 위해</li>
-        <li className="list_maju">
-          <ul className="maju">매주</ul>
-          <ul className="maju_list">
-            <li>휴식을 할 때 함께할,</li>
-            <li>고된 하루를 극복할,</li>
-            <li>사랑하는 사람과 함께 할 때</li>
-            <li>늘 곁에 있겠습니다.</li>
-          </ul>
-        </li>
+
+      <div className="space"></div>
+      <div className="layout3" style={{ opacity: y > 3600 ? (y > 4500 ? "0" : "1") : "0" }}>
+        <Homelayout3 />
       </div>
-      <div className="glad3-item">
-        <img
-          src={mainmiddle}
-          alt="Main middle"
-          className="Mainmiddle"
-          style={{ opacity: y > 2000 ? (y > 2750 ? "0" : "1") : "0" }}
-        ></img>
-        <br />
-        <div className="glad3" style={{ opacity: y > 2500 ? (y > 3100 ? "0" : "1") : "0" }}>
-          Welcome To Meju Meju
-        </div>
-        <div className="glad4-item">
-          <img
-            src={samplingimg}
-            alt="samplingimg"
-            className="samplingimg"
-            style={{ opacity: y > 3200 ? (y > 4050 ? "0" : "1") : "0" }}
-          ></img>
-          <div className="glad4" style={{ opacity: y > 3200 ? (y > 3800 ? "0" : "1") : "0" }}>
-            Welcome
-            <br />
-            To <br />
-            Meju <br />
-            Meju
-          </div>
-        </div>
-        <p className="sales" style={{ opacity: y > 4100 ? (y > 4800 ? "0" : "1") : "0" }}>
+
+      <div className="space"></div>
+      <div className="layout4" style={{ opacity: y > 5300 ? (y > 6300 ? "0" : "1") : "0" }}>
+        <Homelayout5 />
+      </div>
+      <div className="space"></div>
+      <div className="saleslist">
+        <p className="sales" style={{ opacity: y > 6700 ? (y > 7500 ? "0" : "1") : "0" }}>
           구매율이 높은 상품
         </p>
-      </div>
-      <div className="saleslist">
-        <a>
-          위스키 계열
+        <a style={{ opacity: y > 6800 ? (y > 7500 ? "0" : "1") : "0" }}>
+          <div className="listtitle">위스키 계열</div>
           <ul className="1stsales">
             <li>
               <img src={samplelist} className="slist" alt="sample list" />
@@ -140,8 +108,8 @@ const Home: React.FC = () => {
             </li>
           </ul>
         </a>
-        <a>
-          보드카 계열
+        <a style={{ opacity: y > 7100 ? (y > 8000 ? "0" : "1") : "0" }}>
+          <div className="listtitle">보드카 계열</div>
           <ul className="2ndsales">
             <li>
               <img src={samplelist} className="slist" alt="sample list" />
@@ -171,6 +139,8 @@ const Home: React.FC = () => {
               <img src={samplelist} className="slist" alt="sample list" />
             </li>
           </ul>
+          {""}
+          {""}
         </a>
       </div>
     </HomeContainer>
@@ -181,165 +151,63 @@ export default Home;
 
 const HomeContainer = styled.section`
   color: ${({ theme }) => theme.colors.fontColor};
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 100vw;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
   font-size: 96px;
+  * {
+    transition: all 1s ease;
+  }
+  & div.space {
+    height: 700px;
+  }
+  & div.layout1 {
+    width: 100%;
+    display: flex;
+  }
 
   .Maintop {
     position: relative;
     top: 0;
     padding-top: 0;
-    height: 100vh;
-    width: 120vw;
+    width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
   }
 
-  .Mainmiddle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 1800px;
-    padding-left: 0;
-    padding-right: 12vw;
-    padding-top: 900px;
-    transition: all 0.5s ease-in-out;
-  }
-  & * {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 100vw;
-    height: 200px;
-    color: ${({ theme }) => theme.colors.fontColor};
-  }
-  & div {
-    padding-left: 2vw;
-    padding-right: 2vw;
-    display: flex;
-  }
-  .glad {
-    padding-top: 500px;
-    transition: all 0.5s ease-in-out;
-  }
-  .smallglad {
-    font-size: 16px;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    font-weight: bold;
-    align-items: flex-end;
-    height: 100px;
-  }
-  .glad2 {
-    display: flex;
-    align-items: center;
-    width: 50vw;
-    justify-content: center;
-    flex-direction: column;
-    font-size: 48px;
-    padding-top: 300px;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 500px;
-    transition: all 0.5s ease-in-out;
-  }
-  .smallglad2 {
-    font-size: 25px;
-    flex-direction: row;
-    color: ${({ theme }) => theme.colors.themeColor};
-  }
-  .firstbox {
-    display: flex;
-    font-size: 30px;
-    width: 100vw;
-    padding-bottom: 100px;
-    align-items: center;
-    flex-direction: column;
-    transition: all 0.5s ease-in-out;
-    height: 400px;
-  }
-  .maju_list {
-    padding-left: 10vw;
-    padding-bottom: 10vw;
-    flex-direction: column;
-    height: 200px;
-    overflow: visible;
-  }
-  .maju {
-    padding-top: 30px;
-    padding-left: 5vw;
-    font-size: 50px;
-    height: 200px;
-    color: ${({ theme }) => theme.colors.themeColor};
-  }
-  .list_maju {
-    padding-top: 30px;
-  }
-  .glad3-item {
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 800px;
-    padding-left: 14vw;
-  }
-  .glad3 {
-    transition: all 0.5s ease-in-out;
-    padding-left: 0;
-    padding-right: 10vw;
-  }
-  .samplingimg {
-    transition: all 0.5s ease-in-out;
-    height: 80vh;
-    width: 100vw;
-  }
-  .glad4-item {
-    flex-direction: row;
-    display: flex;
-    justify-content: center;
-    padding-top: 550px;
-    padding-left: 10vw;
-  }
-  .glad4 {
-    transition: all 0.5s ease-in-out;
-    width: 100vw;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding-left: 1vw;
-  }
   .sales {
-    width: 100vw;
+    width: 100%;
     display: flex;
     align-items: flex-start;
-    padding-left: 15vw;
-    padding-top: 1000px;
-    padding-bottom: 200px;
     flex-direction: row;
     justify-content: flex-start;
     font-size: 48px;
     color: ${({ theme }) => theme.colors.themeColor};
     transition: all 0.5s ease-in-out;
+    padding-bottom: 40px;
   }
   .saleslist {
-    max-width: 80vw;
+    max-width: 80%;
     margin: 0;
-    padding-top: 1600px;
-    height: 1880px;
+    display: flex;
     flex-direction: column;
-    padding-left: 20vw;
+    justify-content: flex-start;
+
     & a {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
       font-size: 20px;
-      padding-left: 2vw;
-      height: 30px;
+    }
+    & div.listtitle {
+      padding-bottom: 20px;
     }
   }
 
   .1stsales {
-    max-width: 100vw;
+    max-width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -356,14 +224,17 @@ const HomeContainer = styled.section`
     height: 1200px;
   }
   .slist {
-    width: 158px;
-    height: 158px;
+    width: 250px;
+    height: 250px;
     margin: 10px;
     object-fit: cover;
   }
   & ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     overflow-x: scroll;
-    height: 220px;
+    height: 300px;
     &li {
     }
   }

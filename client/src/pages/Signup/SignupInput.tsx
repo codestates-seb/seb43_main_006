@@ -9,7 +9,7 @@ import useAxiosAll from "@hooks/useAxiosAll";
 import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import Alert from "@components/Common/AlertModal";
 
-const url = `${process.env.REACT_APP_API_URL}/`;
+const url = `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/`;
 
 type TitleProps = {
   fontSize: string;
@@ -107,7 +107,7 @@ const SignupInput = () => {
       };
       console.log(body);
       axios
-        .post(`${process.env.REACT_APP_API_URL}/members/oauth2-signup`, body, {
+        .post(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/oauth2-signup`, body, {
           headers: {
             Authorization: localStorage.getItem("authToken"),
             refresh: localStorage.getItem("refresh"),
@@ -143,7 +143,7 @@ const SignupInput = () => {
         };
         console.log(body);
         axios
-          .post(`${process.env.REACT_APP_API_URL}/members/signup`, body, {
+          .post(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/signup`, body, {
             headers: {
               Authorization: localStorage.getItem("authToken"),
               refresh: localStorage.getItem("refresh"),

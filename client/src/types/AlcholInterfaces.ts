@@ -77,10 +77,11 @@ export interface CartItemsProps {
 
 // 결제 페이지 UserProps
 export interface UserProps {
-  id?: string;
-  name: string;
+  memberId: string;
+  realName: string;
+  displayName: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
 }
 
 export interface CheckoutProps {
