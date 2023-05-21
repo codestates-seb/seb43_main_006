@@ -128,7 +128,7 @@ const ReviewTitleBox = styled.div`
   }
 `;
 
-const AlcoholItemReview = ({ itemId, reviewRating }: ItemReviewsProps) => {
+const AlcoholItemReview = ({ itemId }: ItemReviewsProps) => {
   const [reviews, setReviews] = useState<ItemReviewsType[] | null>(null);
   const [isReviewAll, setIsReviewALL] = useState<boolean>(false);
 

@@ -126,14 +126,14 @@ const ReviewList = ({ reviews, itemId }: ItemReviewListProps) => {
   const HandleUpdateReview = (reviewId: number): void => {
     setIsEditing((prevState) => ({ ...prevState, [reviewId]: true }));
 
-    const review: ReveiwUpdateProps = {
+    const reviewUpdate: ReveiwUpdateProps = {
       mode: "edit",
       itemId,
       reviewId,
     };
 
     navigate(`/review/edit/${itemId}`, {
-      state: { review },
+      state: { reviewUpdate },
     });
   };
 

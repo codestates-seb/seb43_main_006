@@ -76,26 +76,20 @@ const DetailInfoBox = styled.div`
   margin-top: 60px;
   ${({ theme }) => theme.common.flexCenterCol};
 
-  img {
+  /* img {
     max-width: 1000px;
-  }
-  /* .info_img_box {
+  } */
+  .info_img_box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
     img {
       width: 80%;
+      max-width: 1000px;
       height: auto;
     }
   }
-
-  .info_text_box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    font-size: 20px;
-    padding: 0px 50px;
-  } */
 `;
 
 const SuggestionTitle = styled.div`
@@ -222,9 +216,8 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
         </ContentBox>
         <DetailInfoBox>
           <div className="info_img_box">
-            <img src={data.detailedProfile} />
+            <img src={`${data.detailedProfile}?${new Date().getTime()}`} alt="description" />
           </div>
-          <div className="info_text_box">{data.content}</div>
         </DetailInfoBox>
         <SuggestionTitle>
           <h2 className="content_titletext">이런 상품은 어때요?</h2>

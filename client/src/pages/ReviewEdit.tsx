@@ -103,6 +103,12 @@ const ReviewContentBox = styled.div`
       font-weight: 600;
       font-size: 14px;
     }
+    .photo_edit {
+      margin-bottom: 2rem;
+      font-weight: 500;
+      font-size: 13px;
+      color: #a84448;
+    }
 
     input {
       width: 85%;
@@ -141,10 +147,24 @@ const ReviewContentBox = styled.div`
     display: flex;
     gap: 1rem;
 
+    .fade-enter {
+      opacity: 0;
+    }
+    .fade-enter-active {
+      opacity: 1;
+      transition: opacity 500ms;
+    }
+    .fade-exit {
+      opacity: 1;
+    }
+    .fade-exit-active {
+      opacity: 0;
+      transition: opacity 500ms;
+    }
+
     .img_box {
       ${({ theme }) => theme.common.flexCenterCol}
     }
-
     img {
       width: 200px;
       height: auto;
@@ -187,47 +207,56 @@ const ConfirmBtnBox = styled.div`
 
 const ReviewEdit = () => {
   const location = useLocation();
-  const review = location.state && location.state.review ? location.state.review : null;
+  const reviewCreate = location.state.reviewCreate ?? null;
+  const reviewUpdate = location.state.reviewUpdate ?? null;
 
   const navigate = useNavigate();
   // 주류 아이템 정보
   const [itemImg, setItemImg] = useState<string>("");
   const [itemName, setItemName] = useState<string>("");
 
-  const [oldImages, setOldImages] = useState<string[]>([]); // 기존 이미지의 URL
-
-  const mode: string = review?.mode || "create";
+  const mode: string = reviewUpdate?.mode || "create";
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
-  const [fileImages, setFileImages] = useState<File[]>([]);
-  const [images, setImages] = useState<string[]>([]); // 기존 이미지
+  const [existingImages, setExistingImages] = useState<string[]>([]); // 기존의 사진
+  const [selectedImages, setSelectedImages] = useState<File[]>([]); // new 사진
   const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!review || review.itemId === null) {
-        return;
-      }
-      const resItem = await getItem(review.itemId);
-      const resReview = await getReviewDetail(review.itemId, review.reviewId);
       try {
+        const itemId = reviewUpdate?.itemId ?? reviewCreate?.itemId;
+
+        // itemId가 없는 경우
+        if (itemId === null || itemId === undefined) {
+          console.log("err");
+          return;
+        }
+
+        // Item 정보를 fetch
+        const resItem = await getItem(itemId);
         const itemData = resItem.data.data;
         setItemImg(itemData.profile);
         setItemName(itemData.titleKor);
 
-        const reviewData = resReview.data.data;
-        setTitle(reviewData.title);
-        setContent(reviewData.content);
-        setRating(reviewData.rating);
-        setImages(reviewData.reviewImages);
+        // reviewUpdate가 있는 경우 추가로 Review 정보를 fetch
+        if (reviewUpdate && reviewUpdate.reviewId !== null) {
+          const resReview = await getReviewDetail(reviewUpdate.itemId, reviewUpdate.reviewId);
+          const reviewData = resReview.data.data;
+
+          setTitle(reviewData.title);
+          setContent(reviewData.content);
+          setRating(reviewData.rating);
+          setExistingImages(reviewData.reviewImages || []); // 리뷰 데이터에서 기존 이미지 가져오기
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchData();
-  }, [review]);
+  }, [reviewCreate, reviewUpdate]);
 
   const handleSubmit = async () => {
     try {
@@ -237,9 +266,9 @@ const ReviewEdit = () => {
       }
       const formData = new FormData();
 
-      if (fileImages.length >= 1) {
-        for (let i = 0; i < fileImages.length; i++) {
-          formData.append("file", fileImages[i]);
+      if (selectedImages.length >= 1) {
+        for (let i = 0; i < selectedImages.length; i++) {
+          formData.append("file", selectedImages[i]);
         }
       }
 
@@ -252,14 +281,12 @@ const ReviewEdit = () => {
       formData.append("requestBody", new Blob([JSON.stringify(requestBody)], { type: "application/json" }));
 
       if (mode === "create") {
-        await createItemReview(1, formData);
-        // Handle response, e.g. navigate to the new review
-      } else if (mode === "edit" && review) {
-        await updateItemReview(review.itemId, review.reviewId, formData);
+        await createItemReview(reviewCreate.itemId, formData);
+        navigate(`/alcohol/`);
+      } else if (mode === "edit" && reviewUpdate) {
+        await updateItemReview(reviewUpdate.itemId, reviewUpdate.reviewId, formData);
+        navigate(`/alcohol/detail/${reviewUpdate.itemId}`);
       }
-      navigate(`/alcohol/`);
-      // navigate(`/alcohol/detail/${review.itemId}`);
-
       setIsModal(false);
     } catch (err) {
       console.log(err);
@@ -268,34 +295,20 @@ const ReviewEdit = () => {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    const fileList = Array.from(files || []);
 
-    if (files) {
-      const newFiles = Array.from(files);
-      const newImages = newFiles.map((file) => URL.createObjectURL(file));
-
-      if (oldImages.length + newFiles.length > 3) {
-        alert("파일은 최대 3까지 추가가 가능합니다.");
-        return;
-      } else {
-        setFileImages((prevFiles) => [...prevFiles, ...newFiles]); // 새로 추가된 이미지의 파일 객체를 상태에 저장
-        setImages((prevImages) => [...prevImages, ...newImages]); // 새로 추가된 이미지의 URL을 상태에 저장
-      }
+    if (selectedImages.length + fileList.length > 3) {
+      alert("파일은 최대 3까지 추가가 가능합니다.");
+      return;
     }
-
+    if (fileList.length > 0) {
+      setSelectedImages((prevImages) => [...prevImages, ...fileList]);
+    }
     e.target.value = "";
   };
 
   const handleImageRemove = (idx: number) => {
-    // 기존 이미지 삭제
-    if (idx < oldImages.length) {
-      setOldImages((prevImages) => prevImages.filter((_, i) => i !== idx));
-    }
-    // 새롭게 업로드한 이미지 삭제
-    else {
-      const newIdx = idx - oldImages.length;
-      setFileImages((prevFiles) => prevFiles.filter((_, i) => i !== newIdx));
-      setImages((prevImages) => prevImages.filter((_, i) => i !== newIdx));
-    }
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== idx));
   };
 
   const handleCancelForm = (): void => {
@@ -331,7 +344,7 @@ const ReviewEdit = () => {
                   type="text"
                   value={title}
                   onChange={(e) => {
-                    console.log(review);
+                    console.log(reviewUpdate);
                     console.log(e.target.value);
                     setTitle(e.target.value);
                   }}
@@ -355,19 +368,28 @@ const ReviewEdit = () => {
               <div className="content_title">사진첨부</div>
               <div className="content_input">
                 <p className="photo_info">사진은 최대 3개까지 첨부 가능합니다.</p>
+                {mode !== "create" && (
+                  <p className="photo_edit">(사진을 새로 추가할 경우, 기존에 업로드한 사진은 삭제됩니다.)</p>
+                )}
                 <label htmlFor="file_upload" className="img_upload_btn">
                   File Upload
                 </label>
                 <input id="file_upload" type="file" style={{ display: "none" }} multiple onChange={handleImageUpload} />
                 <div className="file_box">
-                  {oldImages.concat(images).map((img, idx) => (
-                    <div className="img_box" key={idx}>
-                      <img src={img} alt={`image upload ${idx}`} />
-                      <button type="button" onClick={() => handleImageRemove(idx)}>
-                        이미지 삭제
-                      </button>
-                    </div>
-                  ))}
+                  {selectedImages.length === 0
+                    ? existingImages.map((imgUrl, idx) => (
+                        <div className="img_box" key={idx}>
+                          <img src={imgUrl} alt={`existing image ${idx}`} />
+                        </div>
+                      ))
+                    : selectedImages.map((img, idx) => (
+                        <div className="img_box" key={idx + existingImages.length}>
+                          <img src={URL.createObjectURL(img)} alt={`image upload ${idx}`} />
+                          <button type="button" onClick={() => handleImageRemove(idx)}>
+                            이미지 삭제
+                          </button>
+                        </div>
+                      ))}
                 </div>
               </div>
             </ReviewContentBox>
