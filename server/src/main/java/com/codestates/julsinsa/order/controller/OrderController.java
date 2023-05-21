@@ -30,8 +30,8 @@ public class OrderController {
         return new ResponseEntity<>(mapper.orderToOrderResponseDto(order), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{order-id}/cancel")
-    public ResponseEntity patchOrder(@PathVariable("order-id") @Positive Long orderId)
+    @PatchMapping("/{orderId}/cancel")
+    public ResponseEntity patchOrder(@PathVariable("orderId") @Positive Long orderId)
     {
     orderService.cancelOrder(orderId);
 
