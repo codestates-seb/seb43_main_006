@@ -17,7 +17,6 @@ export interface AlcoholData {
   titleEng: string;
   profile: string;
   detailedProfile: string;
-  content: string;
   categories: string[];
   price: number;
   capacity: number;
