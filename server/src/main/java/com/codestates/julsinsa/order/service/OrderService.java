@@ -51,8 +51,8 @@ public class OrderService {
 
     public void cancelOrder(Long orderId){
         Order order = findVerifiedOrder(orderId);
-
         order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+        orderRepository.save(order);
     }
 
     private Order findVerifiedOrder(Long orderId) {
