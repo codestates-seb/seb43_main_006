@@ -24,6 +24,7 @@ const Cart = () => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/cart`, {
+        // .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/cart`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,

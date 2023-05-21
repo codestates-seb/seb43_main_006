@@ -62,8 +62,8 @@ const PaymentConfirm = () => {
 
   axios
     .post(
-      // `${process.env.REACT_APP_API_URL}/payment`,
-      `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/payment`,
+      `${process.env.REACT_APP_API_URL}/payment`,
+      // `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/payment`,
       { orderId, paymentKey, amount },
       {
         headers: {
@@ -81,8 +81,8 @@ const PaymentConfirm = () => {
   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
   useEffect(() => {
     axios
-      // .get(`${process.env.REACT_APP_API_URL}/orders/to-payment`, {
-      .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/to-payment`, {
+      .get(`${process.env.REACT_APP_API_URL}/orders/to-payment`, {
+        // .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/to-payment`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -99,8 +99,8 @@ const PaymentConfirm = () => {
 
   axios
     .post(
-      // `${process.env.REACT_APP_API_URL}/orders`,
-      `  http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/orders`,
+      `${process.env.REACT_APP_API_URL}/orders`,
+      // `  http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/orders`,
       { orderId, paymentKey, orderlist },
       {
         headers: {

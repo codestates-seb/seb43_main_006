@@ -17,15 +17,8 @@ const Payment = () => {
   const navigate = useNavigate();
   const [doAxios, data] = useAxiosAll();
 
-  const [userInfo, setUserInfo] = useState<UserProps>({
-    memberId: "",
-    realName: "",
-    displayName: "",
-    email: "",
-    phone: "",
-  } as UserProps);
+  const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
 
-  console.log(userInfo);
   const updateUserInfo = () => {
     setUserInfo(data as UserProps);
   };
@@ -36,11 +29,13 @@ const Payment = () => {
   }, []);
 
   useEffect(() => {
-    console.log(data);
+    if (data) {
+      updateUserInfo();
+    }
   }, [data]);
 
   const handlePayment = () => {
-    navigate("/CheckoutChang", { state: { items: items, user: userInfo } });
+    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
   };
 
   return (

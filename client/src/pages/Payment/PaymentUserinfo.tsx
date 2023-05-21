@@ -1,19 +1,22 @@
 import styled from "styled-components";
 import { UserProps } from "../../types/AlcholInterfaces";
+import { useLocation } from "react-router-dom";
 
-interface ChildComponentProps {
+export interface ChildComponentProps {
   userInfo: UserProps;
   updateUserInfo: (user: UserdataType) => void;
 }
-type UserdataType = {
+export type UserdataType = {
   memberId: string;
   displayName: string;
   realName: string;
   phone: string;
   email: string;
 };
-
-export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
+export default function PaymnetUserInfo({ userInfo, updateUserInfo }: ChildComponentProps) {
+  const location = useLocation();
+  const data = location.state ? location.state.data : [];
+  console.log(userInfo);
   return (
     <BuyerInfo>
       <div className="userinfo">
@@ -27,8 +30,10 @@ export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
             <div className="email">이메일 </div>
             <div className="useremail">{userInfo.email}</div>
           </div>
-
-          <div className="userphone">{userInfo.phone}</div>
+          <div className="buyerphoneNumber">
+            <div className="phone">전화번호 </div>
+            <div className="userphone">{userInfo.phone}</div>
+          </div>
         </div>
       </div>
     </BuyerInfo>
@@ -84,6 +89,7 @@ const BuyerInfo = styled.div`
     width: 100%;
     padding-top: 1.25%;
     padding-bottom: 1.25%;
+    border-bottom: 1px solid rgba(60, 60, 60, 0.05);
   }
   & div.buyer {
     display: flex;
