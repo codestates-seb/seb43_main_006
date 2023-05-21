@@ -36,7 +36,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final static String USER_DEFAULT_URL = "/users";
+    private final static String MEMBER_DEFAULT_URL = "/members";
 
     private final OrderService orderService;
 
@@ -49,7 +49,7 @@ public class MemberController {
         Member createdmember = memberService.createMember(member);
 
 
-        URI location = UriCreator.createUri(USER_DEFAULT_URL, createdmember.getMemberId());
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdmember.getMemberId());
 
         return ResponseEntity.created(location).build();
     }
@@ -61,7 +61,7 @@ public class MemberController {
 
 //        memberService.oauthgetToekn(member,response);
 
-        URI location = UriCreator.createUri(USER_DEFAULT_URL, member.getMemberId());
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
 
         return ResponseEntity.created(location).build();
 

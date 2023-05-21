@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
     @Modifying
@@ -24,7 +26,10 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     // 카테고리 지정해서 페이지네이션
     Page<Item> findAllByCategories(String category, Pageable pageable);
 
+    // 한글 술이름으로 검색
     Page<Item> findAllByTitleKorContaining(String titleKor, Pageable pageable);
+
+    Optional<Item> findByTitleKor(String titleKor);
 
 //    // 판매량에 따라 아이템 정렬
 //    // 카테고리와 판매량에 따라 아이템 필터링 및 정렬

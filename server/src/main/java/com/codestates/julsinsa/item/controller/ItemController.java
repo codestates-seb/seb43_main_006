@@ -1,7 +1,9 @@
 package com.codestates.julsinsa.item.controller;
 
+import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.global.dto.MultiResponseDto;
 import com.codestates.julsinsa.global.dto.SingleResponseDto;
+import com.codestates.julsinsa.global.utils.UriCreator;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.mapper.ItemMapper;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,35 @@ public class ItemController {
     private final ItemService itemService;
 
     private final ItemMapper mapper;
+
+    private final static String ITEM_DEFAULT_URL = "/items";
+
+    @PostMapping
+    public ResponseEntity postItem(@RequestBody ItemDto.Post requestBody){
+        Item item = itemService.createItem(mapper.itemPostToItem(requestBody));
+
+        URI location = UriCreator.createUri(ITEM_DEFAULT_URL, item.getItemId());
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PatchMapping("/{item-id}")
+    public ResponseEntity patchItem(@RequestBody ItemDto.Patch requestBody,
+                                    @PathVariable("item-id") @Positive long itemId){
+        Item item = mapper.itemPatchToItem(requestBody);
+        item.setItemId(itemId);
+        Item patchItem = itemService.updateItem(item);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.itemToItemResponseDto(patchItem)),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{item-id}")
+    public ResponseEntity deleteItem(@PathVariable("item-id") @Positive long itemId){
+        itemService.deleteItem(itemId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
     @GetMapping
     public ResponseEntity getItemByCategories(@Positive @RequestParam int page,
