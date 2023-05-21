@@ -7,8 +7,9 @@ import { AlcoholData, ItemOrder } from "types/AlcholInterfaces";
 // components
 import ClickFavoriteItem from "@components/Common/ClickFavoriteItem";
 import PriceDisplay from "@components/Common/PriceDisplay";
-import { ButtonDark } from "@components/Common/Button";
+import { ButtonLight, ButtonDark } from "@components/Common/Button";
 import QuantityControl from "@components/AlcoholDetailPage/QuantityControl";
+import { createItemCart } from "@services/api";
 
 interface ItemDatailProps {
   data: AlcoholData;
@@ -137,7 +138,12 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
   };
 
   const navigate = useNavigate();
-  // const HandlerClickCart = () => {};
+
+  const HandlerClickCart = async () => {
+    console.log(data.itemId, quantity);
+    await createItemCart(data.itemId, quantity);
+  };
+
   const HandlerClickOrder = (): void => {
     const items: ItemOrder = {
       itemId: data.itemId,
@@ -191,7 +197,10 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
           </div>
         </div>
         <div className="buy_cart">
-          <button className="cart_btn">장바구니</button>
+          <ButtonLight width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickCart}>
+            장바구니
+          </ButtonLight>
+          {/* <button className="cart_btn">장바구니</button> */}
           <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickOrder}>
             구매하기
           </ButtonDark>

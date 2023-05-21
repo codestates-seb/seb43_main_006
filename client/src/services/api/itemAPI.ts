@@ -6,7 +6,7 @@ export const getItemsList = (page: number, size: number, sortBy: string, categor
   if (category !== "전체") {
     params.category = category;
   }
-  return instance.get("/items/", {
+  return instance.get("/items", {
     params,
     headers: { "No-Auth": "True" }, // No-Auth 헤더를 추가하여 이 요청이 토큰을 필요로 하지 않음을 표시,
   });
