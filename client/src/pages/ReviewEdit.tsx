@@ -282,11 +282,10 @@ const ReviewEdit = () => {
 
       if (mode === "create") {
         await createItemReview(reviewCreate.itemId, formData);
-        navigate(`/alcohol/`);
       } else if (mode === "edit" && reviewUpdate) {
         await updateItemReview(reviewUpdate.itemId, reviewUpdate.reviewId, formData);
-        navigate(`/alcohol/detail/${reviewUpdate.itemId}`);
       }
+      navigate(`/alcohol/detail/${reviewUpdate.itemId}`);
       setIsModal(false);
     } catch (err) {
       console.log(err);
