@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MarketService {
-    MarketRepository marketRepository;
+    private final MarketRepository marketRepository;
 
     public Market createMarket(Market market) {
         return marketRepository.save(market);
@@ -44,6 +44,7 @@ public class MarketService {
     }
 
     public Page<Market> findMarkets(Pageable pageable) {
+
         Page<Market> marketPage = marketRepository.findAll(pageable);
 
         return  marketPage;
