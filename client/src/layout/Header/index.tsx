@@ -226,7 +226,7 @@ const Header: React.FC = () => {
                   className="li3"
                   hovering={(isHover || false).toString()}
                   y={y}
-                  onClick={() => navigate("/likepage")}
+                  onClick={() => navigate("/mypage/likepage")}
                 >
                   찜
                 </StyledList>
@@ -245,7 +245,7 @@ const Header: React.FC = () => {
                   className="li5"
                   hovering={(isHover || false).toString()}
                   y={y}
-                  onClick={() => navigate("/orderpage")}
+                  onClick={() => navigate("/mypage/orderpage")}
                 >
                   주문 내역
                 </StyledList>
@@ -253,7 +253,7 @@ const Header: React.FC = () => {
                   className="li6"
                   hovering={(isHover || false).toString()}
                   y={y}
-                  onClick={() => navigate("/changeinfo")}
+                  onClick={() => navigate("/mypage/changeinfo")}
                 >
                   개인 정보 수정
                 </StyledList>
