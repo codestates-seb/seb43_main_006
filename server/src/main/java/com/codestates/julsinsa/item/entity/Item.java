@@ -73,9 +73,6 @@ public class Item extends Auditable {
     @OneToMany(mappedBy = "item")
     private List<Review> reviews = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "item")
-//    private List<ItemImage> images = new ArrayList<>();
-
     @OneToMany(mappedBy = "item")
     private List<ItemCart> itemCarts = new ArrayList<>();
 

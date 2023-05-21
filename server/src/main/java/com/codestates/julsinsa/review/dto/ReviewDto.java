@@ -14,7 +14,6 @@ public class ReviewDto {
 
     @Getter
     public static class Post{
-
         @NotBlank
         private String title;
 

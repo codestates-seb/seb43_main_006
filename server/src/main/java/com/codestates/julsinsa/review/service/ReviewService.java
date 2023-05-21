@@ -94,14 +94,7 @@ public class ReviewService {
         else throw new BusinessLogicException(ExceptionCode.DO_NOT_MATCH);
     }
 
-    //  리뷰 페이지네이션 처리
-    public Page<Review> findReviews(long itemId , int page, int size){
-        Optional<Item> findItem = itemRepository.findById(itemId);
-        Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
-
-        return reviewRepository.findAllByItem(item,PageRequest.of(page -1 , size, Sort.by("reviewId").descending()));
-    }
-
+    // 페이지 네이션은 프론트에서 처리 하겠다고 함
     public List<Review> findReviews(long itemId){
         Optional<Item> findItem = itemRepository.findById(itemId);
         Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));

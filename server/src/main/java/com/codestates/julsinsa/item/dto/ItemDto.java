@@ -18,7 +18,6 @@ public class ItemDto {
 
     @Getter
     public static class Post{
-
         @NotBlank
         private String titleKor;
         @NotBlank

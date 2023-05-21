@@ -20,19 +20,15 @@ import java.util.Optional;
 public class MemberDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
     private final CustomAuthorityUtils authorityUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return new MemberDetails(findMember);
-
-
     }
 
     private final class MemberDetails extends Member implements UserDetails {
