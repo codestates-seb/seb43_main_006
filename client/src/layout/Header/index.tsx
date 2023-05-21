@@ -150,6 +150,32 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
+  function authTokenExpired() {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) {
+      // authToken이 없는 경우
+      return true; // 만료된 것으로 처리
+    }
+
+    // authToken이 있는 경우
+    const decodedToken = decodeAuthToken(authToken);
+    const expSeconds = decodedToken.exp;
+    const nowSeconds = Math.floor(Date.now() / 1000);
+
+    return expSeconds < nowSeconds; // 만료된 경우 true, 유효한 경우 false 반환
+  }
+
+  function decodeAuthToken(authToken: string) {
+    // authToken을 디코딩하는 로직을 구현해야 합니다.
+    // 실제로 사용하는 JWT 디코딩 라이브러리 등을 활용하면 됩니다.
+    // 예시로는 페이로드에 exp 필드가 있다고 가정하고 처리하고 있습니다.
+    const payload = authToken.split(".")[1];
+    const decodedPayload = atob(payload);
+    const { exp } = JSON.parse(decodedPayload);
+    return { exp };
+  }
+
   // const access_token = `Bearer ${localStorage.getItem("authToken")}`;
 
   const handleLogout = () => {
@@ -254,7 +280,12 @@ const Header: React.FC = () => {
               </ul>
               <ul className="banner6">
                 {localStorage.getItem("authToken") ? (
-                  <div onClick={handleLogout}>로그아웃</div>
+                  // authToken이 있는 경우
+                  authTokenExpired() ? ( // authToken이 만료된 경우
+                    <div onClick={() => navigate("/login")}>로그인</div>
+                  ) : (
+                    <div onClick={handleLogout}>로그아웃</div>
+                  )
                 ) : (
                   <div onClick={() => navigate("/login")}>로그인</div>
                 )}
