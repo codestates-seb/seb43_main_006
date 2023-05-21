@@ -47,7 +47,7 @@ public class Item extends Auditable {
     private String field;
 
     @Column(nullable = false)
-    private int sales;
+    private int sales = 0;
 
     @Column(nullable = false)
     private int quantity;
@@ -62,10 +62,10 @@ public class Item extends Auditable {
     private String detailedProfile;
 
     @Column(nullable = false)
-    private int reviewCount;
+    private int reviewCount = 0;
 
     @Column(nullable = false)
-    private double reviewRating;
+    private double reviewRating = 0;
 
     @OneToMany(mappedBy = "item")
     private List<Favorite> favorites = new ArrayList<>();
