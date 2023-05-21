@@ -3,6 +3,9 @@ import { useLocation } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import MapComponent from "@pages/Map";
+import Place from "@pages/Place";
 
 export default function Payinfo() {
   const location = useLocation();
@@ -19,6 +22,10 @@ export default function Payinfo() {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const selectdata = useSelector((state) => state);
+  console.log(selectdata);
+  // const [shoplist, setShoplist] = useState<Shopitem[]>([]);
+  // const [selectedShop, setSelectedShop] = useState<Shopitem | null>(null);
 
   const handlePickDateClick = () => {
     setIsCalendarOpen(true);
@@ -76,7 +83,7 @@ export default function Payinfo() {
               </div>
             </div>
             <div className="map">
-              <div>지도</div>
+              <Place />
             </div>
           </div>
         </div>
@@ -336,7 +343,13 @@ const Payinfostyle = styled.div`
     justify-content: center;
     align-items: center;
     width: 65%;
-    height: 100%;
+    height: 50%;
     border: 1px solid rgba(60, 60, 60, 0.1);
+    & section {
+      width: 100%;
+      max-height: 600px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
   }
 `;
