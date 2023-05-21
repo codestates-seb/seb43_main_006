@@ -26,6 +26,49 @@ public class ItemService {
     private final MemberRepository memberRepository;
 
 
+    public Item createItem(Item item){
+        //관리자 페이지가 만들어지면 관리자만 등록할 수 있게 구현
+
+        Optional<Item> optionalItem = itemRepository.findByTitleKor(item.getTitleKor());
+        if(optionalItem.isPresent()) throw new BusinessLogicException(ExceptionCode.ITEM_EXISTS);
+
+        return itemRepository.save(item);
+    }
+
+    public Item updateItem(Item item){
+        //관리자 페이지가 만들어지면 관리자만 수정할 수 있게 구현
+
+        Optional<Item> optionalItem = itemRepository.findById(item.getItemId());
+        Item findItem = optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+
+        Optional.ofNullable(item.getTitleKor()).ifPresent(findItem::setTitleKor);
+        Optional.ofNullable(item.getTitleEng()).ifPresent(findItem::setTitleEng);
+        Optional.ofNullable(item.getCategories()).ifPresent(findItem::setCategories);
+        Optional.ofNullable(item.getPrice()).ifPresent(findItem::setPrice);
+        Optional.ofNullable(item.getCapacity()).ifPresent(findItem::setCapacity);
+        Optional.ofNullable(item.getVolume()).ifPresent(findItem::setVolume);
+        Optional.ofNullable(item.getCountry()).ifPresent(findItem::setCountry);
+        Optional.ofNullable(item.getAroma()).ifPresent(findItem::setAroma);
+        Optional.ofNullable(item.getTaste()).ifPresent(findItem::setTaste);
+        Optional.ofNullable(item.getField()).ifPresent(findItem::setField);
+        Optional.ofNullable(item.getSales()).ifPresent(findItem::setSales);
+        Optional.ofNullable(item.getQuantity()).ifPresent(findItem::setQuantity);
+        Optional.ofNullable(item.getDiscountRate()).ifPresent(findItem::setDiscountRate);
+        Optional.ofNullable(item.getProfile()).ifPresent(findItem::setProfile);
+        Optional.ofNullable(item.getDetailedProfile()).ifPresent(findItem::setDetailedProfile);
+
+        return itemRepository.save(findItem);
+    }
+
+    public void deleteItem(long itemId){
+        //관리자 페이지가 만들어지면 관리자만 삭제할 수 있게 구현
+
+        Optional<Item> optionalItem = itemRepository.findById(itemId);
+        Item findItem = optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
+
+        itemRepository.delete(findItem);
+    }
+
     // 최신순 정렬
     public Page<Item> findItems(int page,int size) {
         return itemRepository.findAll(PageRequest.of(page-1,size, Sort.by("itemId").descending()));

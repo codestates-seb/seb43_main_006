@@ -7,13 +7,109 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDto {
+
+    @Getter
+    public static class Post{
+
+        @NotBlank
+        private String titleKor;
+        @NotBlank
+        private String titleEng;
+        @NotBlank
+        private List<String> categories;
+
+        @NotNull
+        private int price;
+
+        @NotNull
+        private int capacity;
+
+        @NotNull
+        private double volume;
+
+        @NotBlank
+        private String country;
+
+        private String aroma;
+
+        private String taste;
+
+        private String field;
+
+        private int sales;
+
+        @NotNull
+        private int quantity;
+
+        @NotNull
+        private int discountRate;
+
+        @NotBlank
+        private String profile;
+        @NotBlank
+        private String detailedProfile;
+
+        public void setCategories(List<String> categories) {
+            this.categories = categories;
+        }
+    }
+
+    @Getter
+    public static class Patch{
+
+        private long itemId;
+
+        @NotBlank
+        private String titleKor;
+        @NotBlank
+        private String titleEng;
+        @NotBlank
+        private List<String> categories;
+
+        @NotNull
+        private int price;
+
+        @NotNull
+        private int capacity;
+
+        @NotNull
+        private double volume;
+
+        @NotBlank
+        private String country;
+
+        private String aroma;
+
+        private String taste;
+
+        private String field;
+
+        private int sales;
+
+        @NotNull
+        private int quantity;
+
+        @NotNull
+        private int discountRate;
+
+        @NotBlank
+        private String profile;
+        @NotBlank
+        private String detailedProfile;
+
+        public void setCategories(List<String> categories) {
+            this.categories = categories;
+        }
+    }
+
 
     @Getter
     @Setter

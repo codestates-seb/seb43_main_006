@@ -13,9 +13,11 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ItemMapper {
 
-    ItemDto.Response itemToItemResponseDto(Item item);
+    Item itemPostToItem(ItemDto.Post requestBody);
 
-//    List<ItemDto.Response> itemsToItemResponseDtos(List<Item> items);
+    Item itemPatchToItem(ItemDto.Patch requestBody);
+
+    ItemDto.Response itemToItemResponseDto(Item item);
 
     List<ItemDto.ItemsResponse> itemsToItemResponseDtos(List<Item> items);
 
