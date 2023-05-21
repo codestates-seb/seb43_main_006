@@ -139,9 +139,10 @@ const InfoBodyupStyled = styled.div`
 const InfoBodydownStyled = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 300px;
   margin-top: 30px;
+  margin-left: 10%;
 `;
 
 //정보수정버튼
@@ -157,7 +158,8 @@ const ChangebtnStyled = styled.button`
 //테이블부분 따로준거, 딱테이블부분!
 const StyledTable = styled.table`
   border: 2px solid #dedede;
-  width: 800px;
+  max-width: 800px;
+  width: 80%;
   height: 900px;
   text-align: center;
   /* vertical-align: middle; */
