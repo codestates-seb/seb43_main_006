@@ -25,10 +25,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
-
     public Item createItem(Item item){
-        //관리자 페이지가 만들어지면 관리자만 등록할 수 있게 구현
-
         Optional<Item> optionalItem = itemRepository.findByTitleKor(item.getTitleKor());
         if(optionalItem.isPresent()) throw new BusinessLogicException(ExceptionCode.ITEM_EXISTS);
 
@@ -36,8 +33,6 @@ public class ItemService {
     }
 
     public Item updateItem(Item item){
-        //관리자 페이지가 만들어지면 관리자만 수정할 수 있게 구현
-
         Optional<Item> optionalItem = itemRepository.findById(item.getItemId());
         Item findItem = optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
@@ -61,8 +56,6 @@ public class ItemService {
     }
 
     public void deleteItem(long itemId){
-        //관리자 페이지가 만들어지면 관리자만 삭제할 수 있게 구현
-
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         Item findItem = optionalItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
 
@@ -148,13 +141,6 @@ public class ItemService {
                 throw new BusinessLogicException(ExceptionCode.LIKE_NOT_TWICE);
             }
         }
-
-//        Favorite newFavorite = new Favorite();
-//        newFavorite.setMember(findmember);
-//        newFavorite.setItem(findItem);
-//        newFavorite.setLiked(true); // 찜한 상태로 설정
-//
-//        findmember.getFavorites().add(newFavorite); // 회원의 찜 목록에 추가
 
         itemRepository.upFavorite(findItem.getItemId(), findmember.getMemberId());
 

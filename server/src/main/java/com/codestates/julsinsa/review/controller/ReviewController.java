@@ -43,18 +43,6 @@ public class ReviewController {
         return new ResponseEntity<>(new SingleResponseDto<>(reviewMapper.reviewToReviewResponse(review)),HttpStatus.OK);
     }
 
-    // 리뷰 페이지네이션 처리
-//    @GetMapping("/{item-id}/reviews")
-//    public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId,
-//                                    @Positive @RequestParam int page,
-//                                     @Positive @RequestParam int size){
-//        Page<Review> reviewPage = reviewService.findReviews(itemId, page, size);
-//        List<Review> reviews = reviewPage.getContent();
-//
-//        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewsToReviewResponses(reviews),reviewPage),HttpStatus.OK);
-//    }
-
-
     @GetMapping("/{item-id}/reviews")
     public ResponseEntity getReviews(@PathVariable("item-id") @Positive long itemId){
         List<Review> reviews = reviewService.findReviews(itemId);

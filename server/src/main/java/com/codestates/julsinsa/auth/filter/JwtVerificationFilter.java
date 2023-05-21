@@ -24,9 +24,7 @@ import java.util.Map;
 public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtTokenizer jwtTokenizer;
-
     private final CustomAuthorityUtils authorityUtils;
-
     private final MemberRepository memberRepository;
 
     @Override
@@ -43,7 +41,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception", e);
         }
 
-
         filterChain.doFilter(request, response);
     }
 
@@ -54,32 +51,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
         return authorization == null || !authorization.startsWith("Bearer");
     }
-
-//    // refresh 토큰을 통한 access토큰 재발급
-//    private void verifyRefreshJws(HttpServletRequest request, HttpServletResponse response) {
-//        String refreshJws = request.getHeader("Refresh");
-//        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-//
-//        try {
-//            Jws<Claims> claims = jwtTokenizer.getClaims(refreshJws, base64EncodedSecretKey);// refresh 토큰 검증
-//            //리프레시 토큰 유효 -> 액세스 토큰 재발급.
-//            String email = claims.getBody().getSubject();
-//            Optional<Member> optionalMember = memberRepository.findByEmail(email);
-//            Member member = optionalMember.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//
-//            String accessToken = jwtTokenizer.delegateAccessToken(member);
-//            String refreshToken = jwtTokenizer.delegateRefreshToken(member);
-//            response.setHeader("Authorization", "Bearer " + accessToken);
-//            response.setHeader("Refresh", refreshToken);
-//
-//        } catch (SignatureException se) {
-//            request.setAttribute("exception", se);
-//        } catch (ExpiredJwtException ee) {
-//            request.setAttribute("exception", ee);
-//        } catch (Exception e) {
-//            request.setAttribute("exception", e);
-//        }
-//    }
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
         String jws = request.getHeader("Authorization").replace("Bearer ", "");

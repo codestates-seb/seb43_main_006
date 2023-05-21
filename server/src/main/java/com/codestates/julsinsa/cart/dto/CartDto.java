@@ -3,8 +3,6 @@ package com.codestates.julsinsa.cart.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -12,8 +10,6 @@ public class CartDto {
 
     @Getter
     public static class Post{
-//        @NotNull
-//        private List<ItemCartDto.Post> itemCarts;
         @Positive
         private long itemId;
 

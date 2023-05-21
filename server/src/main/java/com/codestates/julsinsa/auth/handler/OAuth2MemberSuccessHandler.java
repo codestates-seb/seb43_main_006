@@ -6,6 +6,7 @@ import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -23,20 +24,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {   // (1)
+@RequiredArgsConstructor
+public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberService memberService;
-
-    // (2)
-    public OAuth2MemberSuccessHandler(JwtTokenizer jwtTokenizer,
-                                      CustomAuthorityUtils authorityUtils,
-                                      MemberService memberService) {
-        this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtils = authorityUtils;
-        this.memberService = memberService;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -55,8 +47,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
             email = String.valueOf(oAuth2User.getAttributes().get("email"));
         }
 
-
-       // (4)
         Member member;
 
         if(!memberService.checkByEmail(email)) { // 디비에 있으면 회원가입x
@@ -67,7 +57,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         if(member.getDisplayName() == null){ // 닉네임 설정 안되어 있으면 약관페이지로 리다이렉트
             List<String> authorities = List.of("ANONYMOUS"); // 익명의 권한 부여
-            redirectSignup(request, response, email, authorities);  // (6)
+            redirectSignup(request, response, email, authorities);
         }else{
             List<String> authorities = authorityUtils.createRoles(email);
             redirect(request, response, email, authorities);
@@ -82,8 +72,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     }
 
     private void redirectSignup(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
-        String accessToken = delegateAccessToken(username, authorities);  // (6-1)
-        String refreshToken = delegateRefreshToken(username);     // (6-2)
+        String accessToken = delegateAccessToken(username, authorities);
+        String refreshToken = delegateRefreshToken(username);
         Member member = memberService.findByEmail(username);
 
         String addedAccessToken = "Bearer " + accessToken;
@@ -92,24 +82,21 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.setHeader("Refresh", refreshToken);
 
 
-        String uri = createSignupURI(addedAccessToken, refreshToken,member).toString();   // (6-3)
-        getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
-//        response.sendRedirect("http://localhost:3000/signup/term");
-
+        String uri = createSignupURI(addedAccessToken, refreshToken,member).toString();
+        getRedirectStrategy().sendRedirect(request, response, uri);
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
-        String accessToken = delegateAccessToken(username, authorities);  // (6-1)
-        String refreshToken = delegateRefreshToken(username);     // (6-2)
+        String accessToken = delegateAccessToken(username, authorities);
+        String refreshToken = delegateRefreshToken(username);
         Member member = memberService.findByEmail(username);
         String addedAccessToken = "Bearer " + accessToken;
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
 
-        String uri = createURI(addedAccessToken, refreshToken,member).toString();   // (6-3)
-        getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
-//        response.sendRedirect("http://localhost:3000/signup/term");
+        String uri = createURI(addedAccessToken, refreshToken,member).toString();
+        getRedirectStrategy().sendRedirect(request, response, uri);
 
     }
 

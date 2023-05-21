@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class PasswordEncoderConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() { return PasswordEncoderFactories.createDelegatingPasswordEncoder(); }
-
     @Bean
     public JwtUtils jwtUtils() { return new JwtUtils(jwtTokenizer()); }
     @Bean
