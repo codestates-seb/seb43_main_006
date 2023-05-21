@@ -31,10 +31,10 @@ public class OrderController {
     }
 
     @PatchMapping("/{orderId}/cancel")
-    public ResponseEntity patchOrder(@PathVariable("orderId") @Positive Long orderId)
-    {
+    public ResponseEntity patchOrder(@PathVariable("orderId") @Positive Long orderId) {
+
     orderService.cancelOrder(orderId);
 
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.OK);
     }
 }
