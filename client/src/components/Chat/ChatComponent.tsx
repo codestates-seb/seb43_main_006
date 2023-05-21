@@ -89,7 +89,7 @@ const ChatComponent = () => {
 };
 const BtnContainer = styled.div`
   position: fixed;
-  right: 10px;
+  right: 5%;
   top: 85vh;
 `;
 

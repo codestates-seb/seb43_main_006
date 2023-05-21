@@ -206,7 +206,12 @@ const SignupInput = () => {
   }, []);
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoLogin : () => setShowAlert(false)} /> : null}
+      {showAlert ? (
+        <Alert
+          text={alertMessage}
+          onClickOk={isOk ? okGotoLogin : type ? () => setShowAlert(false) : () => navigate("/login")}
+        />
+      ) : null}
       {type ? (
         <InputContainer>
           <TopContainer>
@@ -316,7 +321,8 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
-  width: 700px;
+  max-width: 700px;
+  width: 80%;
   gap: 40px;
   position: absolute;
   top: 15%;
@@ -330,7 +336,7 @@ const InputContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 35%;
+    width: 200px;
   }
   padding-bottom: 60px;
 `;
@@ -390,7 +396,7 @@ const SingleInfo = styled.div`
   }
   .code-pos {
     position: absolute;
-    right: 5%;
+    right: 0%;
     top: 10%;
   }
   .input-container {
