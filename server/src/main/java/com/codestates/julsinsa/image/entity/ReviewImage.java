@@ -22,7 +22,7 @@ public class ReviewImage extends Auditable {
     @Embedded
     private ImageInfo imageInfo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REVIEW_ID")
     private Review review;
 

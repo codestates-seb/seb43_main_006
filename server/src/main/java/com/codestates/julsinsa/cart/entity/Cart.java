@@ -23,7 +23,7 @@ public class Cart {
 
     private int totalPrice;
 
-    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Member member;
     @OneToMany(mappedBy = "cart" , cascade = CascadeType.ALL)
     private List<ItemCart> itemCarts = new ArrayList<>();

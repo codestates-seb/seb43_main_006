@@ -34,24 +34,31 @@ public class ImageService {
         List<ReviewImage> reviewImages = new ArrayList<>();
 
         for (MultipartFile mf : mfs) {
-            long time = System.currentTimeMillis();
-            String originalFilename = mf.getOriginalFilename();
-            String saveFileName = String.format("%d_%s", time, originalFilename.replaceAll(" ", ""));
-            String filePath = "review/";
+            if (isSupportedFileType(mf)) {
+                long time = System.currentTimeMillis();
+                String originalFilename = mf.getOriginalFilename();
+                String saveFileName = String.format("%d_%s", time, originalFilename.replaceAll(" ", ""));
+                String filePath = "review/";
 
-            String savedPath = createAndUploadFile(mf,saveFileName, filePath);
-            log.info("Saved Path : "+savedPath);
+                String savedPath = createAndUploadFile(mf, saveFileName, filePath);
+                log.info("Saved Path : " + savedPath);
 
-            ReviewImage reviewImage = ReviewImage.builder().review(review)
-                    .imageInfo(new ImageInfo(saveFileName, originalFilename, filePath))
-                    .build();
-            reviewImages.add(reviewImage);
+                ReviewImage reviewImage = ReviewImage.builder().review(review)
+                        .imageInfo(new ImageInfo(saveFileName, originalFilename, filePath))
+                        .build();
+                reviewImages.add(reviewImage);
+            }
         }
 
         return reviewImages;
     }
 
-
+    // 선택한 화장자 허용 확인
+    private boolean isSupportedFileType(MultipartFile file) {
+        String contentType = file.getContentType();
+        return contentType != null && (contentType.equals("image/gif") || contentType.equals("image/jpeg")
+                || contentType.equals("image/jpg") || contentType.equals("image/svg") || contentType.equals("image/png"));
+    }
 
     // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
     // createAndUploadFile 메소드는 MultipartFile을 File 객체로 변환하고, S3에 업로드하기 위해 파일을 임시로 생성하여 S3로 업로드하고,
