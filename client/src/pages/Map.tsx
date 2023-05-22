@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { useSelector } from "react-redux";
 
 declare global {
   interface Window {
@@ -22,21 +21,14 @@ interface ShopProps {
   shoplist: Shopitem[];
   setSelect: React.Dispatch<React.SetStateAction<Shopitem | null>>;
 }
-// interface SelectProps {
-//   setSelect: React.Dispatch<React.SetStateAction<string>>;
-// }
 
 const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
-  // const selectdata = useSelector((state) => state);
-  // console.log(selectdata);
-
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
       center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804), //죽전역
       level: 8,
     };
-    // console.log(setSelect);
     const map = new window.kakao.maps.Map(container, options);
 
     //사용자 현재위치 정보
@@ -102,7 +94,6 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
       });
       window.kakao.maps.event.addListener(marker, "click", () => {
         setSelect(el);
-        // console.log(el);
       });
     });
   }, [shoplist]);
@@ -111,4 +102,3 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
 };
 
 export default MapComponent;
-//0522 2:13pm
