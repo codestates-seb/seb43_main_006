@@ -24,8 +24,8 @@ public class OrderController {
     private final OrderMapper mapper;
 
     @PostMapping
-    public ResponseEntity postOrder(@RequestBody OrderPostDto orderPostDto) {
-        Order order = orderService.createOrder(mapper.orderPostDtoToOrder(orderPostDto));
+    public ResponseEntity postOrder(@RequestBody @Validated OrderPostDto orderPostDto) {
+        Order order = orderService.createOrder(orderPostDto);
 
         return new ResponseEntity<>(mapper.orderToOrderResponseDto(order), HttpStatus.CREATED);
     }
