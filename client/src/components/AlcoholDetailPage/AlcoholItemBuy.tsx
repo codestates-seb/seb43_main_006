@@ -155,7 +155,7 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
       quantity,
     };
     navigate("/payment", {
-      state: items,
+      state: { items: [items] },
     });
   };
   const HandlerCart = (): void => {

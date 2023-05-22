@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonDark, ButtonLight } from "../../components/Common/Button";
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import { useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Progress from "./Progress";
 import PaymnetUserInfo from "./PaymentUserinfo";
 import Itemlist from "./Paymentitemlist";
 import Payinfo from "./Paymentpayinfo";
-import { UserProps } from "../../types/AlcholInterfaces";
+import { UserProps } from "types/AlcholInterfaces";
 import useAxiosAll from "@hooks/useAxiosAll";
-import { useSelector } from "react-redux";
 
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
   const [doAxios, data] = useAxiosAll();
-  const selectdata = useSelector((state) => state);
 
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
 
@@ -40,7 +38,6 @@ const Payment = () => {
     navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
   };
 
-  console.log(selectdata);
   return (
     <PaymentContainer>
       <h2 className="payment">결제 페이지</h2>

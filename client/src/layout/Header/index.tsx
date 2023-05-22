@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { ReactComponent as Mainlogo } from "../../assets/images/Logo.svg";
+import { ReactComponent as Mainlogo } from "@assets/images/Logo.svg";
 import { useRef, useEffect, useState } from "react";
 import { useHover } from "usehooks-ts";
-import Headerback from "../../assets/images/Headerback.png";
+import Headerback from "@assets/images/Headerback.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "./Logoutmodal";
 
@@ -136,7 +136,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     }
   }
 
-  @media (max-width: 1919px) {
+  /* @media (max-width: 1900px) {
     width: 70%;
     & ul {
       font-size: 18px;
@@ -146,7 +146,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     .banner6 {
       display: none;
     }
-  }
+  } */
 `;
 
 const StyledList = styled.li<IHeaderContainerProps>`
