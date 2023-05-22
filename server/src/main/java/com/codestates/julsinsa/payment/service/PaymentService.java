@@ -44,25 +44,4 @@ public class PaymentService {
         }
 
     }
-
-//    public void paymentCancel(String paymentKey, String cancelReason) {
-//
-//        try {
-//            String encodedAuth = Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes());
-//
-//            HttpRequest request = HttpRequest.newBuilder()
-//                    .uri(URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel"))
-//                    .header("Authorization", "Basic " + encodedAuth)
-//                    .header("Content-Type", "application/json")
-//                    .method("POST", HttpRequest.BodyPublishers.ofString("{\"결제 취소 사유\":\"" + cancelReason + "\"}"))
-//                    .build();
-//
-//            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-//
-//        }
-//        catch (IOException | InterruptedException e) {
-//            throw new BusinessLogicException(ExceptionCode.PAYMENT_REQUEST_FAIL);
-//        }
-//
-//    }
 }
