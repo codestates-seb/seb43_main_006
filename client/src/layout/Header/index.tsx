@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { useHover } from "usehooks-ts";
 import Headerback from "../../assets/images/Headerback.png";
 import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "./Logoutmodal";
 
 interface IHeaderContainerProps {
   hovering: string;
@@ -52,6 +53,9 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
           opacity: 1;
           color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
         `}
+  & div.modal {
+    color: #222222;
+  }
 `;
 
 const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
@@ -149,6 +153,7 @@ const Header: React.FC = () => {
   const isHover = useHover(hoverRef);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function authTokenExpired() {
     const authToken = localStorage.getItem("authToken");
@@ -181,8 +186,11 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     // 로컬 스토리지에서 authToken 제거
     localStorage.removeItem("authToken");
-    // localStorage.removeItem("refresh");
-    // window.location.reload();
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("exp");
+    localStorage.removeItem("memberId");
+    localStorage.removeItem("iat");
+    setIsModalOpen(true);
   };
 
   const useScroll = (): ScrollState => {
@@ -294,6 +302,11 @@ const Header: React.FC = () => {
           </LogoContainer>
         </div>
       </nav>
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <div className="modal">로그아웃이 되었습니다!</div>
+        </Modal>
+      )}
     </HeaderContainer>
   );
 };

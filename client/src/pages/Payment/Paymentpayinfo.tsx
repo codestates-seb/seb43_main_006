@@ -6,10 +6,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import MapComponent from "@pages/Map";
 import Place from "@pages/Place";
+import { useNavigate } from "react-router-dom";
 
 export default function Payinfo() {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
+  const navigate = useNavigate();
 
   const { totalquantity, totalPrice } = items.reduce(
     (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {
@@ -35,7 +37,9 @@ export default function Payinfo() {
     setSelectedDate(date);
     setIsCalendarOpen(false);
   };
-
+  const handlemapClick = () => {
+    navigate("/place");
+  };
   return (
     <Payinfostyle>
       <div className="title3">
@@ -82,7 +86,7 @@ export default function Payinfo() {
                 </div>
               </div>
             </div>
-            <div className="map">
+            <div className="map" onClick={handlemapClick}>
               <Place />
             </div>
           </div>
