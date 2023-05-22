@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { ButtonDark } from "../components/Common/Button";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/slice/store";
-
 const MapComponent = lazy(() => import("./Map"));
 // import MapComponent from "./Map";
 
@@ -124,3 +123,4 @@ const Place = () => {
 };
 
 export default Place;
+//0522 17:00

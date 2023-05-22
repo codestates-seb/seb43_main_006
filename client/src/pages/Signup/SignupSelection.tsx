@@ -30,7 +30,11 @@ const Container = styled.div`
 const SelectionContainer = styled.div`
   color: white;
   padding: 60px 70px;
-  width: 600px;
+  @media screen and (max-width: 768px) {
+    padding: 40px 20px;
+  }
+  max-width: 600px;
+  width: 95%;
   ${({ theme }) => theme.common.flexCenterCol};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 2px;

@@ -17,6 +17,9 @@ const BtnDark = styled.button<BtnProps>`
   &:hover {
     filter: brightness(80%);
   }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const ButtonDark: React.FC<BtnProps> = ({

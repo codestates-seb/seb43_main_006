@@ -1,4 +1,4 @@
-import { PriceRegular } from "../../utils/priceUtils";
+import { PriceRegular } from "@utils/priceUtils";
 
 interface PriceType {
   price: number;

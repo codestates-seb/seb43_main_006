@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { AlcoholListData } from "../types/AlcholInterfaces";
-import { getItemsList } from "../services/api";
+import { AlcoholListData } from "types/AlcholInterfaces";
+import { getItemsList } from "@services/api";
 
 // components
-import AlcoholList from "../components/AlcoholPage/AlcoholList";
-import SortingUtils from "../components/AlcoholPage/SortingUtils";
+import AlcoholList from "@components/AlcoholPage/AlcoholList";
+import SortingUtils from "@components/AlcoholPage/SortingUtils";
 
 // 전체적인 컨테이너
 const AlcoholContainer = styled.section`

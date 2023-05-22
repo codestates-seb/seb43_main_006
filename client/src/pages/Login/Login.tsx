@@ -36,11 +36,9 @@ const Login = () => {
     }
   }, []);
   function convertToSeconds(dateString: string): string {
-    // dateString을 Date 객체로 변환합니다.
+    dateString = dateString.replace("/", "T");
     const date = new Date(dateString);
-
-    // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
-    const seconds = Math.floor(date.getTime() / 1000);
+    const seconds = Math.floor(date.getTime() / 1000); // 초 단위 변환
 
     return `${seconds}`;
   }
@@ -70,8 +68,8 @@ const Login = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         const token = res.headers.authorization;
+
         const iat_sec = convertToSeconds(res.headers.iat);
         const exp_sec = convertToSeconds(res.headers.exp);
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
@@ -88,9 +86,8 @@ const Login = () => {
           navigate("/mypage/changeinfo");
         }
       })
-      .catch((err) => {
+      .catch(() => {
         // 로그인 요청 실패 시
-        console.log("실패", err);
         setAlertMessage("이메일 혹은 비밀번호를 확인해주세요!");
         setShowAlert(true);
       });
@@ -199,7 +196,8 @@ const Container = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
 `;
 const ContentsContainer = styled.div`
-  width: 600px;
+  max-width: 600px;
+  width: 95%;
   position: absolute;
   top: 15%;
 `;
@@ -228,6 +226,9 @@ const MiddleContainer = styled.div`
   gap: 20px;
   width: 100%;
   padding: 50px 60px;
+  @media screen and (max-width: 768px) {
+    padding: 40px 20px;
+  }
   border: 1px solid ${({ theme }) => theme.colors.border};
   background-color: white;
 `;
@@ -258,6 +259,9 @@ const LoginContainer = styled.div`
     width: 100%;
     height: 100%;
     gap: 30px;
+    @media screen and (max-width: 768px) {
+      gap: 10px;
+    }
   }
   .button {
     width: 30%;
@@ -277,6 +281,9 @@ const OAuthSignUpBox = styled.div<TypeProps>`
     font-size: 18px;
     width: calc(100% - 65px);
     text-align: center;
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      font-size: 15px;
+    }
   }
   border-radius: 2px;
   cursor: pointer;
