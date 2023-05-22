@@ -1,4 +1,3 @@
-//개인정보수정 페이지이다.  회원탈퇴기능 안에 포함되어있음.
 import React, { useEffect } from "react";
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import useAxiosAll from "@hooks/useAxiosAll";
 //components
 import Alert from "@components/Common/AlertModal";
 import axios from "axios";
-import { ButtonDark } from "@components/Common/Button";
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
 
 type TableProsp = {
   setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
@@ -81,13 +80,13 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
         {isOauth ? null : (
           <>
             <tr>
-              <StyledTh>비밀번호</StyledTh>
+              <StyledTh>비밀번호변경</StyledTh>
               <StyledTd>
                 <input onChange={handlePassword} type="password" placeholder="비밀번호를 입력하세요"></input>
               </StyledTd>
             </tr>
             <tr>
-              <StyledTh>비밀번호확인</StyledTh>
+              <StyledTh>비밀번호변경확인</StyledTh>
               <StyledTd>
                 <input
                   disabled={isDisabled}
@@ -112,14 +111,15 @@ const TotalStyled = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   > p {
-    margin-left: 30px;
-    font-size: 18px;
+    padding-top: 10px;
+    padding-left: 30px;
+    font-size: 22px;
+    font-weight: 600;
   }
 `;
 
@@ -130,7 +130,6 @@ const InfoBodyupStyled = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-
   input {
     font-size: 16px;
     padding: 10px;
@@ -142,39 +141,25 @@ const InfoBodydownStyled = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 300px;
-  margin-top: 30px;
-  margin-left: 10%;
-`;
-
-//정보수정버튼
-const ChangebtnStyled = styled.button`
-  background-color: #222222;
-  height: 52px;
-  width: 350px;
-  color: whitesmoke;
-  font-size: 20px;
-  border-radius: 7px;
+  gap: 250px;
+  margin-top: 20px;
+  padding-bottom: 10px;
 `;
 
 //테이블부분 따로준거, 딱테이블부분!
 const StyledTable = styled.table`
   border: 2px solid #dedede;
-  max-width: 800px;
-  width: 80%;
-  height: 900px;
-  text-align: center;
-  /* vertical-align: middle; */
+  /* border: 2px solid blue; */
+  max-width: 700px;
+  width: 70%;
+  height: 750px;
   font-size: 16px;
-  /* margin-left: 100px; */
 `;
 const StyledTd = styled.td`
-  border: 1px solid black;
   vertical-align: middle;
-  /* background-color: red; */
+  padding-left: 20px;
 `;
 const StyledTh = styled.th`
-  border: 1px solid black;
   vertical-align: middle;
   text-align: left;
   padding-left: 20px;
@@ -186,23 +171,12 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  // position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 `;
-const ModalBtn = styled.button`
-  //회원탈퇴버튼
-  background-color: #f7f7f7;
-  height: 52px;
-  width: 120px;
-  border-radius: 7px;
-  border: 1px solid #181818;
-  font-size: 20px;
-  font-weight: 350;
-  margin-right: 40px;
-`;
+
 //모달뜰때 뒤배경
 const ModalBackdrop = styled.div`
   background-color: whitesmoke;
@@ -219,19 +193,10 @@ const ModalView = styled.div`
   width: 600px;
   height: 300px;
   position: fixed;
-  /* transform: translateY(-100px);
-  transform: translateX(-200px); */
   transform: translateY(-200px);
   transform: translateX(-300px);
   left: 50%;
   top: 35%;
-  //display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  /* > p {
-    border: 2px solid black;
-    top: 50%;
-  } */
   text-align: center;
   padding-top: 50px;
   > p {
@@ -257,16 +222,12 @@ const CloseBtn = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  /* margin-left: 180px; */
-  /* margin-left: 30%; */
   gap: 70px;
   cursor: pointer;
-  /* background-color: #222222; */
 `;
 
 //모달창열렸을때 X버튼
 const WindowCloseBtn = styled.div`
-  /* border: 2px solid blue; */
   float: right;
   margin-right: 10px;
   cursor: pointer;
@@ -277,8 +238,6 @@ const ModalCloseBtn = styled.div`
   height: 52px;
   width: 80px;
   border-radius: 7px;
-  /* display: flex;
-  flex-direction: row; */
   line-height: 100%;
   font-size: 20px;
   padding-top: 10px;
@@ -343,7 +302,9 @@ const Modal = ({ email }: { email: string }) => {
     <>
       <ModalContainer>
         {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
-        <ModalBtn onClick={openModalHandler}>회원탈퇴</ModalBtn>
+        <ButtonLight width="200px" height="40px" onClick={openModalHandler}>
+          회원탈퇴
+        </ButtonLight>
         {isOpen ? (
           <ModalBackdrop onClick={openModalHandler}>
             <ModalView onClick={(event) => event.stopPropagation()}>
@@ -510,7 +471,9 @@ const ChangeInfoPage = () => {
               <InfoTable setBody={setBody} userInfo={userInfo} isOauth={isOauth}></InfoTable>
             </InfoBodyupStyled>
             <InfoBodydownStyled>
-              <ChangebtnStyled onClick={patchOnclick}>정보 수정</ChangebtnStyled>
+              <ButtonDark width="200px" height="40px" onClick={patchOnclick}>
+                정보수정
+              </ButtonDark>
               {userInfo ? <Modal email={userInfo.email}></Modal> : null}
             </InfoBodydownStyled>
           </InfoContainer>
