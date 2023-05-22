@@ -99,9 +99,9 @@ const PaymentConfirm = () => {
 
   axios
     .post(
-      `${process.env.REACT_APP_API_URL}/orders`,
+      `${process.env.REACT_APP_API_URL}/order`,
       // `  http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/orders`,
-      { orderId, paymentKey, orderlist },
+      { orderlist },
       {
         headers: {
           "Content-Type": "application/json",

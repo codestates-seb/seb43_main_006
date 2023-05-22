@@ -8,7 +8,7 @@ const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
 const CheckoutChang = () => {
   const location = useLocation();
-  const data = location.state ? location.state.data : [];
+  const userInfo = location.state ? location.state.userInfo : [];
   const items: ItemOrder[] = location.state ? location.state.items : [];
   const orderNames = items.map((item) => item.titleKor);
   const orderName = orderNames.join(", ");
@@ -24,7 +24,7 @@ const CheckoutChang = () => {
   console.log(totalPrice);
   console.log(orderName);
   console.log(nanoid());
-  console.log(data);
+  console.log(userInfo);
 
   useEffect(() => {
     // ------ 클라이언트 키로 객체 초기화 ------
@@ -40,8 +40,8 @@ const CheckoutChang = () => {
           amount: totalPrice,
           orderId: nanoid(), // 주문 ID
           orderName: orderName, // 주문명
-          customerName: data.realName, // 구매자 이름
-          customerEmail: data.email,
+          customerName: userInfo.realName, // 구매자 이름
+          customerEmail: userInfo.email,
           successUrl: `${window.location.origin}/PaymentConfirm`, // 결제 성공 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
           failUrl: `${window.location.origin}/fail`, // 결제 실패 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
         })
@@ -57,7 +57,7 @@ const CheckoutChang = () => {
           }
         });
     });
-  }, [totalPrice, items, data]);
+  }, [totalPrice, items, userInfo]);
 
   return <script src="https://js.tosspayments.com/v1/payment%22%3E"></script>; // JSX 반환
 };

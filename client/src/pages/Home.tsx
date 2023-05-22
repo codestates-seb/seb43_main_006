@@ -33,6 +33,7 @@ const Home: React.FC = () => {
     return `${seconds}`;
   }
   useEffect(() => {
+    window.scrollTo(0, 0);
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get("access_token");
     const refreshToken = urlParams.get("refresh_token");
@@ -54,29 +55,29 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="layout1" style={{ opacity: y > 400 ? (y > 1100 ? "0" : "1") : "0" }}>
+      <div className="layout1" style={{ opacity: y > 800 ? (y > 1500 ? "0" : "1") : "0" }}>
         <Homelayout1 />
       </div>
       <div className="space"></div>
-      <div className="layout2" style={{ opacity: y > 1500 ? (y > 2200 ? "0" : "1") : "0" }}>
+      <div className="layout2" style={{ opacity: y > 2000 ? (y > 2600 ? "0" : "1") : "0" }}>
         <Homelayout2 />
       </div>
 
       <div className="space"></div>
-      <div className="layout3" style={{ opacity: y > 2900 ? (y > 3900 ? "0" : "1") : "0" }}>
+      <div className="layout3" style={{ opacity: y > 3300 ? (y > 4200 ? "0" : "1") : "0" }}>
         <Homelayout3 />
       </div>
 
       <div className="space"></div>
-      <div className="layout4" style={{ opacity: y > 4700 ? (y > 5900 ? "0" : "1") : "0" }}>
+      <div className="layout4" style={{ opacity: y > 4900 ? (y > 6000 ? "0" : "1") : "0" }}>
         <Homelayout5 />
       </div>
       <div className="space"></div>
       <div className="saleslist">
-        <p className="sales" style={{ opacity: y > 6000 ? (y > 7500 ? "0" : "1") : "0" }}>
+        <p className="sales" style={{ opacity: y > 6500 ? (y > 7500 ? "0" : "1") : "0" }}>
           구매율이 높은 상품
         </p>
-        <a style={{ opacity: y > 6100 ? (y > 7500 ? "0" : "1") : "0" }}>
+        <a style={{ opacity: y > 6600 ? (y > 7500 ? "0" : "1") : "0" }}>
           <div className="listtitle">위스키 계열</div>
           <ul className="1stsales">
             <li>
@@ -108,7 +109,7 @@ const Home: React.FC = () => {
             </li>
           </ul>
         </a>
-        <a style={{ opacity: y > 6400 ? (y > 8000 ? "0" : "1") : "0" }}>
+        <a style={{ opacity: y > 6900 ? (y > 8000 ? "0" : "1") : "0" }}>
           <div className="listtitle">보드카 계열</div>
           <ul className="2ndsales">
             <li>

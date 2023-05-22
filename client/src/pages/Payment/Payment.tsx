@@ -10,12 +10,14 @@ import Itemlist from "./Paymentitemlist";
 import Payinfo from "./Paymentpayinfo";
 import { UserProps } from "../../types/AlcholInterfaces";
 import useAxiosAll from "@hooks/useAxiosAll";
+import { useSelector } from "react-redux";
 
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
   const [doAxios, data] = useAxiosAll();
+  const selectdata = useSelector((state) => state);
 
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
 
@@ -38,6 +40,7 @@ const Payment = () => {
     navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
   };
 
+  console.log("통합" + userInfo);
   return (
     <PaymentContainer>
       <h2 className="payment">결제 페이지</h2>
