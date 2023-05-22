@@ -213,3 +213,7 @@ const Homelayoutstyled5 = styled.div`
     padding-left: 1%;
   }
 `;
+
+export function Alcoholinfo() {
+  return <div></div>;
+}
