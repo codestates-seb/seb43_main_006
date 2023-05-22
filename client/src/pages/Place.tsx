@@ -8,14 +8,13 @@ import { setMarker } from "../redux/slice/store";
 const MapComponent = lazy(() => import("./Map"));
 
 const TotalStyled = styled.section`
-  /* border: 10px solid black; */
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f7f7f7;
 `;
 const PlaceContainer = styled.div`
-  /* border: 5px solid black; */
+  border: 5px solid black;
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
@@ -26,7 +25,6 @@ const PlaceContainer = styled.div`
 
 //지도부분
 const MapBodyStyled = styled.div`
-  /* border: 5px solid red; */
   display: flex;
   flex-direction: column;
   flex-grow: 6.5;
@@ -36,13 +34,20 @@ const MapBodyStyled = styled.div`
 
 //지도제목
 const MapArticleStyled = styled.div`
-  /* border: 5px solid black; */
+  border: 3px solid #dedede;
   margin-bottom: 80px;
   font-size: 18px;
+  width: 300px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+  font-weight: 600;
 `;
 
 const MapBottomStyled = styled.div`
-  /* border: 3px solid blue; */
   flex-grow: 1;
   display: flex;
   flex-grow: 3.5;
@@ -70,6 +75,7 @@ const Place = () => {
   const [select, setSelect] = useState<Shopitem | null>(null);
   const location = useLocation();
   const items = location.state ? location.state.items : [];
+  const selectedDate = location.state ? location.state.selectedDate : [];
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
@@ -80,7 +86,6 @@ const Place = () => {
         },
       })
       .then((res) => {
-        // console.log(res.data.content);
         setShoplist(res.data.content);
       })
       .catch((err) => console.log(err));
@@ -90,17 +95,19 @@ const Place = () => {
   }, []);
 
   const handleSelect = () => {
-    // console.log(select);
     dispatch(setMarker(select));
-    navigate("/payment", { state: { items: items } });
+    navigate("/payment", { state: { items: items, selectedDate: selectedDate } });
   };
-  console.log(select);
+
   return (
     <>
       <TotalStyled>
         <PlaceContainer>
           <MapBodyStyled>
-            <MapArticleStyled>픽업 매장을 선택하세요</MapArticleStyled>
+            <MapArticleStyled>
+              픽업 매장을 선택하세요.
+              {select?.name === null ? null : <p>{select?.name}</p>}
+            </MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
               <MapComponent shoplist={shoplist} setSelect={setSelect} />
             </Suspense>
@@ -117,4 +124,4 @@ const Place = () => {
 };
 
 export default Place;
-//0522 22:26
+//0522 23:41
