@@ -1,20 +1,17 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
   datasource:
-    url: jdbc:mysql://${RDS_ENDPOINT}/JJIN?useSSL=false&characterEncoding=UTF-8&serve
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  config:
-    domain: http://mejumeju.s3-website.ap-northeast-2.amazonaws.com
+    url: jdbc:h2:mem:test
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true      # (2) SQL 쿼리 출력
     properties:
       hibernate:
@@ -24,6 +21,12 @@ spring:
         use_sql_comments: true
     defer-datasource-initialization: true # 더미데이터 전 테이블 부터 만듦
 
+
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql # 더미데이터
+      mode: always # 더미데이터 관련
+      platform: h2
   security:
     oauth2:
       client:
@@ -106,4 +109,4 @@ cloud:
     stack.auto: false
 
 toss:
-  secret-key: ${TOSS_SECRET}
+  secret-key: sdadsaw
