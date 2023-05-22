@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { ButtonDark } from "../../components/Common/Button";
-import Pagination from "../../components/AlcoholPage/Pagination";
+import { ButtonDark } from "@components/Common/Button";
+import Pagination from "@components/AlcoholPage/Pagination";
 
 interface Orderitem {
   orderId: number;
@@ -499,4 +499,4 @@ const OrderPage = () => {
 
 export default OrderPage;
 
-//0522 10:21
+//0522 10:35
