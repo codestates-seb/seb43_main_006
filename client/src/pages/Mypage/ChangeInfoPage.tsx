@@ -7,6 +7,8 @@ import styled from "styled-components";
 import useAxiosAll from "@hooks/useAxiosAll";
 //components
 import Alert from "@components/Common/AlertModal";
+import axios from "axios";
+import { ButtonDark } from "@components/Common/Button";
 
 type TableProsp = {
   setBody: React.Dispatch<React.SetStateAction<Bodytype>>;
@@ -40,7 +42,7 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
     setPhone(e.target.value);
   };
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
     if (val) {
       // true
       setPassword(e.target.value); // 비밀번호를 저장
@@ -91,7 +93,7 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
                   disabled={isDisabled}
                   onChange={handlePasswordCheck}
                   type="password"
-                  placeholder="비밀번호를 먼저 옳바르게 입력하세요"
+                  placeholder="비밀번호를 먼저 올바르게 입력하세요"
                 ></input>
               </StyledTd>
             </tr>
@@ -284,7 +286,24 @@ const ModalCloseBtn = styled.div`
   font-weight: 700;
   cursor: pointer;
 `;
-
+const CheckContainer = styled.div`
+  position: fixed;
+  top: 20%;
+  left: calc(50% - 250px);
+  ${({ theme }) => theme.common.flexCenterCol};
+  width: 500px;
+  padding: 50px;
+  gap: 40px;
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  input {
+    width: 70%;
+    padding: 10px;
+    font-size: 18px;
+  }
+`;
 const Modal = ({ email }: { email: string }) => {
   const [isOpen, setIsOpen] = useState(false); //false를 모달 닫힌걸로 생각함.
   const [password, setPassword] = useState("");
@@ -374,6 +393,9 @@ const ChangeInfoPage = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [isOk, setIsOk] = useState(false);
+  const [isPass, setIsPass] = useState(false);
+  const [checkPassword, setCheckPassword] = useState("");
+
   useEffect(() => {
     if (err) {
       setAlertMessage("로그인 후 접근해주세요!");
@@ -426,26 +448,87 @@ const ChangeInfoPage = () => {
       setIsOk(true);
     }
   };
+  const checkPasswordHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    // 아이디 핸들러
+    setCheckPassword(e.target.value);
+  };
   const okGotoMain = () => {
     // 수정 성공시 알림창 확인 onClick 핸들러
     setShowAlert(false);
     navigate("/");
   };
+  const CheckAxios = () => {
+    const body = {
+      username: userInfo?.email,
+      password: checkPassword,
+    };
+    function convertToSeconds(dateString: string): string {
+      // dateString을 Date 객체로 변환합니다.
+      const date = new Date(dateString);
+
+      // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
+      const seconds = Math.floor(date.getTime() / 1000);
+
+      return `${seconds}`;
+    }
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const token = res.headers.authorization;
+        const iat_sec = convertToSeconds(res.headers.iat);
+        const exp_sec = convertToSeconds(res.headers.exp);
+        localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
+        localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
+        localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
+        localStorage.setItem("memberId", res.headers["x-member-id"]); // member id 저장
+        localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
+        setIsPass(true);
+      })
+      .catch((err) => {
+        // 로그인 요청 실패 시
+        console.log("실패", err);
+        setAlertMessage("비밀번호를 확인해주세요!");
+        setShowAlert(true);
+      });
+  };
+  const checkHandler = () => {
+    CheckAxios();
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      CheckAxios();
+    }
+  };
   return (
     <>
-      <TotalStyled>
-        {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
-        <InfoContainer>
-          <p>회원정보수정</p>
-          <InfoBodyupStyled>
-            <InfoTable setBody={setBody} userInfo={userInfo} isOauth={isOauth}></InfoTable>
-          </InfoBodyupStyled>
-          <InfoBodydownStyled>
-            <ChangebtnStyled onClick={patchOnclick}>정보 수정</ChangebtnStyled>
-            {userInfo ? <Modal email={userInfo.email}></Modal> : null}
-          </InfoBodydownStyled>
-        </InfoContainer>
-      </TotalStyled>
+      {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoMain : () => setShowAlert(false)} /> : null}
+      {isPass ? (
+        <TotalStyled>
+          <InfoContainer>
+            <p>회원정보수정</p>
+            <InfoBodyupStyled>
+              <InfoTable setBody={setBody} userInfo={userInfo} isOauth={isOauth}></InfoTable>
+            </InfoBodyupStyled>
+            <InfoBodydownStyled>
+              <ChangebtnStyled onClick={patchOnclick}>정보 수정</ChangebtnStyled>
+              {userInfo ? <Modal email={userInfo.email}></Modal> : null}
+            </InfoBodydownStyled>
+          </InfoContainer>
+        </TotalStyled>
+      ) : (
+        <CheckContainer>
+          <div className="title">비밀번호를 입력하세요!</div>
+          <input onKeyDown={handleKeyDown} type="password" onChange={checkPasswordHandle} />
+          <ButtonDark width="100px" height="40px" onClick={checkHandler}>
+            확인
+          </ButtonDark>
+        </CheckContainer>
+      )}
     </>
   );
 };

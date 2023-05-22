@@ -20,8 +20,7 @@ const ChatComponent = () => {
   async function handleSubmit() {
     await getAnswer(input);
   }
-
-  async function getAnswer(input: string) {
+  const sendAxios = async () => {
     const body = {
       question: input,
     };
@@ -39,9 +38,16 @@ const ChatComponent = () => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
+  };
+  async function getAnswer(input: string) {
+    sendAxios();
     setIsLoading(true);
   }
-
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      sendAxios();
+    }
+  };
   return (
     <>
       {isOpen ? (
@@ -71,7 +77,7 @@ const ChatComponent = () => {
             )}
           </MiddleContainer>
           <BottonContainer>
-            <input onChange={handleInput} className="input" />
+            <input onKeyDown={handleKeyDown} onChange={handleInput} className="input" />
             <IoMdSend className="sendBtn" size="30" color="#222" onClick={handleSubmit}>
               전송
             </IoMdSend>
@@ -89,8 +95,8 @@ const ChatComponent = () => {
 };
 const BtnContainer = styled.div`
   position: fixed;
-  right: 5%;
-  top: 85vh;
+  right: 20px;
+  bottom: 20px;
 `;
 
 const GptContainer = styled.div`
