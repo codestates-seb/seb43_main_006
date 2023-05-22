@@ -74,7 +74,7 @@ public class OrderService {
         Order order = findVerifiedOrder(orderId);
 
         if (order.getOrderStatus() == Order.OrderStatus.ORDER_COMPLETE) {
-            orderRepository.save(order);
+            order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
         }
         else if (order.getOrderStatus() == Order.OrderStatus.ORDER_CANCEL) {
             throw new BusinessLogicException(ExceptionCode.ORDER_ALREADY_CANCEL);
@@ -82,6 +82,8 @@ public class OrderService {
         else {
             throw new BusinessLogicException(ExceptionCode.ORDER_CANCEL_FAIL);
         }
+
+        orderRepository.save(order);
     }
 
     private Order findVerifiedOrder(Long orderId) {
