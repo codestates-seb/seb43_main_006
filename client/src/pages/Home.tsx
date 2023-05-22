@@ -54,29 +54,29 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="layout1" style={{ opacity: y > 900 ? (y > 1600 ? "0" : "1") : "0" }}>
+      <div className="layout1" style={{ opacity: y > 400 ? (y > 1100 ? "0" : "1") : "0" }}>
         <Homelayout1 />
       </div>
       <div className="space"></div>
-      <div className="layout2" style={{ opacity: y > 2300 ? (y > 2900 ? "0" : "1") : "0" }}>
+      <div className="layout2" style={{ opacity: y > 1500 ? (y > 2200 ? "0" : "1") : "0" }}>
         <Homelayout2 />
       </div>
 
       <div className="space"></div>
-      <div className="layout3" style={{ opacity: y > 3600 ? (y > 4500 ? "0" : "1") : "0" }}>
+      <div className="layout3" style={{ opacity: y > 2900 ? (y > 3900 ? "0" : "1") : "0" }}>
         <Homelayout3 />
       </div>
 
       <div className="space"></div>
-      <div className="layout4" style={{ opacity: y > 5300 ? (y > 6300 ? "0" : "1") : "0" }}>
+      <div className="layout4" style={{ opacity: y > 4700 ? (y > 5900 ? "0" : "1") : "0" }}>
         <Homelayout5 />
       </div>
       <div className="space"></div>
       <div className="saleslist">
-        <p className="sales" style={{ opacity: y > 6700 ? (y > 7500 ? "0" : "1") : "0" }}>
+        <p className="sales" style={{ opacity: y > 6000 ? (y > 7500 ? "0" : "1") : "0" }}>
           구매율이 높은 상품
         </p>
-        <a style={{ opacity: y > 6800 ? (y > 7500 ? "0" : "1") : "0" }}>
+        <a style={{ opacity: y > 6100 ? (y > 7500 ? "0" : "1") : "0" }}>
           <div className="listtitle">위스키 계열</div>
           <ul className="1stsales">
             <li>
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
             </li>
           </ul>
         </a>
-        <a style={{ opacity: y > 7100 ? (y > 8000 ? "0" : "1") : "0" }}>
+        <a style={{ opacity: y > 6400 ? (y > 8000 ? "0" : "1") : "0" }}>
           <div className="listtitle">보드카 계열</div>
           <ul className="2ndsales">
             <li>
@@ -158,7 +158,7 @@ const HomeContainer = styled.section`
   max-width: 100%;
   font-size: 96px;
   * {
-    transition: all 1s ease;
+    transition: all 0.5s ease;
   }
   & div.space {
     height: 700px;
