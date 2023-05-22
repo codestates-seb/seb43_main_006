@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import axios from "axios";
-import { ButtonDark } from "../../components/Common/Button";
-import Pagination from "../../components/AlcoholPage/Pagination";
+import { ButtonDark } from "@components/Common/Button";
+import Pagination from "@components/AlcoholPage/Pagination";
 import PriceDisplay from "@components/Common/PriceDisplay";
 
 //components
