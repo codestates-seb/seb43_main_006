@@ -135,6 +135,18 @@ const Ulist = styled.div<IHeaderContainerProps>`
       cursor: pointer;
     }
   }
+
+  @media (max-width: 1919px) {
+    width: 70%;
+    & ul {
+      font-size: 18px;
+    }
+  }
+  @media (max-width: 1415px) {
+    .banner6 {
+      display: none;
+    }
+  }
 `;
 
 const StyledList = styled.li<IHeaderContainerProps>`
@@ -191,6 +203,7 @@ const Header: React.FC = () => {
     localStorage.removeItem("memberId");
     localStorage.removeItem("iat");
     setIsModalOpen(true);
+    navigate("/");
   };
 
   const useScroll = (): ScrollState => {
@@ -277,15 +290,7 @@ const Header: React.FC = () => {
                   자주 묻는 질문
                 </StyledList>
               </ul>
-              <ul className="banner5">
-                회원가입
-                <StyledList
-                  className="li8"
-                  hovering={(isHover || false).toString()}
-                  y={y}
-                  onClick={() => navigate("/signup")}
-                ></StyledList>
-              </ul>
+
               <ul className="banner6">
                 {localStorage.getItem("authToken") ? (
                   // authToken이 있는 경우

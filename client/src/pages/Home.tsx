@@ -140,8 +140,6 @@ const Home: React.FC = () => {
               <img src={samplelist} className="slist" alt="sample list" />
             </li>
           </ul>
-          {""}
-          {""}
         </a>
       </div>
     </HomeContainer>
@@ -168,7 +166,18 @@ const HomeContainer = styled.section`
     width: 100%;
     display: flex;
   }
-
+  & div.layout2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & div.layout3 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .Maintop {
     position: relative;
     top: 0;
@@ -195,6 +204,7 @@ const HomeContainer = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-bottom: 200px;
 
     & a {
       display: flex;
