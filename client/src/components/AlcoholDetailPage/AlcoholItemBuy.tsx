@@ -109,25 +109,6 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
-
-    button {
-      font-weight: 600;
-      border: none;
-      width: 100%;
-      padding: 14px 0;
-      letter-spacing: 1px;
-      border-radius: 2px;
-      cursor: pointer;
-    }
-    .cart_btn {
-      color: ${({ theme }) => theme.colors.themeColor};
-      background: #fff;
-      border: solid 1px lightgray;
-    }
-    .buy_btn {
-      background: ${({ theme }) => theme.colors.themeColor};
-      color: #fff;
-    }
   }
 `;
 
@@ -210,7 +191,6 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
             <ButtonLight width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickCart}>
               장바구니
             </ButtonLight>
-            {/* <button className="cart_btn">장바구니</button> */}
             <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickOrder}>
               구매하기
             </ButtonDark>

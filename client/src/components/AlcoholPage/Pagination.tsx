@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PaginationProps } from "../../types/AlcholInterfaces";
+import { PaginationProps } from "types/AlcholInterfaces";
 
 const PaginationContainer = styled.div`
   width: 100%;

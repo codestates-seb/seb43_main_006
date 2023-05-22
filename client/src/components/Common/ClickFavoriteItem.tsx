@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { IconType } from "react-icons";
-import { getItemLike, createItemLike, deleteItemLike } from "../../services/api";
+import { getItemLike, createItemLike, deleteItemLike } from "@services/api";
 import { useNavigate } from "react-router-dom";
 
 interface ClickFavoriteCProps {
