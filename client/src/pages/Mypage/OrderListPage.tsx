@@ -32,17 +32,15 @@ const TotalStyled = styled.div`
 `;
 
 const OrderContainer = styled.div`
-  /* border: 5px solid blue; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
 `;
 
 const PageTitle = styled.div`
-  /* border: 3px solid red; */
   height: 100px;
   display: flex;
   justify-content: flex-end;
@@ -50,7 +48,6 @@ const PageTitle = styled.div`
   padding-right: 30px;
 `;
 
-//누구누구님 등급써있는부분
 const OrderpageHeadStyled = styled.div`
   border: 2px solid #dedede;
   font-size: 18px;
@@ -63,9 +60,7 @@ const OrderpageHeadStyled = styled.div`
   font-weight: 600;
 `;
 
-//주문내역써있는부분
 const OrderpageMainStyled = styled.div`
-  /* border: 3px solid blue; */
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -77,7 +72,6 @@ const OrderpageMainStyled = styled.div`
   line-height: 25px;
 `;
 
-//기간설정하는 부분
 const PeriodStyled = styled.div`
   border: 2px solid #dedede;
   height: 120px;
@@ -99,7 +93,6 @@ const PeriodStyled = styled.div`
   }
 `;
 
-//목록부분
 const OrderlistStyled = styled.div`
   border: 2px solid #dedede;
   margin-top: 10px;
@@ -114,20 +107,17 @@ const OrderlistStyled = styled.div`
 `;
 
 const StyledTable = styled.table`
-  /* border: 1px solid black; */
   width: 1240px;
   height: 500px;
   font-size: 18px;
 `;
 
 const StyledTh = styled.th`
-  /* border: 1px solid black; */
   padding: 8px;
   font-weight: 600;
 `;
 
 const StyledTd = styled.td`
-  /* border: 1px solid black; */
   padding: 8px;
   text-align: center;
   vertical-align: middle;
@@ -138,9 +128,7 @@ const StyledTd = styled.td`
   }
 `;
 
-//맨밑 페이지네이션부분
 const PigStyled = styled.div`
-  /* border: 2px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -160,9 +148,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
     });
   };
 
-  const realOrderList = orderlist; //진짜데이터에서는 어차피 하나만 들어오니까 필요없는 로직이 될것이다.
-  // console.log(orderlist);
-  // console.log(realOrderList); //원래 들어오는 오더
+  const realOrderList = orderlist;
 
   const OrderPatchHandle = (orderId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -174,12 +160,11 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
           headers: {
             "Content-Type": "application/json",
             Authorization: access_token,
-            "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+            "ngrok-skip-browser-warning": "69420",
           },
         },
       )
       .then((res) => {
-        // console.log(res.data);
         window.location.reload();
       })
       .catch((err) => console.log(err));
@@ -187,10 +172,6 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
 
   return (
     <>
-      {/* {console.log(orderlist[0].itemOrders)} */}
-      {/* {console.log(orderlist)} */}
-      {/* {console.log(filterData)} */}
-      {/* {console.log(realOrderList)} */}
       <StyledTable>
         <thead>
           <tr>
@@ -250,12 +231,12 @@ const OrderPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1); //페이지네이션관련
   const [choiceFronDay, setChoiceFronDay] = useState<string>(""); //조회할때 선택하는 날짜앞부분
   const [choiceBackDay, setChoiceBackDay] = useState<string>(""); //조회할때 선택하는 날짜뒷부분
-  const [filterlist, setFilterlist] = useState<Orderitem[]>([]); //정신없는 데이터를 새로 정제한것.
+  const [filterlist, setFilterlist] = useState<Orderitem[]>([]); //정신없는 데이터를 새로 다듬은것.
   const [userName, setUserName] = useState<string>("");
   //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
-  //조회버튼 함수
+  //조회버튼관련
   const Search = () => {
     console.log("a");
     const newData = orderlist.slice();
@@ -271,12 +252,10 @@ const OrderPage = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
-
       .then((res) => {
-        // console.log(res.data.data);
         const data = res.data.data;
         const newData = [];
         for (let i = 0; i < data.length; i++) {
@@ -287,7 +266,6 @@ const OrderPage = () => {
             singleData["pickupDate"] = data[i].pickupDate;
             singleData["orderId"] = data[i].orderId;
             newData.push(singleData);
-            // console.log(newData);
           }
         }
         setOrderlist(newData);
@@ -300,7 +278,7 @@ const OrderPage = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => setUserName(res.data.data.displayName))
