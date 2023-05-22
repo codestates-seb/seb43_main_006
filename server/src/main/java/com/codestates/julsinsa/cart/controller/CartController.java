@@ -35,6 +35,14 @@ public class CartController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.cartToCartResponse(cart)), HttpStatus.OK);
     }
 
+
+    @PatchMapping()
+    public ResponseEntity updateCartItemQuantity(@RequestBody CartDto.Patch requestBody) {
+        Cart cart = cartService.updateCartItemQuantity(requestBody);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.cartToCartResponse(cart)), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity getCart() {
         Cart cart = cartService.findCart();

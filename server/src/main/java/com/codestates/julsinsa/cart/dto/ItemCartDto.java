@@ -18,6 +18,15 @@ public class ItemCartDto {
     }
 
     @Getter
+    public static class Patch{
+        @Positive
+        private long itemId;
+
+        @Positive
+        private int quantity;
+    }
+
+    @Getter
     public static class Delete{
 
         @Positive

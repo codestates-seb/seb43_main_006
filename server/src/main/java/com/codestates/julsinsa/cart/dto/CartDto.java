@@ -18,6 +18,11 @@ public class CartDto {
     }
 
     @Getter
+    public static class Patch{
+        private List<ItemCartDto.Patch> cart;
+    }
+
+    @Getter
     public static class Delete{
 
         private List<Long> itemIds;

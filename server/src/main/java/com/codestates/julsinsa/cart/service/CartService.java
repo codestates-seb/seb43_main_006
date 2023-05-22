@@ -1,6 +1,7 @@
 package com.codestates.julsinsa.cart.service;
 
 import com.codestates.julsinsa.cart.dto.CartDto;
+import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.cart.entity.Cart;
 import com.codestates.julsinsa.cart.entity.ItemCart;
 import com.codestates.julsinsa.cart.repository.CartRepository;
@@ -91,6 +92,34 @@ public class CartService {
 
     }
 
+    public Cart updateCartItemQuantity(CartDto.Patch requestBody) {
+        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
+        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+        for (ItemCartDto.Patch itemPatch : requestBody.getCart()) {
+            long itemId = itemPatch.getItemId();
+            int quantity = itemPatch.getQuantity();
+
+            Item item = itemService.findVerifedItem(itemId); // 아이템 조회
+
+            // 장바구니에서 해당 아이템을 찾아서 개수 수정
+            Optional<ItemCart> existingItemCart = member.getCart().getItemCarts()
+                    .stream()
+                    .filter(ic -> ic.getItem().getItemId().equals(itemId))
+                    .findFirst();
+
+            if (existingItemCart.isPresent()) {
+                ItemCart cartItem = existingItemCart.get();
+                cartItem.setQuantity(quantity);
+            } else {
+                throw new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND);
+            }
+        }
+
+        // 장바구니 저장
+        return cartRepository.save(member.getCart());
+    }
 
     public Cart findCart(){
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
