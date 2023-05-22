@@ -48,8 +48,19 @@ public class OrderService {
     }
 
     public void cancelOrder(Long orderId){
+
         Order order = findVerifiedOrder(orderId);
-        order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+
+        if (order.getOrderStatus() == Order.OrderStatus.ORDER_REQUEST) {
+            order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+        }
+        else if (order.getOrderStatus() == Order.OrderStatus.ORDER_CANCEL) {
+            throw new BusinessLogicException(ExceptionCode.ORDER_ALREADY_CANCEL);
+        }
+        else {
+            throw new BusinessLogicException(ExceptionCode.ORDER_CANCEL_FAIL);
+        }
+
         orderRepository.save(order);
     }
 
