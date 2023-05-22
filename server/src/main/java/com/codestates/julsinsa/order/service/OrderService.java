@@ -2,6 +2,7 @@ package com.codestates.julsinsa.order.service;
 
 import com.codestates.julsinsa.global.exception.BusinessLogicException;
 import com.codestates.julsinsa.global.exception.ExceptionCode;
+import com.codestates.julsinsa.global.utils.MemberUtils;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.item.repository.ItemRepository;
 import com.codestates.julsinsa.member.entity.Member;
@@ -25,17 +26,16 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
-
     private final ItemRepository itemRepository;
+    private final MemberUtils memberUtils;
 
     public Order createOrder(OrderDto.Post orderPostDto) {
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
-        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+
+        Member findmember = memberUtils.findLoggedInMember();
 
         Order order = new Order();
         order.setOrderStatus(Order.OrderStatus.ORDER_COMPLETE);
-        order.setMember(member);
+        order.setMember(findmember);
         order.setPickupDate(orderPostDto.getPickupDate());
 
         List<ItemOrder> itemOrders = new ArrayList<>();
@@ -61,11 +61,9 @@ public class OrderService {
 
     public List<Order> getOrders() {
 
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
-        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        Member findmember = memberUtils.findLoggedInMember();
 
-        List<Order> orders = orderRepository.findAllByMember(member);
+        List<Order> orders = orderRepository.findAllByMember(findmember);
 
 
         return orders;
