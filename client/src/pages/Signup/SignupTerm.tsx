@@ -28,6 +28,7 @@ const SignupTerm = () => {
   const [isNext, setIsNext] = useState(false);
   const [isAgreed, setIsAgreed] = useState([false, false, false, false]);
   const [alertMessage, setAlertMessage] = useState(""); // 알람 메시지 상태
+  const [isRead, setIsRead] = useState([true, true, true]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -80,6 +81,7 @@ const SignupTerm = () => {
   const onClickToSelection = () => {
     navigate("/signup");
   };
+
   return (
     <Container>
       {isNext ? <Alert text={alertMessage} onClickOk={() => setIsNext(false)} /> : null}
@@ -112,7 +114,7 @@ const SignupTerm = () => {
           </div>
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(1)} type="checkbox" />
+              <input disabled={isRead[0]} onChange={() => clickCheck(1)} type="checkbox" />
               <p className="red">(필수) </p>
               서비스 이용약관 동의
             </div>
@@ -120,10 +122,10 @@ const SignupTerm = () => {
               {detail[0] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[0] ? <Term pos={0} /> : null}
+          {detail[0] ? <Term pos={0} setIsRead={setIsRead} /> : null}
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(2)} type="checkbox" />
+              <input disabled={isRead[1]} onChange={() => clickCheck(2)} type="checkbox" />
               <p className="red">(필수) </p>
               개인정보 수집 동의
             </div>
@@ -131,10 +133,10 @@ const SignupTerm = () => {
               {detail[1] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[1] ? <Term pos={1} /> : null}
+          {detail[1] ? <Term pos={1} setIsRead={setIsRead} /> : null}
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(3)} type="checkbox" />
+              <input disabled={isRead[2]} onChange={() => clickCheck(3)} type="checkbox" />
               <p className="red">(필수) </p>
               전자금융거래 이용약관 동의
             </div>
@@ -142,7 +144,7 @@ const SignupTerm = () => {
               {detail[2] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[2] ? <Term pos={2} /> : null}
+          {detail[2] ? <Term pos={2} setIsRead={setIsRead} /> : null}
         </MiddleContainer>
         <BottomContainer>
           <ButtonLight width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickToSelection}>
