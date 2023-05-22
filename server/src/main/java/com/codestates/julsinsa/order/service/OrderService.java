@@ -7,7 +7,7 @@ import com.codestates.julsinsa.item.repository.ItemRepository;
 import com.codestates.julsinsa.member.entity.Member;
 import com.codestates.julsinsa.member.repository.MemberRepository;
 import com.codestates.julsinsa.order.dto.ItemOrderDto;
-import com.codestates.julsinsa.order.dto.OrderPostDto;
+import com.codestates.julsinsa.order.dto.OrderDto;
 import com.codestates.julsinsa.order.entity.ItemOrder;
 import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.repository.OrderRepository;
@@ -28,7 +28,7 @@ public class OrderService {
 
     private final ItemRepository itemRepository;
 
-    public Order createOrder(OrderPostDto orderPostDto) {
+    public Order createOrder(OrderDto.Post orderPostDto) {
         String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
         Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
@@ -75,8 +75,8 @@ public class OrderService {
 
         Order order = findVerifiedOrder(orderId);
 
-        if (order.getOrderStatus() == Order.OrderStatus.ORDER_REQUEST) {
-            order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+        if (order.getOrderStatus() == Order.OrderStatus.ORDER_COMPLETE) {
+            orderRepository.save(order);
         }
         else if (order.getOrderStatus() == Order.OrderStatus.ORDER_CANCEL) {
             throw new BusinessLogicException(ExceptionCode.ORDER_ALREADY_CANCEL);
@@ -84,8 +84,6 @@ public class OrderService {
         else {
             throw new BusinessLogicException(ExceptionCode.ORDER_CANCEL_FAIL);
         }
-
-        orderRepository.save(order);
     }
 
     private Order findVerifiedOrder(Long orderId) {

@@ -1,6 +1,6 @@
 package com.codestates.julsinsa.order.controller;
 
-import com.codestates.julsinsa.order.dto.OrderPostDto;
+import com.codestates.julsinsa.order.dto.OrderDto;
 import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.mapper.OrderMapper;
 import com.codestates.julsinsa.order.service.OrderService;
@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.util.List;
 
 
 @RestController
@@ -24,7 +23,7 @@ public class OrderController {
     private final OrderMapper mapper;
 
     @PostMapping
-    public ResponseEntity postOrder(@RequestBody @Validated OrderPostDto orderPostDto) {
+    public ResponseEntity postOrder(@RequestBody @Validated OrderDto.Post orderPostDto) {
         Order order = orderService.createOrder(orderPostDto);
 
         return new ResponseEntity<>(mapper.orderToOrderResponseDto(order), HttpStatus.CREATED);

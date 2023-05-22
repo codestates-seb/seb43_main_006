@@ -27,7 +27,7 @@ public class Order extends Auditable {
     private String phone;
     @Enumerated(value = EnumType.STRING)
     @Column
-    private OrderStatus orderStatus = OrderStatus.ORDER_REQUEST;
+    private OrderStatus orderStatus = OrderStatus.ORDER_COMPLETE;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<ItemOrder> itemOrders = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Order extends Auditable {
     private LocalDate pickupDate;
 
     public enum OrderStatus {
-        ORDER_REQUEST("주문 요청"),
+//        ORDER_REQUEST("주문 요청"),
         ORDER_COMPLETE("주문 완료"),
         PICKUP_COMPLETE("픽업 완료"),
         ORDER_CANCEL("주문 취소");
