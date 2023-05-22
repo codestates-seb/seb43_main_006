@@ -12,7 +12,8 @@ interface Orderitem {
   // phone: number;
   // checked: boolean;
   orderStatus: string;
-  createdAt: string;
+  orderedAt: string;
+  pickupDate: string;
   // itemOrders: Dfdf[];
   // name: string;
   // totalQuantity: number;
@@ -206,7 +207,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
   // const orderStatus = orderlist[0].orderStatus;
 
   // console.log(realOrderList);
-  // console.log(orderlist);
+  console.log(orderlist);
 
   //여기부터 살리기!
   const OrderPatchHandle = (orderId: number) => {
@@ -280,7 +281,8 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       <StyledTable>
         <thead>
           <tr>
-            <StyledTh>날짜</StyledTh>
+            <StyledTh>주문날짜</StyledTh>
+            <StyledTh>픽업날짜</StyledTh>
             <StyledTh>구매목록</StyledTh>
             <StyledTh>수량(개)</StyledTh>
             <StyledTh>상태</StyledTh>
@@ -310,7 +312,8 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
           {orderlist.map((el: Orderitem, idx: number) => {
             return (
               <tr key={idx}>
-                <StyledTd>{el.createdAt}</StyledTd>
+                <StyledTd>{el.orderedAt}</StyledTd>
+                <StyledTd>{el.pickupDate}</StyledTd>
                 <StyledTd>{el.titleKor}</StyledTd>
                 <StyledTd>{el.quantity}</StyledTd>
                 <StyledTd>{el.orderStatus}</StyledTd>
@@ -381,7 +384,7 @@ const OrderPage = () => {
     const newData = orderlist.slice();
     const first = new Date(choiceFronDay);
     const second = new Date(choiceBackDay);
-    setFilterlist(newData.filter((el) => new Date(el.createdAt) >= first && new Date(el.createdAt) <= second));
+    setFilterlist(newData.filter((el) => new Date(el.orderedAt) >= first && new Date(el.orderedAt) <= second));
   };
 
   useEffect(() => {
@@ -397,15 +400,16 @@ const OrderPage = () => {
       })
 
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         // setOrderlist(res.data.data);
         const data = res.data.data;
         const newData = [];
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < data[i].itemOrders.length; j++) {
             const singleData = data[i].itemOrders[j];
-            singleData["createdAt"] = data[i].createdAt;
+            singleData["orderedAt"] = data[i].orderedAt;
             singleData["orderStatus"] = data[i].orderStatus;
+            singleData["pickupDate"] = data[i].pickupDate;
             singleData["orderId"] = data[i].orderId;
             newData.push(singleData);
             // console.log(newData);
