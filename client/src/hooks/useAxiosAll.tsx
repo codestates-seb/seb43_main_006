@@ -74,7 +74,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       requestCon = {
         method: method,
         // url: `${process.env.REACT_APP_API_URL}${path}`,
-        url: `https://cffa-124-111-225-247.ngrok-free.app${path}`,
+        url: `${process.env.REACT_APP_API_URL}${path}`,
         headers: header,
         data: body,
       };
@@ -82,7 +82,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       // body 필요시 body 미포함 요청 구성
       requestCon = {
         method: method,
-        url: `https://cffa-124-111-225-247.ngrok-free.app${path}`,
+        url: `${process.env.REACT_APP_API_URL}${path}`,
         headers: header,
       };
     }
