@@ -5,6 +5,7 @@ import com.codestates.julsinsa.auth.jwt.JwtTokenizer;
 import com.codestates.julsinsa.auth.utills.CustomAuthorityUtils;
 import com.codestates.julsinsa.global.exception.BusinessLogicException;
 import com.codestates.julsinsa.global.exception.ExceptionCode;
+import com.codestates.julsinsa.global.utils.MemberUtils;
 import com.codestates.julsinsa.helper.email.HtmlEmailSendable;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.helper.event.MemberRegistrationApplicationEvent;
@@ -55,6 +56,7 @@ public class MemberService {
 
     private final JwtTokenizer jwtTokenizer;
 
+    private final MemberUtils memberUtils;
     // 일반 회원 가입
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
@@ -90,10 +92,8 @@ public class MemberService {
 
     // oauth2 가입시 닉네임 설정시 권한 부여
     public Member updateOAuth2Member(Member member){
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        // 로그인 유저 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         List<String> roles = new ArrayList<>(authorityUtils.createRoles(findmember.getEmail()));
         findmember.setRoles(roles);
@@ -109,10 +109,8 @@ public class MemberService {
     // 회원 수정
     public Member updateMember(Member member){
 
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        // 로그인 유저 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         // 각각 설정
         Optional.ofNullable(member.getDisplayName()).ifPresent(displayName -> findmember.setDisplayName(displayName));
@@ -129,17 +127,14 @@ public class MemberService {
 
     // 회원 조회
     public Member findMember(){
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        return findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        // 로그인 유저 불러오기
+        return memberUtils.findLoggedInMember();
     }
 
     // 찜 목록 불러오기
     public List<ItemDto.favoriteItemResponse> findFavorites(){
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        // 로그인 유저 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         // 찜 목록 생성
         List<Object[]> resultList = favoriteRepository.findFavoriteItemsByMemberId(findmember.getMemberId());
@@ -161,9 +156,8 @@ public class MemberService {
 
     // 회원 탈퇴 아이디와 비밀번호가 일치해야함
     public void deleteMember(LoginDto member) {
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        // 로그인 유저 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         if(!(findmember.getEmail().equals(member.getUsername()) && passwordEncoder.matches(member.getPassword(), findmember.getPassword()))){
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_AUTHORIZED);

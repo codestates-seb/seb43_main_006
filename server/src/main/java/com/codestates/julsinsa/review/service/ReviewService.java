@@ -5,6 +5,7 @@ import com.codestates.julsinsa.global.exception.ExceptionCode;
 import com.codestates.julsinsa.image.entity.ReviewImage;
 import com.codestates.julsinsa.image.service.ImageService;
 import com.codestates.julsinsa.item.entity.Item;
+import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.order.repository.OrderRepository;
 import com.codestates.julsinsa.review.entity.Review;
 import com.codestates.julsinsa.item.repository.ItemRepository;
@@ -44,13 +45,24 @@ public class ReviewService {
         Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
         Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
 
-//        // 구매내역이 있는지 검증하는 로직 추가할것. + 단 1회만 작성 가능
+        // 구매내역이 있는지 검증하는 로직 추가할것. + 단 1회만 작성 가능
 //        List<Order> findOrders = orderRepository.findByMember(findmember);
 //        boolean isItemOrdered = findOrders.stream()
 //                .anyMatch(order -> order.getItemOrders().stream()
 //                        .anyMatch(itemOrder -> itemOrder.getItem().getItemId() == itemId));
 //        if (!isItemOrdered) {
 //            throw new BusinessLogicException(ExceptionCode.LIKE_NOT_CANCEL);
+//        }
+        // 해당 아이템에 대한 픽업 완료된 주문 확인
+        Optional<Order> pickupOrder = orderRepository.findByMemberAndItemOrders_Item_ItemIdAndOrderStatus(findmember, itemId, Order.OrderStatus.PICKUP_COMPLETE);
+        if (pickupOrder.isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.ORDER_ITEM_NOT_FOUND);
+        }
+
+        // 해당 주문에 이미 리뷰가 작성되었는지 확인
+//        Optional<Review> existingReview = reviewRepository.findByOrder(pickupOrder.get());
+//        if (existingReview.isPresent()) {
+//            throw new BusinessLogicException(ExceptionCode.REVIEW_ALREADY_EXISTS);
 //        }
 
         // 아이템 아이디로 아이템 찾기

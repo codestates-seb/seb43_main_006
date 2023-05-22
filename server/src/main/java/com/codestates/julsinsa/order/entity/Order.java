@@ -11,6 +11,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -47,6 +48,8 @@ public class Order extends Auditable {
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
+
+    private LocalDate pickupDate;
 
     public enum OrderStatus {
         ORDER_REQUEST("주문 요청"),

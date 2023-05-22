@@ -21,51 +21,20 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
 
+
     Order orderPostDtoToOrder(OrderPostDto orderPostDto);
+    @Mapping(source = "member.realName", target = "name")
     OrderResponseDto orderToOrderResponseDto(Order order);
+    @Mapping(source = "member.realName", target = "name")
     OrderDto.Response orderToOrderResponse(Order order);
+
+    ItemOrderDto itemOrderToItemOrderDto(ItemOrder itemOrder);
 
     @Mapping(source = "item.itemId", target = "itemId")
     @Mapping(source = "item.titleKor", target = "titleKor")
     ItemOrderDto.Response itemOrderToItemOrderResponse(ItemOrder itemOrder);
 
+
     List<OrderDto.Response> ordersToOrderResponses(List<Order> orders);
 
-
-
-
-//    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
-//
-//    @Mapping(target = "itemList", ignore = true)
-//    @Mapping(target = "totalPrice", ignore = true)
-//    OrderDto.Response orderToOrderResponse(Order order);
-//
-//    default OrderDto.Response orderToOrderResponseWithItems(Order order) {
-//        OrderDto.Response response = orderToOrderResponse(order);
-//
-//        // 아이템 주문 목록과 각 아이템의 금액 가져오기
-//        List<ItemOrder> itemOrders = order.getItemOrder();
-//        List<Item> items = new ArrayList<>();
-//        int totalPrice = 0;
-//
-//        for (ItemOrder itemOrder : itemOrders) {
-//            Item item = itemOrder.getItem();
-//            int quantity = itemOrder.getQuantity();
-//            int price = item.getPrice();
-//
-//            item.setQuantity(quantity);
-//            item.setPrice(price);
-//            items.add(item);
-//            totalPrice += quantity * price;
-//        }
-//
-//        response.setItemList(items);
-//        response.setTotalPrice(totalPrice);
-//
-//        return response;
-//    }
-//
-//    @Mapping(target = "itemList", ignore = true)
-//    @Mapping(target = "totalPrice", ignore = true)
-//    List<OrderDto.Response> ordersToOrderResponses(List<Order> orders);
 }

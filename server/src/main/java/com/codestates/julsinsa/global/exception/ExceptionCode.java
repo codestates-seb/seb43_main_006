@@ -32,6 +32,10 @@ public enum ExceptionCode {
     REVIEW_NOT_FOUND(404,"Review not found"),
 
     DO_NOT_MATCH(406,"Do not match"),
+
+    ORDER_ITEM_NOT_FOUND(404, "아이템이 주문 내역에 없습니다"),
+
+    REVIEW_ALREADY_EXISTS(403, "이미 해당 구매내역으로 리뷰를 작성 하셨습니다"),
     ITEM_NOT_FOUND(404,"Item not found");
     @Getter
     private int status;

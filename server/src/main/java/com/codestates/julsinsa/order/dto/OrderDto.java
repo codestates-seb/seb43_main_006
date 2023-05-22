@@ -3,6 +3,7 @@ package com.codestates.julsinsa.order.dto;
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.order.entity.ItemOrder;
 import com.codestates.julsinsa.order.entity.Order;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,16 +26,17 @@ public class OrderDto {
 
         private Long orderId;
         private String name;
-        private String phone;
+
         private Order.OrderStatus orderStatus;
 
         private int totalQuantity;
 
         private List<ItemOrderDto.Response> itemOrders;
 
-        private LocalDate createdAt;
+        private LocalDate pickupDate;
 
-        private boolean isChecked = false; // 프론트에서 체크박스 여부 확인한다고 만들어 달라함
+        @JsonProperty(value="orderedAt")
+        private LocalDate createdAt;
 
         // 아이템리스트에서 갯수들을 가져와서 더함
         public int getTotalQuantity() {
