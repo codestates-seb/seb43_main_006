@@ -1,17 +1,12 @@
 package com.codestates.julsinsa.item.dto;
 
-import com.codestates.julsinsa.member.entity.Member;
-import com.codestates.julsinsa.review.dto.ReviewDto;
-import com.codestates.julsinsa.review.entity.Review;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDto {

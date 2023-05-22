@@ -1,16 +1,12 @@
 package com.codestates.julsinsa.order.dto;
 
-import com.codestates.julsinsa.item.entity.Item;
-import com.codestates.julsinsa.order.entity.ItemOrder;
+
 import com.codestates.julsinsa.order.entity.Order;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;

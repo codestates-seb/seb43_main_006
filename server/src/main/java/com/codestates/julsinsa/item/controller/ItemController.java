@@ -1,6 +1,5 @@
 package com.codestates.julsinsa.item.controller;
 
-import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.global.dto.MultiResponseDto;
 import com.codestates.julsinsa.global.dto.SingleResponseDto;
 import com.codestates.julsinsa.global.utils.UriCreator;
