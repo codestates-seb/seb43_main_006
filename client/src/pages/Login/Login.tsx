@@ -9,7 +9,7 @@ import axios from "axios";
 import Alert from "@components/Common/AlertModal";
 import { ButtonDark, ButtonLight } from "@components/Common/Button";
 
-const url = `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080`;
+const url = `${process.env.REACT_APP_API_URL}`;
 
 type TypeProps = {
   type: string;

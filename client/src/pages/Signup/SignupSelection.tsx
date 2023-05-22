@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
-const url = `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080`;
+const url = `${process.env.REACT_APP_API_URL}`;
 
 type TypeProps = {
   type: string;

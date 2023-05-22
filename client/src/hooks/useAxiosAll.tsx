@@ -26,7 +26,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
         const access_token = `Bearer ${localStorage.getItem("authToken")}`;
         await axios
           .post(
-            `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/token`,
+            `${process.env.REACT_APP_API_URL}/members/token`,
             {},
             {
               headers: {
@@ -48,6 +48,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
             localStorage.removeItem("exp");
             localStorage.removeItem("iat");
             navigate("/login");
+            localStorage.setItem("needLogin", "needLogin");
           });
       }
       if (needToken) {
@@ -72,7 +73,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       requestCon = {
         method: method,
         // url: `${process.env.REACT_APP_API_URL}${path}`,
-        url: `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080${path}`,
+        url: `https://cffa-124-111-225-247.ngrok-free.app${path}`,
         headers: header,
         data: body,
       };
@@ -80,7 +81,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       // body 필요시 body 미포함 요청 구성
       requestCon = {
         method: method,
-        url: `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080${path}`,
+        url: `https://cffa-124-111-225-247.ngrok-free.app${path}`,
         headers: header,
       };
     }
