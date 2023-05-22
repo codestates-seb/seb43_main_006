@@ -54,21 +54,25 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="layout1" style={{ opacity: y > 800 ? (y > 1500 ? "0" : "1") : "0" }}>
+      <div>
+        {/* <div className="layout1" style={{ opacity: y > 800 ? (y > 1500 ? "0" : "1") : "0" }}> */}
         <Homelayout1 />
       </div>
       <div className="space"></div>
-      <div className="layout2" style={{ opacity: y > 2000 ? (y > 2600 ? "0" : "1") : "0" }}>
+      <div>
+        {/* <div className="layout2" style={{ opacity: y > 2000 ? (y > 2600 ? "0" : "1") : "0" }}> */}
         <Homelayout2 />
       </div>
 
       <div className="space"></div>
-      <div className="layout3" style={{ opacity: y > 3300 ? (y > 4200 ? "0" : "1") : "0" }}>
+      <div>
+        {/* <div className="layout3" style={{ opacity: y > 3300 ? (y > 4200 ? "0" : "1") : "0" }}> */}
         <Homelayout3 />
       </div>
 
       <div className="space"></div>
-      <div className="layout4" style={{ opacity: y > 4900 ? (y > 6000 ? "0" : "1") : "0" }}>
+      <div>
+        {/* <div className="layout4" style={{ opacity: y > 4900 ? (y > 6000 ? "0" : "1") : "0" }}> */}
         <Homelayout5 />
       </div>
       <div className="space"></div>

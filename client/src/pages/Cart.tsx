@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonDark, ButtonLight } from "../components/Common/Button";
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Progress from "./Payment/Progress";
@@ -20,6 +20,8 @@ interface CartItemsProps {
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItemsProps>({ itemCarts: [] });
+  // Create the payload to be sent in the patch request
+
   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
   useEffect(() => {
     axios
@@ -62,11 +64,72 @@ const Cart = () => {
 
   const checkedItems = cartItems.itemCarts.filter((item) => isCheckedItems[item.itemId]);
   const totalQuantity = checkedItems.reduce((acc, cur) => acc + cur.quantity, 0);
+
+  const itemIds = checkedItems.map((item) => item.itemId);
+  const payload = {
+    itemIds: itemIds,
+  };
+
   const totalPrice = checkedItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
   const handleCheckout = () => {
     const checkedItems = cartItems.itemCarts.filter((item) => isCheckedItems[item.itemId]);
+
+    // Create an array of item IDs
+    const itemIds = checkedItems.map((item) => item.itemId);
+
+    // Create the payload to be sent in the patch request
+    const payload = {
+      itemIds: itemIds,
+    };
+
+    //   // Send the patch request to the server
+    //   axios
+    //     .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: access_token,
+    //         "ngrok-skip-browser-warning": "69420",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       // Handle the response from the server
+    //       console.log("Patch request successful:", res.data);
+    //       // Perform any necessary actions after successful patch request
+    //       // For example, you can navigate to the payment page here
     navigate("/payment", { state: { items: checkedItems } });
+    //     })
+    //     .catch((err) => {
+    //       // Handle any errors that occur during the patch request
+    //       console.log("Error during patch request:", err);
+    //       // Perform any necessary error handling actions
+    //     });
   };
+
+  const handleCancel = () => {
+    //   // Clear the checked items
+    //   // Send the patch request to the server to update the checked items as empty
+    //   axios
+    //     .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: access_token,
+    //         "ngrok-skip-browser-warning": "69420",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       // Handle the response from the server
+    //       console.log("Patch request successful:", res.data);
+    //       // Perform any necessary actions after successful patch request
+    //       // For example, you can navigate to a different page here
+    navigate(-1);
+    //     })
+    //     .catch((err) => {
+    //       // Handle any errors that occur during the patch request
+    //       console.log("Error during patch request:", err);
+    //       // Perform any necessary error handling actions
+    //     });
+  };
+
   const handleCheckAll = () => {
     setIsCheckedAll(!isCheckedAll);
     setIsCheckedItems(
@@ -142,7 +205,7 @@ const Cart = () => {
 
   return (
     <CartContainer isEmpty={cartItems.itemCarts.length === 0}>
-      <h2 className="장바구니">장바구니</h2>
+      <h2 className="장바구니"></h2>
 
       <div className="main">
         <Progress />
@@ -219,7 +282,7 @@ const Cart = () => {
 
         <div className="button">
           <div className="buttonDetail">
-            <ButtonLight width="160px" height="60px" fontSize="18px" onClick={() => navigate(-1)}>
+            <ButtonLight width="160px" height="60px" fontSize="18px" onClick={handleCancel}>
               뒤로가기
             </ButtonLight>
           </div>
@@ -251,15 +314,12 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
 
   & div.main {
     width: 100%;
-    height: 500px;
     ${({ theme }) => theme.common.flexCenterCol};
   }
 
   & h2 {
     font-size: 48px;
     font-weight: bold;
-    padding-bottom: 20vh;
-    height: ${(props) => (props.isEmpty ? "0px" : "500px")};
   }
 
   & div.list {
@@ -273,11 +333,11 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     margin-top: 50px;
 
     & div.Allcheckbox {
-      width: 5.47%;
+      width: 5.4%;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      overflow: ;
+      overflow: auto;
     }
     & div.checkbox {
       width: 5%;
@@ -298,6 +358,7 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
 
   & div.cartitem {
     ${({ theme }) => theme.common.flexCenterRow};
+    flex-direction: row;
     width: 85%;
     font-size: 15px;
     border-bottom: 1px solid rgba(60, 60, 60, 0.1);
@@ -309,7 +370,7 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
 
       & img {
         width: 250px;
-        height: 250px;
+        height: 200px;
         object-fit: contain;
       }
     }
@@ -482,7 +543,7 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     }
   }
   .전체 {
-    padding-left: 10px;
+    padding-left: 8px;
     font-size: 12px;
   }
   & div.empty {
