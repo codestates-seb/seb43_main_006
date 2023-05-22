@@ -63,9 +63,7 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-
     private boolean passwordIssued = false;
-
     private boolean oauth2Registered = false;
 
     //관계 편의 메서드

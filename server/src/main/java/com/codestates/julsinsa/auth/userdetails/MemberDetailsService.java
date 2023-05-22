@@ -38,6 +38,7 @@ public class MemberDetailsService implements UserDetailsService {
             setEmail(member.getEmail());
             setPassword(member.getPassword());
             setRoles(member.getRoles());
+            setPasswordIssued(member.isPasswordIssued());
         }
 
         @Override
