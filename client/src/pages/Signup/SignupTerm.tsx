@@ -165,7 +165,8 @@ const Container = styled.div`
 const TermContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
-  width: 700px;
+  max-width: 700px;
+  width: 80%;
   padding-bottom: 60px;
   position: absolute;
   top: 15%;

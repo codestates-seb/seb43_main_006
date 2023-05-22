@@ -86,9 +86,19 @@ const ReviewListContainer = styled.div`
 
       .review_img {
         display: flex;
-        overflow: hidden;
+        overflow: auto;
         flex-direction: row;
         gap: 10px;
+
+        &::-webkit-scrollbar {
+          height: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: none;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: lightgray;
+        }
 
         img {
           margin-bottom: 1rem;
@@ -116,14 +126,14 @@ const ReviewList = ({ reviews, itemId }: ItemReviewListProps) => {
   const HandleUpdateReview = (reviewId: number): void => {
     setIsEditing((prevState) => ({ ...prevState, [reviewId]: true }));
 
-    const review: ReveiwUpdateProps = {
+    const reviewUpdate: ReveiwUpdateProps = {
       mode: "edit",
       itemId,
       reviewId,
     };
 
     navigate(`/review/edit/${itemId}`, {
-      state: { review },
+      state: { reviewUpdate },
     });
   };
 

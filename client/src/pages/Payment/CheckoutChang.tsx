@@ -8,8 +8,8 @@ const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
 const CheckoutChang = () => {
   const location = useLocation();
+  const data = location.state ? location.state.data : [];
   const items: ItemOrder[] = location.state ? location.state.items : [];
-  const user = location.state ? location.state.user : [];
   const orderNames = items.map((item) => item.titleKor);
   const orderName = orderNames.join(", ");
   const { totalPrice } = items.reduce(
@@ -22,9 +22,9 @@ const CheckoutChang = () => {
   );
 
   console.log(totalPrice);
-  console.log(user.name);
   console.log(orderName);
   console.log(nanoid());
+  console.log(data);
 
   useEffect(() => {
     // ------ 클라이언트 키로 객체 초기화 ------
@@ -37,11 +37,11 @@ const CheckoutChang = () => {
           // 더 많은 결제 정보 파라미터는 결제창 Javascript SDK에서 확인하세요.
           // https://docs.tosspayments.com/reference/js-sdk
           // amount: totalPrice, // 결제 금액
-          amount: 1,
+          amount: totalPrice,
           orderId: nanoid(), // 주문 ID
           orderName: orderName, // 주문명
-          customerName: user.name, // 구매자 이름
-          customerEmail: user.email,
+          customerName: data.realName, // 구매자 이름
+          customerEmail: data.email,
           successUrl: `${window.location.origin}/PaymentConfirm`, // 결제 성공 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
           failUrl: `${window.location.origin}/fail`, // 결제 실패 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
         })
@@ -57,7 +57,7 @@ const CheckoutChang = () => {
           }
         });
     });
-  }, [totalPrice, items, user]);
+  }, [totalPrice, items, data]);
 
   return <script src="https://js.tosspayments.com/v1/payment%22%3E"></script>; // JSX 반환
 };

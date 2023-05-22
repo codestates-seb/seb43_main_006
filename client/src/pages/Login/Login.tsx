@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
@@ -28,6 +28,13 @@ const Login = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("needLogin")) {
+      setAlertMessage("로그인이 필요합니다!");
+      setShowAlert(true);
+      localStorage.removeItem("needLogin");
+    }
+  }, []);
   function convertToSeconds(dateString: string): string {
     // dateString을 Date 객체로 변환합니다.
     const date = new Date(dateString);
