@@ -34,7 +34,7 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
     const container = document.getElementById("map");
     const options = {
       center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804), //죽전역
-      level: 2,
+      level: 8,
     };
     // console.log(setSelect);
     const map = new window.kakao.maps.Map(container, options);
@@ -111,3 +111,4 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
 };
 
 export default MapComponent;
+//0522 2:13pm
