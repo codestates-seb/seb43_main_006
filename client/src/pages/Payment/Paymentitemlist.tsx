@@ -5,6 +5,7 @@ import { ItemOrder } from "../../types/AlcholInterfaces";
 export default function Itemlist() {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
+  console.log(items);
   return (
     <IItemlist>
       <div className="list">

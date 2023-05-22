@@ -30,6 +30,15 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
       cursor: pointer;
     }
   }
+
+  @media screen and (max-width: 1297px) {
+  }
+  @media screen and (max-width: 860px) {
+    left: 3%;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 600px) {
+  }
 `;
 
 const HeaderContainer = styled.div<IHeaderContainerProps>`
@@ -91,7 +100,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${({ hovering }) => (hovering === "true" ? "20px" : "24px")};
+    font-size: ${({ hovering }) => (hovering === "true" ? "17px" : "21px")};
     transition: all 0.5s ease-out;
   }
 
@@ -113,7 +122,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
 
   .banner3 {
     padding-left: 0px;
-    width: 8%;
+    width: 9%;
   }
   .banner4 {
     padding-left: 0px;
@@ -135,18 +144,36 @@ const Ulist = styled.div<IHeaderContainerProps>`
       cursor: pointer;
     }
   }
-
-  /* @media (max-width: 1900px) {
-    width: 70%;
-    & ul {
-      font-size: 18px;
-    }
+  @media screen and (max-width: 1920px) {
   }
-  @media (max-width: 1415px) {
-    .banner6 {
+  @media screen and (max-width: 1440px) {
+    width: 75%;
+  }
+
+  @media screen and (max-width: 860px) {
+    width: 30%;
+    height: 80px;
+    padding-top: 0px;
+    & ul {
       display: none;
     }
-  } */
+    .banner6 {
+      display: flex;
+      font-size: 22px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .banner6 {
+      display: flex;
+      font-size: 16px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+  }
 `;
 
 const StyledList = styled.li<IHeaderContainerProps>`
@@ -317,19 +344,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-/* 
-  @media ${({ theme }) => theme.breakpoints.mobileMax} {
-    & ul {
-      display: none;
-    }
-  }
-  @media ${({ theme }) => theme.breakpoints.mobileMax} {
-    & ul {
-      display: none;
-    }
-  }
-  @media ${({ theme }) => theme.breakpoints.mobileMax} {
-    & ul {
-      display: none;
-    }
-  } */

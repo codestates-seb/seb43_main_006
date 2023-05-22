@@ -123,13 +123,10 @@ const PaymentConfirm = () => {
 
   return (
     <PaymentConfirmContainer>
-      <h2>결제 성공</h2>
+      <h2></h2>
       <div className="main">
         <Progress />
         <div className="reason">{`주문 아이디: ${orderId}`}</div>
-        <div className="reason">{`주문 목록: ${String(searchParams.get("orderName"))}`}</div>
-        <div className="reason">{`구매자 : ${String(searchParams.get("customerName"))}`}</div>
-        <div className="reason">{`구매자 E-Mail : ${searchParams.get("transactionAt")}`}</div>
         <div className="reason">{`결제 금액: ${Number(searchParams.get("amount")).toLocaleString()}원`}</div>
       </div>
     </PaymentConfirmContainer>

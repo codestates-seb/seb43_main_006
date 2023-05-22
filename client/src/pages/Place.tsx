@@ -1,12 +1,13 @@
 //지도페이지
 
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { ButtonDark } from "../components/Common/Button";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/slice/store";
+
 const MapComponent = lazy(() => import("./Map"));
 // import MapComponent from "./Map";
 
@@ -72,7 +73,8 @@ const Place = () => {
   const [shoplist, setShoplist] = useState<Shopitem[]>([]);
   const navigate = useNavigate();
   const [select, setSelect] = useState<Shopitem | null>(null);
-
+  const location = useLocation();
+  const items = location.state ? location.state.items : [];
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
@@ -96,7 +98,7 @@ const Place = () => {
   const handleSelect = () => {
     // console.log(select);
     dispatch(setMarker(select));
-    navigate("/payment");
+    navigate("/payment", { state: { items: items } });
   };
 
   return (

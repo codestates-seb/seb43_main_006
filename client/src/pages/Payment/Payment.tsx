@@ -40,7 +40,7 @@ const Payment = () => {
 
   return (
     <PaymentContainer>
-      <h2 className="payment">결제 페이지</h2>
+      <h2 className="payment"></h2>
       <div className="main">
         <Progress />
         <PaymnetUserInfo userInfo={userInfo} updateUserInfo={updateUserInfo} />

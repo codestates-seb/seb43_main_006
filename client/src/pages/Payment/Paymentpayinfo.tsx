@@ -53,7 +53,7 @@ export default function Payinfo() {
     setIsCalendarOpen(false);
   };
   const handlemapClick = () => {
-    navigate("/place");
+    navigate("/place", { state: { items: items } });
   };
   return (
     <Payinfostyle>
@@ -245,6 +245,9 @@ const Payinfostyle = styled.div`
     height: 100%;
     border: 1px solid rgba(60, 60, 60, 0.1);
     font-size: 14px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   & div.thirdline {
