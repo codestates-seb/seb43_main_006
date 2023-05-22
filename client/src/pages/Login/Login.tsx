@@ -36,7 +36,9 @@ const Login = () => {
     }
   }, []);
   function convertToSeconds(dateString: string): string {
+    dateString = dateString.replace("/", "T");
     // dateString을 Date 객체로 변환합니다.
+    console.log("T처리한 문자열", dateString);
     const date = new Date(dateString);
 
     // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
@@ -72,6 +74,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         const token = res.headers.authorization;
+        console.log(res.headers.exp);
         const iat_sec = convertToSeconds(res.headers.iat);
         const exp_sec = convertToSeconds(res.headers.exp);
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
