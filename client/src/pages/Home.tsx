@@ -1,7 +1,6 @@
-import maintop from "../assets/images/Maintop.png";
+import maintop from "@assets/images/Maintop.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import samplelist from "../assets/images/samplelist.png";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
 
@@ -73,75 +72,6 @@ const Home: React.FC = () => {
         <Homelayout5 />
       </div>
       <div className="space"></div>
-      <div className="saleslist">
-        <p className="sales" style={{ opacity: y > 6500 ? (y > 7500 ? "0" : "1") : "0" }}>
-          구매율이 높은 상품
-        </p>
-        <a style={{ opacity: y > 6600 ? (y > 7500 ? "0" : "1") : "0" }}>
-          <div className="listtitle">위스키 계열</div>
-          <ul className="1stsales">
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-          </ul>
-        </a>
-        <a style={{ opacity: y > 6900 ? (y > 8000 ? "0" : "1") : "0" }}>
-          <div className="listtitle">보드카 계열</div>
-          <ul className="2ndsales">
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-            <li>
-              <img src={samplelist} className="slist" alt="sample list" />
-            </li>
-          </ul>
-        </a>
-      </div>
     </HomeContainer>
   );
 };
