@@ -324,7 +324,7 @@ const OrderPage = () => {
             <p>총 {filterlist.length}건</p>
           </OrderpageMainStyled>
           <PeriodStyled>
-            <p>주문조회기간</p>
+            <p>주문기간조회</p>
             <input type="date" className="FrontInput" onChange={(e) => setChoiceFronDay(e.target.value)}></input>
             <p>~</p>
             <input type="date" className="BackInput" onChange={(e) => setChoiceBackDay(e.target.value)}></input>
