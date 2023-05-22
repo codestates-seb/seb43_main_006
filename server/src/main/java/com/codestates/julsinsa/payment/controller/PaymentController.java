@@ -22,13 +22,4 @@ public class PaymentController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    @DeleteMapping("/{payment-id}")
-//    public ResponseEntity cancelPayment(@PathVariable("paymentKey") String paymentKey,
-//                                        @RequestParam String cancelReason) {
-//
-//        paymentService.paymentCancel(paymentKey, cancelReason);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 }
