@@ -1,5 +1,3 @@
-//지도페이지
-
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -8,9 +6,7 @@ import { ButtonDark } from "../components/Common/Button";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/slice/store";
 const MapComponent = lazy(() => import("./Map"));
-// import MapComponent from "./Map";
 
-/*--------------------------------스타일--------------------------------*/
 const TotalStyled = styled.section`
   /* border: 10px solid black; */
   display: flex;
@@ -66,7 +62,7 @@ interface Shopitem {
   phone: string;
   workTime: string;
 }
-/*-----------------------------------------------------------------------*/
+
 const Place = () => {
   const dispatch = useDispatch();
   const [shoplist, setShoplist] = useState<Shopitem[]>([]);
@@ -77,7 +73,6 @@ const Place = () => {
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
-        // .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/marts`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
@@ -99,7 +94,7 @@ const Place = () => {
     dispatch(setMarker(select));
     navigate("/payment", { state: { items: items } });
   };
-
+  console.log(select);
   return (
     <>
       <TotalStyled>
@@ -108,7 +103,6 @@ const Place = () => {
             <MapArticleStyled>픽업 매장을 선택하세요</MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
               <MapComponent shoplist={shoplist} setSelect={setSelect} />
-              {/* <MapComponent shoplist={shoplist} /> */}
             </Suspense>
           </MapBodyStyled>
           <MapBottomStyled>
@@ -123,4 +117,4 @@ const Place = () => {
 };
 
 export default Place;
-//0522 17:00
+//0522 22:26
