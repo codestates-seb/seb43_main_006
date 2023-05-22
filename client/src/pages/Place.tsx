@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { ButtonDark } from "../components/Common/Button";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/slice/store";
+// import { useSelector } from "react-redux";
 const MapComponent = lazy(() => import("./Map"));
 // import MapComponent from "./Map";
 
@@ -96,7 +97,7 @@ const Place = () => {
   const handleSelect = () => {
     // console.log(select);
     dispatch(setMarker(select));
-    navigate("/cart");
+    navigate("/payment");
   };
 
   return (
@@ -122,3 +123,4 @@ const Place = () => {
 };
 
 export default Place;
+//0522 17:00
