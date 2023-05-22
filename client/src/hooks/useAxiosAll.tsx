@@ -26,7 +26,8 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
         const access_token = `Bearer ${localStorage.getItem("authToken")}`;
         await axios
           .post(
-            `https://cffa-124-111-225-247.ngrok-free.app/members/token`,
+            `${process.env.REACT_APP_API_URL}/members/token`,
+
             {},
             {
               headers: {

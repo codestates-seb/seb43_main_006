@@ -38,7 +38,7 @@ const SignupTerm = () => {
       localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
 
       axios
-        .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members`, {
+        .get(`${process.env.REACT_APP_API_URL}/members`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: localStorage.getItem("authToken"),
