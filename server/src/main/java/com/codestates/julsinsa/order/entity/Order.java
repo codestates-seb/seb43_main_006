@@ -52,7 +52,6 @@ public class Order extends Auditable {
     private LocalDate pickupDate;
 
     public enum OrderStatus {
-//        ORDER_REQUEST("주문 요청"),
         ORDER_COMPLETE("주문 완료"),
         PICKUP_COMPLETE("픽업 완료"),
         ORDER_CANCEL("주문 취소");
