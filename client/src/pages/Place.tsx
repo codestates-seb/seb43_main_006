@@ -96,7 +96,7 @@ const Place = () => {
   const handleSelect = () => {
     // console.log(select);
     dispatch(setMarker(select));
-    navigate("/cart");
+    navigate("/payment");
   };
 
   return (

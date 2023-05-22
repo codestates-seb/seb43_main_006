@@ -45,7 +45,7 @@ export function Homelayout2() {
   return (
     <Homelayoutstyled2>
       <div className="glad2">
-        <div>매주 함께하는 우리</div>
+        <div className="smallglad1">매주 함께하는 우리</div>
         <div className="smallglad2">어서 오세요!</div>
       </div>
     </Homelayoutstyled2>
@@ -58,10 +58,11 @@ const Homelayoutstyled2 = styled.div`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.fontColor};
+  width: 100%;
   .glad2 {
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 100%;
     justify-content: center;
     flex-direction: column;
     font-size: 48px;
@@ -70,10 +71,19 @@ const Homelayoutstyled2 = styled.div`
     padding-right: 2%;
     padding-bottom: 500px;
   }
+  .smallglad1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .smallglad2 {
     font-size: 25px;
     flex-direction: row;
     color: ${({ theme }) => theme.colors.themeColor};
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -81,16 +91,16 @@ export function Homelayout3() {
   return (
     <Homelayoutstyled3>
       <div className="firstbox">
-        <li>저희 매주매주는 술을 사랑하는 여러분들을 위해</li>
-        <li className="list_maju">
-          <ul className="maju">매주</ul>
+        <div>저희 매주매주는 술을 사랑하는 여러분들을 위해</div>
+        <div className="list_maju">
+          <div className="maju">매주</div>
           <ul className="maju_list">
             <li>휴식을 할 때 함께할,</li>
             <li>고된 하루를 극복할,</li>
             <li>사랑하는 사람과 함께 할 때</li>
             <li>늘 곁에 있겠습니다.</li>
           </ul>
-        </li>
+        </div>
       </div>
     </Homelayoutstyled3>
   );
@@ -102,6 +112,7 @@ const Homelayoutstyled3 = styled.div`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.fontColor};
+  width: 100%;
   .firstbox {
     display: flex;
     font-size: 30px;
@@ -126,6 +137,11 @@ const Homelayoutstyled3 = styled.div`
   }
   .list_maju {
     padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 `;
 

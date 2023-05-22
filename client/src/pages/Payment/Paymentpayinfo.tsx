@@ -4,9 +4,23 @@ import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import MapComponent from "@pages/Map";
 import Place from "@pages/Place";
 import { useNavigate } from "react-router-dom";
+
+type stateProps = {
+  loginState?: string;
+  markerState?: {
+    address: string;
+    choice: boolean;
+    comment: string;
+    lat: number;
+    lng: number;
+    marketId: number;
+    name: string;
+    phone: string;
+    workTime: string;
+  };
+};
 
 export default function Payinfo() {
   const location = useLocation();
@@ -24,7 +38,8 @@ export default function Payinfo() {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const selectdata = useSelector((state) => state);
+  const selectdata = useSelector((state: stateProps) => state.markerState);
+  console.log("이 아래거");
   console.log(selectdata);
   // const [shoplist, setShoplist] = useState<Shopitem[]>([]);
   // const [selectedShop, setSelectedShop] = useState<Shopitem | null>(null);
@@ -70,19 +85,26 @@ export default function Payinfo() {
         <div>
           <div className="thirdline">
             <div className="place">
-              <div className="pickupplace">픽업 예정 위치</div>
+              <div className="pickupplace">픽업 정보</div>
               <div className="placeinfo">
                 <div className="place1">
                   <div className="placename">가게 이름</div>
-                  <div className="placename2">좋은데이</div>
+                  <div className="placename2">{selectdata?.name}</div>
                 </div>
                 <div className="place2">
                   <div className="placeadd">도로명 주소</div>
-                  <div className="placeadd2">경기도 사랑시 고백구 행복동 48-85</div>
+                  <div className="placeadd2">{selectdata?.address}</div>
                 </div>
                 <div className="place3">
                   <div className="placenumber">가게 번호</div>
-                  <div className="placenumber2">010-1234-5678</div>
+                  <div className="placenumber2">{selectdata?.phone}</div>
+                </div>
+                <div className="place4">
+                  <div className="placecomment">가게 정보</div>
+                  <div className="placecomment2">
+                    <div>{selectdata?.comment}</div>
+                    <div>{selectdata?.workTime}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -273,7 +295,7 @@ const Payinfostyle = styled.div`
 
   & div.placename {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -283,7 +305,7 @@ const Payinfostyle = styled.div`
   }
   & div.placename2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -299,7 +321,7 @@ const Payinfostyle = styled.div`
   }
   & div.placeadd {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,7 +331,7 @@ const Payinfostyle = styled.div`
   }
   & div.placeadd2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -325,7 +347,7 @@ const Payinfostyle = styled.div`
   }
   & div.placenumber {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,13 +357,40 @@ const Payinfostyle = styled.div`
   }
   & div.placenumber2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(60, 60, 60, 0.1);
   }
 
+  & div.place4 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  & div.placecomment {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(217, 217, 217, 0.5);
+    border: 1px solid rgba(60, 60, 60, 0.1);
+    font-weight: bold;
+  }
+  & div.placecomment2 {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid rgba(60, 60, 60, 0.1);
+  }
   & div.map {
     display: flex;
     justify-content: center;

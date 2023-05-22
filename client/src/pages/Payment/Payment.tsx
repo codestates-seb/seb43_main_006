@@ -40,7 +40,7 @@ const Payment = () => {
     navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
   };
 
-  console.log("통합" + userInfo);
+  console.log(selectdata);
   return (
     <PaymentContainer>
       <h2 className="payment">결제 페이지</h2>
