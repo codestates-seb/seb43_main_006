@@ -46,12 +46,10 @@ const SignupTerm = () => {
             "ngrok-skip-browser-warning": "69420",
           },
         })
-        .then((res) => {
+        .then(() => {
           navigate("/");
-          console.log("유저임");
         })
-        .catch((err) => {
-          console.log("유저아님");
+        .catch(() => {
           localStorage.setItem("oauthSign", "true"); // 오어스로 회원가입 시도
           setAlertMessage("회원가입을 진행해 주세요!");
           setIsNext(true);
@@ -172,6 +170,9 @@ const TermContainer = styled.div`
   padding-bottom: 60px;
   position: absolute;
   top: 15%;
+  @media screen and (max-width: 768px) {
+    width: 95%;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
@@ -209,6 +210,10 @@ const MiddleContainer = styled.div`
   align-items: flex-start;
   gap: 25px;
   width: 100%;
+  @media screen and (max-width: 768px) {
+    padding: 30px 20px;
+    font-size: 14px;
+  }
   .title {
     width: 100%;
     padding-bottom: 20px;

@@ -105,7 +105,7 @@ const SignupInput = () => {
         phone: number,
         birthDate: birth,
       };
-      console.log(body);
+
       axios
         .post(`${url}/members/oauth2-signup`, body, {
           headers: {
@@ -141,7 +141,7 @@ const SignupInput = () => {
           birthDate: birth,
           mailKey: code,
         };
-        console.log(body);
+
         axios
           .post(`${process.env.REACT_APP_API_URL}/members/signup`, body, {
             headers: {
@@ -173,17 +173,15 @@ const SignupInput = () => {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
+      .then(() => {
         // 인증 코드 요청 성공시 알람창
         setAlertMessage("이메일 코드가 전송되었습니다!");
         setShowAlert(true);
-        console.log(res);
       })
-      .catch((err) => {
+      .catch(() => {
         // 인증 코드 요청 실패시 알람창
         setAlertMessage("없는 이메일 입니다!");
         setShowAlert(true);
-        console.log(err);
       });
   };
   const okGotoLogin = () => {
@@ -322,7 +320,7 @@ const Container = styled.div`
 const InputContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   max-width: 700px;
-  width: 80%;
+  width: 95%;
   gap: 40px;
   position: absolute;
   top: 15%;
@@ -378,7 +376,10 @@ const InfoTable = styled.div`
 const SingleInfo = styled.div`
   position: relative;
   width: 100%;
-  ${({ theme }) => theme.common.flexCenterRow};
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   font-size: 16px;
   border-bottom: 1px solid #b2b2b2;
   p {
@@ -390,6 +391,11 @@ const SingleInfo = styled.div`
     width: 190px;
     padding: 20px;
     background-color: #ededed;
+    @media screen and (max-width: 768px) {
+      width: 75px;
+      padding: 10px 0 10px 10px;
+      font-size: 15px;
+    }
     &.email {
       height: 90px;
     }
@@ -408,6 +414,9 @@ const SingleInfo = styled.div`
     justify-content: flex-start;
     gap: 10px;
     width: calc(100% - 190px);
+    @media screen and (max-width: 768px) {
+      width: calc(100% - 75px);
+    }
     padding: 10px;
     input {
       border: 1px solid #b2b2b2;

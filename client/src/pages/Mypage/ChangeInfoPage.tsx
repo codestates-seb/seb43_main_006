@@ -319,7 +319,6 @@ const Modal = ({ email }: { email: string }) => {
     setPassword(e.target.value);
   };
   const DeleteHandler = () => {
-    console.log(email, password);
     doAxios("delete", "/members", { username: email, password });
   };
   useEffect(() => {
@@ -429,8 +428,6 @@ const ChangeInfoPage = () => {
     doAxios("get", "/members", {}, true);
   }, []);
   const patchOnclick = () => {
-    console.log(body);
-
     if (body && body.password) {
       if (body.password === body.passwordCheck) {
         doAxios("patch", "/members", body, true);
@@ -478,7 +475,6 @@ const ChangeInfoPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         const token = res.headers.authorization;
         const iat_sec = convertToSeconds(res.headers.iat);
         const exp_sec = convertToSeconds(res.headers.exp);
@@ -489,9 +485,8 @@ const ChangeInfoPage = () => {
         localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
         setIsPass(true);
       })
-      .catch((err) => {
+      .catch(() => {
         // 로그인 요청 실패 시
-        console.log("실패", err);
         setAlertMessage("비밀번호를 확인해주세요!");
         setShowAlert(true);
       });

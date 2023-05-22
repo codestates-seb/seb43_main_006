@@ -21,7 +21,6 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
 
       if (expSeconds < nowSeconds) {
         // 만료시간이 지난 경우
-        console.log("토큰 만료된 경우");
         // 엑세스 토큰 갱신
         const access_token = `Bearer ${localStorage.getItem("authToken")}`;
         await axios
@@ -36,13 +35,11 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
             },
           )
           .then((res) => {
-            console.log(res.headers);
             const token = res.headers.authorization;
             localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
             localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
           })
-          .catch((err) => {
-            console.error(err);
+          .catch(() => {
             localStorage.removeItem("authToken"); // 토큰 지우기
             localStorage.removeItem("refresh"); // refresh 지우기
             localStorage.removeItem("memberId"); //
@@ -91,16 +88,15 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       .request(requestCon)
       .then((res) => {
         // 요청 성공시
-        console.log(res);
+
         setOk(true);
         if (res.data.data) {
           setData(res.data.data);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         // 요청 실패시
         setErr(true);
-        console.log(err);
       });
   };
 
