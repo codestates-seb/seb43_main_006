@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { AlcoholListData } from "../../types/AlcholInterfaces";
+import { AlcoholListData } from "types/AlcholInterfaces";
 
 // components
-import ReviewRating from "../Common/ReviewRating";
-import PriceDisplay from "../Common/PriceDisplay";
+import ReviewRating from "@components/Common/ReviewRating";
+import PriceDisplay from "@components/Common/PriceDisplay";
 
 interface ItemProps {
   item: AlcoholListData;

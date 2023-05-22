@@ -76,9 +76,6 @@ const DetailInfoBox = styled.div`
   margin-top: 60px;
   ${({ theme }) => theme.common.flexCenterCol};
 
-  /* img {
-    max-width: 1000px;
-  } */
   .info_img_box {
     display: flex;
     justify-content: center;

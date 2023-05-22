@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { AlcoholListProps } from "../../types/AlcholInterfaces";
+import { AlcoholListProps } from "types/AlcholInterfaces";
 import { Link } from "react-router-dom";
 
 // components
-import AlcoholListItem from "./AlcoholListItem";
-import Pagination from "./Pagination";
+import AlcoholListItem from "@AlcoholPage/AlcoholListItem";
+import Pagination from "@AlcoholPage/Pagination";
 
 // 알코올 리스트
 const AlcoholListContainer = styled.div`

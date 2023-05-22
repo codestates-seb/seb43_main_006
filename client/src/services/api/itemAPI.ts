@@ -1,5 +1,4 @@
 import instance from "./axiosInstance";
-import { RequestData } from "types/AlcholInterfaces";
 
 export const getItemsList = (page: number, size: number, sortBy: string, category: string) => {
   const params: { page: number; size: number; sortBy: string; category?: string } = { page, size, sortBy };
@@ -58,7 +57,3 @@ export const createItemReview = (itemId: number, formData: FormData) => {
     },
   });
 };
-
-// export const getOrderItem = () => {
-//   return instance.get(`/orders/orders`);
-// };
