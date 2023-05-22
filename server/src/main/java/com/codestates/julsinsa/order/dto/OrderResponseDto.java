@@ -1,7 +1,5 @@
 package com.codestates.julsinsa.order.dto;
 
-import com.codestates.julsinsa.member.entity.Member;
-import com.codestates.julsinsa.order.entity.ItemOrder;
 import com.codestates.julsinsa.order.entity.Order;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
