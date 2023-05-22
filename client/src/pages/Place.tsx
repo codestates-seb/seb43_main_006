@@ -14,7 +14,7 @@ const TotalStyled = styled.section`
   background-color: #f7f7f7;
 `;
 const PlaceContainer = styled.div`
-  border: 5px solid black;
+  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
@@ -124,4 +124,3 @@ const Place = () => {
 };
 
 export default Place;
-//0522 23:41
