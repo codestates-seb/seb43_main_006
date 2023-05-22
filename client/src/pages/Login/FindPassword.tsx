@@ -111,7 +111,9 @@ const Container = styled.div`
 const ContentsContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
-  width: 600px;
+  max-width: 600px;
+  width: 95%;
+
   padding-bottom: 60px;
   position: absolute;
   top: 25%;
@@ -183,6 +185,9 @@ const InputContainer = styled.div`
     width: 100%;
     height: 100%;
     gap: 30px;
+    @media screen and (max-width: 768px) {
+      gap: 10px;
+    }
     .button {
       width: 30%;
     }
