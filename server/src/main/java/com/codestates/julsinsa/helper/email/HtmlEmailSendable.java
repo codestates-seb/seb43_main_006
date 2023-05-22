@@ -14,7 +14,6 @@ public class HtmlEmailSendable implements EmailSendable {
 
     private final JavaMailSender javaMailSender;
 
-
     @Override
     public void send(String[] to, String subject, String message, String templateName) throws InterruptedException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

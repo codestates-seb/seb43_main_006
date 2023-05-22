@@ -19,18 +19,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     private final AuthenticationManager authenticationManager;
-
     private final JwtTokenizer jwtTokenizer;
-
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
@@ -55,12 +51,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("X-Member-ID", String.valueOf(member.getMemberId())); // 헤더에 멤버 아이디 추가
-        response.setHeader("X-Password-Issued", String.valueOf(member.isPasswordIssued()));
+        response.setHeader("X-Password-Issued", member.isPasswordIssued() ? "true" : "false");
         response.setHeader("exp", formattedExpirationDateTime);
         response.setHeader("iat", issuedDateTime.format(formatter));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
-
     }
 
     private String delegateAccessToken(Member member) {

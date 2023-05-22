@@ -74,6 +74,7 @@ public class SecurityConfiguration {
                                 .antMatchers(HttpMethod.PATCH, "/members").hasAnyRole("USER","ADMIN") // 회원 수정
                                 .antMatchers(HttpMethod.DELETE, "/members").hasAnyRole("USER","ADMIN") // 회원 탈퇴
                                 .antMatchers(HttpMethod.GET, "/members/favorite").hasAnyRole("USER","ADMIN") // 찜 목록보기
+                                .antMatchers(HttpMethod.GET, "/members/orders").hasAnyRole("USER","ADMIN") // 주문 내역보기
                                 .antMatchers(HttpMethod.POST, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 하기
                                 .antMatchers(HttpMethod.DELETE, "/items/*/favorite").hasAnyRole("USER","ADMIN") // 찜 삭제
                                 .antMatchers(HttpMethod.GET, "/items/*/is-favorite").hasAnyRole("USER","ADMIN") // 찜 여부 확인
@@ -81,6 +82,9 @@ public class SecurityConfiguration {
                                 .antMatchers(HttpMethod.PATCH, "/items/*/reviews/*").hasAnyRole("USER","ADMIN")// 리뷰수정
                                 .antMatchers(HttpMethod.DELETE, "/items/*/reviews/*").hasAnyRole("USER","ADMIN") // 리뷰삭제
                                 .antMatchers(HttpMethod.GET, "/items/*/cart").hasAnyRole("USER","ADMIN") // 장바구니 조회
+                                .antMatchers(HttpMethod.POST, "/items").hasAnyRole("ADMIN") // 아이템 등록
+                                .antMatchers(HttpMethod.PATCH, "/items/*").hasAnyRole("ADMIN") // 아이템 수정
+                                .antMatchers(HttpMethod.DELETE, "/items/*").hasAnyRole("ADMIN") // 아이템 삭제
                                 .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2

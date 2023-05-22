@@ -1,6 +1,5 @@
 package com.codestates.julsinsa.item.controller;
 
-import com.codestates.julsinsa.cart.dto.ItemCartDto;
 import com.codestates.julsinsa.global.dto.MultiResponseDto;
 import com.codestates.julsinsa.global.dto.SingleResponseDto;
 import com.codestates.julsinsa.global.utils.UriCreator;
@@ -56,7 +55,6 @@ public class ItemController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
     @GetMapping
     public ResponseEntity getItemByCategories(@Positive @RequestParam int page,

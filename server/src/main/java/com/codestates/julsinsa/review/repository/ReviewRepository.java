@@ -2,6 +2,7 @@ package com.codestates.julsinsa.review.repository;
 
 import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.member.entity.Member;
+import com.codestates.julsinsa.order.entity.Order;
 import com.codestates.julsinsa.review.dto.ReviewDto;
 import com.codestates.julsinsa.review.entity.Review;
 import org.mapstruct.Mapper;
@@ -21,4 +22,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<Review> findAllByItem(Item item, Sort sort);
 
     Optional<Review> findByItemAndMember(Item item, Member member);
+
+//    Optional<Review> findByOrder(Order order);
 }

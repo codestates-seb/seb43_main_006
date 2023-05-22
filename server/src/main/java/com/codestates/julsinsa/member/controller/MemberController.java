@@ -59,8 +59,6 @@ public class MemberController {
     public ResponseEntity postOAuth2User(@RequestBody @Valid MemberDto.Oath2Post requestBody){
         Member member = memberService.updateOAuth2Member(mapper.oauth2MemberPostToMember(requestBody));
 
-//        memberService.oauthgetToekn(member,response);
-
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, member.getMemberId());
 
         return ResponseEntity.created(location).build();
@@ -69,7 +67,6 @@ public class MemberController {
 
     @GetMapping
     public ResponseEntity getUser(){
-
         Member member = memberService.findMember();
 
         return new ResponseEntity(new SingleResponseDto<>(mapper.memberToMemberResponse(member)),HttpStatus.OK);
