@@ -16,7 +16,6 @@ export type UserdataType = {
 export default function PaymnetUserInfo({ userInfo, updateUserInfo }: ChildComponentProps) {
   const location = useLocation();
   const data = location.state ? location.state.data : [];
-  console.log(userInfo);
   return (
     <BuyerInfo>
       <div className="userinfo">

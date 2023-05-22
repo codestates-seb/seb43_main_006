@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Place from "@pages/Place";
-import { useNavigate } from "react-router-dom";
 
-type stateProps = {
+export type stateProps = {
   loginState?: string;
   markerState?: {
     address: string;
@@ -22,7 +21,11 @@ type stateProps = {
   };
 };
 
-export default function Payinfo() {
+export interface PayinfoProps {
+  onDateChange: (date: Date | null) => void;
+}
+
+export default function Payinfo({ onDateChange }: PayinfoProps) {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
@@ -39,8 +42,6 @@ export default function Payinfo() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const selectdata = useSelector((state: stateProps) => state.markerState);
-  console.log("이 아래거");
-  console.log(selectdata);
   // const [shoplist, setShoplist] = useState<Shopitem[]>([]);
   // const [selectedShop, setSelectedShop] = useState<Shopitem | null>(null);
 
@@ -51,10 +52,13 @@ export default function Payinfo() {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     setIsCalendarOpen(false);
+    onDateChange(date);
   };
+
   const handlemapClick = () => {
-    navigate("/place", { state: { items: items } });
+    navigate("/place", { state: { items: items, selectedDate: selectedDate } });
   };
+
   return (
     <Payinfostyle>
       <div className="title3">
@@ -72,14 +76,6 @@ export default function Payinfo() {
               <div className="totalprice"> {totalPrice.toLocaleString()} 원</div>
             </div>
           </div>
-        </div>
-        <div className="secondline">
-          <div className="pickupdate">픽업 예정 날짜</div>
-          <div className="pickdate">{selectedDate?.toLocaleDateString() || "날짜를 선택해주세요."}</div>
-          <div className="pickselect" onClick={handlePickDateClick}>
-            픽업 예정 날짜 선택
-          </div>
-          {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
         </div>
 
         <div>
@@ -112,6 +108,16 @@ export default function Payinfo() {
               <Place />
             </div>
           </div>
+          <div className="secondline">
+            <div className="pickupdate">픽업 예정 날짜</div>
+            <div className="pickdate">{selectedDate ? selectedDate.toLocaleDateString() : "날짜를 선택해주세요."}</div>
+            <div className="pickselect">
+              <div className="pickselect2" onClick={handlePickDateClick}>
+                픽업 예정 날짜 선택
+              </div>
+              {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
+            </div>
+          </div>
         </div>
       </div>
     </Payinfostyle>
@@ -137,7 +143,7 @@ const Payinfostyle = styled.div`
   }
 
   & div.mainpay {
-    width: 80%;
+    width: 70%;
     height: 100%;
     flex-direction: column;
     justify-content: flex-start;
@@ -175,7 +181,7 @@ const Payinfostyle = styled.div`
   }
   & div.tq {
     ${({ theme }) => theme.common.flexCenter};
-    width: 40%;
+    width: 180px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -184,7 +190,7 @@ const Payinfostyle = styled.div`
     min-width: 161px;
   }
   & div.totalQuantity {
-    width: 75%;
+    width: 441px;
     display: flex;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
@@ -192,7 +198,7 @@ const Payinfostyle = styled.div`
   }
   & div.tp {
     ${({ theme }) => theme.common.flexCenter};
-    width: 40%;
+    width: 322px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -200,7 +206,7 @@ const Payinfostyle = styled.div`
   }
 
   & div.totalprice {
-    width: 60%;
+    width: 483px;
     display: flex;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
@@ -217,7 +223,7 @@ const Payinfostyle = styled.div`
 
   & div.pickupdate {
     ${({ theme }) => theme.common.flexCenter};
-    width: 17.4%;
+    width: 180px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -225,7 +231,7 @@ const Payinfostyle = styled.div`
     min-width: 162px;
   }
   & div.pickdate {
-    width: 100%;
+    width: 950px;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -240,16 +246,19 @@ const Payinfostyle = styled.div`
     }
   }
   & div.pickselect {
-    ${({ theme }) => theme.common.flexCenter};
-    width: 30%;
+    display: flex;
+    align-items: center;
+    width: 466px;
     height: 100%;
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border: 1px solid rgba(60, 60, 60, 0.5);
     font-size: 14px;
     &:hover {
       cursor: pointer;
     }
   }
-
+  & div.pickselect2 {
+    margin-top: 15px;
+  }
   & div.thirdline {
     display: flex;
     justify-content: space-between;
@@ -262,14 +271,14 @@ const Payinfostyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35%;
+    width: 30%;
     height: 100%;
   }
   & div.pickupplace {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 180px;
     height: 100%;
     min-width: 162px;
     max-width: 181px;
@@ -398,7 +407,7 @@ const Payinfostyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 70%;
     height: 50%;
     border: 1px solid rgba(60, 60, 60, 0.1);
     & section {
@@ -407,5 +416,8 @@ const Payinfostyle = styled.div`
       margin-top: 10px;
       overflow: hidden;
     }
+  }
+  & div.calender {
+    display: flex;
   }
 `;

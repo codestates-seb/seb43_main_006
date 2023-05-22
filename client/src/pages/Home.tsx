@@ -1,13 +1,17 @@
 import maintop from "@assets/images/Maintop.png";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
 
+interface MainscrollProps {
+  y: number;
+}
 interface ScrollState {
   x: number;
   y: number;
 }
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const useScroll = (): ScrollState => {
@@ -22,11 +26,10 @@ const Home: React.FC = () => {
     return state;
   };
   const { y } = useScroll();
+
   function convertToSeconds(dateString: string): string {
-    // dateString을 Date 객체로 변환합니다.
     const date = new Date(dateString);
 
-    // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
     const seconds = Math.floor(date.getTime() / 1000);
 
     return `${seconds}`;
@@ -50,39 +53,21 @@ const Home: React.FC = () => {
       navigate("/");
     }
   }, []);
-
   return (
-    <HomeContainer>
+    <HomeContainer y={y}>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div>
-        {/* <div className="layout1" style={{ opacity: y > 800 ? (y > 1500 ? "0" : "1") : "0" }}> */}
-        <Homelayout1 />
+      <div className="mainview">
+        <LayoutContainer1 y={y} />
+        <LayoutContainer2 y={y} />
+        <LayoutContainer3 y={y} />
+        <LayoutContainer5 y={y} />
       </div>
-      <div className="space"></div>
-      <div>
-        {/* <div className="layout2" style={{ opacity: y > 2000 ? (y > 2600 ? "0" : "1") : "0" }}> */}
-        <Homelayout2 />
-      </div>
-
-      <div className="space"></div>
-      <div>
-        {/* <div className="layout3" style={{ opacity: y > 3300 ? (y > 4200 ? "0" : "1") : "0" }}> */}
-        <Homelayout3 />
-      </div>
-
-      <div className="space"></div>
-      <div>
-        {/* <div className="layout4" style={{ opacity: y > 4900 ? (y > 6000 ? "0" : "1") : "0" }}> */}
-        <Homelayout5 />
-      </div>
-      <div className="space"></div>
     </HomeContainer>
   );
 };
-
 export default Home;
 
-const HomeContainer = styled.section`
+const HomeContainer = styled.section<MainscrollProps>`
   color: ${({ theme }) => theme.colors.fontColor};
   display: flex;
   flex-direction: column;
@@ -90,27 +75,15 @@ const HomeContainer = styled.section`
   justify-content: center;
   max-width: 100%;
   font-size: 96px;
+  & div.mainview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: sticky;
+  }
   * {
     transition: all 0.5s ease;
-  }
-  & div.space {
-    height: 700px;
-  }
-  & div.layout1 {
-    width: 100%;
-    display: flex;
-  }
-  & div.layout2 {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  & div.layout3 {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .Maintop {
     position: relative;
@@ -120,67 +93,12 @@ const HomeContainer = styled.section`
     background-repeat: no-repeat;
     background-size: cover;
   }
-
-  .sales {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    justify-content: flex-start;
-    font-size: 48px;
-    color: ${({ theme }) => theme.colors.themeColor};
-    transition: all 0.5s ease-in-out;
-    padding-bottom: 40px;
-  }
-  .saleslist {
-    max-width: 80%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-bottom: 200px;
-
-    & a {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      font-size: 20px;
-    }
-    & div.listtitle {
-      padding-bottom: 20px;
-    }
-  }
-
-  .1stsales {
-    max-width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    height: 1200px;
-  }
-
-  .2ndsales {
-    max-width: 100vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    height: 1200px;
-  }
-  .slist {
-    width: 250px;
-    height: 250px;
-    margin: 10px;
-    object-fit: cover;
-  }
-  & ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    overflow-x: scroll;
-    height: 300px;
-    &li {
-    }
-  }
 `;
+
+const LayoutContainer1 = styled(Homelayout1)<MainscrollProps>``;
+
+const LayoutContainer2 = styled(Homelayout2)<MainscrollProps>``;
+
+const LayoutContainer3 = styled(Homelayout3)<MainscrollProps>``;
+
+const LayoutContainer5 = styled(Homelayout5)<MainscrollProps>``;
