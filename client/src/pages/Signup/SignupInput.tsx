@@ -80,7 +80,7 @@ const SignupInput = () => {
   };
   const onPassword = (e: ChangeEvent<HTMLInputElement>) => {
     // 비밀번호 onChange 핸들러
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
 
     if (val) {
       // true
@@ -168,7 +168,7 @@ const SignupInput = () => {
       email,
     };
     axios
-      .post(`${url}members/email`, body, {
+      .post(`${url}/members/email`, body, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -264,7 +264,7 @@ const SignupInput = () => {
                       <input
                         className={isDisabled ? "disable" : ""}
                         type="password"
-                        placeholder={isDisabled ? "비밀번호를 먼저 옳바르게 입력하세요" : ""}
+                        placeholder={isDisabled ? "비밀번호를 먼저 올바르게 입력하세요" : ""}
                         disabled={isDisabled}
                         onChange={onPasswordCheck}
                       />
@@ -396,8 +396,11 @@ const SingleInfo = styled.div`
   }
   .code-pos {
     position: absolute;
-    right: 0%;
+    right: 30px;
     top: 10%;
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      right: 5px;
+    }
   }
   .input-container {
     display: flex;
