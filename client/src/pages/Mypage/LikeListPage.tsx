@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import axios from "axios";
-import { ButtonDark } from "../../components/Common/Button";
-import Pagination from "../../components/AlcoholPage/Pagination";
+import { ButtonDark } from "@components/Common/Button";
+import Pagination from "@components/AlcoholPage/Pagination";
+import PriceDisplay from "@components/Common/PriceDisplay";
 
 //components
 interface Likeitem {
@@ -326,7 +327,9 @@ const LikePage = () => {
                         </StyledTd>
                         <StyledTd>{el.titleKor}</StyledTd>
                         <StyledTd>{el.quantity}</StyledTd>
-                        <StyledTd>{el.price}</StyledTd>
+                        <StyledTd>
+                          <PriceDisplay price={el.price} />
+                        </StyledTd>
                         <StyledTd>
                           {/* <StyledBtn> */}
                           <div className="button-container">

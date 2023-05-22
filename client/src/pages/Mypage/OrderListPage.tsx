@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { ButtonDark } from "../../components/Common/Button";
-import Pagination from "../../components/AlcoholPage/Pagination";
+import { ButtonDark } from "@components/Common/Button";
+import Pagination from "@components/AlcoholPage/Pagination";
 
 interface Orderitem {
   orderId: number;
@@ -179,10 +179,16 @@ const PigStyled = styled.div`
   padding-bottom: 10px;
 `;
 
+// const DropDownStyled = styled.div`
+//   border: 2px solid red;
+//   height: 50px;
+// `;
+
 const OrderTable = ({ orderlist }: OrderTableProps) => {
-  const [orderCancel, SetOrderCancel] = useState("");
+  // const [orderCancel, SetOrderCancel] = useState("");
   const navigate = useNavigate();
 
+  //후기연결
   const ReviewWindow = (itemId: number) => {
     const reviewCreate: ReveiwUpdateProps = {
       itemId,
@@ -237,7 +243,8 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
         },
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res.data);
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
@@ -275,7 +282,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
           <tr>
             <StyledTh>날짜</StyledTh>
             <StyledTh>구매목록</StyledTh>
-            <StyledTh>수량</StyledTh>
+            <StyledTh>수량(개)</StyledTh>
             <StyledTh>상태</StyledTh>
             <StyledTh>주문취소</StyledTh>
             <StyledTh>후기보기</StyledTh>
@@ -357,6 +364,15 @@ const OrderPage = () => {
   //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
+  //드롭다운관련
+  const [open, setOpen] = useState(false);
+
+  // const DropDown = () => {
+  //   <>
+  //     <li>마이페이지</li>
+  //     <li>로그아웃</li>
+  //   </>;
+  // };
   // console.log(orderlist);
   // console.log(pageData);
   //조회버튼 함수
@@ -371,7 +387,6 @@ const OrderPage = () => {
   useEffect(() => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
-      // .get(`http://localhost:8081/orders`, {
       .get(`${process.env.REACT_APP_API_URL}/members/orders`, {
         // .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/members/orders`, {
         headers: {
@@ -455,6 +470,7 @@ const OrderPage = () => {
             <p>주문내역</p>
             <p>총 {filterlist.length}건</p>
           </OrderpageMainStyled>
+          {/* <DropDownStyled><DropDown><DropDown/></DropDownStyled> */}
           <PeriodStyled>
             <p>조회기간</p>
             <input type="date" className="FrontInput" onChange={(e) => setChoiceFronDay(e.target.value)}></input>
@@ -483,4 +499,4 @@ const OrderPage = () => {
 
 export default OrderPage;
 
-//0521 23:28pm
+//0522 10:35
