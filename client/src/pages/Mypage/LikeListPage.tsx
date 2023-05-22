@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import axios from "axios";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
 import PriceDisplay from "@components/Common/PriceDisplay";
@@ -26,7 +26,6 @@ const TotalStyled = styled.div`
   background-color: #f7f7f7;
 `;
 const PageTitle = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -35,11 +34,10 @@ const PageTitle = styled.div`
 `;
 
 const LikepageContainer = styled.div`
-  /* border: 5px solid blue; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
 `;
@@ -59,13 +57,11 @@ const LikepageHeadStyled = styled.div`
 
 //찜리스트 나오는 부분
 const LikepageMainStyled = styled.div`
-  /* border: 3px solid red; */
   > * {
     font-size: 18px;
   }
 `;
 const HeadTable = styled.div`
-  /* border: 3px solid blue; */
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -80,19 +76,16 @@ const TotalTableStyled = styled.div`
   flex-grow: 1;
 `;
 const StyledTable = styled.table`
-  /* border: 1px solid black; */
   font-size: 18px;
   width: 1240px;
   height: 300px;
 `;
 
 const StyledTh = styled.th`
-  /* border: 1px solid black; */
   padding: 8px;
 `;
 
 const StyledTd = styled.td`
-  /* border: 1px solid black; */
   padding: 8px;
   text-align: center;
   vertical-align: middle;
@@ -110,7 +103,6 @@ const StyledTd = styled.td`
 
 //맨밑 페이지네이션부분
 const PigStyled = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -126,11 +118,6 @@ const LikePage = () => {
 
   const totalPages = Math.ceil(totalLength / 5); //나오는 총 페이지수
   const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage); //각페이지에서 보이는내용
-  // console.log(currentPage);
-  // console.log(likelist);
-  // console.log(totalpages);
-  // console.log(itemsPerPage);
-  // console.log(paginationData);
 
   const LikeGetHandle = () => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -144,11 +131,7 @@ const LikePage = () => {
       })
 
       .then((res) => {
-        // console.log(res);
-        // console.log(res.data.data[0]);
-        // console.log(res.data.data);
         setLikelist(res.data.data);
-        // console.log(res.data.data.length);
         setTotalLength(res.data.data.length);
       })
       .catch((err) => console.log(err));
@@ -165,7 +148,7 @@ const LikePage = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => {
@@ -194,7 +177,7 @@ const LikePage = () => {
       .then((res) => navigate("/cart"))
       .catch((err) => console.log(err));
   };
-  //닉네임 불러오는부분 0520추가함 데이터들어오는지 확인해봐야하는부분임
+
   useEffect(() => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     axios
