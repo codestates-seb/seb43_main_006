@@ -18,7 +18,7 @@ const ChatComponent = () => {
     setInput(e.target.value);
   }
   async function handleSubmit() {
-    await getAnswer(input);
+    await getAnswer();
   }
   const sendAxios = async () => {
     const body = {
@@ -35,11 +35,10 @@ const ChatComponent = () => {
       .then((res) => {
         const splittedText = res.data.choices[0].text.split("\n");
         setAnswer(splittedText);
-        console.log(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("gpt 서버 불안정", err));
   };
-  async function getAnswer(input: string) {
+  async function getAnswer() {
     sendAxios();
     setIsLoading(true);
   }
