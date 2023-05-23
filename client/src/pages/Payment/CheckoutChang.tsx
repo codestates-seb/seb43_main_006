@@ -3,13 +3,13 @@ import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ItemOrder } from "../../types/AlcholInterfaces";
-
 const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
 const CheckoutChang = () => {
   const location = useLocation();
   const userInfo = location.state ? location.state.userInfo : [];
   const items: ItemOrder[] = location.state ? location.state.items : [];
+  const selectedDate = location.state ? location.state.selectedDate : null;
   const orderNames = items.map((item) => item.titleKor);
   const orderName = orderNames.join(", ");
   const { totalPrice } = items.reduce(
@@ -20,11 +20,6 @@ const CheckoutChang = () => {
     },
     { totalquantity: 0, totalPrice: 0 },
   );
-
-  console.log(totalPrice);
-  console.log(orderName);
-  console.log(nanoid());
-  console.log(userInfo);
 
   useEffect(() => {
     // ------ 클라이언트 키로 객체 초기화 ------
@@ -57,7 +52,7 @@ const CheckoutChang = () => {
           }
         });
     });
-  }, [totalPrice, items, userInfo]);
+  }, [totalPrice, items, userInfo, selectedDate]);
 
   return <script src="https://js.tosspayments.com/v1/payment%22%3E"></script>; // JSX 반환
 };

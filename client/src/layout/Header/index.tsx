@@ -47,6 +47,11 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
   transition: all 0.3s ease-out;
   z-index: 1;
 
+  & div.modal {
+    color: #222222;
+    border: 5px solid white;
+    border-radius: 3px;
+  }
   ${({ hovering, y, pathname }) =>
     y > 0 || hovering === "true"
       ? css`
@@ -62,9 +67,6 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
           opacity: 1;
           color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
         `}
-  & div.modal {
-    color: #222222;
-  }
 `;
 
 const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
@@ -127,14 +129,6 @@ const Ulist = styled.div<IHeaderContainerProps>`
   .banner4 {
     padding-left: 0px;
     width: 8%;
-  }
-  .banner5 {
-    padding-left: 0px;
-    width: 7%;
-    &:hover {
-      color: #a84448;
-      cursor: pointer;
-    }
   }
   .banner6 {
     padding-top: 0px;

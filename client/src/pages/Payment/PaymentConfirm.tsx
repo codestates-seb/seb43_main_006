@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import Progress from "./Progress";
 import axios from "axios";
 import useAxiosAll from "@hooks/useAxiosAll";
+import { ButtonLight } from "@components/Common/Button";
 
 type UserdataType = {
   memberId: string;
@@ -20,7 +21,7 @@ const PaymentConfirmContainer = styled.section`
   align-items: center;
   margin-top: 150px;
   & h2 {
-    font-size: 48px;
+    font-size: 24px;
     font-weight: bold;
   }
 
@@ -30,11 +31,15 @@ const PaymentConfirmContainer = styled.section`
   }
 
   & div.reason {
+    margin-top: 100px;
     height: 100px;
-    font-size: 48px;
+    font-size: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  & div.button {
+    margin-top: 100px;
   }
 `;
 
@@ -47,6 +52,9 @@ const PaymentConfirm = () => {
   const [orderlist, setOrderlist] = useState();
   const [userdata, setUserdata] = useState<UserdataType | null>(null);
   const [doAxios, data] = useAxiosAll();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const selectedDate = location.state ? location.state.selectedDate : [];
 
   useEffect(() => {
     if ("realName" in data && "email" in data && "phone" in data) {
@@ -90,8 +98,6 @@ const PaymentConfirm = () => {
         },
       })
       .then((res) => {
-        // console.log(res);
-        console.log(res.data);
         setOrderlist(res.data);
       })
       .catch((err) => console.log(err));
@@ -128,6 +134,11 @@ const PaymentConfirm = () => {
         <Progress />
         <div className="reason">{`주문 아이디: ${orderId}`}</div>
         <div className="reason">{`결제 금액: ${Number(searchParams.get("amount")).toLocaleString()}원`}</div>
+        <div className="button">
+          <ButtonLight width="160px" height="60px" fontSize="18px" onClick={() => navigate("/")}>
+            뒤로가기
+          </ButtonLight>
+        </div>
       </div>
     </PaymentConfirmContainer>
   );

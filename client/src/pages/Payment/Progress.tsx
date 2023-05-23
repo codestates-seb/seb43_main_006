@@ -82,7 +82,7 @@ const Progressn = styled.div`
     height: 30px;
     font-size: 40px;
     ${({}) =>
-      useLocation().pathname === "/paymentconfirm" &&
+      useLocation().pathname === "/PaymentConfirm" &&
       `display:flex;
     `}
   }
@@ -120,7 +120,7 @@ const Progressn = styled.div`
     }
     & li.third {
       ${({}) =>
-        useLocation().pathname === "/paymentconfirm" &&
+        useLocation().pathname === "/PaymentConfirm" &&
         `
       color: #a84448;
     `}

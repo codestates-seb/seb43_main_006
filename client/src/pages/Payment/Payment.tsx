@@ -10,13 +10,15 @@ import Itemlist from "./Paymentitemlist";
 import Payinfo from "./Paymentpayinfo";
 import { UserProps } from "types/AlcholInterfaces";
 import useAxiosAll from "@hooks/useAxiosAll";
+import { useSelector } from "react-redux";
+import { stateProps } from "./Paymentpayinfo";
 
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
   const [doAxios, data] = useAxiosAll();
-
+  const selectdata = useSelector((state: stateProps) => state.markerState);
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
 
   const updateUserInfo = () => {
@@ -34,8 +36,13 @@ const Payment = () => {
     }
   }, [data]);
 
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const handlePayment = () => {
-    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
+    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo, selectedDate: selectedDate || null } });
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
   };
 
   return (
@@ -45,7 +52,7 @@ const Payment = () => {
         <Progress />
         <PaymnetUserInfo userInfo={userInfo} updateUserInfo={updateUserInfo} />
         <Itemlist />
-        <Payinfo />
+        <Payinfo onDateChange={handleDateChange} />
         <div className="button">
           <div className="buttonDetail">
             <ButtonLight width="160px" height="60px" fontSize="18px" onClick={() => navigate(-1)}>
@@ -53,7 +60,13 @@ const Payment = () => {
             </ButtonLight>
           </div>
           <div className="buttonDetail">
-            <ButtonDark width="160px" height="60px" fontSize="18px" onClick={handlePayment}>
+            <ButtonDark
+              width="160px"
+              height="60px"
+              fontSize="18px"
+              onClick={handlePayment}
+              disabled={selectedDate === null || selectdata === null || items === null}
+            >
               결제하기
             </ButtonDark>
           </div>
@@ -77,7 +90,8 @@ const PaymentContainer = styled.section`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 30%;
+    margin-top: 150px;
+    width: 25%;
     padding-bottom: 200px;
   }
 

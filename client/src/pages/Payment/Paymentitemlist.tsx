@@ -5,7 +5,6 @@ import { ItemOrder } from "../../types/AlcholInterfaces";
 export default function Itemlist() {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
-  console.log(items);
   return (
     <IItemlist>
       <div className="list">
@@ -114,7 +113,6 @@ const IItemlist = styled.div`
       height: 100%;
       ${({ theme }) => theme.common.flexCenter};
       font-size: 16px;
-      // 나중에 수정할 사항
     }
 
     & div.each {

@@ -20,7 +20,6 @@ interface CartItemsProps {
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItemsProps>({ itemCarts: [] });
-  // Create the payload to be sent in the patch request
 
   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
   useEffect(() => {
@@ -34,7 +33,6 @@ const Cart = () => {
         },
       })
       .then((res) => {
-        // console.log(res);
         console.log(res.data.data);
         setCartItems(res.data.data);
       })
@@ -65,69 +63,51 @@ const Cart = () => {
   const checkedItems = cartItems.itemCarts.filter((item) => isCheckedItems[item.itemId]);
   const totalQuantity = checkedItems.reduce((acc, cur) => acc + cur.quantity, 0);
 
-  const itemIds = checkedItems.map((item) => item.itemId);
+  const cart = checkedItems.map((item) => {
+    return {
+      itemId: item.itemId,
+      quantity: item.quantity,
+    };
+  });
   const payload = {
-    itemIds: itemIds,
+    cart: cart,
   };
 
   const totalPrice = checkedItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
   const handleCheckout = () => {
-    const checkedItems = cartItems.itemCarts.filter((item) => isCheckedItems[item.itemId]);
-
-    // Create an array of item IDs
-    const itemIds = checkedItems.map((item) => item.itemId);
-
-    // Create the payload to be sent in the patch request
-    const payload = {
-      itemIds: itemIds,
-    };
-
-    //   // Send the patch request to the server
-    //   axios
-    //     .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: access_token,
-    //         "ngrok-skip-browser-warning": "69420",
-    //       },
-    //     })
-    //     .then((res) => {
-    //       // Handle the response from the server
-    //       console.log("Patch request successful:", res.data);
-    //       // Perform any necessary actions after successful patch request
-    //       // For example, you can navigate to the payment page here
-    navigate("/payment", { state: { items: checkedItems } });
-    //     })
-    //     .catch((err) => {
-    //       // Handle any errors that occur during the patch request
-    //       console.log("Error during patch request:", err);
-    //       // Perform any necessary error handling actions
-    //     });
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((res) => {
+        console.log("Patch request successful:", res.data);
+        navigate("/payment", { state: { items: checkedItems } });
+      })
+      .catch((err) => {
+        console.log("Error during patch request:", err);
+      });
   };
 
   const handleCancel = () => {
-    //   // Clear the checked items
-    //   // Send the patch request to the server to update the checked items as empty
-    //   axios
-    //     .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: access_token,
-    //         "ngrok-skip-browser-warning": "69420",
-    //       },
-    //     })
-    //     .then((res) => {
-    //       // Handle the response from the server
-    //       console.log("Patch request successful:", res.data);
-    //       // Perform any necessary actions after successful patch request
-    //       // For example, you can navigate to a different page here
-    navigate(-1);
-    //     })
-    //     .catch((err) => {
-    //       // Handle any errors that occur during the patch request
-    //       console.log("Error during patch request:", err);
-    //       // Perform any necessary error handling actions
-    //     });
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/cart`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((res) => {
+        console.log("Patch request successful:", res.data);
+        navigate(-1);
+      })
+      .catch((err) => {
+        console.log("Error during patch request:", err);
+      });
   };
 
   const handleCheckAll = () => {
@@ -193,7 +173,7 @@ const Cart = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
         data: { itemIds: selectedIds.map((id) => parseInt(id)) },
       });
@@ -379,7 +359,6 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
       height: 250px;
       ${({ theme }) => theme.common.flexCenter};
       font-size: 16px;
-      // 나중에 수정할 사항
     }
 
     & div.each {
@@ -434,7 +413,7 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    margin-bottom: 200px;
+    margin-bottom: 100px;
   }
 
   & div.total {
@@ -471,6 +450,7 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     align-items: center;
     width: 30vw;
     height: 200px;
+    margin-bottom: 200px;
   }
 
   .buttonDetail {
