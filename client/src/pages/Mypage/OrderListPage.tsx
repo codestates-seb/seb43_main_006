@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
+import Modal from "@layout/Header/Logoutmodal";
 
 interface Orderitem {
   orderId: number;
@@ -126,6 +127,9 @@ const StyledTd = styled.td`
     justify-content: center;
     width: 100%;
   }
+  :nth-child(3) {
+    cursor: pointer;
+  }
 `;
 
 const PigStyled = styled.div`
@@ -137,6 +141,11 @@ const PigStyled = styled.div`
 
 const OrderTable = ({ orderlist }: OrderTableProps) => {
   const navigate = useNavigate();
+  const realOrderList = orderlist;
+
+  const handleDetailBtn = (itemId: number) => {
+    navigate(`/alcohol/detail/${itemId}`);
+  };
 
   //후기연결
   const ReviewWindow = (itemId: number) => {
@@ -147,8 +156,6 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       state: { reviewCreate },
     });
   };
-
-  const realOrderList = orderlist;
 
   const OrderPatchHandle = (orderId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -190,12 +197,11 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
               <tr key={idx}>
                 <StyledTd>{el.orderedAt}</StyledTd>
                 <StyledTd>{el.pickupDate}</StyledTd>
-                <StyledTd>{el.titleKor}</StyledTd>
+                <StyledTd onClick={() => handleDetailBtn(el.itemId)}>{el.titleKor}</StyledTd>
                 <StyledTd>{el.quantity}</StyledTd>
                 <StyledTd>{el.orderStatus}</StyledTd>
-
                 <StyledTd>
-                  {el.orderStatus === "픽업 완료" ? null : (
+                  {el.orderStatus === "픽업 완료" || el.orderStatus === "주문 취소" ? null : (
                     <div className="button-container">
                       <ButtonDark
                         width="100px"
@@ -203,7 +209,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
                         onClick={() => {
                           OrderPatchHandle(el.orderId);
                         }}
-                        disabled={el.orderStatus === "픽업 완료"}
+                        disabled={el.orderStatus === "픽업 완료" || el.orderStatus === "주문 취소"}
                       >
                         취소
                       </ButtonDark>
@@ -240,6 +246,7 @@ const OrderPage = () => {
   const [choiceBackDay, setChoiceBackDay] = useState<string>(""); //조회할때 선택하는 날짜뒷부분
   const [filterlist, setFilterlist] = useState<Orderitem[]>([]); //정신없는 데이터를 새로 다듬은것.
   const [userName, setUserName] = useState<string>("");
+  const [pageNumber, setPageNumber] = useState<number>(1);
   //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
@@ -250,6 +257,7 @@ const OrderPage = () => {
     const first = new Date(choiceFronDay);
     const second = new Date(choiceBackDay);
     setFilterlist(newData.filter((el) => new Date(el.orderedAt) >= first && new Date(el.orderedAt) <= second));
+    setPageNumber(1);
   };
 
   useEffect(() => {
@@ -322,8 +330,8 @@ const OrderPage = () => {
           </OrderlistStyled>
           <PigStyled>
             <Pagination
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              currentPage={pageNumber}
+              setCurrentPage={setPageNumber}
               itemsPerPage={5}
               totalData={filterlist.length}
             ></Pagination>
