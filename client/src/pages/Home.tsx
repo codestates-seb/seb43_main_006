@@ -1,8 +1,8 @@
 import maintop from "@assets/images/Maintop.png";
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
+import { Homelayout1, Homelayout2, Homelayout3, Homelayout5, Homelayout4 } from "./Homelayout";
 import { ButtonDark } from "@components/Common/Button";
 
 interface MainscrollProps {
@@ -60,13 +60,18 @@ const Home: React.FC = () => {
       <div className="space" style={{ opacity: y > 1400 ? (y > 2100 ? "0" : "1") : "0" }}>
         <Homelayout1 />
       </div>
-      <div className="space" style={{ opacity: y > 2300 ? (y > 3100 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 2600 ? (y > 3300 ? "0" : "1") : "0" }}>
         <Homelayout2 />
       </div>
-      <div className="space" style={{ opacity: y > 3600 ? (y > 4320 ? "0" : "1") : "0" }}>
+      {/* <Gradient /> */}
+      <div className="space" style={{ opacity: y > 3800 ? (y > 4400 ? "0" : "1") : "0" }}>
         <Homelayout3 />
       </div>
-      <div className="space" style={{ opacity: y > 5100 ? (y > 6300 ? "0" : "1") : "0" }}>
+      {/* <Gradientout /> */}
+      <div className="space" style={{ opacity: y > 4700 ? (y > 6300 ? "0" : "1") : "0" }}>
+        <Homelayout4 />
+      </div>
+      <div className="space" style={{ opacity: y > 6000 ? (y > 7000 ? "0" : "1") : "0" }}>
         <Homelayout5 />
       </div>
       <div className="bt">
