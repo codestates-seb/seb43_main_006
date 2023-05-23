@@ -80,7 +80,7 @@ const SignupInput = () => {
   };
   const onPassword = (e: ChangeEvent<HTMLInputElement>) => {
     // 비밀번호 onChange 핸들러
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    const val = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자, 숫자, 특수문자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
 
     if (val) {
       // true
@@ -253,7 +253,11 @@ const SignupInput = () => {
                   <SingleInfo>
                     <div className="name">비밀번호</div>
                     <div className="input-container">
-                      <input type="password" placeholder="문자, 숫자를 결합해 8자 이상" onChange={onPassword} />
+                      <input
+                        type="password"
+                        placeholder="문자, 숫자, 특수문자를 결합해 8자 이상"
+                        onChange={onPassword}
+                      />
                     </div>
                   </SingleInfo>
                   <SingleInfo>
