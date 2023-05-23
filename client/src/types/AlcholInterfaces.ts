@@ -24,7 +24,7 @@ export interface AlcoholData {
   country: string;
   aroma: string;
   taste: string;
-  field: string;
+  finish: string;
   sales: string;
   quantity: number;
   discountRate: string;

@@ -71,7 +71,7 @@ const AlcoholListItem = ({ item }: ItemProps) => {
   return (
     <AlcoholItemContainer>
       <div className="item_img">
-        <img src={item.profile} />
+        <img src={`${item.profile}?${new Date().getTime()}`} />
       </div>
       <div className="item_content">
         <p className="item_title">{item.titleKor}</p>

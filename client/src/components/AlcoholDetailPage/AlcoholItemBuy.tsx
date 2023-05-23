@@ -147,7 +147,7 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
     <>
       <AlcoholItemBuyContainer>
         <StyledItemImgBox>
-          <img src={data.profile} />
+          <img src={`${data.profile}?${new Date().getTime()}`} />
         </StyledItemImgBox>
         <StyledItemBuyBox>
           <div className="buy_titlebox">
