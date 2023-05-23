@@ -41,11 +41,16 @@ const Payment = () => {
     if (!selectedDate || !selectdata || !items) {
       return setIsModalOpen(true);
     }
-    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo, selectedDate: selectedDate } });
+    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo } });
   };
 
   const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+    const today = new Date();
+    if (date && date < today) {
+      setIsModalOpen(true);
+    } else {
+      setSelectedDate(date);
+    }
   };
 
   return (

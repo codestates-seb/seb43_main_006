@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Progress from "./Progress";
 import axios from "axios";
 import { ButtonLight } from "@components/Common/Button";
@@ -54,7 +54,6 @@ const PaymentConfirm = () => {
   const paymentKey = urlParams.get("paymentKey");
   const amount = Number(urlParams.get("amount"));
   const navigate = useNavigate();
-  const location = useLocation();
   const [itemOrders, setItemOrders] = useState<{ itemId: number; quantity: number }[]>([]);
   const pickupDate = useSelector((state: DateProps) => {
     const date = state.dateState.Date;
@@ -115,7 +114,6 @@ const PaymentConfirm = () => {
           itemOrders: itemOrders,
           pickupDate: pickupDate,
         };
-        console.log(body);
         axios.post(`${process.env.REACT_APP_API_URL}/order`, body, {
           headers: {
             "Content-Type": "application/json",

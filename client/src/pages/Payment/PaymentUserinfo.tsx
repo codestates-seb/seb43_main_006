@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { UserProps } from "../../types/AlcholInterfaces";
-import { useLocation } from "react-router-dom";
 
 export interface ChildComponentProps {
   userInfo: UserProps;
@@ -13,9 +12,7 @@ export type UserdataType = {
   phone: string;
   email: string;
 };
-export default function PaymnetUserInfo({ userInfo, updateUserInfo }: ChildComponentProps) {
-  const location = useLocation();
-  const data = location.state ? location.state.data : [];
+export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
   return (
     <BuyerInfo>
       <div className="userinfo">

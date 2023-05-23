@@ -1,8 +1,9 @@
 import maintop from "@assets/images/Maintop.png";
-import React, { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
+import { ButtonDark } from "@components/Common/Button";
 
 interface MainscrollProps {
   y: number;
@@ -35,7 +36,7 @@ const Home: React.FC = () => {
     return `${seconds}`;
   }
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get("access_token");
     const refreshToken = urlParams.get("refresh_token");
@@ -56,19 +57,30 @@ const Home: React.FC = () => {
   return (
     <HomeContainer y={y}>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="space" style={{ opacity: y > 500 ? (y > 1500 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 1400 ? (y > 2100 ? "0" : "1") : "0" }}>
         <Homelayout1 />
       </div>
-      <div className="space" style={{ opacity: y > 2000 ? (y > 3000 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 2300 ? (y > 3100 ? "0" : "1") : "0" }}>
         <Homelayout2 />
       </div>
-      <div className="space" style={{ opacity: y > 3500 ? (y > 4500 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 3600 ? (y > 4320 ? "0" : "1") : "0" }}>
         <Homelayout3 />
       </div>
-      <div className="space" style={{ opacity: y > 5000 ? (y > 6000 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 5100 ? (y > 6300 ? "0" : "1") : "0" }}>
         <Homelayout5 />
       </div>
-      <div className="space"></div>
+      <div className="bt">
+        <ButtonDark
+          width="160px"
+          height="60px"
+          fontSize="18px"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
+          Top
+        </ButtonDark>
+      </div>
     </HomeContainer>
   );
 };
@@ -102,5 +114,9 @@ const HomeContainer = styled.section<MainscrollProps>`
     align-items: center;
     width: 100%;
     margin-top: 600px;
+  }
+  & div.bt {
+    margin-top: 300px;
+    margin-bottom: 100px;
   }
 `;
