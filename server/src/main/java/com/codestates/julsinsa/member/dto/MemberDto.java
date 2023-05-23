@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
@@ -68,6 +69,7 @@ public class MemberDto {
     @Getter
     public static class Patch {
         private String displayName;
+
 
         private String phone;
 
