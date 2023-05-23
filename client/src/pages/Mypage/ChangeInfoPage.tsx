@@ -389,7 +389,6 @@ const ChangeInfoPage = () => {
     doAxios("get", "/members", {}, true);
   }, []);
   const patchOnclick = () => {
-    console.log(body);
     if (body.password !== "") {
       // 비밀번호가 빈 문자열이 아닐때
       if (body.password === body.passwordCheck) {
@@ -407,8 +406,8 @@ const ChangeInfoPage = () => {
       // 비밀번호가 빈문자열이고 이름, 번호 값이 있을 때
       if (body.displayName !== "" && body.phone !== "") {
         const patchData = { displayName: body.displayName, phone: body.phone };
-        console.log("비밀번호 수정 안할 때", patchData);
-        doAxios("patch", "/members", patchData, true);
+        const newData = Object.assign({}, patchData);
+        doAxios("patch", "/members", newData, true);
         setAlertMessage("정보수정을 성공했습니다!");
         setShowAlert(true);
         setIsOk(true);
