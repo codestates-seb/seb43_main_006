@@ -40,12 +40,11 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
         const locPosition = new window.kakao.maps.LatLng(lat, lon),
           message = "<div>현재위치</div>";
 
-        // console.log(locPosition, message); // 이게 현재위치 잡히는거다 !!!!!!!!
         displayMarker(locPosition, message);
       });
     } else {
       const locPosition = new window.kakao.maps.LatLng(37.57022168346011, 126.98314742271637), //종각역
-        message = "<div>아니야</div>";
+        message = "<div>여기아니에요</div>";
 
       displayMarker(locPosition, message);
     }
@@ -74,7 +73,7 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
       });
 
       const content =
-        '<div onClick={handleChoice} className="overlayContainer" style="background-color: red;">' +
+        '<div className="overlayContainer" style="background-color: red;">' +
         `<div style="color: black;" >${el.name}</div>` +
         `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
@@ -83,12 +82,11 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
         content: content,
         position: new window.kakao.maps.LatLng(el.lat, el.lng),
       });
-      //마우스오버하면 커스텀어레이가 생성된다.
+
       window.kakao.maps.event.addListener(marker, "mouseover", () => {
         customOverlay.setMap(map);
       });
 
-      //마우스아웃하면 커스텀어레이가 없어진다.
       window.kakao.maps.event.addListener(marker, "mouseout", () => {
         customOverlay.setMap(null);
       });

@@ -181,7 +181,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
             <StyledTh>수량(개)</StyledTh>
             <StyledTh>상태</StyledTh>
             <StyledTh>주문취소</StyledTh>
-            <StyledTh>후기보기</StyledTh>
+            <StyledTh>후기작성</StyledTh>
           </tr>
         </thead>
         <tbody>
@@ -211,11 +211,18 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
                   )}
                 </StyledTd>
                 <StyledTd>
-                  <div className="button-container">
-                    <ButtonDark width="100px" height="50%" onClick={() => ReviewWindow(el.itemId)}>
-                      후기
-                    </ButtonDark>
-                  </div>
+                  {el.orderStatus !== "픽업 완료" ? null : (
+                    <div className="button-container">
+                      <ButtonDark
+                        width="100px"
+                        height="50%"
+                        onClick={() => ReviewWindow(el.itemId)}
+                        disabled={el.orderStatus !== "픽업 완료"}
+                      >
+                        후기
+                      </ButtonDark>
+                    </div>
+                  )}
                 </StyledTd>
               </tr>
             );
