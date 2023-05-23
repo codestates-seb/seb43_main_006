@@ -41,7 +41,7 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
     setPhone(e.target.value);
   };
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    const val = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자, 숫자, 특수문자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인 // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
     if (val) {
       // true
       setPassword(e.target.value); // 비밀번호를 저장
@@ -332,12 +332,12 @@ type Datatype = {
   phone: string;
   email: string;
 };
-type Bodytype = {
+interface Bodytype {
   displayName: string;
   phone: string;
   password: string;
   passwordCheck: string;
-};
+}
 
 const ChangeInfoPage = () => {
   const navigate = useNavigate();
@@ -389,21 +389,33 @@ const ChangeInfoPage = () => {
     doAxios("get", "/members", {}, true);
   }, []);
   const patchOnclick = () => {
-    if (body && body.password) {
+    console.log(body);
+    if (body.password !== "") {
+      // 비밀번호가 빈 문자열이 아닐때
       if (body.password === body.passwordCheck) {
+        // 확인란과 일치할 때 비밀번호 수정 허용
         doAxios("patch", "/members", body, true);
         setAlertMessage("정보수정을 성공했습니다!");
         setShowAlert(true);
         setIsOk(true);
       } else {
-        setAlertMessage("비밀번호와 비밀번호 확인이 일치 않거나 정보가 모두 기입되지 않았습니다!");
+        // 일치하지 않거나, 빈 문자열일 때 에러 알림
+        setAlertMessage("비밀번호와 비밀번호 확인이 일치 않거나\\정보가 모두 기입되지 않았습니다!");
         setShowAlert(true);
       }
-    } else {
-      doAxios("patch", "/members", { displayName: body?.displayName, phone: body?.phone }, true);
-      setAlertMessage("정보수정을 성공했습니다!");
-      setShowAlert(true);
-      setIsOk(true);
+    } else if (body.displayName && body.phone) {
+      // 비밀번호가 빈문자열이고 이름, 번호 값이 있을 때
+      if (body.displayName !== "" && body.phone !== "") {
+        const patchData = { displayName: body.displayName, phone: body.phone };
+        console.log("비밀번호 수정 안할 때", patchData);
+        doAxios("patch", "/members", patchData, true);
+        setAlertMessage("정보수정을 성공했습니다!");
+        setShowAlert(true);
+        setIsOk(true);
+      } else {
+        setAlertMessage("이름 및 전화번호가 입력되어야 합니다!");
+        setShowAlert(true);
+      }
     }
   };
   const checkPasswordHandle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -447,7 +459,6 @@ const ChangeInfoPage = () => {
         setIsPass(true);
       })
       .catch(() => {
-        // 로그인 요청 실패 시
         setAlertMessage("비밀번호를 확인해주세요!");
         setShowAlert(true);
       });
