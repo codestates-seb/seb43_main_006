@@ -263,7 +263,6 @@ const OrderPage = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         const data = res.data.data.slice().sort((a: any, b: any) => +new Date(b.orderedAt) - +new Date(a.orderedAt));
         const newData = [];
         for (let i = 0; i < data.length; i++) {
