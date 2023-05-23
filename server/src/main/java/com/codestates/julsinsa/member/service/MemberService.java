@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -303,16 +304,14 @@ public class MemberService {
             String accessToken = jwtTokenizer.delegateAccessToken(member);
             String refreshToken = jwtTokenizer.delegateRefreshToken(member);
             Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-            LocalDateTime issuedDateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
-            String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
+            LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
             new Date();
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
             response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
-            response.setHeader("exp", formattedExpirationDateTime);
-            response.setHeader("iat", issuedDateTime.format(formatter));
+            response.setHeader("exp", now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+            response.setHeader("iat", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (SignatureException se) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
