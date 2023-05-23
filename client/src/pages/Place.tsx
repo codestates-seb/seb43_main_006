@@ -76,6 +76,7 @@ const Place = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
@@ -104,7 +105,6 @@ const Place = () => {
     dispatch(setMarker(select));
     navigate("/payment", { state: { items: items, selectedDate: selectedDate } });
   };
-  console.log(selectedDate);
 
   return (
     <>

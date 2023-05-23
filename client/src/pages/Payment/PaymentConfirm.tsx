@@ -3,15 +3,19 @@ import styled from "styled-components";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import Progress from "./Progress";
 import axios from "axios";
-import useAxiosAll from "@hooks/useAxiosAll";
 import { ButtonLight } from "@components/Common/Button";
+import { useSelector } from "react-redux";
+import { Itemtype } from "@pages/Cart";
 
-type UserdataType = {
-  memberId: string;
-  displayName: string;
-  realName: string;
-  phone: string;
-  email: string;
+type DateProps = {
+  dateState: {
+    Date: Date | null;
+  };
+};
+
+type Datatype = {
+  cartId: string;
+  itemCarts: [Itemtype];
 };
 
 const PaymentConfirmContainer = styled.section`
@@ -49,83 +53,81 @@ const PaymentConfirm = () => {
   const orderId = urlParams.get("orderId");
   const paymentKey = urlParams.get("paymentKey");
   const amount = Number(urlParams.get("amount"));
-  const [orderlist, setOrderlist] = useState();
-  const [userdata, setUserdata] = useState<UserdataType | null>(null);
-  const [doAxios, data] = useAxiosAll();
   const navigate = useNavigate();
   const location = useLocation();
-  const selectedDate = location.state ? location.state.selectedDate : [];
-
-  useEffect(() => {
-    if ("realName" in data && "email" in data && "phone" in data) {
-      const formData = {
-        realName: data.realName,
-        phone: data.phone,
-        email: data.email,
-      };
-      data as UserdataType;
-      setUserdata(formData as UserdataType);
+  const [itemOrders, setItemOrders] = useState<{ itemId: number; quantity: number }[]>([]);
+  const pickupDate = useSelector((state: DateProps) => {
+    const date = state.dateState.Date;
+    if (date) {
+      const formattedDate = date.toISOString().substring(0, 10);
+      return formattedDate;
     }
-  }, [data]);
+    return null;
+  });
+  // itemlist의 itemCarts 배열을 순회하면서 itemId와 quantity를 추출하여 itemOrders에 추가합니다.
 
-  axios
-    .post(
-      `${process.env.REACT_APP_API_URL}/payment`,
-      // `http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/payment`,
-      { orderId, paymentKey, amount },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    )
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  const access_token = `Bearer ${localStorage.getItem("authToken")}`;
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/orders/to-payment`, {
-        // .get(`http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/to-payment`, {
+  const fetchData = async () => {
+    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/cart`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
           "ngrok-skip-browser-warning": "69420",
         },
       })
-      .then((res) => {
-        setOrderlist(res.data);
+      .then((response) => {
+        const data: Datatype = response.data.data; // 받아온 데이터
+        const itemOrders = data.itemCarts.map(({ itemId, quantity }) => ({ itemId, quantity }));
+        setItemOrders(itemOrders);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        console.log(err);
+      });
 
-  axios
-    .post(
-      `${process.env.REACT_APP_API_URL}/order`,
-      // `  http://ec2-3-39-189-208.ap-northeast-2.compute.amazonaws.com:8080/orders`,
-      { orderlist },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420",
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/payment`,
+        { orderId, paymentKey, amount },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "69420",
+          },
         },
-      },
-    )
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
+      );
+    } catch (err) {
       console.log(err);
-    });
+    }
 
-  useEffect(() => {
     window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (itemOrders.length > 0) {
+      const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+      try {
+        const body = {
+          itemOrders: itemOrders,
+          pickupDate: pickupDate,
+        };
+        console.log(body);
+        axios.post(`${process.env.REACT_APP_API_URL}/order`, body, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: access_token,
+            "ngrok-skip-browser-warning": "69420",
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [itemOrders]);
 
   return (
     <PaymentConfirmContainer>

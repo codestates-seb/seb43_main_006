@@ -41,12 +41,26 @@ const markerState = createSlice({
   },
 });
 
+const dateState = createSlice({
+  name: "dateState",
+  initialState: {
+    Date: new Date(),
+  },
+  reducers: {
+    setDate: (state, action) => {
+      return action.payload;
+    },
+  },
+});
+
 export const { setToken, setLogout } = loginState.actions;
 export const { setMarker } = markerState.actions;
+export const { setDate } = dateState.actions;
 
 export default configureStore({
   reducer: {
     loginState: loginState.reducer,
     markerState: markerState.reducer,
+    dateState: dateState.reducer,
   },
 });

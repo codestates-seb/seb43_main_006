@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ItemOrder } from "../../types/AlcholInterfaces";
+
 const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
 const CheckoutChang = () => {
