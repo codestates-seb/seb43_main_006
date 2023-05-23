@@ -39,8 +39,10 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,facebook,kakao
 
         String email;
-
-        if(clientRegistrationId.equals("kakao")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
+        if(clientRegistrationId.equals("naver")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
+            Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+            email = (String) naverAccount.get("email");
+        } else if(clientRegistrationId.equals("kakao")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
             Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
             email = (String) kakaoAccount.get("email");
         }else{

@@ -1,4 +1,4 @@
-INSERT INTO CART (cart_id, total_price, total_quantity)
+INSERT INTO cart (cart_id, total_price, total_quantity)
 VALUES (101, 211000,6),
        (102, 0,0);
 
@@ -36,7 +36,7 @@ VALUES ('에펜', 'Effen', 35000, 700, 35, '네덜란드', '천연 향료', '깔
 ('아키토라 준마이 다이긴죠', 'Akitora Junmai Daiginjo', 44000, 720, 15, '일본', '과일, 꽃', '깨끗하고 깊은 맛', '막걸리', 3, 40, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/23.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/23.jpg', '3', '4.8'),
 ('와일드 터키 101 1L', 'Wild Turkey 101 1L', 40000, 1000, 50, '미국', '버터 스카치, 바닐라', '찐하고 무거운 맛', '버번 위스키', 9, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/24.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/24.jpg' ,'3', '4.0');
 
-INSERT INTO  ITEM_CATEGORIES (item_item_id, categories)
+INSERT INTO  item_categories (item_item_id, categories)
 VALUES (1, '보드카'),
        (2, '보드카'),
        (3, '보드카'),
@@ -63,13 +63,13 @@ VALUES (1, '보드카'),
        (24, '위스키');
 
 
-INSERT INTO ITEM_CART (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
+INSERT INTO item_cart (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
 VALUES (101,2, 101,3),
        (102,1,101,5),
        (103,3, 101,7);
 
 
-INSERT INTO MARKET (name, lat, lng, phone, choice, address, work_Time, comment)
+INSERT INTO market (name, lat, lng, phone, choice, address, work_Time, comment)
 VALUES
     ('고래맥주창고 수지구청점', 37.322117581491526, 127.0948747094305, '031-261-0828', false, '경기 용인시 수지구', '오후 5시 영업', '매주 월요일 휴무'),
     ('고래맥주창고 수지죽전점', 37.3254276819496, 127.1136172500424, '031-261-0828', false, '경기 용인시 수지구 대지로', '오후 5시 영업', '매주 월요일 휴무'),
@@ -164,7 +164,7 @@ VALUES
     ('여수웅천점', 35.03803074180165, 127.47408841830051, '012-345-6789',  'false', '전남 순천시 서면 운평리 산 137', '오후 3시영업', '매주월요일휴무'),
     ('광주송정점', 35.08808187453227, 127.2192645160448, '0507-1338-3143','false', '광주 광산구 내상로 60 1층', '오후 3시영업', '매주월요일휴무');
 
-INSERT INTO REVIEW (CREATED_AT, LAST_MODIFIED_AT, CONTENT, RATING, TITLE, ITEM_ID, MEMBER_ID)
+INSERT INTO review (CREATED_AT, LAST_MODIFIED_AT, CONTENT, RATING, TITLE, ITEM_ID, MEMBER_ID)
 VALUES ('2023-05-16 15:46:58.400765', '2023-05-16 15:46:58.400765', '너무 맛있어서 사진 3개 첨부요!', 5.0, '와 맛있당!', 1, 1),
        ('2023-05-16 15:47:34.939605', '2023-05-16 15:47:34.939605', '너무 맛없어서 사진 없어', 2.0, '우웩!', 1, 1),
        ('2023-05-16 15:48:40.414441', '2023-05-16 15:48:40.414441', '싫어요!', 1.0, '맛업서!', 2, 1),
@@ -177,7 +177,7 @@ VALUES ('2023-05-16 15:46:58.400765', '2023-05-16 15:46:58.400765', '너무 맛�
        ('2023-05-16 15:52:00.000000', '2023-05-16 15:52:00.000000', '별로에요!', 2.0, '별로에요!', 1, 2);
 
 
-INSERT INTO REVIEW_IMAGE (CREATED_AT, LAST_MODIFIED_AT, FILE_PATH, IMAGE_NAME, ORI_NAME, REVIEW_ID)
+INSERT INTO review_image (CREATED_AT, LAST_MODIFIED_AT, FILE_PATH, IMAGE_NAME, ORI_NAME, REVIEW_ID)
 VALUES ('2023-05-16 15:46:58.445765', '2023-05-16 15:46:58.445765', 'review/', '1684572154449_test.png', 'test.png', 1),
 ('2023-05-16 15:46:58.450766', '2023-05-16 15:46:58.450766', 'review/', '1684572154912_test2.jpg', 'test2.jpg', 1),
 ('2023-05-16 15:46:58.451765', '2023-05-16 15:46:58.451765', 'review/', '1684572155085_test3.png', 'test3.png', 1),
@@ -194,7 +194,7 @@ VALUES
     ('2023-05-06 15:47:34.939605', '2023-05-06 15:47:34.939605', '2023-05-27','어드민', 'ORDER_COMPLETE', '010-1234-5678', 2, 1),
     ('2023-05-26 15:47:34.939605', '2023-05-26 15:47:34.939605', '2023-05-28','어드민', 'PICKUP_COMPLETE', '010-1234-5678', 1, 1);
 
-INSERT INTO  FAVORITE (favorite_id, item_id, member_id)
+INSERT INTO  favorite (favorite_id, item_id, member_id)
 VALUES (100, 1,1),
        (102, 2,1),
        (103, 3,1),
