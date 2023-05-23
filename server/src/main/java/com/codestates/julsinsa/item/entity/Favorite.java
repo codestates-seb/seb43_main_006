@@ -1,6 +1,5 @@
 package com.codestates.julsinsa.item.entity;
 
-import com.codestates.julsinsa.item.entity.Item;
 import com.codestates.julsinsa.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

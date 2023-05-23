@@ -2,6 +2,7 @@ package com.codestates.julsinsa.item.service;
 
 import com.codestates.julsinsa.global.exception.BusinessLogicException;
 import com.codestates.julsinsa.global.exception.ExceptionCode;
+import com.codestates.julsinsa.global.utils.MemberUtils;
 import com.codestates.julsinsa.item.dto.ItemDto;
 import com.codestates.julsinsa.item.entity.Favorite;
 import com.codestates.julsinsa.item.entity.Item;
@@ -24,6 +25,8 @@ import java.util.Optional;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+
+    private final MemberUtils memberUtils;
 
     public Item createItem(Item item){
         Optional<Item> optionalItem = itemRepository.findByTitleKor(item.getTitleKor());
@@ -130,10 +133,8 @@ public class ItemService {
 
         Item findItem = findVerifedItem(itemId);
 
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        //로그인한 멤버 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         // 찜이 이미 되있는 경우 Exception 호출
         for(Favorite favorite : findmember.getFavorites()){
@@ -152,10 +153,8 @@ public class ItemService {
     public Item cancleFavorite(long itemId) {
         Item findItem = findVerifedItem(itemId);
 
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findbyEmailMember = memberRepository.findByEmail(principal);
-        Member findmember = findbyEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        //로그인한 멤버 불러오기
+        Member findmember = memberUtils.findLoggedInMember();
 
         findItem.getFavorites().stream()
                 .filter(f -> f.getMember() == findmember)
@@ -167,10 +166,8 @@ public class ItemService {
     }
 
     public ItemDto.FavoriteStatusDto checkFavoriteStatus(long itemId){
-        // 로그인한 유저 불러오기
-        String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        Optional<Member> findByEmailMember = memberRepository.findByEmail(principal);
-        Member member = findByEmailMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_EXISTS));
+        //로그인한 멤버 불러오기
+        Member member = memberUtils.findLoggedInMember();
 
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
