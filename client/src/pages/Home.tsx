@@ -1,6 +1,6 @@
 import maintop from "@assets/images/Maintop.png";
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5 } from "./Homelayout";
 
@@ -56,12 +56,19 @@ const Home: React.FC = () => {
   return (
     <HomeContainer y={y}>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="mainview">
-        <LayoutContainer1 y={y} />
-        <LayoutContainer2 y={y} />
-        <LayoutContainer3 y={y} />
-        <LayoutContainer5 y={y} />
+      <div className="space" style={{ opacity: y > 500 ? (y > 1500 ? "0" : "1") : "0" }}>
+        <Homelayout1 />
       </div>
+      <div className="space" style={{ opacity: y > 2000 ? (y > 3000 ? "0" : "1") : "0" }}>
+        <Homelayout2 />
+      </div>
+      <div className="space" style={{ opacity: y > 3500 ? (y > 4500 ? "0" : "1") : "0" }}>
+        <Homelayout3 />
+      </div>
+      <div className="space" style={{ opacity: y > 5000 ? (y > 6000 ? "0" : "1") : "0" }}>
+        <Homelayout5 />
+      </div>
+      <div className="space"></div>
     </HomeContainer>
   );
 };
@@ -75,13 +82,7 @@ const HomeContainer = styled.section<MainscrollProps>`
   justify-content: center;
   max-width: 100%;
   font-size: 96px;
-  & div.mainview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: sticky;
-  }
+
   * {
     transition: all 0.5s ease;
   }
@@ -93,12 +94,13 @@ const HomeContainer = styled.section<MainscrollProps>`
     background-repeat: no-repeat;
     background-size: cover;
   }
+  & div.space {
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 600px;
+  }
 `;
-
-const LayoutContainer1 = styled(Homelayout1)<MainscrollProps>``;
-
-const LayoutContainer2 = styled(Homelayout2)<MainscrollProps>``;
-
-const LayoutContainer3 = styled(Homelayout3)<MainscrollProps>``;
-
-const LayoutContainer5 = styled(Homelayout5)<MainscrollProps>``;

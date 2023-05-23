@@ -6,14 +6,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Progress from "./Payment/Progress";
 
-type Itemtype = {
+export type Itemtype = {
   itemId: number;
   quantity: number;
   titleKor: string;
   price: number;
   profile: string;
 };
-interface CartItemsProps {
+export interface CartItemsProps {
   itemCarts: Itemtype[];
 }
 

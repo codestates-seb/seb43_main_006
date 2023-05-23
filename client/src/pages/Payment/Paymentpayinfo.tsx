@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Place from "@pages/Place";
+import { useDispatch } from "react-redux";
+import { setDate } from "../../redux/slice/store";
+import Modal from "@layout/Header/Logoutmodal";
 
 export type stateProps = {
   loginState?: string;
@@ -29,6 +32,7 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { totalquantity, totalPrice } = items.reduce(
     (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {
@@ -42,17 +46,22 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const selectdata = useSelector((state: stateProps) => state.markerState);
-  // const [shoplist, setShoplist] = useState<Shopitem[]>([]);
-  // const [selectedShop, setSelectedShop] = useState<Shopitem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePickDateClick = () => {
     setIsCalendarOpen(true);
   };
 
   const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setIsCalendarOpen(false);
-    onDateChange(date);
+    const today = new Date();
+    if (date && date < today) {
+      setIsModalOpen(true);
+    } else {
+      setSelectedDate(date);
+      setIsCalendarOpen(false);
+      onDateChange(date);
+      dispatch(setDate(date ? date.toISOString() : null));
+    }
   };
 
   const handlemapClick = () => {
@@ -111,15 +120,25 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
           <div className="secondline">
             <div className="pickupdate">픽업 예정 날짜</div>
             <div className="pickdate">{selectedDate ? selectedDate.toLocaleDateString() : "날짜를 선택해주세요."}</div>
-            <div className="pickselect">
-              <div className="pickselect2" onClick={handlePickDateClick}>
-                픽업 예정 날짜 선택
+            {isCalendarOpen ? (
+              <div className="pickselect3">
+                {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
               </div>
-              {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
-            </div>
+            ) : (
+              <div className="pickselect">
+                <div className="pickselect2" onClick={handlePickDateClick}>
+                  픽업 예정 날짜 선택
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <div className="modal">날짜를 오늘 이후로 해주세요</div>
+        </Modal>
+      )}
     </Payinfostyle>
   );
 }
@@ -231,7 +250,7 @@ const Payinfostyle = styled.div`
     min-width: 162px;
   }
   & div.pickdate {
-    width: 950px;
+    width: 1040px;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -248,7 +267,8 @@ const Payinfostyle = styled.div`
   & div.pickselect {
     display: flex;
     align-items: center;
-    width: 466px;
+    justify-content: center;
+    width: 270px;
     height: 100%;
     border: 1px solid rgba(60, 60, 60, 0.5);
     font-size: 14px;
@@ -257,7 +277,16 @@ const Payinfostyle = styled.div`
     }
   }
   & div.pickselect2 {
-    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & div.pickselect3 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 100px;
   }
   & div.thirdline {
     display: flex;

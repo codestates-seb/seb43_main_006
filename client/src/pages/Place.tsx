@@ -105,7 +105,6 @@ const Place = () => {
     dispatch(setMarker(select));
     navigate("/payment", { state: { items: items, selectedDate: selectedDate } });
   };
-  console.log(selectedDate);
 
   return (
     <>

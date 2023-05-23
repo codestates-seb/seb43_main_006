@@ -12,7 +12,7 @@ import { UserProps } from "types/AlcholInterfaces";
 import useAxiosAll from "@hooks/useAxiosAll";
 import { useSelector } from "react-redux";
 import { stateProps } from "./Paymentpayinfo";
-
+import Modal from "@layout/Header/Logoutmodal";
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
@@ -20,7 +20,7 @@ const Payment = () => {
   const [doAxios, data] = useAxiosAll();
   const selectdata = useSelector((state: stateProps) => state.markerState);
   const [userInfo, setUserInfo] = useState<UserProps>({} as UserProps);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const updateUserInfo = () => {
     setUserInfo(data as UserProps);
   };
@@ -38,7 +38,10 @@ const Payment = () => {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const handlePayment = () => {
-    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo, selectedDate: selectedDate || null } });
+    if (!selectedDate || !selectdata || !items) {
+      return setIsModalOpen(true);
+    }
+    navigate("/CheckoutChang", { state: { items: items, userInfo: userInfo, selectedDate: selectedDate } });
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -60,18 +63,18 @@ const Payment = () => {
             </ButtonLight>
           </div>
           <div className="buttonDetail">
-            <ButtonDark
-              width="160px"
-              height="60px"
-              fontSize="18px"
-              onClick={handlePayment}
-              disabled={selectedDate === null || selectdata === null || items === null}
-            >
+            <ButtonDark width="160px" height="60px" fontSize="18px" onClick={handlePayment}>
               결제하기
             </ButtonDark>
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <div className="modal">날짜 및 픽업 장소를 입력해 주세요</div>
+        </Modal>
+      )}
     </PaymentContainer>
   );
 };

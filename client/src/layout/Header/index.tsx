@@ -102,7 +102,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${({ hovering }) => (hovering === "true" ? "17px" : "21px")};
+    font-size: ${({ hovering }) => (hovering === "true" ? "18px" : "21px")};
     transition: all 0.5s ease-out;
   }
 
@@ -265,14 +265,6 @@ const Header: React.FC = () => {
               <ul className="banner2">
                 Order
                 <StyledList
-                  className="li3"
-                  hovering={(isHover || false).toString()}
-                  y={y}
-                  onClick={() => navigate("/mypage/likepage")}
-                >
-                  찜
-                </StyledList>
-                <StyledList
                   className="li4"
                   hovering={(isHover || false).toString()}
                   y={y}
@@ -283,6 +275,14 @@ const Header: React.FC = () => {
               </ul>
               <ul className="banner3">
                 My Page
+                <StyledList
+                  className="li3"
+                  hovering={(isHover || false).toString()}
+                  y={y}
+                  onClick={() => navigate("/mypage/likepage")}
+                >
+                  찜
+                </StyledList>
                 <StyledList
                   className="li5"
                   hovering={(isHover || false).toString()}
