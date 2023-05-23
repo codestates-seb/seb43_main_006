@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import wave from "../assets/images/wave.png";
 export default function HomeLoading() {
   return (

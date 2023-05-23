@@ -75,7 +75,6 @@ const Place = () => {
   const [select, setSelect] = useState<Shopitem | null>(null);
   const location = useLocation();
   const items = location.state ? location.state.items : [];
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const King = async () => {
     await axios
@@ -95,15 +94,9 @@ const Place = () => {
     King();
   }, []);
 
-  useEffect(() => {
-    if (location.state && location.state.selectedDate) {
-      setSelectedDate(location.state.selectedDate);
-    }
-  }, [location.state]);
-
   const handleSelect = () => {
     dispatch(setMarker(select));
-    navigate("/payment", { state: { items: items, selectedDate: selectedDate } });
+    navigate("/payment", { state: { items: items } });
   };
 
   return (

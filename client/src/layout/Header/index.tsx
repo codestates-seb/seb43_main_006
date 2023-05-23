@@ -108,7 +108,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
 
   & ul {
     & li {
-      padding-top: 15%;
+      padding-top: 5%;
       font-size: 16px;
       font-weight: 400;
       flex-direction: row;
@@ -182,7 +182,6 @@ const StyledList = styled.li<IHeaderContainerProps>`
 
 const Header: React.FC = () => {
   const hoverRef = useRef(null);
-  const location = useLocation();
   const isHover = useHover(hoverRef);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;

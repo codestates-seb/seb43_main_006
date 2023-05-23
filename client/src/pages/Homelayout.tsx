@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import mainmiddle from "../assets/images/Mainmiddle.png";
 import samplingimg from "../assets/images/samplingimg.png";
 
@@ -123,7 +123,7 @@ const Homelayoutstyled3 = styled.div`
     height: 400px;
   }
   .maju_list {
-    padding-left: 10%;
+    padding-left: 40px;
     padding-bottom: 10%;
     flex-direction: column;
     height: 200px;
@@ -133,7 +133,8 @@ const Homelayoutstyled3 = styled.div`
     padding-top: 30px;
     font-size: 50px;
     height: 200px;
-    color: ${({ theme }) => theme.colors.themeColor};
+    display: flex;
+    justify-content: flex-end;
   }
   .list_maju {
     padding-top: 30px;

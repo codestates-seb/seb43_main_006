@@ -44,11 +44,11 @@ const markerState = createSlice({
 const dateState = createSlice({
   name: "dateState",
   initialState: {
-    Date: new Date(),
+    Date: new Date().toISOString(),
   },
   reducers: {
     setDate: (state, action) => {
-      return action.payload;
+      state.Date = action.payload;
     },
   },
 });

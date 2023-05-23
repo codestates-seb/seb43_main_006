@@ -65,7 +65,7 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
   };
 
   const handlemapClick = () => {
-    navigate("/place", { state: { items: items, selectedDate: selectedDate } });
+    navigate("/place", { state: { items: items } });
   };
 
   return (
