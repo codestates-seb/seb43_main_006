@@ -115,9 +115,8 @@ public class MemberService {
         // 각각 설정
         Optional.ofNullable(member.getDisplayName()).ifPresent(displayName -> findmember.setDisplayName(displayName));
         Optional.ofNullable(member.getPhone()).ifPresent(phone -> findmember.setPhone(phone));
-        Optional.ofNullable(member.getPassword()).ifPresent(password -> findmember.setPassword(password));
-        String encode = passwordEncoder.encode(findmember.getPassword());
-        findmember.setPassword(encode);
+        Optional.ofNullable(member.getPassword()).ifPresent(password -> findmember.setPassword(passwordEncoder.encode(password)));
+
         if(findmember.isPasswordIssued()){ // 임시비밀번호 발급자는 false로 설정
             findmember.setPasswordIssued(false);
         }
