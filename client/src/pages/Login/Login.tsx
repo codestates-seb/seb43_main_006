@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TiSocialFacebook } from "react-icons/ti";
+import { SiNaver } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import axios from "axios";
@@ -96,9 +96,9 @@ const Login = () => {
     //오어스 구글 인증링크 이동
     window.location.assign(`${url}/oauth2/authorization/google`);
   };
-  const facebookOAuthHandler = () => {
+  const naverOAuthHandler = () => {
     //오어스 페이스북 인증링크로 이동
-    window.location.assign(`${url}/oauth2/authorization/facebook`);
+    window.location.assign(`${url}/oauth2/authorization/naver`);
   };
   const kakaoOAuthHandler = () => {
     window.location.assign(`${url}/oauth2/authorization/kakao`);
@@ -145,11 +145,11 @@ const Login = () => {
             </OAuthIconContainer>
             <div className="desc">구글로 시작하기</div>
           </OAuthSignUpBox>
-          <OAuthSignUpBox onClick={facebookOAuthHandler} type="facebook">
+          <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
             <OAuthIconContainer>
-              <TiSocialFacebook size="40" color="white" />
+              <SiNaver size="30" color="white" />
             </OAuthIconContainer>
-            <div className="desc">페이스북으로 시작하기</div>
+            <div className="desc">네이버로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
             <OAuthIconContainer>
@@ -274,7 +274,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : type === "facebook" ? "#4566a0" : "#ffeb00")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "naver" ? "#03C75A" : "#ffeb00")};
   color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {

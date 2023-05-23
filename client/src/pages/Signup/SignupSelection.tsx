@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { TiSocialFacebook } from "react-icons/ti";
+import { SiNaver } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 const url = `${process.env.REACT_APP_API_URL}`;
@@ -62,7 +62,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : type === "facebook" ? "#4566a0" : "#ffeb00")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "naver" ? "#03C75A" : "#ffeb00")};
   color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
@@ -95,9 +95,9 @@ const SignupSelection = () => {
     //오어스 구글 인증링크 이동
     window.location.assign(`${url}/oauth2/authorization/google`);
   };
-  const facebookOAuthHandler = () => {
-    //오어스 페이스북 인증링크로 이동
-    // window.location.assign(`${url}/oauth2/authorization/facebook`);
+  const naverOAuthHandler = () => {
+    //오어스  인증링크로 이동
+    window.location.assign(`${url}/oauth2/authorization/naver`);
   };
   const kakaoOAuthHandler = () => {
     window.location.assign(`${url}/oauth2/authorization/kakao`);
@@ -113,11 +113,11 @@ const SignupSelection = () => {
           </OAuthIconContainer>
           <div className="desc">구글로 회원가입</div>
         </OAuthSignUpBox>
-        <OAuthSignUpBox onClick={toSignTerm} type="facebook">
+        <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
           <OAuthIconContainer>
-            <TiSocialFacebook size="40" color="white" />
+            <SiNaver size="30" color="white" />
           </OAuthIconContainer>
-          <div className="desc">페이스북으로 회원가입</div>
+          <div className="desc">네이버로 회원가입</div>
         </OAuthSignUpBox>
         <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
           <OAuthIconContainer>
