@@ -180,7 +180,7 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
               </li>
               <li>
                 <div className="content_note_bold">Finish</div>
-                <div className="content_detail_text">{data.field}</div>
+                <div className="content_detail_text">{data.finish}</div>
               </li>
             </ul>
           </div>

@@ -340,27 +340,13 @@ const ReviewEdit = () => {
             <ReviewContentBox>
               <div className="content_title">리뷰제목</div>
               <div className="content_input">
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => {
-                    console.log(reviewUpdate);
-                    console.log(e.target.value);
-                    setTitle(e.target.value);
-                  }}
-                />
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
               </div>
             </ReviewContentBox>
             <ReviewContentBox>
               <div className="content_title">상세리뷰</div>
               <div className="content_input">
-                <textarea
-                  value={content}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    setContent(e.target.value);
-                  }}
-                />
+                <textarea value={content} onChange={(e) => setContent(e.target.value)} />
                 <p>상품 품질과 관계 없는 내용은 삭제될 수 있습니다.</p>
               </div>
             </ReviewContentBox>
