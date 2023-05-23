@@ -98,6 +98,10 @@ const StyledTd = styled.td`
   > img {
     width: 50%;
     height: 80px;
+    cursor: pointer;
+  }
+  :nth-child(2) {
+    cursor: pointer;
   }
 `;
 
@@ -155,6 +159,9 @@ const LikePage = () => {
         LikeGetHandle();
       })
       .catch((error) => console.log(error));
+  };
+  const handleDetailBtn = (itemId: number) => {
+    navigate(`/alcohol/detail/${itemId}`);
   };
 
   const handleCartBtn = (itemId: number) => {
@@ -225,9 +232,9 @@ const LikePage = () => {
                     return (
                       <tr key={idx}>
                         <StyledTd>
-                          <img src={el.profile} />
+                          <img src={el.profile} onClick={() => handleDetailBtn(el.itemId)} />
                         </StyledTd>
-                        <StyledTd>{el.titleKor}</StyledTd>
+                        <StyledTd onClick={() => handleDetailBtn(el.itemId)}>{el.titleKor}</StyledTd>
                         <StyledTd>
                           <PriceDisplay price={el.price} />
                         </StyledTd>
