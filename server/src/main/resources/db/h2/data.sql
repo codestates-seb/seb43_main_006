@@ -1,4 +1,4 @@
-INSERT INTO CART (cart_id, total_price, total_quantity)
+INSERT INTO cart (cart_id, total_price, total_quantity)
 VALUES (101, 211000,6),
        (102, 0,0);
 
@@ -10,33 +10,33 @@ VALUES (1, 'USER'),
        (1, 'ADMIN'),
        (2, 'USER');
 
-INSERT INTO item (title_kor, title_eng, price, capacity, volume, country, aroma, taste, field, sales, quantity, discount_rate, profile, detailed_Profile ,review_count, review_rating)
-VALUES ('에펜', 'Effen', 35000, 700, 35, '네덜란드', '천연 향료', '깔끔한 맛', '보드카', 32, 20, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/1.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/1.jpg','0','0.0'),
-('스미노프 레드', 'Smirnoff', 16000, 750, 37.5, '러시아', '보리', '깔끔한 맛', '보드카', 22, 150, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/2.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/2.jpg','4','2.5'),
-('앱솔루트 보드카', 'Absolut', 28000, 700, 40, '스웨덴', '보리', '부드러운 맛', '보드카', 17, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/3.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/3.jpg','2','5.0'),
-('잭 다니엘스', 'Jack Daniels', 50000, 700, 35, '미국', '바닐라, 메이플', '깊은 풍미', '위스키', 10, 80, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/4.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/4.jpg','15','4.8'),
-('매카랜', 'Macallan', 80000, 700, 40, '스코틀랜드', '캐러멜, 과일', '부드러운 맛', '위스키', 3, 30, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/5.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/5.jpg','10','4.2'),
-('말리부', 'Malibu', 24000, 700, 20, '바베이도스', '코코넛', '달콤한 맛', '럼', 55, 30, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/6.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/6.jpg', '0', '0.0'),
-('스미노프 블루', 'Smirnoff Blue', 25000, 750, 50, '러시아', '알코올', '매운 맛', '보드카', 40, 25, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/7.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/7.jpg','4','5.0'),
-('블랙 벨벳', 'Velvet Black', 30000, 700, 40, '스코틀랜드', '차', '달콤한 맛', '위스키', 30, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/8.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/8.jpg','12','4.7'),
-('론디아즈 151', 'RonDiaz', 18000, 750, 75.5, '바베이도스', '과일', '향긋한 맛', '럼', 47, 35, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/9.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/9.jpg','3','4.0'),
-('레드 스트라이프', 'Red Stripe', 8000, 330, 4.7, '자메이카', '보리', '빈티지한 맛', '맥주', 22, 20, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/10.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/10.jpg','4','4.8'),
-('바카디 파인애플', 'Bacardi PainApple', 18000, 700, 18, '러시아', '파인애플', '신선한 맛', '보드카', 31, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/11.png', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/11.jpg','2', '4.5'),
-('깔루아', 'Kahlua', 25000, 700, 20, '러시아', '커피', '달달한 맛', '리큐르', 59, 10, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/12.png', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/12.jpg','1', '5.0'),
-('화요25', 'Hwayo', 28000, 375, 41, '대한민국', '적고소한 향', '달콤하고 부드러운 맛', '전통주', 24, 20, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/13.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/13.jpg' ,'2', '4.5'),
-('짐빔 화이트', 'Jim Beam White', 30000, 1000, 40, '미국', '밀', '달콤하고 부드러운 맛', '버번 위스키', 38, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/14.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/14.jpg' ,'2', '4.5'),
-('커티 삭', 'Cutty Sark', 32000, 1000,40, '스코틀랜드', '과일', '부드러운 맛', '스카치 위스키', 6, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/15.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/15.jpg', '1', '5.0'),
-('미다이 위스키', 'Midori Whiskey', 20000, 700, 37, '일본', '과일', '부드러운 맛', '위스키', 11, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/16.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/16.jpg','3', '4.3'),
-('글렌피딕', 'Klenfedik', 110000, 700, 40, '스코틀랜드', '복숭아와 과일', '부드러운 맛', '위스키', 12, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/17.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/17.jpg', '1', '5.0'),
-('아페롤', 'Aperol', 14000, 700, 11, '이탈리아', '오렌지', '씁쓸한 맛', '아페리티프', 23, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/18.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/18.jpg','1', '4.5'),
-('예거마이스터', 'Jägermeister', 25000, 700, 35, '독일', '허브와 스파이스', '씁쓸한 맛', '리큐어', 88, 100, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/19.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/19.jpg', '1', '4.0'),
-('빌라 욜란다 모스카토 다스티', 'Villa Yolanda Moscato D Asti', 18000, 750, 5, '이탈리아', '꽃', '달콤한 맛', '디저트 와인', 41, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/20.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/20.jpg', '3', '4.7'),
-('글렌 스코샤 더블 캐스크', 'Glen Scotia Double Cask', 66000, 700, 46, '스코틀랜드', '과일, 허브', '달콤하고 부드러운 맛', '싱글몰트 위스키', 23, 30, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/21.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/21.jpg', '2', '4.5'),
-('제갈량가주', 'Jegalryang Rice Wine', 20000, 750, 16, '한국', '쌀', '산미와 달콤한 맛', '쌀주', 7, 100, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/22.png','https://jusinsa-project.s3.ap-northeast-2.amazona2.jpg' ,'5', '4.0'),
-('아키토라 준마이 다이긴죠', 'Akitora Junmai Daiginjo', 44000, 720, 15, '일본', '과일, 꽃', '깨끗하고 깊은 맛', '막걸리', 3, 40, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/23.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/23.jpg', '3', '4.8'),
-('와일드 터키 101 1L', 'Wild Turkey 101 1L', 40000, 1000, 50, '미국', '버터 스카치, 바닐라', '찐하고 무거운 맛', '버번 위스키', 9, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/24.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/24.jpg' ,'3', '4.0');
+INSERT INTO item (title_kor, title_eng, price, capacity, volume, country, aroma, taste, finish, sales, quantity, discount_rate, profile, detailed_Profile ,review_count, review_rating)
+VALUES ('에펜', 'Effen', 35000, 700, 35, '네덜란드', '유자, 감귤', '달달한 맛', '상큼한 맛', 32, 20, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/1.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/1.jpg','0','0.0'),
+('스미노프 레드', 'Smirnoff', 16000, 750, 37.5, '미국', '무취', '깔끔한 맛', '톡 쏘는 맛', 22, 150, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/2.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/2.jpg','4','2.5'),
+('앱솔루트 보드카', 'Absolut', 28000, 700, 40, '스웨덴', '바닐라, 캐러멜', '부드러운 맛', '과일, 신선한, 풍부한', 17, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/3.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/3.jpg','2','5.0'),
+('잭 다니엘스', 'Jack Daniels', 50000, 700, 35, '미국', '바닐라, 메이플', '달콤한, 바나나, 오크', '부드러운', 10, 80, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/4.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/4.jpg','15','4.8'),
+('맥켈란', 'Macallan', 80000, 700, 40, '스코틀랜드', '바닐라, 버터, 사과, 오렌지, 토피', '건포도, 시트러스, 감귤, 캐러멜', '달콤한, 따뜻한, 오크', 3, 30, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/5.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/5.jpg','10','4.2'),
+('말리부', 'Malibu', 24000, 700, 20, '스페인', '코코넛', '달콤한 맛', '달콤한, 코코넛, 부드러운', 55, 30, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/6.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/6.jpg', '0', '0.0'),
+('스미노프 블루', 'Smirnoff Blue', 25000, 750, 37.5, '미국', '신선한 향', '상큼한 맛', '블루베리', 40, 25, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/7.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/7.jpg','4','5.0'),
+('블랙 벨벳', 'Velvet Black', 30000, 700, 40, '캐나다', '과일, 오크, 바닐라', '부드러운 맛', '깊고 풍부한 맛', 30, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/8.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/8.jpg','12','4.7'),
+('론디아즈 151', 'RonDiaz', 18000, 750, 75.5, '미국', '달콤한, 체리, 오렌지', '강렬한, 바닐라, 럼', '강렬한, 긴 여운, 스파이시', 47, 35, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/9.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/9.jpg','3','4.0'),
+('레드 스트라이프', 'Red Stripe', 8000, 330, 4.7, '자메이카', '보리', '청량한 맛, 고소한 맛', '부담 없는 맛', 22, 20, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/10.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/10.jpg','4','4.8'),
+('바카디 코코넛', 'Bacardi Coconut', 18000, 700, 32, '이탈리아', '코코넛', '달콤한 맛', '신선한 맛', 31, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/11.png', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/11.jpg','2', '4.5'),
+('깔루아', 'Kahlua', 25000, 700, 20, '멕시코', '바닐라, 초콜릿, 커피', '다크 초콜릿, 바닐라, 커피', '모카 에스프레소, 화이트 초콜릿', 59, 10, 20, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/12.png', 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/12.jpg','1', '5.0'),
+('화요25', 'Hwayo', 28000, 375, 25, '대한민국', '쌀, 꽃', '곡물, 구수한, 균형 잡힌', '부드러운, 섬세한', 24, 20, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/13.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/13.jpg' ,'2', '4.5'),
+('짐빔 화이트', 'Jim Beam White', 30000, 750, 40, '미국', '부드러운, 달콤한', '바닐라, 캐러멜', '나무', 38, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/14.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/14.jpg' ,'2', '4.5'),
+('커티 삭', 'Cutty Sark', 32000, 700,40, '스코틀랜드', '시트러스, 신선한, 바닐라', '바닐라 아이스크림, 캐러멜, 몰트', '바닐라, 구운 오크, 우아한', 6, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/15.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/15.jpg', '1', '5.0'),
+('엑스레이티드', 'X RATED', 58000, 700, 17, '미국', '자몽', '망고, 오렌지, 패션프루트', '긴 여운, 달콤한', 11, 5, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/16.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/16.jpg','3', '4.3'),
+('글렌피딕', 'Klenfedik', 110000, 700, 40, '스코틀랜드', '꿀, 바닐라, 구운 사과, 호두', '달콤한, 셰리, 스파이스', '캐러멜, 나무, 스파이스', 12, 10, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/17.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/17.jpg', '1', '5.0'),
+('아페롤', 'Aperol', 14000, 700, 11, '이탈리아', '오렌지, 바닐라, 허브', '오렌지, 우아한, 허브', '부드러운, 긴 여운', 23, 50, 10, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/18.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/18.jpg','1', '4.5'),
+('예거마이스터', 'Jägermeister', 25000, 700, 35, '독일', '감초, 꽃, 체리', '계피, 다크 초콜릿, 말린 민트', '감초, 스파이시, 초콜릿, 콜라', 88, 100, 0, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/19.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/19.jpg', '1', '4.0'),
+('빌라 욜란다 모스카토 다스티', 'Villa Yolanda Moscato D Asti', 18000, 750, 5.5, '이탈리아', '꽃, 꿀, 시트러스, 감귤', '복숭아, 살구, 사과, 꿀, 배, 레몬', '허니서클, 엘더플라워', 41, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/20.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/20.jpg', '3', '4.7'),
+('글렌 스코샤 더블 캐스크', 'Glen Scotia Double Cask', 66000, 700, 46, '스코틀랜드', '캐러멜, 달콤한, 토피, 사과, 복숭아', '달콤한, 스파이시, 민트', '깔끔한, 스파이시, 피트, 긴 여운', 23, 30, 15, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/21.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/21.jpg', '2', '4.5'),
+('제갈량가주', 'Zhuge Liang', 26000, 480, 38, '중국', '달콤한', '배, 파인애플', '달콤한, 산뜻한', 7, 100, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/22.png','https://jusinsa-project.s3.ap-northeast-2.amazona2.jpg' ,'5', '4.0'),
+('아키토라 준마이 다이긴죠', 'Akitora Junmai Daiginjo', 44000, 720, 15.5, '일본', '쌀, 꽃, 바닐라', '부드러운, 깊은', '묵직한, 섬세한', 3, 40, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/23.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/23.jpg', '3', '4.8'),
+('와일드 터키 101 1L', 'Wild Turkey 101 1L', 40000, 1000, 50.5, '미국', '바닐라, 오렌지, 오크, 캐러멜', '계피, 과일, 스파이스, 호밀', '다크 초콜릿, 오크', 9, 20, 5, 'https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/item/24.png','https://jusinsa-project.s3.ap-northeast-2.amazonaws.com/detaliedItem/24.jpg' ,'3', '4.0');
 
-INSERT INTO  ITEM_CATEGORIES (item_item_id, categories)
+INSERT INTO  item_categories (item_item_id, categories)
 VALUES (1, '보드카'),
        (2, '보드카'),
        (3, '보드카'),
@@ -63,13 +63,13 @@ VALUES (1, '보드카'),
        (24, '위스키');
 
 
-INSERT INTO ITEM_CART (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
+INSERT INTO item_cart (ITEM_CART_ID ,QUANTITY ,CART_ID, ITEM_ID)
 VALUES (101,2, 101,3),
        (102,1,101,5),
        (103,3, 101,7);
 
 
-INSERT INTO MARKET (name, lat, lng, phone, choice, address, work_Time, comment)
+INSERT INTO market (name, lat, lng, phone, choice, address, work_Time, comment)
 VALUES
     ('고래맥주창고 수지구청점', 37.322117581491526, 127.0948747094305, '031-261-0828', false, '경기 용인시 수지구', '오후 5시 영업', '매주 월요일 휴무'),
     ('고래맥주창고 수지죽전점', 37.3254276819496, 127.1136172500424, '031-261-0828', false, '경기 용인시 수지구 대지로', '오후 5시 영업', '매주 월요일 휴무'),
@@ -164,7 +164,7 @@ VALUES
     ('여수웅천점', 35.03803074180165, 127.47408841830051, '012-345-6789',  'false', '전남 순천시 서면 운평리 산 137', '오후 3시영업', '매주월요일휴무'),
     ('광주송정점', 35.08808187453227, 127.2192645160448, '0507-1338-3143','false', '광주 광산구 내상로 60 1층', '오후 3시영업', '매주월요일휴무');
 
-INSERT INTO REVIEW (CREATED_AT, LAST_MODIFIED_AT, CONTENT, RATING, TITLE, ITEM_ID, MEMBER_ID)
+INSERT INTO review (CREATED_AT, LAST_MODIFIED_AT, CONTENT, RATING, TITLE, ITEM_ID, MEMBER_ID)
 VALUES ('2023-05-16 15:46:58.400765', '2023-05-16 15:46:58.400765', '너무 맛있어서 사진 3개 첨부요!', 5.0, '와 맛있당!', 1, 1),
        ('2023-05-16 15:47:34.939605', '2023-05-16 15:47:34.939605', '너무 맛없어서 사진 없어', 2.0, '우웩!', 1, 1),
        ('2023-05-16 15:48:40.414441', '2023-05-16 15:48:40.414441', '싫어요!', 1.0, '맛업서!', 2, 1),
@@ -177,7 +177,7 @@ VALUES ('2023-05-16 15:46:58.400765', '2023-05-16 15:46:58.400765', '너무 맛�
        ('2023-05-16 15:52:00.000000', '2023-05-16 15:52:00.000000', '별로에요!', 2.0, '별로에요!', 1, 2);
 
 
-INSERT INTO REVIEW_IMAGE (CREATED_AT, LAST_MODIFIED_AT, FILE_PATH, IMAGE_NAME, ORI_NAME, REVIEW_ID)
+INSERT INTO review_image (CREATED_AT, LAST_MODIFIED_AT, FILE_PATH, IMAGE_NAME, ORI_NAME, REVIEW_ID)
 VALUES ('2023-05-16 15:46:58.445765', '2023-05-16 15:46:58.445765', 'review/', '1684572154449_test.png', 'test.png', 1),
 ('2023-05-16 15:46:58.450766', '2023-05-16 15:46:58.450766', 'review/', '1684572154912_test2.jpg', 'test2.jpg', 1),
 ('2023-05-16 15:46:58.451765', '2023-05-16 15:46:58.451765', 'review/', '1684572155085_test3.png', 'test3.png', 1),
@@ -194,7 +194,7 @@ VALUES
     ('2023-05-06 15:47:34.939605', '2023-05-06 15:47:34.939605', '2023-05-27','어드민', 'ORDER_COMPLETE', '010-1234-5678', 2, 1),
     ('2023-05-26 15:47:34.939605', '2023-05-26 15:47:34.939605', '2023-05-28','어드민', 'PICKUP_COMPLETE', '010-1234-5678', 1, 1);
 
-INSERT INTO  FAVORITE (favorite_id, item_id, member_id)
+INSERT INTO  favorite (favorite_id, item_id, member_id)
 VALUES (100, 1,1),
        (102, 2,1),
        (103, 3,1),
