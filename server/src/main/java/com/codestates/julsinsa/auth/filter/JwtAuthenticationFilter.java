@@ -47,12 +47,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
+        LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9); // 배포용
+        LocalDateTime nowPlus9Hours = now.plusHours(9); // 배포용
+
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("X-Member-ID", String.valueOf(member.getMemberId())); // 헤더에 멤버 아이디 추가
         response.setHeader("X-Password-Issued", member.isPasswordIssued() ? "true" : "false");
-        response.setHeader("exp", now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
-        response.setHeader("iat", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+//        response.setHeader("exp", now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+//        response.setHeader("iat", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));       // 로컬용
+
+        response.setHeader("exp", expirationDateTimePlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+        response.setHeader("iat", nowPlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
