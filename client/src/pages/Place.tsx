@@ -96,7 +96,8 @@ const Place = () => {
 
   const handleSelect = () => {
     dispatch(setMarker(select));
-    navigate("/payment", { state: { items: items } });
+    navigate(-1);
+    // , { state: { items: items } });
   };
 
   return (
