@@ -30,14 +30,11 @@ const SignupTerm = () => {
   const [alertMessage, setAlertMessage] = useState(""); // 알람 메시지 상태
   const [isRead, setIsRead] = useState([true, true, true]);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const accessToken = urlParams.get("access_token");
+  const refreshToken = urlParams.get("refresh_token");
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get("access_token");
-    const refreshToken = urlParams.get("refresh_token");
     if (accessToken && refreshToken) {
-      localStorage.setItem("authToken", accessToken); // 토큰 저장
-      localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
-
       axios
         .get(`${process.env.REACT_APP_API_URL}/members`, {
           headers: {
@@ -77,7 +74,7 @@ const SignupTerm = () => {
     }
   };
   const onClickToSelection = () => {
-    navigate("/signup");
+    navigate("/signup", { state: { access: accessToken, refresh: refreshToken } });
   };
 
   return (

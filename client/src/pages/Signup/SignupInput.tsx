@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
-//hooks
-import useAxiosAll from "@hooks/useAxiosAll";
+
 //components
 import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import Alert from "@components/Common/AlertModal";
@@ -34,7 +33,6 @@ const SignupInput = () => {
   const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
   const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
   const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
-  const [doAxios, data, err, ok] = useAxiosAll(); // axios 요청 응답 에러여부 확인
   const [type, setType] = useState<string | null>(null);
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value); // 이름 onChange 핸들러
@@ -105,21 +103,26 @@ const SignupInput = () => {
         phone: number,
         birthDate: birth,
       };
+      const location = useLocation();
+      const state = location.state;
 
+      // state.access와 state.refresh를 사용하여 데이터를 받을 수 있습니다.
+      const accessToken = state.access;
+      const refreshToken = state.refresh;
       axios
         .post(`${url}/members/oauth2-signup`, body, {
           headers: {
-            Authorization: localStorage.getItem("authToken"),
-            refresh: localStorage.getItem("refresh"),
+            Authorization: accessToken,
+            refresh: refreshToken,
             "ngrok-skip-browser-warning": "69420",
           },
         })
-        .then((res) => {
+        .then(() => {
           setAlertMessage("회원가입 성공!");
           setShowAlert(true);
           setIsOk(true);
         })
-        .catch((err) => {
+        .catch(() => {
           setAlertMessage("모든 정보를 기입하였는지 확인하세요!");
           setShowAlert(true);
         });
@@ -150,12 +153,12 @@ const SignupInput = () => {
               "ngrok-skip-browser-warning": "69420",
             },
           })
-          .then((res) => {
+          .then(() => {
             setAlertMessage("회원가입 성공!");
             setShowAlert(true);
             setIsOk(true);
           })
-          .catch((err) => {
+          .catch(() => {
             setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
             setShowAlert(true);
           });
@@ -202,6 +205,9 @@ const SignupInput = () => {
     }
     localStorage.removeItem("oauthSign");
   }, []);
+  const backToSelection = () => {
+    () => navigate("/signup");
+  };
   return (
     <Container>
       {showAlert ? (
@@ -302,8 +308,8 @@ const SignupInput = () => {
             </InfoTable>
           </MiddleContainer>
           <BottomContainer>
-            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup/term")}>
-              이전
+            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={backToSelection}>
+              회원가입 선택
             </ButtonLight>
             <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
               회원가입
