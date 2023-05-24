@@ -46,6 +46,8 @@
 |:---:|:---:|:---:|:---:|
 |<div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="aws" width="65" height="65" /></div>| <img alt="S3" src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1567064876/noticon/sb5llmvfubuceldbkmx8.png" width="65" height="65" >| <img alt="EC2" src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566914173/noticon/kos1xkevxtr81zgwvyoe.svg" width="65" height="65" >|<img alt="RDS" src="https://user-images.githubusercontent.com/116181346/222353450-5c052bbc-3fe8-4429-bc1c-65ffbc1404ed.png" width="65" height="65" > |
 
+![image](https://github.com/codestates-seb/seb43_main_006/assets/119927651/8ef4191d-a19d-4645-b0c7-7803072baba1)
+
 </br>
 
 ## ✉️ Git Commit Message Convention ✉️ 
