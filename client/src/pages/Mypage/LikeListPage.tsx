@@ -117,11 +117,11 @@ const LikePage = () => {
   const [likelist, setLikelist] = useState<Likeitem[]>([]);
   const [totalLength, setTotalLength] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const navigate = useNavigate();
   const [userName, setUserName] = useState<string>("");
+  const navigate = useNavigate();
 
-  const totalPages = Math.ceil(totalLength / 5); //나오는 총 페이지수
-  const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage); //각페이지에서 보이는내용
+  const totalPages = Math.ceil(totalLength / 5);
+  const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage);
 
   const LikeGetHandle = () => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -130,15 +130,14 @@ const LikePage = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
-
       .then((res) => {
         setLikelist(res.data.data);
         setTotalLength(res.data.data.length);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
@@ -158,8 +157,9 @@ const LikePage = () => {
       .then((res) => {
         LikeGetHandle();
       })
-      .catch((error) => console.log(error));
+      .catch((err) => console.error(err));
   };
+
   const handleDetailBtn = (itemId: number) => {
     navigate(`/alcohol/detail/${itemId}`);
   };
@@ -177,12 +177,12 @@ const LikePage = () => {
           headers: {
             "Content-Type": "application/json",
             Authorization: access_token,
-            "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+            "ngrok-skip-browser-warning": "69420",
           },
         },
       )
       .then((res) => navigate("/cart"))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
@@ -227,47 +227,51 @@ const LikePage = () => {
                     <StyledTh></StyledTh>
                   </tr>
                 </thead>
-                <tbody>
-                  {paginationData.map((el: Likeitem, idx: number) => {
-                    return (
-                      <tr key={idx}>
-                        <StyledTd>
-                          <img src={el.profile} onClick={() => handleDetailBtn(el.itemId)} />
-                        </StyledTd>
-                        <StyledTd onClick={() => handleDetailBtn(el.itemId)}>{el.titleKor}</StyledTd>
-                        <StyledTd>
-                          <PriceDisplay price={el.price} />
-                        </StyledTd>
-                        <StyledTd>
-                          <div className="button-container">
-                            <ButtonDark
-                              width="100px"
-                              height="50%"
-                              onClick={() => {
-                                handleCartBtn(el.itemId);
-                              }}
-                            >
-                              장바구니
-                            </ButtonDark>
-                          </div>
-                        </StyledTd>
-                        <StyledTd>
-                          <div className="button-container">
-                            <ButtonDark
-                              width="100px"
-                              height="50%"
-                              onClick={() => {
-                                handleDeleteBtn(el.itemId);
-                              }}
-                            >
-                              삭제
-                            </ButtonDark>
-                          </div>
-                        </StyledTd>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                {paginationData.length !== 0 ? (
+                  <tbody>
+                    {paginationData.map((el: Likeitem, idx: number) => {
+                      return (
+                        <tr key={idx}>
+                          <StyledTd>
+                            <img src={el.profile} onClick={() => handleDetailBtn(el.itemId)} />
+                          </StyledTd>
+                          <StyledTd onClick={() => handleDetailBtn(el.itemId)}>{el.titleKor}</StyledTd>
+                          <StyledTd>
+                            <PriceDisplay price={el.price} />
+                          </StyledTd>
+                          <StyledTd>
+                            <div className="button-container">
+                              <ButtonDark
+                                width="100px"
+                                height="50%"
+                                onClick={() => {
+                                  handleCartBtn(el.itemId);
+                                }}
+                              >
+                                장바구니
+                              </ButtonDark>
+                            </div>
+                          </StyledTd>
+                          <StyledTd>
+                            <div className="button-container">
+                              <ButtonDark
+                                width="100px"
+                                height="50%"
+                                onClick={() => {
+                                  handleDeleteBtn(el.itemId);
+                                }}
+                              >
+                                삭제
+                              </ButtonDark>
+                            </div>
+                          </StyledTd>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                ) : (
+                  <div>찜리스트가 없습니다.</div>
+                )}
               </StyledTable>
             </TotalTableStyled>
           </LikepageMainStyled>
