@@ -19,7 +19,7 @@ const FindPassword = () => {
   const [email, setEmail] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [doAxios, data, err, ok] = useAxiosAll();
+  const [doAxios, , err, ok] = useAxiosAll();
 
   const phoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     // 전화번호 000-0000-0000 형식으로 숫자만 입력되도록 함

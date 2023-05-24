@@ -82,7 +82,11 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
             <tr>
               <StyledTh>비밀번호변경</StyledTh>
               <StyledTd>
-                <input onChange={handlePassword} type="password" placeholder="비밀번호를 입력하세요"></input>
+                <input
+                  onChange={handlePassword}
+                  type="password"
+                  placeholder="변경할 비밀번호를 문자, 숫자, 특수기호를 결합해 8자 이상 작성하세요"
+                ></input>
               </StyledTd>
             </tr>
             <tr>
@@ -266,7 +270,7 @@ const CheckContainer = styled.div`
 const Modal = ({ email }: { email: string }) => {
   const [isOpen, setIsOpen] = useState(false); //false를 모달 닫힌걸로 생각함.
   const [password, setPassword] = useState("");
-  const [doAxios, data, err, ok] = useAxiosAll();
+  const [doAxios, , err, ok] = useAxiosAll();
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [isOk, setIsOk] = useState(false);
