@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
-import Modal from "@layout/Header/Logoutmodal";
 
 interface Orderitem {
   orderId: number;
@@ -141,7 +140,6 @@ const PigStyled = styled.div`
 
 const OrderTable = ({ orderlist }: OrderTableProps) => {
   const navigate = useNavigate();
-  const realOrderList = orderlist;
 
   const handleDetailBtn = (itemId: number) => {
     navigate(`/alcohol/detail/${itemId}`);
@@ -156,6 +154,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       state: { reviewCreate },
     });
   };
+  // const realOrderList = orderlist;
 
   const OrderPatchHandle = (orderId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -174,7 +173,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       .then((res) => {
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -246,18 +245,16 @@ const OrderPage = () => {
   const [choiceBackDay, setChoiceBackDay] = useState<string>(""); //조회할때 선택하는 날짜뒷부분
   const [filterlist, setFilterlist] = useState<Orderitem[]>([]); //정신없는 데이터를 새로 다듬은것.
   const [userName, setUserName] = useState<string>("");
-  const [pageNumber, setPageNumber] = useState<number>(1);
   //페이지네이션관련
   const totalPg = Math.ceil(totalLength / 5);
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
   //조회버튼관련
   const Search = () => {
-    console.log("a");
     const newData = orderlist.slice();
     const first = new Date(choiceFronDay);
     const second = new Date(choiceBackDay);
     setFilterlist(newData.filter((el) => new Date(el.orderedAt) >= first && new Date(el.orderedAt) <= second));
-    setPageNumber(1);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -286,7 +283,7 @@ const OrderPage = () => {
         setOrderlist(newData);
         setFilterlist(newData);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
 
     axios
       .get(`${process.env.REACT_APP_API_URL}/members`, {
@@ -330,8 +327,8 @@ const OrderPage = () => {
           </OrderlistStyled>
           <PigStyled>
             <Pagination
-              currentPage={pageNumber}
-              setCurrentPage={setPageNumber}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
               itemsPerPage={5}
               totalData={filterlist.length}
             ></Pagination>
