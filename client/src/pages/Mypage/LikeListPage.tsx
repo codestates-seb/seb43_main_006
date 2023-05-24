@@ -227,6 +227,7 @@ const LikePage = () => {
                     <StyledTh></StyledTh>
                   </tr>
                 </thead>
+
                 {paginationData.length !== 0 ? (
                   <tbody>
                     {paginationData.map((el: Likeitem, idx: number) => {
@@ -270,7 +271,11 @@ const LikePage = () => {
                     })}
                   </tbody>
                 ) : (
-                  <div>찜리스트가 없습니다.</div>
+                  <tbody>
+                    <tr>
+                      <td>찜리스트가 없습니다.</td>
+                    </tr>
+                  </tbody>
                 )}
               </StyledTable>
             </TotalTableStyled>
