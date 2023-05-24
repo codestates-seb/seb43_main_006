@@ -30,7 +30,8 @@ export default function FailPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  const authToken = localStorage.getItem("authToken");
+  const access_token = `Bearer ${authToken}`;
   useEffect(() => {
     // Check if the authToken is missing or expired
     if (!access_token || authTokenExpired(access_token)) {

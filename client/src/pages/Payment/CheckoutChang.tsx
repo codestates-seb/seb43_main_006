@@ -45,12 +45,12 @@ const CheckoutChang = () => {
     },
     { totalquantity: 0, totalPrice: 0 },
   );
-
-  const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  const authToken = localStorage.getItem("authToken");
+  const access_token = `Bearer ${authToken}`;
 
   useEffect(() => {
     // Check if the authToken is missing or expired
-    if (!access_token || authTokenExpired(access_token)) {
+    if (!authToken || authTokenExpired(authToken)) {
       navigate("/");
       return;
     }

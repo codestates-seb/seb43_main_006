@@ -90,10 +90,11 @@ const PaymentConfirm = () => {
   });
   // itemlist의 itemCarts 배열을 순회하면서 itemId와 quantity를 추출하여 itemOrders에 추가합니다.
 
-  const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+  const authToken = localStorage.getItem("authToken");
+  const access_token = `Bearer ${authToken}`;
   useEffect(() => {
     // Check if the authToken is missing or expired
-    if (!access_token || authTokenExpired(access_token)) {
+    if (!authToken || authTokenExpired(authToken)) {
       navigate("/");
       return;
     }
