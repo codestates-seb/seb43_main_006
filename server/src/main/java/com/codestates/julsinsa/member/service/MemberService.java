@@ -305,16 +305,12 @@ public class MemberService {
             String refreshToken = jwtTokenizer.delegateRefreshToken(member);
             Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
             LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-
-            LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9); // 배포용
-            LocalDateTime nowPlus9Hours = now.plusHours(9); // 배포용
+            LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(0); // 배포용
+            LocalDateTime nowPlus9Hours = now.plusHours(0); // 배포용
 
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
             response.setHeader("X-Member-ID", String.valueOf(member.getMemberId()));
-//            response.setHeader("exp", now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
-//            response.setHeader("iat", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
-
             response.setHeader("exp", expirationDateTimePlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
             response.setHeader("iat", nowPlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
             response.setStatus(HttpServletResponse.SC_OK);
