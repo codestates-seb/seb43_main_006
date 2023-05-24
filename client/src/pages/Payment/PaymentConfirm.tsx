@@ -55,6 +55,8 @@ const PaymentConfirm = () => {
   const amount = Number(urlParams.get("amount"));
   const navigate = useNavigate();
   const [itemOrders, setItemOrders] = useState<{ itemId: number; quantity: number }[]>([]);
+  const [itemCartdelete, setItemCartdelete] = useState<{ itemId: number }[]>([]);
+  const itemIds = itemCartdelete;
   const pickupDate = useSelector((state: DateProps) => {
     const date = state.dateState.Date;
     if (date) {
@@ -79,7 +81,10 @@ const PaymentConfirm = () => {
         const data: Datatype = response.data.data; // 받아온 데이터
         const itemOrders = data.itemCarts.map(({ itemId, quantity }) => ({ itemId, quantity }));
         setItemOrders(itemOrders);
+        const itemCartdelete = data.itemCarts.map(({ itemId }) => ({ itemId }));
+        setItemCartdelete(itemCartdelete);
       })
+
       .catch((err) => {
         console.log(err);
       });
@@ -126,6 +131,25 @@ const PaymentConfirm = () => {
       }
     }
   }, [itemOrders]);
+
+  useEffect(() => {
+    const itemIds = itemCartdelete.map((item) => item.itemId);
+    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    try {
+      const res = axios.delete(`${process.env.REACT_APP_API_URL}/cart`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420",
+        },
+        data: { itemIds },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  console.log(itemIds);
 
   return (
     <PaymentConfirmContainer>

@@ -60,7 +60,7 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
       setSelectedDate(date);
       setIsCalendarOpen(false);
       onDateChange(date);
-      dispatch(setDate(date ? date.toISOString() : null));
+      dispatch(setDate(date ? date.getTime() : null));
     }
   };
 
