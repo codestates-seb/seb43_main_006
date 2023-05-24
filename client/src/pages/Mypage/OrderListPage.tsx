@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { ButtonDark } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
-import Modal from "@layout/Header/Logoutmodal";
 
 interface Orderitem {
   orderId: number;
@@ -141,7 +140,6 @@ const PigStyled = styled.div`
 
 const OrderTable = ({ orderlist }: OrderTableProps) => {
   const navigate = useNavigate();
-  const realOrderList = orderlist;
 
   const handleDetailBtn = (itemId: number) => {
     navigate(`/alcohol/detail/${itemId}`);
@@ -156,6 +154,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       state: { reviewCreate },
     });
   };
+  const realOrderList = orderlist;
 
   const OrderPatchHandle = (orderId: number) => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
@@ -174,7 +173,7 @@ const OrderTable = ({ orderlist }: OrderTableProps) => {
       .then((res) => {
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -252,7 +251,6 @@ const OrderPage = () => {
   const pageData = filterlist.slice(5 * (currentPage - 1), 5 * currentPage);
   //조회버튼관련
   const Search = () => {
-    console.log("a");
     const newData = orderlist.slice();
     const first = new Date(choiceFronDay);
     const second = new Date(choiceBackDay);
@@ -286,7 +284,7 @@ const OrderPage = () => {
         setOrderlist(newData);
         setFilterlist(newData);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
 
     axios
       .get(`${process.env.REACT_APP_API_URL}/members`, {
@@ -330,8 +328,8 @@ const OrderPage = () => {
           </OrderlistStyled>
           <PigStyled>
             <Pagination
-              currentPage={pageNumber}
-              setCurrentPage={setPageNumber}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
               itemsPerPage={5}
               totalData={filterlist.length}
             ></Pagination>
