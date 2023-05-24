@@ -47,8 +47,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
-        LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(9); // 배포용
-        LocalDateTime nowPlus9Hours = now.plusHours(9); // 배포용
+        LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(0); // 배포용
+        LocalDateTime nowPlus9Hours = now.plusHours(0); // 배포용
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
