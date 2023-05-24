@@ -17,11 +17,42 @@ export interface CartItemsProps {
   itemCarts: Itemtype[];
 }
 
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    // authToken is missing
+    return true; // treat as expired
+  }
+
+  // authToken is present
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds; // true if expired, false if valid
+}
+
+function decodeAuthToken(authToken: string) {
+  // Implement the logic to decode the authToken
+  // You can use a JWT decoding library or your own implementation
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
+
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItemsProps>({ itemCarts: [] });
 
   const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+
+  useEffect(() => {
+    // Check if the authToken is missing or expired
+    if (!access_token || authTokenExpired(access_token)) {
+      navigate("/");
+      return;
+    }
+  });
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/cart`, {

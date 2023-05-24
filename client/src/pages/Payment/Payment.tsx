@@ -13,6 +13,30 @@ import useAxiosAll from "@hooks/useAxiosAll";
 import { useSelector } from "react-redux";
 import { stateProps } from "./Paymentpayinfo";
 import Modal from "@layout/Header/Logoutmodal";
+
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    // authToken is missing
+    return true; // treat as expired
+  }
+
+  // authToken is present
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds; // true if expired, false if valid
+}
+
+function decodeAuthToken(authToken: string) {
+  // Implement the logic to decode the authToken
+  // You can use a JWT decoding library or your own implementation
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
+
 const Payment = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
@@ -25,6 +49,15 @@ const Payment = () => {
     setUserInfo(data as UserProps);
   };
 
+  const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+
+  useEffect(() => {
+    // Check if the authToken is missing or expired
+    if (!access_token || authTokenExpired(access_token)) {
+      navigate("/");
+      return;
+    }
+  });
   useEffect(() => {
     window.scrollTo(0, 0);
     doAxios("get", "/members", {}, true);
