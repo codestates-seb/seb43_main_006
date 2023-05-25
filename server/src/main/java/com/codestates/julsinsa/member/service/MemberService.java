@@ -207,8 +207,6 @@ public class MemberService {
         return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-    // 메일 인증 비동기로 구현
-    @Async
     public void sendEmail(EmailRequest request) {
 
         verifyExistsEmail(request.getEmail());
