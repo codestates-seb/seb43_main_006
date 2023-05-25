@@ -51,8 +51,8 @@ const SignupInput = () => {
     ) {
       age = age - 1;
     }
-    if (age <= 18) {
-      // 만 18 이상인지 아닌지 확인
+    if (age <= 19) {
+      // 만 19 이상인지 아닌지 확인
       setAlertMessage("성인이 아닙니다!");
       setShowAlert(true);
     } else {
@@ -114,7 +114,6 @@ const SignupInput = () => {
           headers: {
             Authorization: accessToken,
             refresh: refreshToken,
-            "ngrok-skip-browser-warning": "69420",
           },
         })
         .then(() => {
@@ -150,7 +149,6 @@ const SignupInput = () => {
             headers: {
               Authorization: localStorage.getItem("authToken"),
               refresh: localStorage.getItem("refresh"),
-              "ngrok-skip-browser-warning": "69420",
             },
           })
           .then(() => {
@@ -305,8 +303,8 @@ const SignupInput = () => {
             </InfoTable>
           </MiddleContainer>
           <BottomContainer>
-            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup/term")}>
-              이전
+            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup")}>
+              회원가입 선택
             </ButtonLight>
             <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
               회원가입
