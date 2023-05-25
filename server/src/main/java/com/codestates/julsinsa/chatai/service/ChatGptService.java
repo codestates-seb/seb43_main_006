@@ -4,6 +4,7 @@ import com.codestates.julsinsa.chatai.config.ChatGptConfig;
 import com.codestates.julsinsa.chatai.dto.ChatGptRequestDto;
 import com.codestates.julsinsa.chatai.dto.ChatGptResponseDto;
 import com.codestates.julsinsa.chatai.dto.QuestionRequestDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,13 +16,15 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ChatGptService {
 
+    @Value("${api.key}")
+    public String API_KEY;
     private static RestTemplate restTemplate = new RestTemplate();
 
     //  HttpEntity를 생성하여 ChatGptConfig 클래스에 정의된 media type, authorization, api key 정보를 설정
     public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
-        headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + ChatGptConfig.API_KEY);
+        headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + API_KEY);
         return new HttpEntity<>(requestDto, headers);
     }
 
