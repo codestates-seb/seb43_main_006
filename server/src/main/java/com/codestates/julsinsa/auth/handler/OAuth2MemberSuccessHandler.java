@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 @RequiredArgsConstructor
@@ -36,11 +37,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-        String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,facebook,kakao
+        String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,naver,kakao
 
         String email;
-
-        if(clientRegistrationId.equals("kakao")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
+        if(clientRegistrationId.equals("naver")){ // 네이버 로그인시 , 이메일 가져오는 곳이 다르므로
+            Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+            email = (String) naverAccount.get("email");
+        } else if(clientRegistrationId.equals("kakao")){ // 카카오 로그인시 , 이메일 가져오는 곳이 다르므로
             Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
             email = (String) kakaoAccount.get("email");
         }else{
@@ -155,14 +158,15 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     //회원가입시 실행
     private URI createSignupURI(String accessToken, String refreshToken,Member member) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        LocalDateTime issuedDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
-        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        LocalDateTime expirationDateTime = now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).plusHours(0);
+        LocalDateTime issuedDateTime = now.plusHours(0);
+
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
-        queryParams.add("exp", formattedExpirationDateTime);
-        queryParams.add("iat", issuedDateTime.format(formatter));
+        queryParams.add("exp", expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+        queryParams.add("iat", issuedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
         queryParams.add("X-Member-ID", String.valueOf(member.getMemberId()));
 
         return UriComponentsBuilder
@@ -178,14 +182,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     // 로그인
     private URI createURI(String accessToken, String refreshToken,Member member) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        LocalDateTime issuedDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
-        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        LocalDateTime expirationDateTime = now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).plusHours(0);
+        LocalDateTime issuedDateTime = now.plusHours(0);
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
-        queryParams.add("exp", formattedExpirationDateTime);
-        queryParams.add("iat", issuedDateTime.format(formatter));
+        queryParams.add("exp", expirationDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+        queryParams.add("iat", issuedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
         queryParams.add("X-Member-ID", String.valueOf(member.getMemberId()));
 
         return UriComponentsBuilder

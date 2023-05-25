@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,16 +45,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
         Date expirationDateTime = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-        LocalDateTime issuedDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss");
-        String formattedExpirationDateTime = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss").format(expirationDateTime);
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        LocalDateTime expirationDateTimePlus9Hours = expirationDateTime.toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().plusHours(0); // 배포용
+        LocalDateTime nowPlus9Hours = now.plusHours(0); // 배포용
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("X-Member-ID", String.valueOf(member.getMemberId())); // 헤더에 멤버 아이디 추가
         response.setHeader("X-Password-Issued", member.isPasswordIssued() ? "true" : "false");
-        response.setHeader("exp", formattedExpirationDateTime);
-        response.setHeader("iat", issuedDateTime.format(formatter));
+//        response.setHeader("exp", now.plusMinutes(jwtTokenizer.getAccessTokenExpirationMinutes()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+//        response.setHeader("iat", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));       // 로컬용
+
+        response.setHeader("exp", expirationDateTimePlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
+        response.setHeader("iat", nowPlus9Hours.format(DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:ss")));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
