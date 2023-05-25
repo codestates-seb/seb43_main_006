@@ -128,10 +128,16 @@ const Login = () => {
               회원 로그인
             </Title>
             <div className="flex-row">
-              <div className="flex-col">
+              <form className="flex-col">
                 <input placeholder="이메일" type="email" onChange={userNameHandler} onKeyDown={handleKeyDown} />
-                <input placeholder="비밀번호" type="password" onChange={passwordHandler} onKeyDown={handleKeyDown} />
-              </div>
+                <input
+                  placeholder="비밀번호"
+                  type="password"
+                  autoComplete="off"
+                  onChange={passwordHandler}
+                  onKeyDown={handleKeyDown}
+                />
+              </form>
               <div className="button">
                 <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
                   로그인
