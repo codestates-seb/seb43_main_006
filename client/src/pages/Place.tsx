@@ -14,11 +14,10 @@ const TotalStyled = styled.section`
   background-color: #f7f7f7;
 `;
 const PlaceContainer = styled.div`
-  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
 `;
@@ -76,13 +75,17 @@ const Place = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => {
@@ -97,7 +100,6 @@ const Place = () => {
   const handleSelect = () => {
     dispatch(setMarker(select));
     navigate(-1);
-    // , { state: { items: items } });
   };
 
   return (
@@ -106,8 +108,7 @@ const Place = () => {
         <PlaceContainer>
           <MapBodyStyled>
             <MapArticleStyled>
-              픽업 매장을 선택하세요.
-              {select?.name === null ? null : <p>{select?.name}</p>}
+              {select && select?.name !== null ? <p>{select?.name}</p> : <p>픽업매장을 선택하세요.</p>}
             </MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
               <MapComponent shoplist={shoplist} setSelect={setSelect} />
