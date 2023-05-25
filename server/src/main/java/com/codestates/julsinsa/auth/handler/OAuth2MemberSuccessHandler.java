@@ -37,7 +37,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-        String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,facebook,kakao
+        String clientRegistrationId = oauthToken.getAuthorizedClientRegistrationId(); // 어디서 정보 가져왔는지 확인 google,naver,kakao
 
         String email;
         if(clientRegistrationId.equals("naver")){ // 네이버 로그인시 , 이메일 가져오는 곳이 다르므로
