@@ -60,32 +60,47 @@ public class ImageService {
                 || contentType.equals("image/jpg") || contentType.equals("image/svg") || contentType.equals("image/png"));
     }
 
-    // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
-    // createAndUploadFile 메소드는 MultipartFile을 File 객체로 변환하고, S3에 업로드하기 위해 파일을 임시로 생성하여 S3로 업로드하고,
-    // 업로드한 파일의 경로를 리턴하는 메소드이다. 파일 생성, 업로드 후에는 생성한 파일을 삭제한다.
+//    // 임시 파일 생성 & 업데이트 & 임시 파일 삭제
+//    // createAndUploadFile 메소드는 MultipartFile을 File 객체로 변환하고, S3에 업로드하기 위해 파일을 임시로 생성하여 S3로 업로드하고,
+//    // 업로드한 파일의 경로를 리턴하는 메소드이다. 파일 생성, 업로드 후에는 생성한 파일을 삭제한다.
+//    private String createAndUploadFile(MultipartFile mf, String saveFileName, String filePath) {
+//        // 파일 생성
+//        File uploadFile = null;
+//        try {
+//            Optional<File> uploadFileOpt = fileManager.convertMultipartFileToFile(mf);
+//            if (uploadFileOpt.isEmpty()) {
+//                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_CONVERTED);
+//            }
+//            uploadFile = uploadFileOpt.get();
+//
+//            // 파일 업로드
+//            String saveFilePath = uploadImageS3.upload(uploadFile, filePath, saveFileName);
+//
+//            return File.separator + saveFilePath;
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_UPLOADED);
+//        } finally {
+//            // 파일 삭제
+//            if (uploadFile != null) {
+//                uploadFile.delete();
+//            }
+//        }
+//    }
     private String createAndUploadFile(MultipartFile mf, String saveFileName, String filePath) {
-        // 파일 생성
-        File uploadFile = null;
         try {
-            Optional<File> uploadFileOpt = fileManager.convertMultipartFileToFile(mf);
-            if (uploadFileOpt.isEmpty()) {
-                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_CONVERTED);
-            }
-            uploadFile = uploadFileOpt.get();
+            byte[] fileData = mf.getBytes();
 
             // 파일 업로드
-            String saveFilePath = uploadImageS3.upload(uploadFile, filePath, saveFileName);
+            String saveFilePath = uploadImageS3.upload(fileData, filePath, saveFileName);
 
             return File.separator + saveFilePath;
 
         } catch (IOException e) {
             e.printStackTrace();
             throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_UPLOADED);
-        } finally {
-            // 파일 삭제
-            if (uploadFile != null) {
-                uploadFile.delete();
-            }
         }
     }
+
 }
