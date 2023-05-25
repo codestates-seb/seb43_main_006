@@ -111,7 +111,7 @@ const FindEmail = () => {
               width="150px"
               height="45px"
               fontSize="18px"
-              borderRadious="2px"
+              borderRadius="2px"
               border="solid 1px lightgray"
               onClick={() => navigate("/findpassword")}
             >
@@ -121,7 +121,7 @@ const FindEmail = () => {
               width="150px"
               height="45px"
               fontSize="18px"
-              borderRadious="2px"
+              borderRadius="2px"
               onClick={() => navigate("/login")}
             >
               로그인하기

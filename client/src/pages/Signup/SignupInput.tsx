@@ -166,6 +166,7 @@ const SignupInput = () => {
   };
   const getCode = () => {
     // 인증 코드 요청 axios
+
     const body = {
       email,
     };
@@ -246,7 +247,7 @@ const SignupInput = () => {
                   <SingleInfo>
                     <div className="name email">이메일</div>
                     <div className="code-pos">
-                      <ButtonDark width="60px" height="30px" fontSize="12px" borderRadious="30px" onClick={getCode}>
+                      <ButtonDark width="60px" height="30px" fontSize="12px" borderRadius="30px" onClick={getCode}>
                         인증요청
                       </ButtonDark>
                     </div>
@@ -260,7 +261,7 @@ const SignupInput = () => {
                   </SingleInfo>
                   <SingleInfo>
                     <div className="name password">비밀번호</div>
-                    <div className="input-container">
+                    <form className="input-container">
                       <input
                         autoComplete="off"
                         type="password"
@@ -268,11 +269,11 @@ const SignupInput = () => {
                         onChange={onPassword}
                       />
                       {isDisabled ? <ValidPassword>문자, 숫자, 특수기호를 결합해 8자 이상</ValidPassword> : null}
-                    </div>
+                    </form>
                   </SingleInfo>
                   <SingleInfo>
                     <div className="name">비밀번호 확인</div>
-                    <div className="input-container">
+                    <form className="input-container">
                       <input
                         autoComplete="off"
                         className={isDisabled ? "disable" : ""}
@@ -281,7 +282,7 @@ const SignupInput = () => {
                         disabled={isDisabled}
                         onChange={onPasswordCheck}
                       />
-                    </div>
+                    </form>
                   </SingleInfo>
                 </>
               )}
@@ -316,7 +317,7 @@ const SignupInput = () => {
             <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup")}>
               회원가입 선택
             </ButtonLight>
-            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
+            <ButtonDark width="150px" height="45px" fontSize="18px" onClick={onClickSign}>
               회원가입
             </ButtonDark>
           </BottomContainer>
@@ -394,7 +395,7 @@ const InfoTable = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   width: 100%;
 `;
-const SingleInfo = styled.form`
+const SingleInfo = styled.div`
   position: relative;
   width: 100%;
   display: flex;

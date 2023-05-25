@@ -82,7 +82,10 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
             <tr>
               <StyledTh>비밀번호변경</StyledTh>
               <StyledTd>
-                <input onChange={handlePassword} type="password"></input>
+                <form>
+                  <input onChange={handlePassword} autoComplete="off" type="password"></input>
+                </form>
+
                 {isDisabled ? (
                   <p style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
                     변경할 비밀번호를 문자, 숫자, 특수기호를 결합해 8자 이상 작성하세요
@@ -93,12 +96,15 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
             <tr>
               <StyledTh>비밀번호변경확인</StyledTh>
               <StyledTd>
-                <input
-                  disabled={isDisabled}
-                  onChange={handlePasswordCheck}
-                  type="password"
-                  placeholder="비밀번호를 먼저 올바르게 입력하세요"
-                ></input>
+                <form>
+                  <input
+                    disabled={isDisabled}
+                    onChange={handlePasswordCheck}
+                    type="password"
+                    placeholder="비밀번호를 먼저 올바르게 입력하세요"
+                    autoComplete="off"
+                  ></input>
+                </form>
               </StyledTd>
             </tr>
           </>
@@ -112,6 +118,9 @@ const TotalStyled = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f7f7f7;
+  form {
+    width: 100%;
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -179,6 +188,9 @@ const ModalContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  form {
+    width: 100%;
+  }
 `;
 
 //모달뜰때 뒤배경
@@ -266,6 +278,10 @@ const CheckContainer = styled.div`
     padding: 10px;
     font-size: 18px;
   }
+  form {
+    width: 100%;
+    ${({ theme }) => theme.common.flexCenterCol};
+  }
 `;
 const Modal = ({ email }: { email: string }) => {
   const [isOpen, setIsOpen] = useState(false); //false를 모달 닫힌걸로 생각함.
@@ -313,10 +329,10 @@ const Modal = ({ email }: { email: string }) => {
           <ModalBackdrop onClick={openModalHandler}>
             <ModalView onClick={(event) => event.stopPropagation()}>
               <WindowCloseBtn onClick={openModalHandler}>X</WindowCloseBtn>
-              <div className="password-container">
+              <form className="password-container">
                 비밀번호
                 <input type="password" onChange={passwordHandler}></input>
-              </div>
+              </form>
               <p>정말로 탈퇴하시겠습니까?</p>
               <CloseBtn>
                 <ModalCloseBtn onClick={DeleteHandler}>YES</ModalCloseBtn>
@@ -376,6 +392,7 @@ const ChangeInfoPage = () => {
       "email" in data
     ) {
       if (data.oauth2Registered) {
+        setIsPass(true);
         setIsOauth(true);
       }
       const formData = {
@@ -471,6 +488,7 @@ const ChangeInfoPage = () => {
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       CheckAxios();
     }
   };
@@ -488,14 +506,16 @@ const ChangeInfoPage = () => {
               <ButtonDark width="200px" height="40px" onClick={patchOnclick}>
                 정보수정
               </ButtonDark>
-              {userInfo ? <Modal email={userInfo.email}></Modal> : null}
+              {userInfo && !isOauth ? <Modal email={userInfo.email}></Modal> : null}
             </InfoBodydownStyled>
           </InfoContainer>
         </TotalStyled>
       ) : (
         <CheckContainer>
           <div className="title">비밀번호를 입력하세요!</div>
-          <input onKeyDown={handleKeyDown} type="password" onChange={checkPasswordHandle} />
+          <form>
+            <input autoComplete="off" onKeyDown={handleKeyDown} type="password" onChange={checkPasswordHandle} />
+          </form>
           <ButtonDark width="100px" height="40px" onClick={checkHandler}>
             확인
           </ButtonDark>

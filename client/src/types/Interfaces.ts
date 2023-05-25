@@ -27,7 +27,7 @@ export interface BtnProps {
   fontSize?: string;
   fontWeight?: string;
   border?: string;
-  borderRadious?: string;
+  borderRadius?: string;
   onClick: () => void;
   disabled?: boolean;
 }
