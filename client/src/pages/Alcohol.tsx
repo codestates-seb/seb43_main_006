@@ -6,6 +6,7 @@ import { getItemsList } from "@services/api";
 // components
 import AlcoholList from "@components/AlcoholPage/AlcoholList";
 import SortingUtils from "@components/AlcoholPage/SortingUtils";
+import ItemSearch from "@components/AlcoholPage/ItemSearch";
 
 // 전체적인 컨테이너
 const AlcoholContainer = styled.section`
@@ -17,12 +18,12 @@ const AlcoholContainer = styled.section`
 
 // 주류 카테고리 Box
 const AlcoholTabNavBox = styled.div`
-  margin-top: 3rem;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   width: 100%;
   display: flex;
+  justify-content: space-between;
   font-size: 15px;
-  height: 40px;
+  height: 60px;
 
   @media screen and (max-width: 600px) {
     font-size: 13px;
@@ -31,10 +32,11 @@ const AlcoholTabNavBox = styled.div`
 
 // 주류 카테고리 NavBar
 const TabNav = styled.ul`
+  width: 50%;
   display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
   cursor: pointer;
 
@@ -51,7 +53,26 @@ const TabNav = styled.ul`
   }
 `;
 
+const SearchTextbox = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+  max-width: ${({ theme }) => theme.widthSize.contentMax};
+  justify-content: flex-start;
+  padding-top: 1rem;
+
+  .string_text {
+    font-size: 23px;
+    font-weight: 700;
+    color: #a84448;
+  }
+  .default_text {
+    padding-top: 5px;
+  }
+`;
+
 const Alcohol = () => {
+  const [searchWord, setSearchWord] = useState<string>(""); // 검색 키워드
   const [data, setData] = useState<AlcoholListData[] | null>(null);
   const [totalData, setTotalData] = useState<number | null>(null);
 
@@ -63,6 +84,7 @@ const Alcohol = () => {
   const [sortBy, setSortBy] = useState<string>("latest");
 
   useEffect(() => {
+    setSearchWord("");
     const fetchData = async () => {
       const response = await getItemsList(currentPage, size, sortBy, tabCategories[currentTab]);
       try {
@@ -99,7 +121,23 @@ const Alcohol = () => {
             );
           })}
         </TabNav>
+
+        {typeof totalData === "number" ? (
+          <ItemSearch
+            setSearchWord={setSearchWord}
+            setData={setData}
+            currentPage={currentPage}
+            setTotalData={setTotalData}
+            size={size}
+          />
+        ) : null}
       </AlcoholTabNavBox>
+      {searchWord ? (
+        <SearchTextbox>
+          <span className="string_text">{searchWord}</span>
+          <span className="default_text">에 대한 검색결과</span>
+        </SearchTextbox>
+      ) : null}
       {typeof totalData === "number" ? (
         <>
           <SortingUtils totalData={totalData} setSortBy={setSortBy} />

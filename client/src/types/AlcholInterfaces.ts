@@ -107,3 +107,12 @@ export interface RequestData {
   content: string;
   rating: number;
 }
+
+// 아이템 검색 props
+export interface SearchProps {
+  setSearchWord: React.Dispatch<React.SetStateAction<string>>;
+  setData: React.Dispatch<React.SetStateAction<AlcoholListData[] | null>>;
+  currentPage: number;
+  setTotalData: React.Dispatch<React.SetStateAction<number | null>>;
+  size: number;
+}

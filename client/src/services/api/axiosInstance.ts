@@ -6,6 +6,7 @@ const instance = axios.create({
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "69420",
   },
 });
 

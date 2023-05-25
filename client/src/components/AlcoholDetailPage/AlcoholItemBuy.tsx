@@ -116,6 +116,11 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [isModal, setIsModal] = useState<boolean>(false);
 
+  const currentDate: Date = new Date();
+  const currentDateNum: number = Math.floor(currentDate.getTime() / 1000);
+
+  const expDataNum: number | null = Number(localStorage.getItem("exp"));
+
   const handleQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
   };
@@ -123,8 +128,12 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
   const navigate = useNavigate();
 
   const HandlerClickCart = async () => {
-    await createItemCart(data.itemId, quantity);
-    setIsModal(true);
+    if (expDataNum && expDataNum > currentDateNum) {
+      await createItemCart(data.itemId, quantity);
+      setIsModal(true);
+    } else {
+      navigate("/login");
+    }
   };
 
   const HandlerClickOrder = (): void => {
