@@ -299,6 +299,11 @@ const Modal = ({ email }: { email: string }) => {
   };
   const DeleteHandler = () => {
     doAxios("delete", "/members", { username: email, password });
+    localStorage.removeItem("authToken"); // 토큰 지우기
+    localStorage.removeItem("refresh"); // refresh 지우기
+    localStorage.removeItem("memberId"); //
+    localStorage.removeItem("exp");
+    localStorage.removeItem("iat");
   };
   useEffect(() => {
     if (err) {
