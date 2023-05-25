@@ -82,11 +82,12 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
             <tr>
               <StyledTh>비밀번호변경</StyledTh>
               <StyledTd>
-                <input
-                  onChange={handlePassword}
-                  type="password"
-                  placeholder="변경할 비밀번호를 문자, 숫자, 특수기호를 결합해 8자 이상 작성하세요"
-                ></input>
+                <input onChange={handlePassword} type="password"></input>
+                {isDisabled ? (
+                  <p style={{ color: "red", marginTop: "5px", fontSize: "12px" }}>
+                    변경할 비밀번호를 문자, 숫자, 특수기호를 결합해 8자 이상 작성하세요
+                  </p>
+                ) : null}
               </StyledTd>
             </tr>
             <tr>
