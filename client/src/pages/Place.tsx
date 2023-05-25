@@ -76,6 +76,10 @@ const Place = () => {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const King = async () => {
     await axios
       .get(`${process.env.REACT_APP_API_URL}/marts`, {
@@ -97,17 +101,15 @@ const Place = () => {
   const handleSelect = () => {
     dispatch(setMarker(select));
     navigate(-1);
-    // , { state: { items: items } });
   };
-
+  console.log(select);
   return (
     <>
       <TotalStyled>
         <PlaceContainer>
           <MapBodyStyled>
             <MapArticleStyled>
-              픽업 매장을 선택하세요.
-              {select?.name === null ? null : <p>{select?.name}</p>}
+              {select && select?.name !== null ? <p>{select?.name}</p> : <p>픽업매장을 선택하세요.</p>}
             </MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
               <MapComponent shoplist={shoplist} setSelect={setSelect} />
