@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -48,9 +49,16 @@ public class OrderService {
             Item item = findItem.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ITEM_NOT_FOUND));
             itemOrder.setItem(item);
 
+            int orderedQuantity = itemOrderDto.getQuantity();
+            int currentQuantity = item.getQuantity();
+            int updatedQuantity = currentQuantity - orderedQuantity;
+            item.setQuantity(updatedQuantity);
+
             itemOrders.add(itemOrder);
         }
         order.setItemOrders(itemOrders);
+
+        itemRepository.saveAll(itemOrders.stream().map(ItemOrder::getItem).collect(Collectors.toList()));
 
         return orderRepository.save(order);
     }
