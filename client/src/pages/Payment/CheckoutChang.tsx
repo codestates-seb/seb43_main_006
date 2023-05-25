@@ -3,10 +3,34 @@ import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ItemOrder } from "../../types/AlcholInterfaces";
+import { useNavigate } from "react-router-dom";
 
 const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    // authToken is missing
+    return true; // treat as expired
+  }
+
+  // authToken is present
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds; // true if expired, false if valid
+}
+
+function decodeAuthToken(authToken: string) {
+  // Implement the logic to decode the authToken
+  // You can use a JWT decoding library or your own implementation
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
 const CheckoutChang = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const userInfo = location.state ? location.state.userInfo : [];
   const items: ItemOrder[] = location.state ? location.state.items : [];
@@ -21,6 +45,16 @@ const CheckoutChang = () => {
     },
     { totalquantity: 0, totalPrice: 0 },
   );
+  const authToken = localStorage.getItem("authToken");
+  const access_token = `Bearer ${authToken}`;
+
+  useEffect(() => {
+    // Check if the authToken is missing or expired
+    if (!authToken || authTokenExpired(authToken)) {
+      navigate("/");
+      return;
+    }
+  });
 
   useEffect(() => {
     // ------ 클라이언트 키로 객체 초기화 ------

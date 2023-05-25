@@ -213,8 +213,6 @@ const Header: React.FC = () => {
     return { exp };
   }
 
-  // const access_token = `Bearer ${localStorage.getItem("authToken")}`;
-
   const handleLogout = () => {
     // 로컬 스토리지에서 authToken 제거
     localStorage.removeItem("authToken");

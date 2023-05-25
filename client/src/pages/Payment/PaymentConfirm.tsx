@@ -47,6 +47,29 @@ const PaymentConfirmContainer = styled.section`
   }
 `;
 
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    // authToken is missing
+    return true; // treat as expired
+  }
+
+  // authToken is present
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds; // true if expired, false if valid
+}
+
+function decodeAuthToken(authToken: string) {
+  // Implement the logic to decode the authToken
+  // You can use a JWT decoding library or your own implementation
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
+
 const PaymentConfirm = () => {
   const [searchParams] = useSearchParams();
   const urlParams = new URLSearchParams(window.location.search);
@@ -66,6 +89,16 @@ const PaymentConfirm = () => {
     return null;
   });
   // itemlist의 itemCarts 배열을 순회하면서 itemId와 quantity를 추출하여 itemOrders에 추가합니다.
+
+  const authToken = localStorage.getItem("authToken");
+  const access_token = `Bearer ${authToken}`;
+  useEffect(() => {
+    // Check if the authToken is missing or expired
+    if (!authToken || authTokenExpired(authToken)) {
+      navigate("/");
+      return;
+    }
+  });
 
   const fetchData = async () => {
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
