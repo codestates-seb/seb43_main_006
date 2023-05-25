@@ -55,11 +55,13 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
         header = {
           "Content-Type": "application/json",
           Authorization: access_token,
+          "ngrok-skip-browser-warning": "69420",
         };
       } else {
         // 토큰 미포함
         header = {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
         };
       }
     }

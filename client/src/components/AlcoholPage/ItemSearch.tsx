@@ -69,21 +69,23 @@ const ItemSearch = ({ setSearchWord, setData, currentPage, setTotalData, size }:
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchResult, setSearchResult] = useState<AlcoholListData[] | null>(null);
   const [searchTotal, setSearchTotal] = useState<number>(0);
-  const [selectedResultIdx, setSelectedResultIdx] = useState(-1);
 
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
+  useEffect(() => {
+    const fecthData = async () => {
+      if (searchInput !== "") {
+        try {
+          const res = await getItemSearch(currentPage, size, searchInput);
 
-    if (searchInput !== "") {
-      try {
-        const res = await getItemSearch(currentPage, size, searchInput);
-
-        setSearchResult(res.data.data);
-        setSearchTotal(res.data.pageInfo.totalElements);
-      } catch (err) {
-        console.log(err);
+          setSearchResult(res.data.data);
+          setSearchTotal(res.data.pageInfo.totalElements);
+        } catch {}
       }
-    }
+    };
+    fecthData();
+  }, [searchInput]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

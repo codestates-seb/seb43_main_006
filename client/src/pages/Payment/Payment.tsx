@@ -49,11 +49,10 @@ const Payment = () => {
     setUserInfo(data as UserProps);
   };
   const authToken = localStorage.getItem("authToken");
-  const access_token = `Bearer ${authToken}`;
   useEffect(() => {
     // Check if the authToken is missing or expired
     if (!authToken || authTokenExpired(authToken)) {
-      navigate("/");
+      navigate("/login");
       return;
     }
   });

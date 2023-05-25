@@ -29,7 +29,6 @@ const ClickFavoriteItem = ({ itemId, icon: Icon, color, activeColor, size }: Cli
   const fetchData = useCallback(async () => {
     const response = await getItemLike(itemId);
     try {
-      console.log(response.data.data);
       setIsFavorited(response.data.data.like);
     } catch (err) {
       console.log(err);

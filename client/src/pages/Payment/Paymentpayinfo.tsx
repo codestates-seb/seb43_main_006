@@ -300,7 +300,7 @@ const Payinfostyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 40%;
     height: 100%;
   }
   & div.pickupplace {
@@ -312,7 +312,9 @@ const Payinfostyle = styled.div`
     min-width: 162px;
     max-width: 181px;
     background-color: rgba(217, 217, 217, 0.5);
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    border-left: 1px solid rgba(60, 60, 60, 0.1);
+    border-right: 1px solid rgba(60, 60, 60, 0.1);
     font-weight: bold;
   }
 
@@ -321,7 +323,7 @@ const Payinfostyle = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 70%;
+    width: 80%;
     height: 100%;
   }
 
@@ -341,7 +343,9 @@ const Payinfostyle = styled.div`
     align-items: center;
     justify-content: center;
     background-color: rgba(217, 217, 217, 0.5);
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    border-left: 1px solid rgba(60, 60, 60, 0.1);
+    border-right: 1px solid rgba(60, 60, 60, 0.1);
     font-weight: bold;
   }
   & div.placename2 {
@@ -436,12 +440,11 @@ const Payinfostyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70%;
-    height: 50%;
+    width: 60%;
     border: 1px solid rgba(60, 60, 60, 0.1);
     & section {
       width: 100%;
-      max-height: 600px;
+      max-height: 690px;
       margin-top: 10px;
       overflow: hidden;
     }

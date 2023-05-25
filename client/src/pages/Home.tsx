@@ -1,6 +1,6 @@
 import maintop from "@assets/images/Maintop.png";
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5, Homelayout4 } from "./Homelayout";
 import { ButtonDark } from "@components/Common/Button";
@@ -57,10 +57,10 @@ const Home: React.FC = () => {
   return (
     <HomeContainer y={y}>
       <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="space" style={{ opacity: y > 1400 ? (y > 2100 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 1400 ? (y > 2200 ? "0" : "1") : "0" }}>
         <Homelayout1 />
       </div>
-      <div className="space" style={{ opacity: y > 2600 ? (y > 3300 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 2600 ? (y > 3400 ? "0" : "1") : "0" }}>
         <Homelayout2 />
       </div>
       {/* <Gradient /> */}
@@ -68,10 +68,10 @@ const Home: React.FC = () => {
         <Homelayout3 />
       </div>
       {/* <Gradientout /> */}
-      <div className="space" style={{ opacity: y > 4700 ? (y > 6300 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 4700 ? (y > 5500 ? "0" : "1") : "0" }}>
         <Homelayout4 />
       </div>
-      <div className="space" style={{ opacity: y > 6000 ? (y > 7000 ? "0" : "1") : "0" }}>
+      <div className="space" style={{ opacity: y > 5700 ? (y > 6700 ? "0" : "1") : "0" }}>
         <Homelayout5 />
       </div>
       <div className="bt">
