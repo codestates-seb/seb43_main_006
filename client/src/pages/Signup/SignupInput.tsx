@@ -34,6 +34,11 @@ const SignupInput = () => {
   const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
   const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
   const [type, setType] = useState<string | null>(null);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const accessToken = urlParams.get("access_token");
+  const refreshToken = urlParams.get("refresh_token");
+
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value); // 이름 onChange 핸들러
   };
@@ -147,8 +152,8 @@ const SignupInput = () => {
         axios
           .post(`${process.env.REACT_APP_API_URL}/members/signup`, body, {
             headers: {
-              Authorization: localStorage.getItem("authToken"),
-              refresh: localStorage.getItem("refresh"),
+              Authorization: accessToken,
+              refresh: refreshToken,
             },
           })
           .then(() => {
@@ -168,6 +173,7 @@ const SignupInput = () => {
     const body = {
       email,
     };
+    console.log(body);
     axios
       .post(`${url}/members/email`, body, {
         headers: {
@@ -179,10 +185,15 @@ const SignupInput = () => {
         setAlertMessage("이메일 코드가 전송되었습니다!");
         setShowAlert(true);
       })
-      .catch(() => {
+      .catch((err) => {
         // 인증 코드 요청 실패시 알람창
-        setAlertMessage("없는 이메일 입니다!");
-        setShowAlert(true);
+        if (err.response.status === 409) {
+          setAlertMessage("이미 가입된 이메일 입니다!");
+          setShowAlert(true);
+        } else {
+          setAlertMessage("없는 이메일 입니다!");
+          setShowAlert(true);
+        }
       });
   };
   const okGotoLogin = () => {
