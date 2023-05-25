@@ -40,7 +40,6 @@ const SignupTerm = () => {
           headers: {
             "Content-Type": "application/json",
             Authorization: accessToken,
-            "ngrok-skip-browser-warning": "69420",
           },
         })
         .then(() => {
@@ -104,7 +103,7 @@ const SignupTerm = () => {
           <div className="check-container">
             <div className="front">
               <input onChange={() => clickCheck(0)} type="checkbox" />
-              <p className="red">(필수) </p>만 18세 이상입니다.
+              <p className="red">(필수) </p>만 19세 이상입니다.
             </div>
           </div>
           <div className="check-container">
