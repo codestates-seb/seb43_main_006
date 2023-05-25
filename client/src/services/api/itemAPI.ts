@@ -39,6 +39,7 @@ export const getItemReview = (itemId: number) => {
 export const getReviewDetail = (itemId: number, reviewId: number) => {
   return instance.get(`/items/${itemId}/reviews/${reviewId}`);
 };
+
 export const deleteItemReview = (itemId: number, reviewId: number) => {
   return instance.delete(`/items/${itemId}/reviews/${reviewId}`);
 };
@@ -56,5 +57,16 @@ export const createItemReview = (itemId: number, formData: FormData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+  });
+};
+
+export const getItemSearch = (page: number, size: number, title: string) => {
+  return instance.get(`/items/search`, {
+    params: {
+      page,
+      size,
+      title,
+    },
+    headers: { "No-Auth": "True" },
   });
 };
