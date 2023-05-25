@@ -64,10 +64,9 @@ const SearchTextbox = styled.div`
   .string_text {
     font-size: 23px;
     font-weight: 700;
-    color: #a84448;
   }
   .default_text {
-    padding-top: 5px;
+    padding: 5px;
   }
 `;
 
@@ -121,7 +120,6 @@ const Alcohol = () => {
             );
           })}
         </TabNav>
-
         {typeof totalData === "number" ? (
           <ItemSearch
             setSearchWord={setSearchWord}
