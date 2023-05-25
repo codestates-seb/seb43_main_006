@@ -73,7 +73,7 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
       });
 
       const content =
-        '<div className="overlayContainer" style="background-color: red;">' +
+        '<div className="overlayContainer" style="background-color: white; border:3px solid black">' +
         `<div style="color: black;" >${el.name}</div>` +
         `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
