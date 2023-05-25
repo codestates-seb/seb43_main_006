@@ -20,7 +20,7 @@ type StepProps = {
 
 const SignupInput = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [name, setName] = useState(""); // 이름 input 상태
   const [nick, setNick] = useState(""); // 닉네임 input 상태
   const [birth, setBirth] = useState(""); // 생일 input 상태
@@ -34,10 +34,6 @@ const SignupInput = () => {
   const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
   const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
   const [type, setType] = useState<string | null>(null);
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const accessToken = urlParams.get("access_token");
-  const refreshToken = urlParams.get("refresh_token");
 
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value); // 이름 onChange 핸들러
@@ -101,19 +97,17 @@ const SignupInput = () => {
 
   const onClickSign = () => {
     // 회원가입 버튼 클릭 시
-    if (type === "oauth") {
+    const accessToken = location.state.access;
+    const refreshToken = location.state.refresh;
+
+    if (type === "oauth" && accessToken && refreshToken) {
       const body = {
         realName: name,
         displayName: nick,
         phone: number,
         birthDate: birth,
       };
-      const location = useLocation();
-      const state = location.state;
 
-      // state.access와 state.refresh를 사용하여 데이터를 받을 수 있습니다.
-      const accessToken = state.access;
-      const refreshToken = state.refresh;
       axios
         .post(`${url}/members/oauth2-signup`, body, {
           headers: {
@@ -134,9 +128,11 @@ const SignupInput = () => {
       if (password !== passwordCheck) {
         // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
         setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
+        setShowAlert(true);
       } else if (!(nick && code && name && birth && number)) {
         // 모든 정보가 입력이 안되었을 경우
         setAlertMessage("모든 정보가 입력되어야 합니다!");
+        setShowAlert(true);
       } else {
         // 요청 body
         const body = {
@@ -173,7 +169,7 @@ const SignupInput = () => {
     const body = {
       email,
     };
-    console.log(body);
+
     axios
       .post(`${url}/members/email`, body, {
         headers: {
@@ -263,19 +259,22 @@ const SignupInput = () => {
                     </div>
                   </SingleInfo>
                   <SingleInfo>
-                    <div className="name">비밀번호</div>
+                    <div className="name password">비밀번호</div>
                     <div className="input-container">
                       <input
+                        autoComplete="off"
                         type="password"
                         placeholder="문자, 숫자, 특수문자를 결합해 8자 이상"
                         onChange={onPassword}
                       />
+                      {isDisabled ? <ValidPassword>문자, 숫자, 특수기호를 결합해 8자 이상</ValidPassword> : null}
                     </div>
                   </SingleInfo>
                   <SingleInfo>
                     <div className="name">비밀번호 확인</div>
                     <div className="input-container">
                       <input
+                        autoComplete="off"
                         className={isDisabled ? "disable" : ""}
                         type="password"
                         placeholder={isDisabled ? "비밀번호를 먼저 올바르게 입력하세요" : ""}
@@ -354,6 +353,12 @@ const InputContainer = styled.div`
   }
   padding-bottom: 60px;
 `;
+const ValidPassword = styled.p`
+  color: red;
+  margin-top: 5px;
+  font-size: 12px;
+  padding: 5px 10px;
+`;
 
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
@@ -389,7 +394,7 @@ const InfoTable = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   width: 100%;
 `;
-const SingleInfo = styled.div`
+const SingleInfo = styled.form`
   position: relative;
   width: 100%;
   display: flex;
@@ -414,6 +419,9 @@ const SingleInfo = styled.div`
     }
     &.email {
       height: 90px;
+    }
+    &.password {
+      height: 87px;
     }
   }
   .code-pos {

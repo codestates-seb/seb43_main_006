@@ -84,7 +84,7 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
               <StyledTd>
                 <input onChange={handlePassword} type="password"></input>
                 {isDisabled ? (
-                  <p style={{ color: "red", marginTop: "5px", fontSize: "12px" }}>
+                  <p style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
                     변경할 비밀번호를 문자, 숫자, 특수기호를 결합해 8자 이상 작성하세요
                   </p>
                 ) : null}
@@ -107,7 +107,6 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
     </StyledTable>
   );
 };
-
 const TotalStyled = styled.div`
   display: flex;
   justify-content: center;
@@ -363,8 +362,8 @@ const ChangeInfoPage = () => {
 
   useEffect(() => {
     if (err) {
-      setAlertMessage("로그인 후 접근해주세요!");
-      setShowAlert(true);
+      localStorage.setItem("needLogin", "needLogin");
+      navigate("/login");
     }
   }, [err]);
   useEffect(() => {
