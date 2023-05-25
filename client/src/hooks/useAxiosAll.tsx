@@ -22,7 +22,7 @@ const useAxiosAll = (): [DoAxiosFunction, object, boolean, boolean] => {
       if (expSeconds < nowSeconds) {
         // 만료시간이 지난 경우
         // 엑세스 토큰 갱신
-        const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+
         await axios
           .post(
             `${process.env.REACT_APP_API_URL}/members/token`,
