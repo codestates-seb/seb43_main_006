@@ -79,7 +79,6 @@ const PaymentConfirm = () => {
   const navigate = useNavigate();
   const [itemOrders, setItemOrders] = useState<{ itemId: number; quantity: number }[]>([]);
   const [itemCartdelete, setItemCartdelete] = useState<{ itemId: number }[]>([]);
-  const itemIds = itemCartdelete;
   const pickupDate = useSelector((state: DateProps) => {
     const date = state.dateState.Date;
     if (date) {
@@ -91,11 +90,10 @@ const PaymentConfirm = () => {
   // itemlist의 itemCarts 배열을 순회하면서 itemId와 quantity를 추출하여 itemOrders에 추가합니다.
 
   const authToken = localStorage.getItem("authToken");
-  const access_token = `Bearer ${authToken}`;
   useEffect(() => {
     // Check if the authToken is missing or expired
     if (!authToken || authTokenExpired(authToken)) {
-      navigate("/");
+      navigate("/login");
       return;
     }
   });
@@ -169,7 +167,7 @@ const PaymentConfirm = () => {
     const itemIds = itemCartdelete.map((item) => item.itemId);
     const access_token = `Bearer ${localStorage.getItem("authToken")}`;
     try {
-      const res = axios.delete(`${process.env.REACT_APP_API_URL}/cart`, {
+      axios.delete(`${process.env.REACT_APP_API_URL}/cart`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -177,12 +175,10 @@ const PaymentConfirm = () => {
         },
         data: { itemIds },
       });
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
   });
-  console.log(itemIds);
 
   return (
     <PaymentConfirmContainer>
@@ -193,7 +189,7 @@ const PaymentConfirm = () => {
         <div className="reason">{`결제 금액: ${Number(searchParams.get("amount")).toLocaleString()}원`}</div>
         <div className="button">
           <ButtonLight width="160px" height="60px" fontSize="18px" onClick={() => navigate("/")}>
-            뒤로가기
+            홈으로
           </ButtonLight>
         </div>
       </div>

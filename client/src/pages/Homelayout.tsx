@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components";
-import samplingimg from "../assets/images/samplingimg.png";
 
 interface H2props {
   primary?: boolean;
@@ -9,12 +8,17 @@ export function Homelayout1() {
   return (
     <Homelayoutstyled1>
       <div className="glad">
-        <div>Welcome</div>
-        <div>To</div>
+        <div className="glad-line">
+          <div>Welcome</div>
+          <div>To</div>
+        </div>
         <Heading>
           <BouncingText>매주 매일 매년 함께</BouncingText>
         </Heading>
-        <div>Meju Meju</div>
+        <div className="glad-line">
+          <div>Meju</div>
+          <div>Meju</div>
+        </div>
       </div>
     </Homelayoutstyled1>
   );
@@ -28,21 +32,29 @@ const Homelayoutstyled1 = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   .glad {
     padding-top: 500px;
-    width: 100%;
-
+    width: 70%;
+    font-size: 48px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
   }
-  .smallglad {
-    font-size: 16px;
-    padding-left: 2%;
-    padding-right: 2%;
-    font-weight: bold;
+  .glad-line {
     display: flex;
-    align-items: flex-end;
-    height: 100px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  @media (max-width: 1516px) {
+    .glad-line {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 909px) {
+    .glad {
+      font-size: 32px;
+    }
   }
 `;
 

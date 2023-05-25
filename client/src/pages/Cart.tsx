@@ -50,7 +50,7 @@ const Cart = () => {
   useEffect(() => {
     // Check if the authToken is missing or expired
     if (!authToken || authTokenExpired(authToken)) {
-      navigate("/");
+      navigate("/login");
       return;
     }
   });
@@ -64,7 +64,6 @@ const Cart = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setCartItems(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -114,8 +113,7 @@ const Cart = () => {
           "ngrok-skip-browser-warning": "69420",
         },
       })
-      .then((res) => {
-        console.log("Patch request successful:", res.data);
+      .then(() => {
         navigate("/payment", { state: { items: checkedItems } });
       })
       .catch((err) => {
@@ -200,7 +198,7 @@ const Cart = () => {
     setIsCheckedItems(newCheckedItems);
 
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_API_URL}/cart`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/cart`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: access_token,
@@ -208,12 +206,10 @@ const Cart = () => {
         },
         data: { itemIds: selectedIds.map((id) => parseInt(id)) },
       });
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log();
 
   return (
     <CartContainer isEmpty={cartItems.itemCarts.length === 0}>
