@@ -78,6 +78,7 @@ const ItemSearch = ({ setSearchWord, setData, currentPage, setTotalData, size }:
 
           setSearchResult(res.data.data);
           setSearchTotal(res.data.pageInfo.totalElements);
+          console.log(res.data.data);
         } catch {}
       }
     };
@@ -90,10 +91,11 @@ const ItemSearch = ({ setSearchWord, setData, currentPage, setTotalData, size }:
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    handleSearchItem();
   };
 
   const handlePreviewOnclick = (item: AlcoholListData) => {
-    setTotalData(searchTotal);
+    setTotalData([item].length);
     setData([item]);
     setSearchInput("");
     setSearchResult(null);

@@ -85,6 +85,8 @@ const Alcohol = () => {
   useEffect(() => {
     setSearchWord("");
     const fetchData = async () => {
+      console.log(currentPage, size, sortBy);
+
       const response = await getItemsList(currentPage, size, sortBy, tabCategories[currentTab]);
       try {
         const { data } = response;
@@ -97,7 +99,7 @@ const Alcohol = () => {
     };
 
     fetchData();
-  }, [size, currentPage, currentTab, sortBy]);
+  }, [currentTab, sortBy, currentPage]);
 
   const handleClickTab = (idx: number): void => {
     setCurrentTab(idx);
