@@ -84,7 +84,7 @@ const ChatComponent = () => {
         </GptContainer>
       ) : (
         <BtnContainer>
-          <ButtonDark width="70px" height="70px" fontSize="18px" borderRadious="50%" onClick={() => setIsOpen(true)}>
+          <ButtonDark width="70px" height="70px" fontSize="18px" borderRadius="50%" onClick={() => setIsOpen(true)}>
             Chat
           </ButtonDark>
         </BtnContainer>

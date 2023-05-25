@@ -141,10 +141,10 @@ const SignupTerm = () => {
           {detail[2] ? <Term pos={2} setIsRead={setIsRead} /> : null}
         </MiddleContainer>
         <BottomContainer>
-          <ButtonLight width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickToSelection}>
+          <ButtonLight width="150px" height="45px" fontSize="18px" onClick={onClickToSelection}>
             이전
           </ButtonLight>
-          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickNext}>
+          <ButtonDark width="150px" height="45px" fontSize="18px" onClick={onClickNext}>
             다음
           </ButtonDark>
         </BottomContainer>
