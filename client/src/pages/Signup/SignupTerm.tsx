@@ -66,14 +66,14 @@ const SignupTerm = () => {
   };
   const onClickNext = () => {
     if (isAgreed[0] && isAgreed[1] && isAgreed[2] && isAgreed[3]) {
-      navigate("/signup/input");
+      navigate("/signup/input", { state: { access: accessToken, refresh: refreshToken } });
     } else {
       setAlertMessage("모든 약관을 동의해 주세요!");
       setIsNext(true);
     }
   };
   const onClickToSelection = () => {
-    navigate("/signup", { state: { access: accessToken, refresh: refreshToken } });
+    navigate("/signup");
   };
 
   return (
