@@ -83,6 +83,17 @@ public class OrderService {
 
         if (order.getOrderStatus() == Order.OrderStatus.ORDER_COMPLETE) {
             order.setOrderStatus(Order.OrderStatus.ORDER_CANCEL);
+
+            List<ItemOrder> itemOrders = order.getItemOrders();
+
+            for (ItemOrder itemOrder : itemOrders) {
+                Item item = itemOrder.getItem();
+                int orderedQuantity = itemOrder.getQuantity();
+                int currentQuantity = item.getQuantity();
+                int updatedQuantity = currentQuantity + orderedQuantity;
+                item.setQuantity(updatedQuantity);
+            }
+
         }
         else if (order.getOrderStatus() == Order.OrderStatus.ORDER_CANCEL) {
             throw new BusinessLogicException(ExceptionCode.ORDER_ALREADY_CANCEL);
