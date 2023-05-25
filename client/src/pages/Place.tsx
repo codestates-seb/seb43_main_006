@@ -14,11 +14,10 @@ const TotalStyled = styled.section`
   background-color: #f7f7f7;
 `;
 const PlaceContainer = styled.div`
-  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
 `;
@@ -86,7 +85,7 @@ const Place = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => {
@@ -102,7 +101,7 @@ const Place = () => {
     dispatch(setMarker(select));
     navigate(-1);
   };
-  console.log(select);
+
   return (
     <>
       <TotalStyled>
