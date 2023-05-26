@@ -12,7 +12,6 @@ import maintop7 from "@assets/images/happyday.jpg";
 import { useNavigate } from "react-router";
 
 const Homefirst = () => {
-  const [currentImage, setCurrentImage] = useState(1);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTakingPhoto, setIsTakingPhoto] = useState(false);
   const navigate = useNavigate();
@@ -50,6 +49,10 @@ const Homefirst = () => {
     const randomItemId = Math.floor(Math.random() * 24) + 1;
     return randomItemId;
   };
+  const getRandomImageNumber = () => {
+    return Math.floor(Math.random() * 7) + 1;
+  };
+  const [currentImage, setCurrentImage] = useState(getRandomImageNumber());
   return (
     <HomefirstLayout>
       {isTakingPhoto && <div className="camera-animation" />}
