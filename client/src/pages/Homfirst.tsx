@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import iphone from "@assets/images/iphone.png";
-import maintop1 from "@assets/images/maintop.png";
-import maintop2 from "@assets/images/mainmiddle.png";
+import maintop1 from "@assets/images/maintop3.png";
+import maintop2 from "@assets/images/maintop2.png";
 import maintop3 from "@assets/images/mainbottom.jpg";
 import maintop4 from "@assets/images/wines.jpg";
 import maintop5 from "@assets/images/cocktail.jpg";
