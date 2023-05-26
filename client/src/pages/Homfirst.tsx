@@ -65,7 +65,8 @@ const Homefirst = () => {
           <img src={getImageSource(currentImage)} alt="Maintopsall" className="Maintopsmall" />
 
           <div className="clickhere">
-            사진 버튼을 누를 시 <br />
+            사진 촬영을 누르면
+            <br />
             랜덤한 주류를
             <br />
             추천해드립니다!
