@@ -229,12 +229,24 @@ const HomefirstLayout = styled.div`
     color: #a84448;
   }
 
-  .camera-animation {
+  /* .camera-animation {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: black;
+    opacity: 0;
+    animation: blinkAnimation 0.3s ease;
+    z-index: 999;
+  } */
+  .camera-animation {
+    position: absolute;
+    top: 61%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    width: 33%;
+    height: 43.5%;
     background-color: black;
     opacity: 0;
     animation: blinkAnimation 0.1s ease;
