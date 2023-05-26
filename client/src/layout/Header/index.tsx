@@ -37,9 +37,11 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   }
   @media screen and (max-width: 860px) {
     left: 3%;
-    justify-content: space-between;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 767px) {
+    & div.tag {
+      width: 50%;
+    }
   }
 `;
 
@@ -48,6 +50,8 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
   position: fixed;
   transition: all 0.3s ease-out;
   z-index: 999;
+  display: flex;
+  justify-content: space-between;
   & div.modal {
     color: #222222;
     border: 5px solid white;
@@ -89,9 +93,9 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
 const Ulist = styled.div<IHeaderContainerProps>`
   display: flex;
   position: relative;
-  padding-left: 7%;
-  justify-content: space-around;
-  width: 80%;
+  padding-left: 10%;
+  padding-right: 5%;
+  width: 110%;
   transition: all 0.3s ease-out;
   font-family: Cafe24Anemone, sans-serif, Arial;
 
@@ -110,64 +114,49 @@ const Ulist = styled.div<IHeaderContainerProps>`
 
   & ul {
     & li {
-      padding-top: 5%;
-      font-size: 15px;
+      padding-top: 4%;
+      font-size: 14px;
       font-weight: 400;
       flex-direction: row;
     }
   }
 
   .banner1 {
-    width: 8%;
+    width: 20%;
   }
   .banner2 {
-    width: 8%;
+    width: 20%;
   }
 
   .banner3 {
-    padding-left: 0px;
-    width: 9%;
+    width: 20%;
   }
   .banner4 {
-    padding-left: 0px;
-    width: 8%;
+    width: 20%;
   }
   .banner6 {
-    padding-top: 0px;
-    width: 7%;
+    width: 20%;
     &:hover {
       color: #a84448;
       cursor: pointer;
     }
   }
-  @media screen and (max-width: 1920px) {
-  }
-  @media screen and (max-width: 1440px) {
-    width: 75%;
-  }
-
-  @media screen and (max-width: 860px) {
-    width: 30%;
-    height: 80px;
-    padding-top: 0px;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
     & ul {
-      display: none;
-    }
-    .banner6 {
-      display: flex;
-      font-size: 22px;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
+      font-size: 15px;
+      & li {
+        font-size: 13px;
+      }
     }
   }
-  @media screen and (max-width: 600px) {
-    .banner6 {
-      display: flex;
-      font-size: 16px;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    & ul {
+      font-size: 13px;
+      & li {
+        font-size: 10px;
+      }
     }
   }
 `;
@@ -179,7 +168,6 @@ const StyledList = styled.li<IHeaderContainerProps>`
     color: #a84448;
     cursor: pointer;
   }
-  width: 100px;
 `;
 
 const Header: React.FC = () => {

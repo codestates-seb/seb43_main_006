@@ -74,11 +74,9 @@ const Homefirst = () => {
           <button className="Camera" onClick={Randomnavigate}></button>
         </div>
         <button className="prevButton" onClick={handlePrevImage}>
-          {" "}
           &lt;
         </button>
         <button className="nextButton" onClick={handleNextImage}>
-          {" "}
           &gt;
         </button>
       </div>
@@ -106,6 +104,7 @@ const HomefirstLayout = styled.div`
     top: 50%;
     left: 50%;
     z-index: 1;
+    width: 25.5%;
   }
 
   .iphone {
@@ -139,11 +138,12 @@ const HomefirstLayout = styled.div`
     left: 60%;
     background-color: black;
     z-index: 3;
-    width: 30%;
+    width: 36%;
     height: 10%;
     font-family: WanjuRegular;
     display: flex;
     align-items: center;
+    border-radius: 50%;
   }
 
   .Camera {
@@ -189,6 +189,26 @@ const HomefirstLayout = styled.div`
     border: none;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  @media (max-width: 1023px) {
+    .title {
+      font-size: 20px;
+    }
+    .clickhere {
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .title {
+      font-size: 16px;
+      top: -37%;
+    }
+    .clickhere {
+      font-size: 8px;
+      width: 40%;
+    }
   }
 
   .prevButton {
