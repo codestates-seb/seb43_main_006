@@ -24,8 +24,10 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   height: 120px;
 
   & div.tag {
-    padding-top: ${({ hovering }) => (hovering === "true" ? "35px" : "25px")};
+    padding-top: ${({ hovering }) => (hovering === "true" ? "30px" : "22px")};
     transition: all 0.3s ease-out;
+
+    filter: drop-shadow(2px 4px 2px black);
     &:hover {
       cursor: pointer;
     }
@@ -45,8 +47,7 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
   width: 100%;
   position: fixed;
   transition: all 0.3s ease-out;
-  z-index: 1;
-
+  z-index: 999;
   & div.modal {
     color: #222222;
     border: 5px solid white;
@@ -56,16 +57,13 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
     y > 0 || hovering === "true"
       ? css`
           height: 120px;
-          color: #222222;
           background-image: url(${Headerback});
-          opacity: 0.8;
         `
       : css`
           height: 0px;
           color: rgba(245, 245, 245, 1);
           background-image: none;
-          opacity: 1;
-          color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
+          color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"};
         `}
 `;
 
@@ -74,15 +72,15 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
     ${({ hovering, y, pathname }) =>
       y > 0 || hovering === "true"
         ? css`
-            fill: #222222;
+            fill: #a84448;
           `
         : css`
-         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
+         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
           `}
-
     transition: all 0.5s ease-out;
+
     &:hover {
-      fill: #a84448;
+      fill: black;
       cursor: pointer;
       transition: all 0.3 ease;
     }
@@ -95,6 +93,9 @@ const Ulist = styled.div<IHeaderContainerProps>`
   justify-content: space-around;
   width: 80%;
   transition: all 0.3s ease-out;
+  font-family: Cafe24Anemone, sans-serif, Arial;
+
+  filter: drop-shadow(2px 2px 1px grey);
 
   padding-top: ${({ hovering }) => (hovering === "true" ? "20px" : "30px")};
   & ul {
@@ -102,6 +103,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     display: flex;
     flex-direction: column;
     font-weight: bold;
+
     font-size: ${({ hovering }) => (hovering === "true" ? "18px" : "21px")};
     transition: all 0.5s ease-out;
   }
@@ -109,7 +111,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
   & ul {
     & li {
       padding-top: 5%;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 400;
       flex-direction: row;
     }
@@ -298,7 +300,7 @@ const Header: React.FC = () => {
                 </StyledList>
               </ul>
               <ul className="banner4">
-                고객센터
+                Help
                 <StyledList
                   className="li7"
                   hovering={(isHover || false).toString()}

@@ -1,9 +1,9 @@
-import maintop from "@assets/images/Maintop.png";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Homelayout1, Homelayout2, Homelayout3, Homelayout5, Homelayout4 } from "./Homelayout";
 import { ButtonDark } from "@components/Common/Button";
+import Homefirst from "./Homfirst";
 
 interface MainscrollProps {
   y: number;
@@ -56,24 +56,12 @@ const Home: React.FC = () => {
   }, []);
   return (
     <HomeContainer y={y}>
-      <img src={maintop} alt="Main Top" className="Maintop" />
-      <div className="space" style={{ opacity: y > 1400 ? (y > 2200 ? "0" : "1") : "0" }}>
-        <Homelayout1 />
-      </div>
-      <div className="space" style={{ opacity: y > 2600 ? (y > 3400 ? "0" : "1") : "0" }}>
-        <Homelayout2 />
-      </div>
-      {/* <Gradient /> */}
-      <div className="space" style={{ opacity: y > 3800 ? (y > 4400 ? "0" : "1") : "0" }}>
-        <Homelayout3 />
-      </div>
-      {/* <Gradientout /> */}
-      <div className="space" style={{ opacity: y > 4700 ? (y > 5500 ? "0" : "1") : "0" }}>
-        <Homelayout4 />
-      </div>
-      <div className="space" style={{ opacity: y > 5700 ? (y > 6700 ? "0" : "1") : "0" }}>
-        <Homelayout5 />
-      </div>
+      <Homefirst />
+      <Homelayout1 />
+      <Homelayout2 />
+      <Homelayout3 />
+      <Homelayout4 />
+      <Homelayout5 />
       <div className="bt">
         <ButtonDark
           width="160px"
@@ -97,29 +85,9 @@ const HomeContainer = styled.section<MainscrollProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 100%;
+  width: 100%;
   font-size: 96px;
 
-  * {
-    transition: all 0.5s ease;
-  }
-  .Maintop {
-    position: relative;
-    top: 0;
-    padding-top: 0;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  & div.space {
-    height: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 600px;
-  }
   & div.bt {
     margin-top: 300px;
     margin-bottom: 100px;
