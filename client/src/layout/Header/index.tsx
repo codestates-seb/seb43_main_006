@@ -24,8 +24,10 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   height: 120px;
 
   & div.tag {
-    padding-top: ${({ hovering }) => (hovering === "true" ? "35px" : "25px")};
+    padding-top: ${({ hovering }) => (hovering === "true" ? "30px" : "22px")};
     transition: all 0.3s ease-out;
+
+    filter: drop-shadow(2px 4px 2px black);
     &:hover {
       cursor: pointer;
     }
@@ -35,9 +37,11 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   }
   @media screen and (max-width: 860px) {
     left: 3%;
-    justify-content: space-between;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 767px) {
+    & div.tag {
+      width: 50%;
+    }
   }
 `;
 
@@ -45,8 +49,9 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
   width: 100%;
   position: fixed;
   transition: all 0.3s ease-out;
-  z-index: 1;
-
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
   & div.modal {
     color: #222222;
     border: 5px solid white;
@@ -56,16 +61,13 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
     y > 0 || hovering === "true"
       ? css`
           height: 120px;
-          color: #222222;
           background-image: url(${Headerback});
-          opacity: 0.8;
         `
       : css`
           height: 0px;
           color: rgba(245, 245, 245, 1);
           background-image: none;
-          opacity: 1;
-          color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
+          color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"};
         `}
 `;
 
@@ -74,15 +76,15 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
     ${({ hovering, y, pathname }) =>
       y > 0 || hovering === "true"
         ? css`
-            fill: #222222;
+            fill: #a84448;
           `
         : css`
-         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"}; rgba(245, 245, 245, 1)" : "color: #222222;"
+         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
           `}
-
     transition: all 0.5s ease-out;
+
     &:hover {
-      fill: #a84448;
+      fill: black;
       cursor: pointer;
       transition: all 0.3 ease;
     }
@@ -91,10 +93,13 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
 const Ulist = styled.div<IHeaderContainerProps>`
   display: flex;
   position: relative;
-  padding-left: 7%;
-  justify-content: space-around;
-  width: 80%;
+  padding-left: 10%;
+  padding-right: 5%;
+  width: 110%;
   transition: all 0.3s ease-out;
+  font-family: Cafe24Anemone, sans-serif, Arial;
+
+  filter: drop-shadow(2px 2px 1px grey);
 
   padding-top: ${({ hovering }) => (hovering === "true" ? "20px" : "30px")};
   & ul {
@@ -102,70 +107,56 @@ const Ulist = styled.div<IHeaderContainerProps>`
     display: flex;
     flex-direction: column;
     font-weight: bold;
+
     font-size: ${({ hovering }) => (hovering === "true" ? "18px" : "21px")};
     transition: all 0.5s ease-out;
   }
 
   & ul {
     & li {
-      padding-top: 5%;
-      font-size: 16px;
+      padding-top: 4%;
+      font-size: 14px;
       font-weight: 400;
       flex-direction: row;
     }
   }
 
   .banner1 {
-    width: 8%;
+    width: 20%;
   }
   .banner2 {
-    width: 8%;
+    width: 20%;
   }
 
   .banner3 {
-    padding-left: 0px;
-    width: 9%;
+    width: 20%;
   }
   .banner4 {
-    padding-left: 0px;
-    width: 8%;
+    width: 20%;
   }
   .banner6 {
-    padding-top: 0px;
-    width: 7%;
+    width: 20%;
     &:hover {
       color: #a84448;
       cursor: pointer;
     }
   }
-  @media screen and (max-width: 1920px) {
-  }
-  @media screen and (max-width: 1440px) {
-    width: 75%;
-  }
-
-  @media screen and (max-width: 860px) {
-    width: 30%;
-    height: 80px;
-    padding-top: 0px;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
     & ul {
-      display: none;
-    }
-    .banner6 {
-      display: flex;
-      font-size: 22px;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
+      font-size: 15px;
+      & li {
+        font-size: 13px;
+      }
     }
   }
-  @media screen and (max-width: 600px) {
-    .banner6 {
-      display: flex;
-      font-size: 16px;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    & ul {
+      font-size: 13px;
+      & li {
+        font-size: 10px;
+      }
     }
   }
 `;
@@ -177,7 +168,6 @@ const StyledList = styled.li<IHeaderContainerProps>`
     color: #a84448;
     cursor: pointer;
   }
-  width: 100px;
 `;
 
 const Header: React.FC = () => {
@@ -298,7 +288,7 @@ const Header: React.FC = () => {
                 </StyledList>
               </ul>
               <ul className="banner4">
-                고객센터
+                Help
                 <StyledList
                   className="li7"
                   hovering={(isHover || false).toString()}

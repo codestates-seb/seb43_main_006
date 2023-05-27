@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components";
-
 interface H2props {
   primary?: boolean;
 }
@@ -30,8 +29,8 @@ const Homelayoutstyled1 = styled.div`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.fontColor};
+  height: 100vh;
   .glad {
-    padding-top: 500px;
     width: 70%;
     font-size: 48px;
     display: flex;
@@ -71,7 +70,7 @@ export function Homelayout2() {
 
 const Homelayoutstyled2 = styled.div`
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -161,11 +160,9 @@ const Homelayoutstyled3 = styled.div`
   width: 100%;
   display: flex;
   font-size: 30px;
-  width: 100%;
-  padding-bottom: 100px;
   align-items: center;
   flex-direction: column;
-  height: 400px;
+  height: 100vh;
   .maju_list {
     padding-left: 40px;
     padding-bottom: 10%;
@@ -206,7 +203,6 @@ const Container = styled.div`
   color: #e5e5e5;
   font-size: 2.26rem;
   text-transform: uppercase;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,7 +267,7 @@ export function Homelayout4() {
 
 const Homelayoutstyled4 = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   -webkit-font-smoothing: antialiased;
   display: flex;
   justify-content: center;
