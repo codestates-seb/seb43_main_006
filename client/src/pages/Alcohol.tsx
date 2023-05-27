@@ -85,8 +85,6 @@ const Alcohol = () => {
   useEffect(() => {
     setSearchWord("");
     const fetchData = async () => {
-      console.log(currentPage, size, sortBy);
-
       const response = await getItemsList(currentPage, size, sortBy, tabCategories[currentTab]);
       try {
         const { data } = response;
