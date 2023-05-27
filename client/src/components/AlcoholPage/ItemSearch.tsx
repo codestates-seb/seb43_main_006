@@ -78,7 +78,6 @@ const ItemSearch = ({ setSearchWord, setData, currentPage, setTotalData, size }:
 
           setSearchResult(res.data.data);
           setSearchTotal(res.data.pageInfo.totalElements);
-          console.log(res.data.data);
         } catch {}
       }
     };
