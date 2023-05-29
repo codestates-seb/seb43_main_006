@@ -38,7 +38,12 @@ const InfoTable = ({ setBody, userInfo, isOauth }: TableProsp) => {
     setDisplayName(e.target.value);
   };
   const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
+    const val = e.target.value.replace(/[^\d]/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/); // 숫자만 입력 가능, 배열로서 앞의 3개, 4개, 4개 숫자 저장
+    if (val) {
+      setPhone(
+        !val[2] ? val[1] : val[3] ? `${val[1]}-${val[2]}-${val[3]}` : val[2] ? `${val[1]}-${val[2]}` : `${val[1]}`, // 전화번호 형식의 문자열로 숫자 저장되도록 함
+      );
+    }
   };
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
     const val = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자, 숫자, 특수문자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인 // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
@@ -415,6 +420,13 @@ const ChangeInfoPage = () => {
     doAxios("get", "/members", {}, true);
   }, []);
   const patchOnclick = () => {
+    const phoneValid = body.phone.replace(/-/g, "").length === 11; //모든 번호자리 입력해야 통화
+
+    if (!phoneValid) {
+      setAlertMessage("전화번호를 모두 기입하세요!");
+      setShowAlert(true);
+      return;
+    }
     if (body.password !== "") {
       // 비밀번호가 빈 문자열이 아닐때
       if (body.password === body.passwordCheck) {
