@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { UserProps } from "../../types/AlcholInterfaces";
+import { memo } from "react";
 
 export interface ChildComponentProps {
   userInfo: UserProps;
@@ -12,7 +13,7 @@ export type UserdataType = {
   phone: string;
   email: string;
 };
-export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
+function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
   return (
     <BuyerInfo>
       <div className="userinfo">
@@ -35,6 +36,8 @@ export default function PaymnetUserInfo({ userInfo }: ChildComponentProps) {
     </BuyerInfo>
   );
 }
+
+export default memo(PaymnetUserInfo);
 
 const BuyerInfo = styled.div`
   display: flex;

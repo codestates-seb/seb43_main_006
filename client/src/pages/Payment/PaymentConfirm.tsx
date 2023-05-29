@@ -87,6 +87,8 @@ const PaymentConfirm = () => {
     }
     return null;
   });
+
+  console.log(pickupDate);
   // itemlist의 itemCarts 배열을 순회하면서 itemId와 quantity를 추출하여 itemOrders에 추가합니다.
 
   const authToken = localStorage.getItem("authToken");
