@@ -121,7 +121,7 @@ const SignupInput = () => {
           setIsOk(true);
         })
         .catch(() => {
-          setAlertMessage("모든 정보를 기입하였는지 확인하세요!");
+          setAlertMessage("모든 정보를 제대로 기입하였는지 확인하세요!");
           setShowAlert(true);
         });
     } else {
