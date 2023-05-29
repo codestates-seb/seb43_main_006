@@ -8,6 +8,9 @@ import maintop4 from "@assets/images/wines.jpg";
 import maintop5 from "@assets/images/cocktail.jpg";
 import maintop6 from "@assets/images/cocktail2.jpg";
 import maintop7 from "@assets/images/happyday.jpg";
+import maintop8 from "@assets/images/cocktail3.jpg";
+import maintop9 from "@assets/images/cocktail4.jpg";
+import maintop10 from "@assets/images/cocktail5.jpg";
 
 import { useNavigate } from "react-router";
 
@@ -29,11 +32,11 @@ const Homefirst = () => {
   }, []);
 
   const handlePrevImage = () => {
-    setCurrentImage((prevImage) => (prevImage === 1 ? 7 : prevImage - 1));
+    setCurrentImage((prevImage) => (prevImage === 1 ? 10 : prevImage - 1));
   };
 
   const handleNextImage = () => {
-    setCurrentImage((prevImage) => (prevImage === 7 ? 1 : prevImage + 1));
+    setCurrentImage((prevImage) => (prevImage === 10 ? 1 : prevImage + 1));
   };
   const Randomnavigate = () => {
     setIsTakingPhoto(true);
@@ -44,18 +47,15 @@ const Homefirst = () => {
   };
 
   const getRandomItemId = () => {
-    // 임의의 itemId를 생성하거나 가져오는 로직을 구현해야 합니다.
-    // 예시로 1부터 100까지의 임의의 숫자를 반환하는 코드입니다.
     const randomItemId = Math.floor(Math.random() * 24) + 1;
     return randomItemId;
   };
   const getRandomImageNumber = () => {
-    return Math.floor(Math.random() * 7) + 1;
+    return Math.floor(Math.random() * 10) + 1;
   };
   const [currentImage, setCurrentImage] = useState(getRandomImageNumber());
   return (
     <HomefirstLayout>
-      {isTakingPhoto && <div className="camera-animation" />}
       <div className="imgtag">
         <img src={getImageSource(currentImage)} alt="Main Top" className="Maintop" />
         <div className="iphone-wrapper">
@@ -66,7 +66,7 @@ const Homefirst = () => {
           </div>
           <img src={iphone} alt="iphone" className="iphone" />
           <img src={getImageSource(currentImage)} alt="Maintopsall" className="Maintopsmall" />
-
+          {isTakingPhoto && <div className="camera-animation" />}
           <div className="clickhere">
             사진 촬영을 누르면
             <br />
@@ -94,7 +94,6 @@ const HomefirstLayout = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-size: 96px;
   height: 100%;
 
   .imgtag {
@@ -107,7 +106,7 @@ const HomefirstLayout = styled.div`
     top: 50%;
     left: 50%;
     z-index: 1;
-    width: 25.5%;
+    width: 25%;
   }
 
   .iphone {
@@ -126,11 +125,10 @@ const HomefirstLayout = styled.div`
     position: absolute;
     top: -35%;
     left: -101%;
-    color: white;
+    color: #f7f7f7;
     font-family: Cafe24Surroundair;
     font-size: 32px;
     z-index: 5;
-    filter: drop-shadow(2px 4px 1px black);
   }
 
   .clickhere {
@@ -143,7 +141,7 @@ const HomefirstLayout = styled.div`
     z-index: 3;
     width: 36%;
     height: 10%;
-    font-family: WanjuRegular;
+    font-family: Cafe24Surroundair;
     display: flex;
     align-items: center;
     border-radius: 50%;
@@ -193,6 +191,9 @@ const HomefirstLayout = styled.div`
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
   }
+  @media (max-width: 1903px) {
+    // 크롬
+  }
 
   @media (max-width: 1023px) {
     .title {
@@ -229,24 +230,13 @@ const HomefirstLayout = styled.div`
     color: #a84448;
   }
 
-  /* .camera-animation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0;
-    animation: blinkAnimation 0.3s ease;
-    z-index: 999;
-  } */
   .camera-animation {
     position: absolute;
-    top: 61%;
-    left: 47%;
+    top: 0%;
+    left: -9%;
     transform: translate(-50%, -50%);
-    width: 33%;
-    height: 43.5%;
+    width: 125%;
+    height: 45%;
     background-color: black;
     opacity: 0;
     animation: blinkAnimation 0.1s ease;
@@ -282,6 +272,12 @@ const getImageSource = (imageNumber: number) => {
       return maintop6;
     case 7:
       return maintop7;
+    case 8:
+      return maintop8;
+    case 9:
+      return maintop9;
+    case 10:
+      return maintop10;
     default:
       return maintop1;
   }
