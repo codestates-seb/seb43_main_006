@@ -97,7 +97,7 @@ const Login = () => {
     window.location.assign(`${url}/oauth2/authorization/google`);
   };
   const facebookOAuthHandler = () => {
-    //오어스 네이버 인증링크로 이동
+    //오어스 페이스북 인증링크로 이동
     window.location.assign(`${url}/oauth2/authorization/facebook`);
   };
   const kakaoOAuthHandler = () => {
