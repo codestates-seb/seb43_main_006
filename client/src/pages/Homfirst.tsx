@@ -214,6 +214,14 @@ const HomefirstLayout = styled.div`
       width: 40%;
     }
   }
+  @media (max-width: 400px) {
+    .title {
+      font-size: 10px;
+    }
+    .clickhere {
+      display: none;
+    }
+  }
 
   .prevButton {
     left: 10px;

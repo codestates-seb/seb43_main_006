@@ -362,6 +362,9 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     height: 30px;
 
     border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
 
   & div.cartitem {
@@ -370,6 +373,9 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     width: 85%;
     font-size: 15px;
     border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
 
     & div.imglist {
       width: 20%;
@@ -387,6 +393,9 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
       height: 250px;
       ${({ theme }) => theme.common.flexCenter};
       font-size: 16px;
+      @media screen and (max-width: 767px) {
+        width: 30%;
+      }
     }
 
     & div.each {
@@ -399,6 +408,9 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
       width: 10%;
       height: 250px;
       ${({ theme }) => theme.common.flexCenter};
+      @media screen and (max-width: 767px) {
+        width: 20%;
+      }
     }
   }
   & div.eachtag {
@@ -408,6 +420,9 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
+    @media screen and (max-width: 767px) {
+      width: 25%;
+    }
   }
   & div.no.data {
     height: 500px;
@@ -452,7 +467,10 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     justify-content: space-around;
     align-items: flex-start;
     font-size: 16px;
-
+    @media screen and (max-width: 767px) {
+      font-size: 12px;
+      width: 50%;
+    }
     & b {
       display: flex;
       margin-top: 20px;
@@ -479,6 +497,10 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     width: 30vw;
     height: 200px;
     margin-bottom: 200px;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      height: 0%;
+    }
   }
 
   .buttonDetail {

@@ -52,6 +52,9 @@ const Progressn = styled.div`
     padding-bottom: 50px;
     padding-left: 100px;
     width: 100%;
+    @media screen and (max-width: 767px) {
+      padding-left: 15%;
+    }
   }
   & div.subco {
     display: none;
@@ -92,7 +95,9 @@ const Progressn = styled.div`
     ${({ theme }) => theme.common.flexCenterRow};
     height: 50px;
     width: 40%;
-
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
     & li {
       height: 30px;
       display: flex;
@@ -163,4 +168,7 @@ const Progressn = styled.div`
   }
 
   /* 여기까지 */
+  @media screen and (max-width: 767px) {
+    padding-left: 10%;
+  }
 `;
