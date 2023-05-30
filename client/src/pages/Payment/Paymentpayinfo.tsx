@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import Place from "@pages/Place";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ export interface PayinfoProps {
   onDateChange: (date: Date | null) => void;
 }
 
-export default function Payinfo({ onDateChange }: PayinfoProps) {
+function Paymentpayinfo({ onDateChange }: PayinfoProps) {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   const navigate = useNavigate();
@@ -48,25 +48,28 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
   const selectdata = useSelector((state: stateProps) => state.markerState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handlePickDateClick = () => {
+  const handlePickDateClick = useCallback(() => {
     setIsCalendarOpen(true);
-  };
+  }, []);
 
-  const handleDateChange = (date: Date | null) => {
-    const today = new Date();
-    if (date && date < today) {
-      setIsModalOpen(true);
-    } else {
-      setSelectedDate(date);
-      setIsCalendarOpen(false);
-      onDateChange(date);
-      dispatch(setDate(date ? date.getTime() : null));
-    }
-  };
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      const today = new Date();
+      if (date && date < today) {
+        setIsModalOpen(true);
+      } else {
+        setSelectedDate(date);
+        setIsCalendarOpen(false);
+        onDateChange(date);
+        dispatch(setDate(date ? date.getTime() : null));
+      }
+    },
+    [onDateChange, dispatch],
+  );
 
-  const handlemapClick = () => {
-    navigate("/place", { state: { items: items } });
-  };
+  const handlemapClick = useCallback(() => {
+    navigate("/place", { state: { items: items, selectedDate: selectedDate } });
+  }, [items, selectedDate, navigate]);
 
   return (
     <Payinfostyle>
@@ -142,6 +145,8 @@ export default function Payinfo({ onDateChange }: PayinfoProps) {
     </Payinfostyle>
   );
 }
+
+export default memo(Paymentpayinfo);
 
 const Payinfostyle = styled.div`
   display: flex;

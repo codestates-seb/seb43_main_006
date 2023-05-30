@@ -73,7 +73,6 @@ const Place = () => {
   const navigate = useNavigate();
   const [select, setSelect] = useState<Shopitem | null>(null);
   const location = useLocation();
-  const items = location.state ? location.state.items : [];
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -48,7 +48,7 @@ const markerState = createSlice({
 const dateState = createSlice({
   name: "dateState",
   initialState: {
-    Date: null, // 초기값을 문자열로 설정
+    Date: new Date(), // 초기값을 문자열로 설정
   },
   reducers: {
     setDate: (state, action) => {

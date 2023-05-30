@@ -1,32 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Homelayout1, Homelayout2, Homelayout3, Homelayout5, Homelayout4 } from "./Homelayout";
-import { ButtonDark } from "@components/Common/Button";
 import Homefirst from "./Homfirst";
-
-interface MainscrollProps {
-  y: number;
-}
-interface ScrollState {
-  x: number;
-  y: number;
-}
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const useScroll = (): ScrollState => {
-    const [state, setState] = useState<ScrollState>({ x: 0, y: 0 });
-    const onScroll = (): void => {
-      setState({ x: window.scrollX, y: window.scrollY });
-    };
-    useEffect(() => {
-      window.addEventListener("scroll", onScroll);
-      return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-    return state;
-  };
-  const { y } = useScroll();
 
   function convertToSeconds(dateString: string): string {
     const date = new Date(dateString);
@@ -55,31 +33,14 @@ const Home: React.FC = () => {
     }
   }, []);
   return (
-    <HomeContainer y={y}>
+    <HomeContainer>
       <Homefirst />
-      <Homelayout1 />
-      <Homelayout2 />
-      <Homelayout3 />
-      <Homelayout4 />
-      <Homelayout5 />
-      <div className="bt">
-        <ButtonDark
-          width="160px"
-          height="60px"
-          fontSize="18px"
-          onClick={() => {
-            window.scrollTo(0, 0);
-          }}
-        >
-          Top
-        </ButtonDark>
-      </div>
     </HomeContainer>
   );
 };
 export default Home;
 
-const HomeContainer = styled.section<MainscrollProps>`
+const HomeContainer = styled.section`
   color: ${({ theme }) => theme.colors.fontColor};
   display: flex;
   flex-direction: column;
@@ -87,9 +48,5 @@ const HomeContainer = styled.section<MainscrollProps>`
   justify-content: center;
   width: 100%;
   font-size: 96px;
-
-  & div.bt {
-    margin-top: 300px;
-    margin-bottom: 100px;
-  }
+  overflow: hidden;
 `;
