@@ -95,7 +95,7 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
             fill: #a84448;
           `
         : css`
-         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
+            fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
           `}
     transition: all 0.5s ease-out;
 
@@ -465,12 +465,21 @@ const Header: React.FC = () => {
                     onClick={() => {
                       if (localStorage.getItem("authToken")) {
                         if (authTokenExpired()) {
-                          navigate("/login");
+                          {
+                            navigate("/login");
+                            toggleAccordionMenu();
+                          }
                         } else {
-                          handleLogout();
+                          {
+                            handleLogout();
+                            toggleAccordionMenu();
+                          }
                         }
                       } else {
-                        navigate("/login");
+                        {
+                          navigate("/login");
+                          toggleAccordionMenu();
+                        }
                       }
                     }}
                   >
