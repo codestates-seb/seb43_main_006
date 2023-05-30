@@ -27,15 +27,27 @@
 ### 기능별 소개
 
 <details>
-<summary><b>주류 페이지</b></summary>
+<summary><b>주류 페이지 ( 리스트 + 상세 )</b></summary>
 <div markdown="1"><br/>
 
 ![ItemList](https://github.com/codestates-seb/seb43_main_006/assets/89833446/dfa6bf5b-0065-43cc-ae85-af702ce61688.gif)
-
+<br/>
   
-- 다양한 주류 정보 제공
-- 카테고리와 검색 기준을 통해 주류 리스트 정보를 확인할 수 있다.
+주류에 대한 다양한 정보를 제공합니다. <br/>
 
+</div>
+</details>
+
+<details>
+<summary><b>주류 페이지( 카테고리+검색 )</b></summary>
+<div markdown="1"><br/>
+
+![ItemCategoryandsearch](https://github.com/codestates-seb/seb43_main_006/assets/89833446/5d57d073-0765-490a-996f-d24e96387309.gif)
+
+<br/>
+  
+주류를 카테고리별로 분류하고 검색할 수 있습니다. 이 기능을 통해 원하는 주류를 손쉽게 찾을 수 있습니다. <br/>
+  
 </div>
 </details>
 
