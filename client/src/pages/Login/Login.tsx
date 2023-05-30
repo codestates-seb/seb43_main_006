@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SiNaver } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
+import { TfiFacebook } from "react-icons/tfi";
 import axios from "axios";
 //components
 import Alert from "@components/Common/AlertModal";
@@ -96,9 +96,9 @@ const Login = () => {
     //오어스 구글 인증링크 이동
     window.location.assign(`${url}/oauth2/authorization/google`);
   };
-  const naverOAuthHandler = () => {
+  const facebookOAuthHandler = () => {
     //오어스 네이버 인증링크로 이동
-    window.location.assign(`${url}/oauth2/authorization/naver`);
+    window.location.assign(`${url}/oauth2/authorization/facebook`);
   };
   const kakaoOAuthHandler = () => {
     window.location.assign(`${url}/oauth2/authorization/kakao`);
@@ -151,11 +151,11 @@ const Login = () => {
             </OAuthIconContainer>
             <div className="desc">구글로 시작하기</div>
           </OAuthSignUpBox>
-          <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
+          <OAuthSignUpBox onClick={facebookOAuthHandler} type="naver">
             <OAuthIconContainer>
-              <SiNaver size="25" color="white" />
+              <TfiFacebook size="30" color="white" />
             </OAuthIconContainer>
-            <div className="desc">네이버로 시작하기</div>
+            <div className="desc">페이스북으로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
             <OAuthIconContainer>
@@ -302,7 +302,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : type === "naver" ? "#03C75A" : "#ffeb00")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "naver" ? "#3b5998" : "#ffeb00")};
   color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
