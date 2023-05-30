@@ -128,11 +128,9 @@ function authTokenExpired(authToken: string) {
   if (!authToken) {
     return true;
   }
-
   const decodedToken = decodeAuthToken(authToken);
   const expSeconds = decodedToken.exp;
   const nowSeconds = Math.floor(Date.now() / 1000);
-
   return expSeconds < nowSeconds;
 }
 
