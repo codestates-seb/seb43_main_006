@@ -51,13 +51,11 @@ const InfoStyled = styled.div`
   padding-top: 10px;
   padding-bottom: 10px;
 `;
-
 const TableStyled = styled.div`
   display: flex;
   flex-direction: row;
   flex-grow: 8;
 `;
-
 const LeftStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -94,7 +92,6 @@ const EachTitle = styled.div`
     font-size: 22px;
   }
 `;
-
 const EachBtn = styled.button`
   display: flex;
   flex-direction: row;
@@ -105,7 +102,6 @@ const EachBtn = styled.button`
   background-color: #f7f7f7;
   border: none;
 `;
-
 const PagenationStyled = styled.div`
   flex-grow: 2;
 `;
@@ -118,7 +114,6 @@ function authTokenExpired(authToken: string) {
   const nowSeconds = Math.floor(Date.now() / 1000);
   return expSeconds < nowSeconds;
 }
-
 function decodeAuthToken(authToken: string) {
   const payload = authToken.split(".")[1];
   const decodedPayload = atob(payload);
