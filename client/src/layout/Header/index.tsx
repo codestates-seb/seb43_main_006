@@ -46,6 +46,9 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
       padding-top: 0px;
     }
   }
+  @media screen and (max-width: 490px) {
+    height: 50px;
+  }
 `;
 
 const HeaderContainer = styled.div<IHeaderContainerProps>`
@@ -462,21 +465,12 @@ const Header: React.FC = () => {
                     onClick={() => {
                       if (localStorage.getItem("authToken")) {
                         if (authTokenExpired()) {
-                          {
-                            navigate("/login");
-                            toggleAccordionMenu();
-                          }
+                          navigate("/login");
                         } else {
-                          {
-                            handleLogout();
-                            toggleAccordionMenu();
-                          }
+                          handleLogout();
                         }
                       } else {
-                        {
-                          navigate("/login");
-                          toggleAccordionMenu();
-                        }
+                        navigate("/login");
                       }
                     }}
                   >
