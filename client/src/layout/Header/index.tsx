@@ -24,12 +24,13 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   left: 10%;
   width: 100%;
   height: 120px;
+  color: ${({ theme }) => theme.colors.fontColor};
 
   & div.tag {
     padding-top: ${({ hovering }) => (hovering === "true" ? "30px" : "22px")};
     transition: all 0.3s ease-out;
 
-    filter: drop-shadow(2px 4px 2px black);
+    filter: drop-shadow(2px 4px 2px rgba(8, 8, 8, 0.5));
     &:hover {
       cursor: pointer;
     }
@@ -116,17 +117,15 @@ const Ulist = styled.div<IHeaderContainerProps>`
   padding-right: 5%;
   width: 110%;
   transition: all 0.3s ease-out;
-  font-family: Cafe24Anemone, sans-serif, Arial;
+  font-weight: bold;
 
-  filter: drop-shadow(2px 2px 1px grey);
+  filter: drop-shadow(2px 2px 1px #ccc);
 
   padding-top: ${({ hovering }) => (hovering === "true" ? "20px" : "30px")};
   & ul {
     width: 100%;
     display: flex;
     flex-direction: column;
-    font-weight: bold;
-
     font-size: ${({ hovering }) => (hovering === "true" ? "18px" : "21px")};
     transition: all 0.5s ease-out;
   }
@@ -138,7 +137,6 @@ const Ulist = styled.div<IHeaderContainerProps>`
       font-size: 14px;
       font-weight: 400;
       flex-direction: row;
-      padding: 1rem;
     }
   }
 
@@ -216,17 +214,23 @@ const AccordionMenu = styled.div<IHeaderContainerProps>`
     padding: 0.8rem 1rem;
   }
   @media screen and (max-width: 767px) {
+    margin-right: 2rem;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     font-family: WanjuRegular, sans-serif, Arial;
-    padding: 13px 10px;
+    padding: 13px 0;
+    text-align: right;
     border-radius: 5px;
     font-size: 16px;
     color: #a84448;
     background-color: none;
-    /* height: 280px; */
   }
   & div.onclick {
+    text-align: right;
+    padding: 0;
+    padding-right: 12px;
+    padding-bottom: 0.5rem;
     filter: drop-shadow(2px 2px 1px rgba(8, 8, 8, 0.5));
   }
 `;
