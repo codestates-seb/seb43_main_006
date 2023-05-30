@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { ButtonDark } from "@components/Common/Button";
+import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
 import PriceDisplay from "@components/Common/PriceDisplay";
 
@@ -25,14 +25,6 @@ const TotalStyled = styled.div`
   align-items: center;
   background-color: #f7f7f7;
 `;
-const PageTitle = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 30px;
-  height: 100px;
-`;
-
 const LikepageContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -41,90 +33,122 @@ const LikepageContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-//누구누구님 등급써있는부분
-const LikepageHeadStyled = styled.div`
-  border: 3px solid #dedede;
-  font-size: 18px;
-  color: #181818;
+const PageTitleStyled = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100px;
-  padding-left: 10px;
-  font-weight: 600;
-`;
-
-//찜리스트 나오는 부분
-const LikepageMainStyled = styled.div`
-  > * {
-    font-size: 18px;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  padding-right: 20px;
+  > div {
+    font-weight: 600;
   }
 `;
-const HeadTable = styled.div`
-  height: 100px;
+const InfoStyled = styled.div`
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  padding-left: 20px;
+  padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 10px;
-  font-weight: 600;
-  line-height: 25px;
 `;
-const TotalTableStyled = styled.div`
-  border: 3px solid #dedede;
+
+const TableStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 8;
+`;
+
+const LeftStyled = styled.div`
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  padding: 10px;
+  box-shadow: 4px 4px 4px rgba(8, 8, 8, 0.4);
 `;
-const StyledTable = styled.table`
-  font-size: 18px;
-  width: 1240px;
-  height: 300px;
+const EachList = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
-
-const StyledTh = styled.th`
-  padding: 8px;
-`;
-
-const StyledTd = styled.td`
-  padding: 8px;
-  text-align: center;
-  vertical-align: middle;
-
-  .button-container {
+const EachTitle = styled.div`
+  flex-grow: 9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-basis: 0;
+  > img {
+    width: 10%;
+    height: 10rem;
+    cursor: pointer;
+  }
+  .productname {
+    font-size: 22px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
-    width: 100%;
   }
-  > img {
-    width: 50%;
-    height: 80px;
-    cursor: pointer;
-  }
-  :nth-child(2) {
-    cursor: pointer;
+  .productprice {
+    font-size: 22px;
   }
 `;
 
-//맨밑 페이지네이션부분
-const PigStyled = styled.div`
+const EachBtn = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-bottom: 10px;
+  align-items: center;
+  flex-grow: 1;
+  gap: 10px;
+  background-color: #f7f7f7;
+  border: none;
 `;
+
+const PagenationStyled = styled.div`
+  flex-grow: 2;
+`;
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    return true;
+  }
+
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds;
+}
+
+function decodeAuthToken(authToken: string) {
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
 
 const LikePage = () => {
   const [likelist, setLikelist] = useState<Likeitem[]>([]);
   const [totalLength, setTotalLength] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [userName, setUserName] = useState<string>("");
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const totalPages = Math.ceil(totalLength / 5);
   const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage);
 
+  const authToken = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    if (!authToken || authTokenExpired(authToken)) {
+      navigate("/login");
+      return;
+    }
+  });
   const LikeGetHandle = () => {
-    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    const access_token = `Bearer ${authToken}`;
     axios
       .get(`${process.env.REACT_APP_API_URL}/members/favorite`, {
         headers: {
@@ -145,7 +169,7 @@ const LikePage = () => {
   }, []);
 
   const handleDeleteBtn = (itemId: number) => {
-    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    const access_token = `Bearer ${authToken}`;
     axios
       .delete(`${process.env.REACT_APP_API_URL}/items/${itemId}/favorite`, {
         headers: {
@@ -165,7 +189,7 @@ const LikePage = () => {
   };
 
   const handleCartBtn = (itemId: number) => {
-    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    const access_token = `Bearer ${authToken}`;
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/cart`,
@@ -186,7 +210,7 @@ const LikePage = () => {
   };
 
   useEffect(() => {
-    const access_token = `Bearer ${localStorage.getItem("authToken")}`;
+    const access_token = `Bearer ${authToken}`;
     axios
       .get(`${process.env.REACT_APP_API_URL}/members`, {
         headers: {
@@ -203,91 +227,52 @@ const LikePage = () => {
     <>
       <TotalStyled>
         <LikepageContainer>
-          <PageTitle>
+          <PageTitleStyled>
             <div>My Page</div>
             <MdOutlineKeyboardArrowRight size="20px" />
             <div>찜리스트</div>
-          </PageTitle>
-          <LikepageHeadStyled>
-            <p>{userName}님의 등급은 Green입니다.</p>
-          </LikepageHeadStyled>
-          <LikepageMainStyled>
-            <HeadTable>
-              <p>찜리스트</p>
-              <p>총 {likelist.length}건</p>
-            </HeadTable>
-            <TotalTableStyled>
-              <StyledTable>
-                <thead>
-                  <tr>
-                    <StyledTh></StyledTh>
-                    <StyledTh>상품 목록</StyledTh>
-                    <StyledTh>가 격(원)</StyledTh>
-                    <StyledTh></StyledTh>
-                    <StyledTh></StyledTh>
-                  </tr>
-                </thead>
-
-                {paginationData.length !== 0 ? (
-                  <tbody>
-                    {paginationData.map((el: Likeitem, idx: number) => {
-                      return (
-                        <tr key={idx}>
-                          <StyledTd>
-                            <img src={el.profile} onClick={() => handleDetailBtn(el.itemId)} />
-                          </StyledTd>
-                          <StyledTd onClick={() => handleDetailBtn(el.itemId)}>{el.titleKor}</StyledTd>
-                          <StyledTd>
-                            <PriceDisplay price={el.price} />
-                          </StyledTd>
-                          <StyledTd>
-                            <div className="button-container">
-                              <ButtonDark
-                                width="100px"
-                                height="50%"
-                                onClick={() => {
-                                  handleCartBtn(el.itemId);
-                                }}
-                              >
-                                장바구니
-                              </ButtonDark>
-                            </div>
-                          </StyledTd>
-                          <StyledTd>
-                            <div className="button-container">
-                              <ButtonDark
-                                width="100px"
-                                height="50%"
-                                onClick={() => {
-                                  handleDeleteBtn(el.itemId);
-                                }}
-                              >
-                                삭제
-                              </ButtonDark>
-                            </div>
-                          </StyledTd>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                ) : (
-                  <tbody>
-                    <tr>
-                      <td>찜리스트가 없습니다.</td>
-                    </tr>
-                  </tbody>
-                )}
-              </StyledTable>
-            </TotalTableStyled>
-          </LikepageMainStyled>
-          <PigStyled>
+          </PageTitleStyled>
+          <InfoStyled>
+            {userName}님의 찜리스트
+            <p>총 {likelist.length}건</p>
+          </InfoStyled>
+          <TableStyled>
+            <LeftStyled>
+              {paginationData.map((el, idx) => {
+                return (
+                  <div key={idx}>
+                    <EachList>
+                      <EachTitle>
+                        <img src={el.profile} onClick={() => handleDetailBtn(el.itemId)} />
+                        <div className="productname" onClick={() => handleDetailBtn(el.itemId)}>
+                          {el.titleKor}
+                        </div>
+                        <div className="productprice">
+                          <PriceDisplay price={el.price} />원
+                        </div>
+                      </EachTitle>
+                      <EachBtn>
+                        <ButtonDark width="100px" height="30%" onClick={() => handleCartBtn(el.itemId)}>
+                          장바구니
+                        </ButtonDark>
+                        <ButtonLight width="100px" height="30%" onClick={() => handleDeleteBtn(el.itemId)}>
+                          삭제
+                        </ButtonLight>
+                      </EachBtn>
+                    </EachList>
+                  </div>
+                );
+              })}
+            </LeftStyled>
+          </TableStyled>
+          <PagenationStyled>
             <Pagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               itemsPerPage={5}
               totalData={likelist.length}
             />
-          </PigStyled>
+          </PagenationStyled>
         </LikepageContainer>
       </TotalStyled>
     </>
