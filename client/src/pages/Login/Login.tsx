@@ -118,7 +118,7 @@ const Login = () => {
       {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
+          <Title className="top-title" fontSize="28px" fontWeight="500">
             로그인
           </Title>
         </TopContainer>
@@ -147,19 +147,19 @@ const Login = () => {
           </LoginContainer>
           <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
             <OAuthIconContainer>
-              <FcGoogle size="40" color="black" />
+              <FcGoogle size="35" color="black" />
             </OAuthIconContainer>
             <div className="desc">구글로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
             <OAuthIconContainer>
-              <SiNaver size="30" color="white" />
+              <SiNaver size="25" color="white" />
             </OAuthIconContainer>
             <div className="desc">네이버로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
             <OAuthIconContainer>
-              <RiKakaoTalkFill size="40" color="black" />
+              <RiKakaoTalkFill size="35" color="black" />
             </OAuthIconContainer>
             <div className="desc">카카오톡으로 시작하기</div>
           </OAuthSignUpBox>
@@ -203,12 +203,16 @@ const Container = styled.div`
 `;
 const ContentsContainer = styled.div`
   max-width: 600px;
-  width: 95%;
+  width: 100%;
   position: absolute;
   top: 15%;
   margin-bottom: 30px;
   @media screen and (max-width: 768px) {
     padding-bottom: 50px;
+    padding: 0 25px;
+    .top-title {
+      display: none;
+    }
   }
 `;
 const Contour = styled.hr`
@@ -232,7 +236,7 @@ const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
   @media screen and (max-width: 768px) {
-    font-size: 22px;
+    font-size: 20px;
   }
 `;
 
@@ -243,10 +247,15 @@ const MiddleContainer = styled.div`
   width: 100%;
   padding: 50px 60px;
   @media screen and (max-width: 768px) {
-    padding: 40px 20px;
+    padding: 0px;
+    gap: 10px;
   }
   border: 1px solid ${({ theme }) => theme.colors.border};
   background-color: white;
+  @media screen and (max-width: 768px) {
+    background-color: inherit;
+    border: none;
+  }
 `;
 const LoginContainer = styled.div`
   display: flex;
@@ -256,7 +265,7 @@ const LoginContainer = styled.div`
   gap: 20px;
   margin-bottom: 30px;
   .flex-col {
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -278,9 +287,12 @@ const LoginContainer = styled.div`
     @media screen and (max-width: 768px) {
       gap: 10px;
     }
-  }
-  .button {
-    width: 30%;
+    .button {
+      width: 30%;
+      @media screen and (max-width: 768px) {
+        width: 20%;
+      }
+    }
   }
 `;
 
@@ -298,7 +310,7 @@ const OAuthSignUpBox = styled.div<TypeProps>`
     width: calc(100% - 65px);
     text-align: center;
     @media ${({ theme }) => theme.breakpoints.mobileMax} {
-      font-size: 15px;
+      font-size: 14px;
     }
   }
   border-radius: 2px;
@@ -313,12 +325,18 @@ const OAuthIconContainer = styled.div`
   .icon {
     width: 35px;
   }
+  @media screen and (max-width: 768px) {
+    height: 55px;
+  }
 `;
 
 const BottomContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterRow}
   width: 100%;
   gap: 15px;
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 export default Login;

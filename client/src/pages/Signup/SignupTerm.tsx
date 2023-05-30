@@ -100,6 +100,7 @@ const SignupTerm = () => {
               약관동의
             </Title>
           </div>
+          <p style={{ color: "gray" }}>모든 약관을 읽어야 합니다</p>
           <div className="check-container">
             <div className="front">
               <input onChange={() => clickCheck(0)} type="checkbox" />
@@ -167,12 +168,16 @@ const TermContainer = styled.div`
   position: absolute;
   top: 15%;
   @media screen and (max-width: 768px) {
-    width: 95%;
+    width: 100%;
+    padding: 0 25px;
   }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    font-size: 18px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -181,12 +186,17 @@ const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  /* border-bottom: 1px solid #434242; */
   margin-bottom: 50px;
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    margin-bottom: 0px;
+  }
 `;
 const StepContainer = styled.div`
   font-size: 18px;
   ${({ theme }) => theme.common.flexCenterRow};
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    font-size: 16px;
+  }
 `;
 const Step = styled.div<StepProps>`
   ${({ theme }) => theme.common.flexCenterRow};
@@ -207,8 +217,9 @@ const MiddleContainer = styled.div`
   gap: 25px;
   width: 100%;
   @media screen and (max-width: 768px) {
-    padding: 30px 20px;
+    padding: 20px 0;
     font-size: 14px;
+    border: none;
   }
   .title {
     width: 100%;
