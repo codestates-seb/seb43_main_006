@@ -77,9 +77,84 @@
 </div>
 </details>
 
+<details>
+<summary><b>결제 ( 픽업 장소 선택 + 토스페이 사용한 결제 )</b></summary>
+<div markdown="1"><br/>
+
+![결제](https://github.com/codestates-seb/seb43_main_006/assets/89833446/eb295356-2a94-41b0-a806-a050f16a6d81)
+
+<br/>
+  
+주류 구매를 위해 픽업 장소를 선택하고, 토스페이를 사용하여 결제를 완료할 수 있습니다. 이를 통해 편리하게 주류를 구매하고 픽업할 수 있습니다. <br/>
+  
+</div>
+</details>
+
+<details>
+<summary><b>주문내역과 주문취소</b></summary>
+<div markdown="1"><br/>
+
+![주문내역과 주문취소](https://github.com/codestates-seb/seb43_main_006/assets/89833446/a253f78e-9830-4a76-80c2-5df151d31ecc)
+
+<br/>
+  
+마이페이지에서는 주문 내역을 확인할 수 있으며, 원하는 주문을 취소할 수도 있습니다. 이를 통해 손쉽게 주문 상태를 파악하고 필요에 따라 주문을 관리할 수 있습니다. <br/>
+  
+</div>
+</details>
+
+<details>
+<summary><b>로컬 회원 가입</b></summary>
+<div markdown="1"><br/>
+
+![로컬회원가입](https://github.com/codestates-seb/seb43_main_006/assets/89833446/b5e979ea-86d1-43bd-a063-50248e13ef5e)
+  
+<br/>
+  
+회원가입을 통해 매주매주 사이트 시스템을 활용하실 수 있습니다. 이를 통해 지속적으로 사이트의 다양한 기능과 혜택을 이용하실 수 있습니다. <br/>
+  
+</div>
+</details>
+
+<details>
+<summary><b>OAuth 로그인 + 추가 정보 입력</b></summary>
+<div markdown="1"><br/>
+
+![오어스 회원가입](https://github.com/codestates-seb/seb43_main_006/assets/89833446/953749aa-b98f-4984-b14f-677f8ab676f9)
+
+<br/>
+  
+OAuth를 통해 간편하게 로그인할 수 있습니다. <br/>
+  
+</div>
+</details>
+
+<details>
+<summary><b>회원 탈퇴</b></summary>
+<div markdown="1"><br/>
+
+![회원 탈퇴](https://github.com/codestates-seb/seb43_main_006/assets/89833446/70be7a0b-4cec-481c-a0cc-cc5164543049)
+
+<br/>
+  
+회원탈퇴 기능을 구현하였습니다. 이제 언제든지 회원님께서 원하실 경우 사이트에서 간편하게 회원탈퇴를 진행하실 수 있습니다. 회원님의 의사에 따라 사이트 이용을 중단하고 회원 정보를 삭제할 수 있습니다. <br/>
+  
+</div>
+</details>
 
 
+<details>
+<summary><b>고객센터</b></summary>
+<div markdown="1"><br/>
 
+![고객센터](https://github.com/codestates-seb/seb43_main_006/assets/89833446/4af47ba3-3e98-4edf-ab15-a73eb9c9d042)
+
+<br/>
+  
+자주 묻는 질문(FAQ) 섹션에는 다양한 유용한 정보들이 담겨 있습니다. 이 섹션을 통해 회원 여러분들이 자주 묻는 질문과 그에 대한 명쾌한 답변을 확인하실 수 있습니다. <br/>
+  
+</div>
+</details>
 
 
 <br/>
