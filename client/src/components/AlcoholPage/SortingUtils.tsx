@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
-import { SortItemsProps } from "../../types/AlcholInterfaces";
+import { SortItemsProps } from "types/AlcholInterfaces";
 
 // 주류 리스트 정렬 방식
 const SortingUtilsContainer = styled.div`
@@ -39,6 +39,9 @@ const SortingUtilsContainer = styled.div`
       @media screen and (max-width: 600px) {
         font-size: 14px;
       }
+      @media ${(props) => props.theme.breakpoints.mobileMax} {
+        width: 100px;
+      }
     }
     ul {
       list-style: none;
@@ -62,6 +65,10 @@ const SortingUtilsContainer = styled.div`
 
         &:hover {
           background-color: #ddd;
+        }
+
+        @media ${(props) => props.theme.breakpoints.mobileMax} {
+          font-size: 12px;
         }
       }
     }

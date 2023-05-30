@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-import { AlcoholData, ItemOrder } from "../../types/AlcholInterfaces";
+import { AlcoholData, ItemOrder } from "types/AlcholInterfaces";
+import { createItemCart } from "@services/api";
 
 // components
-// import ReviewRating from "../Common/ReviewRating";
-import ClickFavoriteItem from "../Common/ClickFavoriteItem";
-import PriceDisplay from "../Common/PriceDisplay";
-import { ButtonDark } from "../Common/Button";
-import QuantityControl from "./QuantityControl";
+import ClickFavoriteItem from "@components/Common/ClickFavoriteItem";
+import PriceDisplay from "@components/Common/PriceDisplay";
+import { ButtonLight, ButtonDark } from "@components/Common/Button";
+import QuantityControl from "@components/AlcoholDetailPage/QuantityControl";
+import Alert from "@components/Common/AlertModal";
 
 interface ItemDatailProps {
   data: AlcoholData;
@@ -20,6 +21,10 @@ const AlcoholItemBuyContainer = styled.div`
   display: flex;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   width: 100%;
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    display: block;
+  }
 `;
 
 const StyledItemImgBox = styled.div`
@@ -29,12 +34,20 @@ const StyledItemImgBox = styled.div`
   padding: 0 20px;
 
   img {
-    /* margin: auto; */
-    height: 550px;
-    max-width: 100%;
+    height: 510px;
     object-fit: scale-down;
-    min-width: 400px;
+    min-width: 380px;
     width: 80%;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-bottom: 3rem;
+
+    img {
+      min-width: 0;
+      height: 250px;
+      width: 80%;
+    }
   }
 `;
 
@@ -51,6 +64,7 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   > .buy_titlebox > .buy_title {
     font-size: 28px;
@@ -108,37 +122,56 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
+  }
+  @media screen and (max-width: 900px) {
+    padding: 0 30px 0 0;
+  }
 
-    button {
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    padding: 0;
+    .buy_titlebox > .buy_title {
+      font-size: 20px;
       font-weight: 600;
-      border: none;
-      width: 100%;
-      padding: 14px 0;
-      letter-spacing: 1px;
-      border-radius: 2px;
-      cursor: pointer;
     }
-    .cart_btn {
-      color: ${({ theme }) => theme.colors.themeColor};
-      background: #fff;
-      border: solid 1px lightgray;
+    .buy_count > .quantity_box > .item_price {
+      font-size: 20px;
+      font-weight: 700;
     }
-    .buy_btn {
-      background: ${({ theme }) => theme.colors.themeColor};
-      color: #fff;
+    .buy_price {
+      > .buy_item_content {
+        font-size: 14px;
+      }
+      .buy_price_text {
+        font-size: 16px;
+      }
     }
   }
 `;
 
 const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
   const [quantity, setQuantity] = useState<number>(1);
+  const [isModal, setIsModal] = useState<boolean>(false);
+
+  const currentDate: Date = new Date();
+  const currentDateNum: number = Math.floor(currentDate.getTime() / 1000);
+
+  const expDataNum: number | null = Number(localStorage.getItem("exp"));
 
   const handleQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
   };
 
   const navigate = useNavigate();
-  // const HandlerClickCart = () => {};
+
+  const HandlerClickCart = async () => {
+    if (expDataNum && expDataNum > currentDateNum) {
+      await createItemCart(data.itemId, quantity);
+      setIsModal(true);
+    } else {
+      navigate("/login");
+    }
+  };
+
   const HandlerClickOrder = (): void => {
     const items: ItemOrder = {
       itemId: data.itemId,
@@ -148,57 +181,71 @@ const AlcoholItemBuy = ({ data }: ItemDatailProps) => {
       quantity,
     };
     navigate("/payment", {
-      state: items,
+      state: { items: [items] },
     });
+  };
+  const HandlerCart = (): void => {
+    navigate("/cart");
   };
 
   return (
-    <AlcoholItemBuyContainer>
-      <StyledItemImgBox>
-        <img src={data.profile} />
-      </StyledItemImgBox>
-      <StyledItemBuyBox>
-        <div className="buy_titlebox">
-          <p className="buy_title">{data.titleKor}</p>
-          <div className="item_like">
-            <ClickFavoriteItem
-              itemId={data.itemId}
-              icon={AiFillHeart}
-              color="#e4e5e9"
-              activeColor="#D43635"
-              size={30}
-            />
-          </div>
-        </div>
-        <div className="buy_price">
-          <div className="buy_item_content">
-            <span className="buy_item_content_title">판매가</span>
-            <span className="buy_price_text">
-              <PriceDisplay price={data.price} />원
-            </span>
-          </div>
-          <div className="buy_item_content">
-            <span className="buy_item_content_title">용량</span>
-            <span>{data.capacity}ml</span>
-          </div>
-        </div>
-        <div className="buy_count">
-          <p>현재 남은 수량 중 최대 {data.quantity}개 구매 가능</p>
-          <div className="quantity_box">
-            <QuantityControl quantity={quantity} maxQuantity={data.quantity} onQuantityChange={handleQuantityChange} />
-            <div className="item_price">
-              <PriceDisplay price={data.price * quantity} />원
+    <>
+      <AlcoholItemBuyContainer>
+        <StyledItemImgBox>
+          <img src={`${data.profile}?${new Date().getTime()}`} />
+        </StyledItemImgBox>
+        <StyledItemBuyBox>
+          <div className="buy_titlebox">
+            <p className="buy_title">{data.titleKor}</p>
+            <div className="item_like">
+              <ClickFavoriteItem
+                itemId={data.itemId}
+                icon={AiFillHeart}
+                color="#e4e5e9"
+                activeColor="#D43635"
+                size={30}
+              />
             </div>
           </div>
-        </div>
-        <div className="buy_cart">
-          <button className="cart_btn">장바구니</button>
-          <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickOrder}>
-            구매하기
-          </ButtonDark>
-        </div>
-      </StyledItemBuyBox>
-    </AlcoholItemBuyContainer>
+          <div className="buy_price">
+            <div className="buy_item_content">
+              <span className="buy_item_content_title">판매가</span>
+              <span className="buy_price_text">
+                <PriceDisplay price={data.price} />원
+              </span>
+            </div>
+            <div className="buy_item_content">
+              <span className="buy_item_content_title">용량</span>
+              <span>{data.capacity}ml</span>
+            </div>
+          </div>
+          <div className="buy_count">
+            <p>현재 남은 수량 중 최대 {data.quantity}개 구매 가능</p>
+            <div className="quantity_box">
+              <QuantityControl
+                quantity={quantity}
+                maxQuantity={data.quantity}
+                onQuantityChange={handleQuantityChange}
+              />
+              <div className="item_price">
+                <PriceDisplay price={data.price * quantity} />원
+              </div>
+            </div>
+          </div>
+          <div className="buy_cart">
+            <ButtonLight width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickCart}>
+              장바구니
+            </ButtonLight>
+            <ButtonDark width="100%" height="100%" fontSize="14px" fontWeight="500" onClick={HandlerClickOrder}>
+              구매하기
+            </ButtonDark>
+          </div>
+        </StyledItemBuyBox>
+      </AlcoholItemBuyContainer>
+      {isModal && (
+        <Alert text="장바구니로 이동하시겠습니까?" onClickCancel={() => setIsModal(false)} onClickOk={HandlerCart} />
+      )}
+    </>
   );
 };
 

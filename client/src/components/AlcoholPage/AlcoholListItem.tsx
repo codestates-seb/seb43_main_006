@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { AlcoholListData } from "../../types/AlcholInterfaces";
+import { AlcoholListData } from "types/AlcholInterfaces";
 
 // components
-import ReviewRating from "../Common/ReviewRating";
-import PriceDisplay from "../Common/PriceDisplay";
+import ReviewRating from "@components/Common/ReviewRating";
+import PriceDisplay from "@components/Common/PriceDisplay";
 
 interface ItemProps {
   item: AlcoholListData;
@@ -65,13 +65,26 @@ const AlcoholItemContainer = styled.div`
       }
     }
   }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    .item_img {
+      height: 190px;
+    }
+    .item_content > .item_title {
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    .item_content > .item_price {
+      font-size: 15px;
+    }
+  }
 `;
 
 const AlcoholListItem = ({ item }: ItemProps) => {
   return (
     <AlcoholItemContainer>
       <div className="item_img">
-        <img src={item.profile} />
+        <img src={`${item.profile}?${new Date().getTime()}`} />
       </div>
       <div className="item_content">
         <p className="item_title">{item.titleKor}</p>

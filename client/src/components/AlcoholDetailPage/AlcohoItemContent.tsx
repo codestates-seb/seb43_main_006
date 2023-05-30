@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { AlcoholData, AlcoholListData } from "../../types/AlcholInterfaces";
-import { useEffect, useState, useRef } from "react";
-import { getItemsList } from "../../services/api";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
-
-import AlcoholListItem from "../AlcoholPage/AlcoholListItem";
+import { useEffect, useState, useRef } from "react";
+import { AlcoholData, AlcoholListData } from "types/AlcholInterfaces";
+import { getItemsList } from "@services/api";
+import AlcoholListItem from "@AlcoholPage/AlcoholListItem";
 
 interface ItemDatailProps {
   data: AlcoholData;
@@ -21,6 +20,9 @@ const ItemContentContainer = styled.div`
     margin-top: 1rem;
     width: 100%;
   }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin: 0.5rem 0 3rem 0;
+  }
 `;
 
 const ContentTitleBox = styled.div`
@@ -33,6 +35,13 @@ const ContentTitleBox = styled.div`
   .content_titletext {
     font-size: 1.5rem;
     padding-bottom: 0.3rem;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    .content_titletext {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -71,20 +80,42 @@ const ContentBox = styled.div`
       line-height: 30px;
     }
   }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    gap: 2rem;
+    padding-left: 2rem;
+    flex-direction: column;
+
+    .content_datail_title {
+      font-size: 18px;
+    }
+    .content_note_bold,
+    .content_info_bold {
+      font-size: 14px;
+    }
+  }
 `;
 
 const DetailInfoBox = styled.div`
-  display: flex;
+  margin-top: 60px;
+  ${({ theme }) => theme.common.flexCenterCol};
 
-  .info_text_box {
-    width: 100%;
+  .info_img_box {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 300px;
-    font-size: 20px;
-    padding: 0px 50px;
+    width: 100%;
+
+    img {
+      width: 80%;
+      max-width: 1000px;
+      height: auto;
+    }
+
+    @media screen and (max-width: 480px) {
+      img {
+        width: 100vw;
+      }
+    }
   }
 `;
 
@@ -92,10 +123,16 @@ const SuggestionTitle = styled.div`
   display: flex;
   width: 100%;
   font-weight: 400;
-  margin: 1rem 0;
+  margin: 8rem 0 1rem 0;
 
   .content_titletext {
     font-size: 1.5rem;
+  }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-top: 4rem;
+    .content_titletext {
+      font-size: 20px;
+    }
   }
 `;
 
@@ -107,8 +144,12 @@ const ScrollContainer = styled.div`
 const ScrollBtn = styled.button`
   border: none;
   background: transparent;
-  font-size: 2em;
+  font-size: 2rem;
   cursor: pointer;
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    display: none;
+  }
 `;
 
 const SuggestionBox = styled.ul`
@@ -124,7 +165,14 @@ const SuggestionBox = styled.ul`
   li {
     flex: none;
     margin-right: 10px;
-    width: 300px;
+    width: 230px;
+    cursor: pointer;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    li {
+      width: 190px;
+    }
   }
 `;
 
@@ -210,17 +258,16 @@ const AlcoholItemContent = ({ data }: ItemDatailProps) => {
           </div>
         </ContentBox>
         <DetailInfoBox>
-          {/* <div className="info_img_box">
-            <img src={data.profile} />
-          </div> */}
-          <div className="info_text_box">{data.content}</div>
+          <div className="info_img_box">
+            <img src={`${data.detailedProfile}?${new Date().getTime()}`} alt="description" />
+          </div>
         </DetailInfoBox>
         <SuggestionTitle>
           <h2 className="content_titletext">이런 상품은 어때요?</h2>
         </SuggestionTitle>
         {itemData && (
           <ScrollContainer>
-            {itemData.length >= 4 ? (
+            {itemData.length >= 5 ? (
               <ScrollBtn onClick={() => HandleScroll("left")}>
                 <FaArrowAltCircleLeft size={45} color="lightgray" />
               </ScrollBtn>

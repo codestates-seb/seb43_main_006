@@ -16,7 +16,7 @@ export interface AlcoholData {
   titleKor: string;
   titleEng: string;
   profile: string;
-  content: string;
+  detailedProfile: string;
   categories: string[];
   price: number;
   capacity: number;
@@ -30,7 +30,6 @@ export interface AlcoholData {
   discountRate: string;
   reviewCount: number;
   reviewRating: number;
-  reviews: ItemReviewsType[];
 }
 
 // 주류 리스트 아이템 정렬 Props
@@ -77,10 +76,11 @@ export interface CartItemsProps {
 
 // 결제 페이지 UserProps
 export interface UserProps {
-  id?: string;
-  name: string;
+  memberId: string;
+  realName: string;
+  displayName: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
 }
 
 export interface CheckoutProps {
@@ -88,8 +88,9 @@ export interface CheckoutProps {
   onPaymentRequest?: () => Promise<void>;
 }
 
-// 주류 상세 페이지 리뷰 조회
+// 아이템 리뷰 리스트 조회
 export interface ItemReviewsType {
+  memberId: number;
   reviewId: number;
   title: string;
   content: string;
@@ -98,4 +99,20 @@ export interface ItemReviewsType {
   createdAt: string;
   modifiedAt: string;
   reviewImages: string[];
+}
+
+// 리뷰 수정 데이터 Type
+export interface RequestData {
+  title: string;
+  content: string;
+  rating: number;
+}
+
+// 아이템 검색 props
+export interface SearchProps {
+  setSearchWord: React.Dispatch<React.SetStateAction<string>>;
+  setData: React.Dispatch<React.SetStateAction<AlcoholListData[] | null>>;
+  currentPage: number;
+  setTotalData: React.Dispatch<React.SetStateAction<number | null>>;
+  size: number;
 }

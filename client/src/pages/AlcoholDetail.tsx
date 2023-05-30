@@ -10,10 +10,7 @@ import AlcoholItemReview from "../components/AlcoholDetailPage/AlcohoIItemReview
 import AlcoholItemContent from "../components/AlcoholDetailPage/AlcohoItemContent";
 
 const AlcoholDetailContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  ${({ theme }) => theme.common.flexCenterCol}
   height: 100%;
   padding: 0 25px;
   color: ${({ theme }) => theme.colors.fontColor};
@@ -43,7 +40,7 @@ const AlcoholDetail = () => {
       {data && (
         <>
           <AlcoholItemBuy data={data} />
-          <AlcoholItemReview reviews={data.reviews}></AlcoholItemReview>
+          <AlcoholItemReview itemId={data.itemId} reviewRating={data.reviewRating}></AlcoholItemReview>
           <AlcoholItemContent data={data} />
         </>
       )}

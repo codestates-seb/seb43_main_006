@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IconType } from "react-icons";
-import { getItemLike, createItemLike, deleteItemLike } from "../../services/api";
+import { getItemLike, createItemLike, deleteItemLike } from "@services/api";
+import { useNavigate } from "react-router-dom";
 
 interface ClickFavoriteCProps {
   itemId: number;
@@ -11,31 +12,40 @@ interface ClickFavoriteCProps {
 }
 
 const ClickFavoriteItem = ({ itemId, icon: Icon, color, activeColor, size }: ClickFavoriteCProps) => {
-  const memberId = localStorage.getItem("memberId");
+  const navigate = useNavigate();
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
+  const currentDate: Date = new Date();
+  const currentDateNum: number = Math.floor(currentDate.getTime() / 1000);
+
+  const expDataNum: number | null = Number(localStorage.getItem("exp"));
+
   useEffect(() => {
-    fetchData();
+    if (expDataNum && expDataNum > currentDateNum) {
+      fetchData();
+    }
   }, []);
 
   const fetchData = useCallback(async () => {
-    if (memberId !== null) {
-      const response = await getItemLike(itemId);
-      try {
-        setIsFavorited(response.data.data.like);
-      } catch (err) {
-        console.log(err);
-      }
+    const response = await getItemLike(itemId);
+    try {
+      setIsFavorited(response.data.data.like);
+    } catch (err) {
+      console.log(err);
     }
   }, []);
 
   const onClickActive = () => {
-    if (isFavorited) {
-      deleteItemLike(itemId);
+    if (expDataNum && expDataNum > currentDateNum) {
+      if (isFavorited) {
+        deleteItemLike(itemId);
+      } else {
+        createItemLike(itemId);
+      }
+      setIsFavorited(!isFavorited);
     } else {
-      createItemLike(itemId);
+      navigate("/login");
     }
-    setIsFavorited(!isFavorited);
   };
 
   return (

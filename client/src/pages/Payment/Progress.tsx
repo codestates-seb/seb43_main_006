@@ -6,7 +6,9 @@ export default function Progress() {
   return (
     <Progressn>
       <div className="progress">
-        <div className="subco">결제 페이지</div>
+        <div className="subco">장바구니</div>
+        <div className="subco1">결제 페이지</div>
+        <div className="subco2">결제 완료</div>
         <ol>
           <li className="first">
             <span className="numbering">01</span>
@@ -50,19 +52,52 @@ const Progressn = styled.div`
     padding-bottom: 50px;
     padding-left: 100px;
     width: 100%;
+    @media screen and (max-width: 767px) {
+      padding-left: 15%;
+    }
   }
   & div.subco {
+    display: none;
     float: left;
     justify-content: flex-start;
     height: 30px;
-    font-size: 32px;
+    font-size: 40px;
+    ${({}) =>
+      useLocation().pathname === "/cart" &&
+      `display:flex;
+    `}
   }
+  & div.subco1 {
+    display: none;
+    float: left;
+    justify-content: flex-start;
+    height: 30px;
+    font-size: 40px;
+    ${({}) =>
+      useLocation().pathname === "/payment" &&
+      `display:flex;
+    `}
+  }
+  & div.subco2 {
+    display: none;
+    float: left;
+    justify-content: flex-start;
+    height: 30px;
+    font-size: 40px;
+    ${({}) =>
+      useLocation().pathname === "/PaymentConfirm" &&
+      `display:flex;
+    `}
+  }
+
   & ol {
     display: flex;
     ${({ theme }) => theme.common.flexCenterRow};
     height: 50px;
     width: 40%;
-
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
     & li {
       height: 30px;
       display: flex;
@@ -71,7 +106,7 @@ const Progressn = styled.div`
     }
     & li.first {
       width: 120px;
-      ${({ theme }) =>
+      ${({}) =>
         useLocation().pathname === "/cart" &&
         `
       color: #a84448;
@@ -81,7 +116,7 @@ const Progressn = styled.div`
 
     & li.second {
       width: 160px;
-      ${({ theme }) =>
+      ${({}) =>
         useLocation().pathname === "/payment" &&
         `
       color: #a84448;
@@ -89,8 +124,8 @@ const Progressn = styled.div`
       ${({ theme }) => theme.common.flexCenter};
     }
     & li.third {
-      ${({ theme }) =>
-        useLocation().pathname === "/paymentconfirm" &&
+      ${({}) =>
+        useLocation().pathname === "/PaymentConfirm" &&
         `
       color: #a84448;
     `}
@@ -133,4 +168,7 @@ const Progressn = styled.div`
   }
 
   /* 여기까지 */
+  @media screen and (max-width: 767px) {
+    padding-left: 10%;
+  }
 `;

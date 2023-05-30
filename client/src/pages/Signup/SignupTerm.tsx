@@ -28,29 +28,24 @@ const SignupTerm = () => {
   const [isNext, setIsNext] = useState(false);
   const [isAgreed, setIsAgreed] = useState([false, false, false, false]);
   const [alertMessage, setAlertMessage] = useState(""); // 알람 메시지 상태
+  const [isRead, setIsRead] = useState([true, true, true]);
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const accessToken = urlParams.get("access_token");
+  const refreshToken = urlParams.get("refresh_token");
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get("access_token");
-    const refreshToken = urlParams.get("refresh_token");
     if (accessToken && refreshToken) {
-      localStorage.setItem("authToken", accessToken); // 토큰 저장
-      localStorage.setItem("refresh", refreshToken); // refresh 토큰 저장
-
       axios
         .get(`${process.env.REACT_APP_API_URL}/members`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("authToken"),
-            "ngrok-skip-browser-warning": "69420",
+            Authorization: accessToken,
           },
         })
-        .then((res) => {
+        .then(() => {
           navigate("/");
-          console.log("유저임");
         })
-        .catch((err) => {
-          console.log("유저아님");
+        .catch(() => {
           localStorage.setItem("oauthSign", "true"); // 오어스로 회원가입 시도
           setAlertMessage("회원가입을 진행해 주세요!");
           setIsNext(true);
@@ -71,7 +66,7 @@ const SignupTerm = () => {
   };
   const onClickNext = () => {
     if (isAgreed[0] && isAgreed[1] && isAgreed[2] && isAgreed[3]) {
-      navigate("/signup/input");
+      navigate("/signup/input", { state: { access: accessToken, refresh: refreshToken } });
     } else {
       setAlertMessage("모든 약관을 동의해 주세요!");
       setIsNext(true);
@@ -80,6 +75,7 @@ const SignupTerm = () => {
   const onClickToSelection = () => {
     navigate("/signup");
   };
+
   return (
     <Container>
       {isNext ? <Alert text={alertMessage} onClickOk={() => setIsNext(false)} /> : null}
@@ -104,15 +100,16 @@ const SignupTerm = () => {
               약관동의
             </Title>
           </div>
+          <p style={{ color: "gray" }}>모든 약관을 읽어야 합니다</p>
           <div className="check-container">
             <div className="front">
               <input onChange={() => clickCheck(0)} type="checkbox" />
-              <p className="red">(필수) </p>만 18세 이상입니다.
+              <p className="red">(필수) </p>만 19세 이상입니다.
             </div>
           </div>
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(1)} type="checkbox" />
+              <input disabled={isRead[0]} onChange={() => clickCheck(1)} type="checkbox" />
               <p className="red">(필수) </p>
               서비스 이용약관 동의
             </div>
@@ -120,10 +117,10 @@ const SignupTerm = () => {
               {detail[0] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[0] ? <Term pos={0} /> : null}
+          {detail[0] ? <Term pos={0} setIsRead={setIsRead} /> : null}
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(2)} type="checkbox" />
+              <input disabled={isRead[1]} onChange={() => clickCheck(2)} type="checkbox" />
               <p className="red">(필수) </p>
               개인정보 수집 동의
             </div>
@@ -131,10 +128,10 @@ const SignupTerm = () => {
               {detail[1] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[1] ? <Term pos={1} /> : null}
+          {detail[1] ? <Term pos={1} setIsRead={setIsRead} /> : null}
           <div className="check-container">
             <div className="front">
-              <input onChange={() => clickCheck(3)} type="checkbox" />
+              <input disabled={isRead[2]} onChange={() => clickCheck(3)} type="checkbox" />
               <p className="red">(필수) </p>
               전자금융거래 이용약관 동의
             </div>
@@ -142,13 +139,13 @@ const SignupTerm = () => {
               {detail[2] ? "닫기" : "자세히"}
             </div>
           </div>
-          {detail[2] ? <Term pos={2} /> : null}
+          {detail[2] ? <Term pos={2} setIsRead={setIsRead} /> : null}
         </MiddleContainer>
         <BottomContainer>
-          <ButtonLight width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickToSelection}>
+          <ButtonLight width="150px" height="45px" fontSize="18px" onClick={onClickToSelection}>
             이전
           </ButtonLight>
-          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickNext}>
+          <ButtonDark width="150px" height="45px" fontSize="18px" onClick={onClickNext}>
             다음
           </ButtonDark>
         </BottomContainer>
@@ -165,14 +162,22 @@ const Container = styled.div`
 const TermContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
-  width: 700px;
+  max-width: 700px;
+  width: 80%;
   padding-bottom: 60px;
   position: absolute;
   top: 15%;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 25px;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    font-size: 18px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -181,12 +186,17 @@ const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  /* border-bottom: 1px solid #434242; */
   margin-bottom: 50px;
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    margin-bottom: 0px;
+  }
 `;
 const StepContainer = styled.div`
   font-size: 18px;
   ${({ theme }) => theme.common.flexCenterRow};
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    font-size: 16px;
+  }
 `;
 const Step = styled.div<StepProps>`
   ${({ theme }) => theme.common.flexCenterRow};
@@ -206,6 +216,11 @@ const MiddleContainer = styled.div`
   align-items: flex-start;
   gap: 25px;
   width: 100%;
+  @media screen and (max-width: 768px) {
+    padding: 20px 0;
+    font-size: 14px;
+    border: none;
+  }
   .title {
     width: 100%;
     padding-bottom: 20px;

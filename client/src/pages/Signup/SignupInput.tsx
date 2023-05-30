@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
-//hooks
-import useAxiosAll from "@hooks/useAxiosAll";
+
 //components
 import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import Alert from "@components/Common/AlertModal";
 
-const url = `${process.env.REACT_APP_API_URL}/`;
+const url = `${process.env.REACT_APP_API_URL}`;
 
 type TitleProps = {
   fontSize: string;
@@ -21,7 +20,7 @@ type StepProps = {
 
 const SignupInput = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [name, setName] = useState(""); // 이름 input 상태
   const [nick, setNick] = useState(""); // 닉네임 input 상태
   const [birth, setBirth] = useState(""); // 생일 input 상태
@@ -34,8 +33,8 @@ const SignupInput = () => {
   const [isDisabled, setIsDisabled] = useState(true); // 비밀번호 형식대로 입력 확인후 비밀번호 확인 란 활성화
   const [showAlert, setShowAlert] = useState(false); // 알림 띄우기 상태
   const [isOk, setIsOk] = useState(false); // 성공 여부 상태 --> 알람 확인의 onClick 이벤트 별도로 주기 위해
-  const [doAxios, data, err, ok] = useAxiosAll(); // axios 요청 응답 에러여부 확인
   const [type, setType] = useState<string | null>(null);
+
   const onName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value); // 이름 onChange 핸들러
   };
@@ -53,8 +52,8 @@ const SignupInput = () => {
     ) {
       age = age - 1;
     }
-    if (age <= 18) {
-      // 만 18 이상인지 아닌지 확인
+    if (age <= 19) {
+      // 만 19 이상인지 아닌지 확인
       setAlertMessage("성인이 아닙니다!");
       setShowAlert(true);
     } else {
@@ -80,7 +79,7 @@ const SignupInput = () => {
   };
   const onPassword = (e: ChangeEvent<HTMLInputElement>) => {
     // 비밀번호 onChange 핸들러
-    const val = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.value); // 문자와 숫자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
+    const val = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(e.target.value); // 문자, 숫자, 특수문자로 조합된 8자리 이상으로 비밀번호가 구성되었는지 확인
 
     if (val) {
       // true
@@ -98,38 +97,42 @@ const SignupInput = () => {
 
   const onClickSign = () => {
     // 회원가입 버튼 클릭 시
-    if (type === "oauth") {
+    const accessToken = location.state.access;
+    const refreshToken = location.state.refresh;
+
+    if (type === "oauth" && accessToken && refreshToken) {
       const body = {
         realName: name,
         displayName: nick,
         phone: number,
         birthDate: birth,
       };
-      console.log(body);
+
       axios
-        .post(`${process.env.REACT_APP_API_URL}/members/oauth2-signup`, body, {
+        .post(`${url}/members/oauth2-signup`, body, {
           headers: {
-            Authorization: localStorage.getItem("authToken"),
-            refresh: localStorage.getItem("refresh"),
-            "ngrok-skip-browser-warning": "69420",
+            Authorization: accessToken,
+            refresh: refreshToken,
           },
         })
-        .then((res) => {
+        .then(() => {
           setAlertMessage("회원가입 성공!");
           setShowAlert(true);
           setIsOk(true);
         })
-        .catch((err) => {
-          setAlertMessage("모든 정보를 기입하였는지 확인하세요!");
+        .catch(() => {
+          setAlertMessage("모든 정보를 제대로 기입하였는지 확인하세요!");
           setShowAlert(true);
         });
     } else {
       if (password !== passwordCheck) {
         // 비밀번호와 비밀번호 확인 입력이 일치하지 않을 경우
         setAlertMessage("비밀번호와 비밀번호 확인이 같지 않습니다!");
+        setShowAlert(true);
       } else if (!(nick && code && name && birth && number)) {
         // 모든 정보가 입력이 안되었을 경우
         setAlertMessage("모든 정보가 입력되어야 합니다!");
+        setShowAlert(true);
       } else {
         // 요청 body
         const body = {
@@ -141,21 +144,20 @@ const SignupInput = () => {
           birthDate: birth,
           mailKey: code,
         };
-        console.log(body);
+
         axios
           .post(`${process.env.REACT_APP_API_URL}/members/signup`, body, {
             headers: {
-              Authorization: localStorage.getItem("authToken"),
-              refresh: localStorage.getItem("refresh"),
-              "ngrok-skip-browser-warning": "69420",
+              Authorization: accessToken,
+              refresh: refreshToken,
             },
           })
-          .then((res) => {
+          .then(() => {
             setAlertMessage("회원가입 성공!");
             setShowAlert(true);
             setIsOk(true);
           })
-          .catch((err) => {
+          .catch(() => {
             setAlertMessage("모든 정보를 기입하였는지와 이메일을 확인해주세요");
             setShowAlert(true);
           });
@@ -164,26 +166,31 @@ const SignupInput = () => {
   };
   const getCode = () => {
     // 인증 코드 요청 axios
+
     const body = {
       email,
     };
+
     axios
-      .post(`${url}members/email`, body, {
+      .post(`${url}/members/email`, body, {
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
+      .then(() => {
         // 인증 코드 요청 성공시 알람창
         setAlertMessage("이메일 코드가 전송되었습니다!");
         setShowAlert(true);
-        console.log(res);
       })
       .catch((err) => {
         // 인증 코드 요청 실패시 알람창
-        setAlertMessage("없는 이메일 입니다!");
-        setShowAlert(true);
-        console.log(err);
+        if (err.response.status === 409) {
+          setAlertMessage("이미 가입된 이메일 입니다!");
+          setShowAlert(true);
+        } else {
+          setAlertMessage("없는 이메일 입니다!");
+          setShowAlert(true);
+        }
       });
   };
   const okGotoLogin = () => {
@@ -198,7 +205,7 @@ const SignupInput = () => {
     } else if (style === "false") {
       setType("normal");
     } else {
-      setType(null);
+      setType(null); //수정해야함!
       setAlertMessage("잘못된 경로로 접근함!");
       setShowAlert(true);
     }
@@ -206,7 +213,12 @@ const SignupInput = () => {
   }, []);
   return (
     <Container>
-      {showAlert ? <Alert text={alertMessage} onClickOk={isOk ? okGotoLogin : () => setShowAlert(false)} /> : null}
+      {showAlert ? (
+        <Alert
+          text={alertMessage}
+          onClickOk={isOk ? okGotoLogin : type ? () => setShowAlert(false) : () => navigate("/login")}
+        />
+      ) : null}
       {type ? (
         <InputContainer>
           <TopContainer>
@@ -235,35 +247,37 @@ const SignupInput = () => {
                   <SingleInfo>
                     <div className="name email">이메일</div>
                     <div className="code-pos">
-                      <ButtonDark width="60px" height="30px" fontSize="12px" borderRadious="30px" onClick={getCode}>
+                      <ButtonDark width="60px" height="30px" fontSize="12px" borderRadius="30px" onClick={getCode}>
                         인증요청
                       </ButtonDark>
                     </div>
                     <div className="input-container">
                       <input onChange={onEmail} />
                       <div className="code">
-                        <p>인증코드</p>
+                        <p className="label">인증코드</p>
                         <input onChange={onCode} className="code-input" />
                       </div>
                     </div>
                   </SingleInfo>
                   <SingleInfo>
-                    <div className="name">비밀번호</div>
-                    <div className="input-container">
-                      <input type="password" placeholder="문자, 숫자를 결합해 8자 이상" onChange={onPassword} />
-                    </div>
+                    <div className="name password">비밀번호</div>
+                    <form className="input-container">
+                      <input autoComplete="off" type="password" onChange={onPassword} />
+                      {isDisabled ? <ValidPassword>문자, 숫자, 특수기호를 결합해 8자 이상</ValidPassword> : null}
+                    </form>
                   </SingleInfo>
                   <SingleInfo>
                     <div className="name">비밀번호 확인</div>
-                    <div className="input-container">
+                    <form className="input-container">
                       <input
+                        autoComplete="off"
                         className={isDisabled ? "disable" : ""}
                         type="password"
-                        placeholder={isDisabled ? "비밀번호를 먼저 옳바르게 입력하세요" : ""}
                         disabled={isDisabled}
                         onChange={onPasswordCheck}
                       />
-                    </div>
+                      {isDisabled ? <ValidPassword>먼저 비밀번호를 옳바르게 입력하세요</ValidPassword> : null}
+                    </form>
                   </SingleInfo>
                 </>
               )}
@@ -295,10 +309,10 @@ const SignupInput = () => {
             </InfoTable>
           </MiddleContainer>
           <BottomContainer>
-            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup/term")}>
-              이전
+            <ButtonLight width="150px" height="45px" fontSize="18px" onClick={() => navigate("/signup")}>
+              회원가입 선택
             </ButtonLight>
-            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickSign}>
+            <ButtonDark width="150px" height="45px" fontSize="18px" onClick={onClickSign}>
               회원가입
             </ButtonDark>
           </BottomContainer>
@@ -316,7 +330,9 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
-  width: 700px;
+  max-width: 700px;
+  width: 100%;
+  padding: 0 25px;
   gap: 40px;
   position: absolute;
   top: 15%;
@@ -330,14 +346,35 @@ const InputContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 35%;
+    width: 200px;
+    @media screen and (max-width: 768px) {
+      width: 60%;
+    }
+    p {
+      width: 50%;
+    }
   }
-  padding-bottom: 60px;
+  padding-bottom: 100px;
+`;
+const ValidPassword = styled.p`
+  color: red;
+  margin-top: 5px;
+  font-size: 12px;
+  padding: 5px 10px;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    padding: 3px;
+    margin: 0px;
+    font-size: 10px;
+  }
 `;
 
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -348,10 +385,16 @@ const TopContainer = styled.div`
   padding-bottom: 20px;
   gap: 20px;
   margin-bottom: 50px;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 const StepContainer = styled.div`
   font-size: 18px;
   ${({ theme }) => theme.common.flexCenterRow};
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const Step = styled.div<StepProps>`
   ${({ theme }) => theme.common.flexCenterRow};
@@ -372,26 +415,40 @@ const InfoTable = styled.div`
 const SingleInfo = styled.div`
   position: relative;
   width: 100%;
-  ${({ theme }) => theme.common.flexCenterRow};
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   font-size: 16px;
-  border-bottom: 1px solid #b2b2b2;
-  p {
-    width: 50%;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
   }
+  border-bottom: 1px solid #b2b2b2;
+  background-color: #ededed;
+
   .name {
     display: flex;
     align-items: center;
     width: 190px;
-    padding: 20px;
-    background-color: #ededed;
-    &.email {
-      height: 90px;
+    height: 100%;
+    @media screen and (max-width: 768px) {
+      width: 65px;
+      padding: 5px 0 5px 10px;
+      font-size: 14px;
     }
   }
   .code-pos {
     position: absolute;
-    right: 5%;
+    right: 30px;
     top: 10%;
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      right: 5px;
+    }
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      button {
+        font-size: 10px;
+      }
+    }
   }
   .input-container {
     display: flex;
@@ -399,12 +456,20 @@ const SingleInfo = styled.div`
     justify-content: flex-start;
     gap: 10px;
     width: calc(100% - 190px);
+    @media screen and (max-width: 768px) {
+      width: calc(100% - 75px);
+    }
     padding: 10px;
+    background-color: white;
     input {
       border: 1px solid #b2b2b2;
       padding: 5px 10px;
       font-size: 16px;
       width: 80%;
+      @media screen and (max-width: 768px) {
+        width: 75%;
+        font-size: 12px;
+      }
     }
   }
 `;

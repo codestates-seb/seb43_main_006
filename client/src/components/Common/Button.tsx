@@ -12,10 +12,13 @@ const BtnDark = styled.button<BtnProps>`
   background-color: ${({ theme }) => theme.colors.themeColor};
   color: white;
   border: none;
-  border-radius: ${({ borderRadious }) => borderRadious};
+  border-radius: ${({ borderRadius }) => borderRadius};
   cursor: pointer;
   &:hover {
     filter: brightness(80%);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
   }
 `;
 
@@ -26,7 +29,7 @@ const ButtonDark: React.FC<BtnProps> = ({
   fontSize = "14px",
   fontWeight = "500",
   border = "none",
-  borderRadious = "2px",
+  borderRadius = "2px",
   onClick,
   disabled,
 }: BtnProps) => {
@@ -37,7 +40,7 @@ const ButtonDark: React.FC<BtnProps> = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       border={border}
-      borderRadious={borderRadious}
+      borderRadius={borderRadius}
       onClick={onClick}
       disabled={disabled}
     >
@@ -58,7 +61,7 @@ const ButtonLight: React.FC<BtnProps> = ({
   fontSize = "14px",
   fontWeight = "500",
   border = "none",
-  borderRadious = "2px",
+  borderRadius = "2px",
   onClick,
   disabled,
 }: BtnProps) => {
@@ -69,7 +72,7 @@ const ButtonLight: React.FC<BtnProps> = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       border={border}
-      borderRadious={borderRadious}
+      borderRadius={borderRadius}
       onClick={onClick}
       disabled={disabled}
     >

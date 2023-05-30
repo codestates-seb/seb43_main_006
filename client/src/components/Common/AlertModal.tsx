@@ -31,6 +31,15 @@ const AlertContainer = styled.div`
   .title {
     font-size: 20px;
     font-weight: 500;
+    @media screen and (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 340px;
+    padding: 30px 10px;
+    font-size: 14px;
+    left: calc(50% - 170px);
   }
 `;
 const Alert = ({ title = "", text, onClickOk, onClickCancel }: AlertProps) => {
@@ -51,18 +60,18 @@ const Alert = ({ title = "", text, onClickOk, onClickCancel }: AlertProps) => {
               width="150px"
               height="45px"
               fontSize="18px"
-              borderRadious="2px"
+              borderRadius="2px"
               border="solid 1px lightgray"
-              onClick={onClickOk}
+              onClick={onClickCancel}
             >
               취소
             </ButtonLight>
-            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickCancel}>
+            <ButtonDark width="150px" height="45px" fontSize="18px" borderRadius="2px" onClick={onClickOk}>
               확인
             </ButtonDark>
           </div>
         ) : (
-          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadious="2px" onClick={onClickOk}>
+          <ButtonDark width="150px" height="45px" fontSize="18px" borderRadius="2px" onClick={onClickOk}>
             확인
           </ButtonDark>
         )}

@@ -1,12 +1,38 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
 import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
+import { useSelector } from "react-redux";
+import Place from "@pages/Place";
+import { useDispatch } from "react-redux";
+import { setDate } from "../../redux/slice/store";
+import Modal from "@layout/Header/Logoutmodal";
 
-export default function Payinfo() {
+export type stateProps = {
+  loginState?: string;
+  markerState?: {
+    address: string;
+    choice: boolean;
+    comment: string;
+    lat: number;
+    lng: number;
+    marketId: number;
+    name: string;
+    phone: string;
+    workTime: string;
+  };
+};
+
+export interface PayinfoProps {
+  onDateChange: (date: Date | null) => void;
+}
+
+function Paymentpayinfo({ onDateChange }: PayinfoProps) {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { totalquantity, totalPrice } = items.reduce(
     (acc: { totalquantity: number; totalPrice: number }, item: ItemOrder) => {
@@ -19,15 +45,31 @@ export default function Payinfo() {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const selectdata = useSelector((state: stateProps) => state.markerState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handlePickDateClick = () => {
+  const handlePickDateClick = useCallback(() => {
     setIsCalendarOpen(true);
-  };
+  }, []);
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setIsCalendarOpen(false);
-  };
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      const today = new Date();
+      if (date && date < today) {
+        setIsModalOpen(true);
+      } else {
+        setSelectedDate(date);
+        setIsCalendarOpen(false);
+        onDateChange(date);
+        dispatch(setDate(date ? date.getTime() : null));
+      }
+    },
+    [onDateChange, dispatch],
+  );
+
+  const handlemapClick = useCallback(() => {
+    navigate("/place", { state: { items: items, selectedDate: selectedDate } });
+  }, [items, selectedDate, navigate]);
 
   return (
     <Payinfostyle>
@@ -47,43 +89,64 @@ export default function Payinfo() {
             </div>
           </div>
         </div>
-        <div className="secondline">
-          <div className="pickupdate">픽업 예정 날짜</div>
-          <div className="pickdate">{selectedDate?.toLocaleDateString() || "날짜를 선택해주세요."}</div>
-          <div className="pickselect" onClick={handlePickDateClick}>
-            픽업 예정 날짜 선택
-          </div>
-          {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
-        </div>
 
         <div>
           <div className="thirdline">
             <div className="place">
-              <div className="pickupplace">픽업 예정 위치</div>
+              <div className="pickupplace">픽업 정보</div>
               <div className="placeinfo">
                 <div className="place1">
                   <div className="placename">가게 이름</div>
-                  <div className="placename2">좋은데이</div>
+                  <div className="placename2">{selectdata?.name}</div>
                 </div>
                 <div className="place2">
                   <div className="placeadd">도로명 주소</div>
-                  <div className="placeadd2">경기도 사랑시 고백구 행복동 48-85</div>
+                  <div className="placeadd2">{selectdata?.address}</div>
                 </div>
                 <div className="place3">
                   <div className="placenumber">가게 번호</div>
-                  <div className="placenumber2">010-1234-5678</div>
+                  <div className="placenumber2">{selectdata?.phone}</div>
+                </div>
+                <div className="place4">
+                  <div className="placecomment">가게 정보</div>
+                  <div className="placecomment2">
+                    <div>{selectdata?.comment}</div>
+                    <div>{selectdata?.workTime}</div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="map">
-              <div>지도</div>
+            <div className="map" onClick={handlemapClick}>
+              <Place />
             </div>
+          </div>
+          <div className="secondline">
+            <div className="pickupdate">픽업 예정 날짜</div>
+            <div className="pickdate">{selectedDate ? selectedDate.toLocaleDateString() : "날짜를 선택해주세요."}</div>
+            {isCalendarOpen ? (
+              <div className="pickselect3">
+                {isCalendarOpen && <DatePicker selected={selectedDate} onChange={handleDateChange} inline />}
+              </div>
+            ) : (
+              <div className="pickselect">
+                <div className="pickselect2" onClick={handlePickDateClick}>
+                  픽업 예정 날짜 선택
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <div className="modal">날짜를 오늘 이후로 해주세요</div>
+        </Modal>
+      )}
     </Payinfostyle>
   );
 }
+
+export default memo(Paymentpayinfo);
 
 const Payinfostyle = styled.div`
   display: flex;
@@ -104,7 +167,7 @@ const Payinfostyle = styled.div`
   }
 
   & div.mainpay {
-    width: 80%;
+    width: 70%;
     height: 100%;
     flex-direction: column;
     justify-content: flex-start;
@@ -124,6 +187,9 @@ const Payinfostyle = styled.div`
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
   & div.totalQ {
     display: flex;
@@ -142,7 +208,7 @@ const Payinfostyle = styled.div`
   }
   & div.tq {
     ${({ theme }) => theme.common.flexCenter};
-    width: 40%;
+    width: 180px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -151,7 +217,7 @@ const Payinfostyle = styled.div`
     min-width: 161px;
   }
   & div.totalQuantity {
-    width: 75%;
+    width: 441px;
     display: flex;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
@@ -159,7 +225,7 @@ const Payinfostyle = styled.div`
   }
   & div.tp {
     ${({ theme }) => theme.common.flexCenter};
-    width: 40%;
+    width: 322px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -167,7 +233,7 @@ const Payinfostyle = styled.div`
   }
 
   & div.totalprice {
-    width: 60%;
+    width: 483px;
     display: flex;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
@@ -180,11 +246,14 @@ const Payinfostyle = styled.div`
     flex-direction: row;
     align-items: center;
     height: 50px;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
   }
 
   & div.pickupdate {
     ${({ theme }) => theme.common.flexCenter};
-    width: 17.4%;
+    width: 180px;
     height: 100%;
     background-color: rgba(217, 217, 217, 0.5);
     border: 1px solid rgba(60, 60, 60, 0.1);
@@ -198,6 +267,10 @@ const Payinfostyle = styled.div`
     border: 1px solid rgba(60, 60, 60, 0.1);
     font-size: 16px;
 
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+
     &::placeholder {
       color: #c3c3c3;
     }
@@ -207,13 +280,32 @@ const Payinfostyle = styled.div`
     }
   }
   & div.pickselect {
-    ${({ theme }) => theme.common.flexCenter};
-    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
     height: 100%;
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border: 1px solid rgba(60, 60, 60, 0.5);
     font-size: 14px;
+    &:hover {
+      cursor: pointer;
+    }
   }
-
+  & div.pickselect2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & div.pickselect3 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 100px;
+    @media screen and (max-width: 767px) {
+      margin-top: 0px;
+    }
+  }
   & div.thirdline {
     display: flex;
     justify-content: space-between;
@@ -221,25 +313,39 @@ const Payinfostyle = styled.div`
     align-items: center;
     height: 700px;
     width: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
   }
   & div.place {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35%;
+    width: 40%;
     height: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      width: 100%;
+    }
   }
   & div.pickupplace {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40%;
+    width: 180px;
     height: 100%;
     min-width: 162px;
     max-width: 181px;
     background-color: rgba(217, 217, 217, 0.5);
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    border-left: 1px solid rgba(60, 60, 60, 0.1);
+    border-right: 1px solid rgba(60, 60, 60, 0.1);
     font-weight: bold;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+    }
   }
 
   & div.placeinfo {
@@ -247,8 +353,12 @@ const Payinfostyle = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 70%;
+    width: 80%;
     height: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      width: 100%;
+    }
   }
 
   & div.place1 {
@@ -262,17 +372,19 @@ const Payinfostyle = styled.div`
 
   & div.placename {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgba(217, 217, 217, 0.5);
-    border: 1px solid rgba(60, 60, 60, 0.1);
+    border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    border-left: 1px solid rgba(60, 60, 60, 0.1);
+    border-right: 1px solid rgba(60, 60, 60, 0.1);
     font-weight: bold;
   }
   & div.placename2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -288,7 +400,7 @@ const Payinfostyle = styled.div`
   }
   & div.placeadd {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -298,7 +410,7 @@ const Payinfostyle = styled.div`
   }
   & div.placeadd2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -314,7 +426,7 @@ const Payinfostyle = styled.div`
   }
   & div.placenumber {
     width: 100%;
-    height: 50%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -324,19 +436,63 @@ const Payinfostyle = styled.div`
   }
   & div.placenumber2 {
     width: 100%;
-    height: 50%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(60, 60, 60, 0.1);
   }
 
+  & div.place4 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  & div.placecomment {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(217, 217, 217, 0.5);
+    border: 1px solid rgba(60, 60, 60, 0.1);
+    font-weight: bold;
+  }
+  & div.placecomment2 {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid rgba(60, 60, 60, 0.1);
+  }
   & div.map {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
-    height: 100%;
+    width: 60%;
     border: 1px solid rgba(60, 60, 60, 0.1);
+    @media screen and (max-width: 767px) {
+      height: 400px;
+      width: 100%;
+    }
+    & section {
+      width: 100%;
+      max-height: 690px;
+      margin-top: 10px;
+      overflow: hidden;
+
+      @media screen and (max-width: 767px) {
+        margin-top: 0;
+        max-height: 400px;
+      }
+    }
+  }
+  & div.calender {
+    display: flex;
   }
 `;

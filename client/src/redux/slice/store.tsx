@@ -36,18 +36,35 @@ const markerState = createSlice({
   },
   reducers: {
     setMarker: (state, action) => {
-      return action.payload;
+      // 기존의 상태를 변경하지 않고 새로운 객체를 반환
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+  },
+});
+
+const dateState = createSlice({
+  name: "dateState",
+  initialState: {
+    Date: new Date(), // 초기값을 문자열로 설정
+  },
+  reducers: {
+    setDate: (state, action) => {
+      state.Date = action.payload;
     },
   },
 });
 
 export const { setToken, setLogout } = loginState.actions;
 export const { setMarker } = markerState.actions;
+export const { setDate } = dateState.actions;
 
 export default configureStore({
   reducer: {
     loginState: loginState.reducer,
     markerState: markerState.reducer,
+    dateState: dateState.reducer,
   },
 });
-//0517 11:30am

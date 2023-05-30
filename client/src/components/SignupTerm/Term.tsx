@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Term = ({ pos }: { pos: number }) => {
+const Term = ({ pos, setIsRead }: { pos: number; setIsRead: React.Dispatch<React.SetStateAction<boolean[]>> }) => {
   const detailData = [
     `[서비스 이용약관 동의서]
     
@@ -111,7 +111,17 @@ const Term = ({ pos }: { pos: number }) => {
     1.서비스 이용에 대한 수수료는 회사가 별도로 정한 바에 따릅니다.
     `,
   ];
-  return <TermDetail>{detailData[pos]}</TermDetail>;
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (Math.abs(scrollTop + clientHeight - scrollHeight) <= 10) {
+      setIsRead((prevState) => {
+        const newState = [...prevState];
+        newState[pos] = false;
+        return newState;
+      });
+    }
+  };
+  return <TermDetail onScroll={handleScroll}>{detailData[pos]}</TermDetail>;
 };
 
 const TermDetail = styled.div`

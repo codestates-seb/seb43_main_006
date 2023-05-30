@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { useSelector } from "react-redux";
 
 declare global {
   interface Window {
@@ -22,21 +21,14 @@ interface ShopProps {
   shoplist: Shopitem[];
   setSelect: React.Dispatch<React.SetStateAction<Shopitem | null>>;
 }
-// interface SelectProps {
-//   setSelect: React.Dispatch<React.SetStateAction<string>>;
-// }
 
 const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
-  // const selectdata = useSelector((state) => state);
-  // console.log(selectdata);
-
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
-      center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804),
-      level: 2,
+      center: new window.kakao.maps.LatLng(37.32569664033685, 127.10734442799804), //죽전역
+      level: 8,
     };
-    // console.log(setSelect);
     const map = new window.kakao.maps.Map(container, options);
 
     //사용자 현재위치 정보
@@ -48,12 +40,11 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
         const locPosition = new window.kakao.maps.LatLng(lat, lon),
           message = "<div>현재위치</div>";
 
-        // console.log(locPosition, message); // 이게 현재위치 잡히는거다 !!!!!!!!
         displayMarker(locPosition, message);
       });
     } else {
       const locPosition = new window.kakao.maps.LatLng(37.57022168346011, 126.98314742271637), //종각역
-        message = "<div>아니야</div>";
+        message = "<div>여기아니에요</div>";
 
       displayMarker(locPosition, message);
     }
@@ -82,7 +73,7 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
       });
 
       const content =
-        '<div onClick={handleChoice} className="overlayContainer" style="background-color: red;">' +
+        '<div className="overlayContainer" style="background-color: white; border:3px solid black">' +
         `<div style="color: black;" >${el.name}</div>` +
         `<div className="shopPhone">${el.phone}</div>` +
         "</div>";
@@ -91,18 +82,16 @@ const MapComponent = ({ shoplist, setSelect }: ShopProps) => {
         content: content,
         position: new window.kakao.maps.LatLng(el.lat, el.lng),
       });
-      //마우스오버하면 커스텀어레이가 생성된다.
+
       window.kakao.maps.event.addListener(marker, "mouseover", () => {
         customOverlay.setMap(map);
       });
 
-      //마우스아웃하면 커스텀어레이가 없어진다.
       window.kakao.maps.event.addListener(marker, "mouseout", () => {
         customOverlay.setMap(null);
       });
       window.kakao.maps.event.addListener(marker, "click", () => {
         setSelect(el);
-        // console.log(el);
       });
     });
   }, [shoplist]);

@@ -3,13 +3,38 @@ import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { ItemOrder } from "../../types/AlcholInterfaces";
+import { useNavigate } from "react-router-dom";
 
-const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+const clientKey = "test_ck_4vZnjEJeQVxQPQONwmMrPmOoBN0k";
 
+function authTokenExpired(authToken: string) {
+  if (!authToken) {
+    // authToken is missing
+    return true; // treat as expired
+  }
+
+  // authToken is present
+  const decodedToken = decodeAuthToken(authToken);
+  const expSeconds = decodedToken.exp;
+  const nowSeconds = Math.floor(Date.now() / 1000);
+
+  return expSeconds < nowSeconds; // true if expired, false if valid
+}
+
+function decodeAuthToken(authToken: string) {
+  // Implement the logic to decode the authToken
+  // You can use a JWT decoding library or your own implementation
+  const payload = authToken.split(".")[1];
+  const decodedPayload = atob(payload);
+  const { exp } = JSON.parse(decodedPayload);
+  return { exp };
+}
 const CheckoutChang = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const userInfo = location.state ? location.state.userInfo : [];
   const items: ItemOrder[] = location.state ? location.state.items : [];
-  const user = location.state ? location.state.user : [];
+  const selectedDate = location.state ? location.state.selectedDate : null;
   const orderNames = items.map((item) => item.titleKor);
   const orderName = orderNames.join(", ");
   const { totalPrice } = items.reduce(
@@ -20,10 +45,14 @@ const CheckoutChang = () => {
     },
     { totalquantity: 0, totalPrice: 0 },
   );
-  console.log(totalPrice);
-  console.log(user.name);
-  console.log(orderName);
-  console.log(nanoid());
+  const authToken = localStorage.getItem("authToken");
+  useEffect(() => {
+    // Check if the authToken is missing or expired
+    if (!authToken || authTokenExpired(authToken)) {
+      navigate("/login");
+      return;
+    }
+  });
 
   useEffect(() => {
     // ------ 클라이언트 키로 객체 초기화 ------
@@ -35,11 +64,12 @@ const CheckoutChang = () => {
           // 결제 정보 파라미터
           // 더 많은 결제 정보 파라미터는 결제창 Javascript SDK에서 확인하세요.
           // https://docs.tosspayments.com/reference/js-sdk
-          amount: totalPrice, // 결제 금액
+          // amount: totalPrice, // 결제 금액
+          amount: totalPrice,
           orderId: nanoid(), // 주문 ID
           orderName: orderName, // 주문명
-          customerName: user.name, // 구매자 이름
-          customerEmail: user.email,
+          customerName: userInfo.realName, // 구매자 이름
+          customerEmail: userInfo.email,
           successUrl: `${window.location.origin}/PaymentConfirm`, // 결제 성공 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
           failUrl: `${window.location.origin}/fail`, // 결제 실패 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
         })
@@ -55,7 +85,7 @@ const CheckoutChang = () => {
           }
         });
     });
-  }, [totalPrice, items, user]);
+  }, [totalPrice, items, userInfo, selectedDate]);
 
   return <script src="https://js.tosspayments.com/v1/payment%22%3E"></script>; // JSX 반환
 };

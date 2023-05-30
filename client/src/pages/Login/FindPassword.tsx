@@ -19,7 +19,7 @@ const FindPassword = () => {
   const [email, setEmail] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [doAxios, data, err, ok] = useAxiosAll();
+  const [doAxios, , err, ok] = useAxiosAll();
 
   const phoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     // 전화번호 000-0000-0000 형식으로 숫자만 입력되도록 함
@@ -66,7 +66,7 @@ const FindPassword = () => {
       {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
+          <Title className="label" fontSize="28px" fontWeight="500">
             비밀번호 찾기
           </Title>
         </TopContainer>
@@ -107,18 +107,31 @@ const Container = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
+  @media screen and (max-width: 768px) {
+    .label {
+      display: none;
+    }
+  }
 `;
 const ContentsContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
+  padding: 0 25px;
   padding-bottom: 60px;
   position: absolute;
   top: 25%;
+  @media screen and (max-width: 768px) {
+    top: 15%;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -132,11 +145,17 @@ const MiddleContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 2px;
   padding: 50px 40px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   background-color: white;
+  @media screen and (max-width: 768px) {
+    background-color: inherit;
+    border: none;
+    padding: 0;
+  }
   gap: 30px;
   width: 100%;
   .title {
@@ -173,6 +192,9 @@ const InputContainer = styled.div`
       padding: 10px 10px;
       font-size: 16px;
       width: 100%;
+      @media screen and (max-width: 768px) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -183,8 +205,11 @@ const InputContainer = styled.div`
     width: 100%;
     height: 100%;
     gap: 30px;
+    @media screen and (max-width: 768px) {
+      gap: 10px;
+    }
     .button {
-      width: 30%;
+      width: 35%;
     }
   }
 `;

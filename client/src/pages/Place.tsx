@@ -1,36 +1,29 @@
-//지도페이지
-
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { ButtonDark } from "../components/Common/Button";
+import { ButtonDark } from "@components/Common/Button";
 import { useDispatch } from "react-redux";
 import { setMarker } from "../redux/slice/store";
 const MapComponent = lazy(() => import("./Map"));
-// import MapComponent from "./Map";
 
-/*--------------------------------스타일--------------------------------*/
 const TotalStyled = styled.section`
-  /* border: 10px solid black; */
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f7f7f7;
 `;
 const PlaceContainer = styled.div`
-  /* border: 5px solid black; */
   width: 100vw;
   height: 100vh;
   max-width: 1250px;
-  margin-top: 150px; //호버됬을때가 150이래서 일단 150으로 설정함.
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
 `;
 
 //지도부분
 const MapBodyStyled = styled.div`
-  /* border: 5px solid red; */
   display: flex;
   flex-direction: column;
   flex-grow: 6.5;
@@ -40,13 +33,20 @@ const MapBodyStyled = styled.div`
 
 //지도제목
 const MapArticleStyled = styled.div`
-  /* border: 5px solid black; */
+  border: 3px solid #dedede;
   margin-bottom: 80px;
   font-size: 18px;
+  width: 300px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+  font-weight: 600;
 `;
 
 const MapBottomStyled = styled.div`
-  /* border: 3px solid blue; */
   flex-grow: 1;
   display: flex;
   flex-grow: 3.5;
@@ -66,12 +66,17 @@ interface Shopitem {
   phone: string;
   workTime: string;
 }
-/*-----------------------------------------------------------------------*/
+
 const Place = () => {
   const dispatch = useDispatch();
   const [shoplist, setShoplist] = useState<Shopitem[]>([]);
   const navigate = useNavigate();
   const [select, setSelect] = useState<Shopitem | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const King = async () => {
     await axios
@@ -79,11 +84,10 @@ const Place = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420", // ngrok cors 에러
+          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => {
-        // console.log(res.data.content);
         setShoplist(res.data.content);
       })
       .catch((err) => console.log(err));
@@ -93,9 +97,8 @@ const Place = () => {
   }, []);
 
   const handleSelect = () => {
-    // console.log(select);
     dispatch(setMarker(select));
-    navigate("/cart");
+    navigate(-1);
   };
 
   return (
@@ -103,10 +106,11 @@ const Place = () => {
       <TotalStyled>
         <PlaceContainer>
           <MapBodyStyled>
-            <MapArticleStyled>픽업 매장을 선택하세요</MapArticleStyled>
+            <MapArticleStyled>
+              {select && select?.name !== null ? <p>{select?.name}</p> : <p>픽업매장을 선택하세요.</p>}
+            </MapArticleStyled>
             <Suspense fallback={<div>loading</div>}>
               <MapComponent shoplist={shoplist} setSelect={setSelect} />
-              {/* <MapComponent shoplist={shoplist} /> */}
             </Suspense>
           </MapBodyStyled>
           <MapBottomStyled>

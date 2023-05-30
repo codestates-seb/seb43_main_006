@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { ItemOrder } from "../../types/AlcholInterfaces";
+import { memo } from "react";
 
-export default function Itemlist() {
+function Itemlist() {
   const location = useLocation();
   const items = location.state ? location.state.items : [];
   return (
@@ -32,6 +33,7 @@ export default function Itemlist() {
     </IItemlist>
   );
 }
+export default memo(Itemlist);
 
 const IItemlist = styled.div`
   display: flex;
@@ -67,6 +69,9 @@ const IItemlist = styled.div`
     height: 30px;
 
     border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
 
   & div.imglisttitle {
@@ -113,7 +118,6 @@ const IItemlist = styled.div`
       height: 100%;
       ${({ theme }) => theme.common.flexCenter};
       font-size: 16px;
-      // 나중에 수정할 사항
     }
 
     & div.each {
@@ -125,6 +129,9 @@ const IItemlist = styled.div`
     & div.price {
       width: 12%;
       height: 100% ${({ theme }) => theme.common.flexCenter};
+      @media screen and (max-width: 767px) {
+        width: 50%;
+      }
     }
   }
 `;

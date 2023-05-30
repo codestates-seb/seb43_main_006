@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TiSocialFacebook } from "react-icons/ti";
+import { SiNaver } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import axios from "axios";
@@ -28,12 +28,17 @@ const Login = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("needLogin")) {
+      setAlertMessage("로그인이 필요합니다!");
+      setShowAlert(true);
+      localStorage.removeItem("needLogin");
+    }
+  }, []);
   function convertToSeconds(dateString: string): string {
-    // dateString을 Date 객체로 변환합니다.
+    dateString = dateString.replace("/", "T");
     const date = new Date(dateString);
-
-    // '밀리초' 단위의 시간을 얻은 후, 이를 '초' 단위로 변환합니다.
-    const seconds = Math.floor(date.getTime() / 1000);
+    const seconds = Math.floor(date.getTime() / 1000); // 초 단위 변환
 
     return `${seconds}`;
   }
@@ -63,14 +68,15 @@ const Login = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         const token = res.headers.authorization;
+
         const iat_sec = convertToSeconds(res.headers.iat);
         const exp_sec = convertToSeconds(res.headers.exp);
         const issued = res.headers["x-password-issued"]; // 임시비밀번호로 로그인한 회원인지
         localStorage.setItem("authToken", token.replace(/^Bearer\s/, "")); // 토큰 저장
         localStorage.setItem("refresh", res.headers.refresh); // refresh 토큰 저장
         localStorage.setItem("exp", exp_sec); // 토큰 만료시간 저장
+        localStorage.setItem("memberId", res.headers["x-member-id"]); // member id 저장
         localStorage.setItem("iat", iat_sec); // refresh 토큰 생성 시간 저장
         if (issued === "false") {
           // 임시 비밀번호로 접근 x
@@ -80,9 +86,8 @@ const Login = () => {
           navigate("/mypage/changeinfo");
         }
       })
-      .catch((err) => {
+      .catch(() => {
         // 로그인 요청 실패 시
-        console.log("실패", err);
         setAlertMessage("이메일 혹은 비밀번호를 확인해주세요!");
         setShowAlert(true);
       });
@@ -91,9 +96,9 @@ const Login = () => {
     //오어스 구글 인증링크 이동
     window.location.assign(`${url}/oauth2/authorization/google`);
   };
-  const facebookOAuthHandler = () => {
-    //오어스 페이스북 인증링크로 이동
-    window.location.assign(`${url}/oauth2/authorization/facebook`);
+  const naverOAuthHandler = () => {
+    //오어스 네이버 인증링크로 이동
+    window.location.assign(`${url}/oauth2/authorization/naver`);
   };
   const kakaoOAuthHandler = () => {
     window.location.assign(`${url}/oauth2/authorization/kakao`);
@@ -113,7 +118,7 @@ const Login = () => {
       {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
+          <Title className="top-title" fontSize="28px" fontWeight="500">
             로그인
           </Title>
         </TopContainer>
@@ -123,10 +128,16 @@ const Login = () => {
               회원 로그인
             </Title>
             <div className="flex-row">
-              <div className="flex-col">
+              <form className="flex-col">
                 <input placeholder="이메일" type="email" onChange={userNameHandler} onKeyDown={handleKeyDown} />
-                <input placeholder="비밀번호" type="password" onChange={passwordHandler} onKeyDown={handleKeyDown} />
-              </div>
+                <input
+                  placeholder="비밀번호"
+                  type="password"
+                  autoComplete="off"
+                  onChange={passwordHandler}
+                  onKeyDown={handleKeyDown}
+                />
+              </form>
               <div className="button">
                 <ButtonDark width="100%" height="100%" fontSize="18px" fontWeight="500" onClick={handleLogin}>
                   로그인
@@ -136,19 +147,19 @@ const Login = () => {
           </LoginContainer>
           <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
             <OAuthIconContainer>
-              <FcGoogle size="40" color="black" />
+              <FcGoogle size="35" color="black" />
             </OAuthIconContainer>
             <div className="desc">구글로 시작하기</div>
           </OAuthSignUpBox>
-          <OAuthSignUpBox onClick={facebookOAuthHandler} type="facebook">
+          <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
             <OAuthIconContainer>
-              <TiSocialFacebook size="40" color="white" />
+              <SiNaver size="25" color="white" />
             </OAuthIconContainer>
-            <div className="desc">페이스북으로 시작하기</div>
+            <div className="desc">네이버로 시작하기</div>
           </OAuthSignUpBox>
           <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
             <OAuthIconContainer>
-              <RiKakaoTalkFill size="40" color="black" />
+              <RiKakaoTalkFill size="35" color="black" />
             </OAuthIconContainer>
             <div className="desc">카카오톡으로 시작하기</div>
           </OAuthSignUpBox>
@@ -191,9 +202,18 @@ const Container = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
 `;
 const ContentsContainer = styled.div`
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   position: absolute;
   top: 15%;
+  margin-bottom: 30px;
+  @media screen and (max-width: 768px) {
+    padding-bottom: 50px;
+    padding: 0 25px;
+    .top-title {
+      display: none;
+    }
+  }
 `;
 const Contour = styled.hr`
   width: 100%;
@@ -208,10 +228,16 @@ const TopContainer = styled.div`
   padding-bottom: 20px;
   gap: 20px;
   margin-bottom: 30px;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const MiddleContainer = styled.div`
@@ -220,8 +246,16 @@ const MiddleContainer = styled.div`
   gap: 20px;
   width: 100%;
   padding: 50px 60px;
+  @media screen and (max-width: 768px) {
+    padding: 0px;
+    gap: 10px;
+  }
   border: 1px solid ${({ theme }) => theme.colors.border};
   background-color: white;
+  @media screen and (max-width: 768px) {
+    background-color: inherit;
+    border: none;
+  }
 `;
 const LoginContainer = styled.div`
   display: flex;
@@ -231,7 +265,7 @@ const LoginContainer = styled.div`
   gap: 20px;
   margin-bottom: 30px;
   .flex-col {
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -250,9 +284,15 @@ const LoginContainer = styled.div`
     width: 100%;
     height: 100%;
     gap: 30px;
-  }
-  .button {
-    width: 30%;
+    @media screen and (max-width: 768px) {
+      gap: 10px;
+    }
+    .button {
+      width: 30%;
+      @media screen and (max-width: 768px) {
+        width: 20%;
+      }
+    }
   }
 `;
 
@@ -262,13 +302,16 @@ const OAuthSignUpBox = styled.div<TypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: ${({ type }) => (type === "google" ? "white" : type === "facebook" ? "#4566a0" : "#ffeb00")};
+  background-color: ${({ type }) => (type === "google" ? "white" : type === "naver" ? "#03C75A" : "#ffeb00")};
   color: ${({ type }) => (type === "google" || type === "kakao" ? "black" : "white")};
   border: 1px solid ${({ theme }) => theme.colors.border};
   .desc {
     font-size: 18px;
     width: calc(100% - 65px);
     text-align: center;
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      font-size: 14px;
+    }
   }
   border-radius: 2px;
   cursor: pointer;
@@ -282,12 +325,18 @@ const OAuthIconContainer = styled.div`
   .icon {
     width: 35px;
   }
+  @media screen and (max-width: 768px) {
+    height: 55px;
+  }
 `;
 
 const BottomContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterRow}
   width: 100%;
   gap: 15px;
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 export default Login;
