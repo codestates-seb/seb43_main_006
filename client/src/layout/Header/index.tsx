@@ -46,7 +46,7 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
       padding-top: 0px;
     }
   }
-  @media screen and (max-width: 490px) {
+  @media screen and (max-width: 767px) {
     height: 50px;
   }
 `;
@@ -133,10 +133,12 @@ const Ulist = styled.div<IHeaderContainerProps>`
 
   & ul {
     & li {
+      height: 20px;
       padding-top: 4%;
       font-size: 14px;
       font-weight: 400;
       flex-direction: row;
+      padding: 1rem;
     }
   }
 
@@ -209,6 +211,10 @@ const slideOut = keyframes`
 `;
 const AccordionMenu = styled.div<IHeaderContainerProps>`
   display: none;
+
+  .li_padding {
+    padding: 0.8rem 1rem;
+  }
   @media screen and (max-width: 767px) {
     display: flex;
     flex-direction: column;
@@ -218,7 +224,7 @@ const AccordionMenu = styled.div<IHeaderContainerProps>`
     font-size: 16px;
     color: #a84448;
     background-color: none;
-    height: 280px;
+    /* height: 280px; */
   }
   & div.onclick {
     filter: drop-shadow(2px 2px 1px rgba(8, 8, 8, 0.5));
@@ -389,7 +395,11 @@ const Header: React.FC = () => {
 
             <AccordionMenu hovering={(isHover || false).toString()} y={y}>
               {isAccordionOpen ? (
-                <div className="onclick" onClick={toggleAccordionMenu}>
+                <div
+                  onBlur={() => setIsAccordionOpen(!isAccordionOpen)}
+                  className="onclick"
+                  onClick={toggleAccordionMenu}
+                >
                   Menu
                 </div>
               ) : (
@@ -400,6 +410,7 @@ const Header: React.FC = () => {
               {isAccordionOpen && (
                 <>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -410,6 +421,7 @@ const Header: React.FC = () => {
                     주류 리스트
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -420,6 +432,7 @@ const Header: React.FC = () => {
                     장바구니
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -430,6 +443,7 @@ const Header: React.FC = () => {
                     찜
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -440,6 +454,7 @@ const Header: React.FC = () => {
                     주문 내역
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -450,6 +465,7 @@ const Header: React.FC = () => {
                     개인 정보 수정
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
@@ -460,6 +476,7 @@ const Header: React.FC = () => {
                     자주 묻는 질문
                   </AccordionMenuItem>
                   <AccordionMenuItem
+                    className="li_padding"
                     hovering={(isHover || false).toString()}
                     y={y}
                     onClick={() => {
