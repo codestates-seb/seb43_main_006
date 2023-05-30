@@ -267,6 +267,10 @@ const Payinfostyle = styled.div`
     border: 1px solid rgba(60, 60, 60, 0.1);
     font-size: 16px;
 
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+
     &::placeholder {
       color: #c3c3c3;
     }

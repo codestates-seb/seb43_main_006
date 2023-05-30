@@ -129,6 +129,9 @@ const IItemlist = styled.div`
     & div.price {
       width: 12%;
       height: 100% ${({ theme }) => theme.common.flexCenter};
+      @media screen and (max-width: 767px) {
+        width: 50%;
+      }
     }
   }
 `;

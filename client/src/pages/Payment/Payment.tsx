@@ -180,6 +180,8 @@ const PaymentContainer = styled.section`
     @media screen and (max-width: 767px) {
       width: 100%;
       margin-top: 0px;
+      padding-left: 25px;
+      padding-right: 25px;
     }
   }
 
