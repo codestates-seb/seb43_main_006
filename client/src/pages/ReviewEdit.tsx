@@ -31,6 +31,7 @@ const ReviewFormBox = styled.div`
   .review_intake_box {
     display: flex;
     width: 100%;
+    align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid lightgray;
     text-align: left;
@@ -49,8 +50,8 @@ const ReviewFormBox = styled.div`
 
   .item_info_box {
     display: flex;
-    justify-content: center;
     padding: 0.5rem 0;
+    justify-content: center;
     border-bottom: 1px solid lightgray;
 
     img {
@@ -79,6 +80,23 @@ const ReviewFormBox = styled.div`
           padding: 0;
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 490px) {
+    margin-top: 10px;
+
+    form > .review_intake_box > h3 {
+      font-size: 20px;
+    }
+    .item_info_box {
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+    .item_info_box > img {
+      margin: 1rem 0.3rem;
+      max-width: 100px;
+      width: auto;
     }
   }
 `;
@@ -171,10 +189,22 @@ const ReviewContentBox = styled.div`
       margin-bottom: 1rem;
     }
   }
+
+  @media screen and (max-width: 490px) {
+    .content_title {
+      font-size: 15px;
+    }
+    .content_input > .photo_info {
+      font-size: 13px;
+    }
+    .content_input > p {
+      font-size: 12px;
+    }
+  }
 `;
 
 const ConfirmBtnBox = styled.div`
-  margin: 20px;
+  margin: 20px 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -201,6 +231,12 @@ const ConfirmBtnBox = styled.div`
       &:hover {
         filter: brightness(80%);
       }
+    }
+  }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    .cancel_btn,
+    .confirm_btn {
+      flex: 0 0 40%;
     }
   }
 `;

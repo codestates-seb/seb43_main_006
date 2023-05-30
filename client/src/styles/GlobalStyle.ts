@@ -26,6 +26,10 @@ export default createGlobalStyle`
     }
     .main {
         margin-top: 120px;
+
+        @media screen and (max-width: 490px) {
+            margin-top: 50px;
+        }
     }
 
     @font-face {

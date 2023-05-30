@@ -46,6 +46,9 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
       padding-top: 0px;
     }
   }
+  @media screen and (max-width: 490px) {
+    height: 50px;
+  }
 `;
 
 const HeaderContainer = styled.div<IHeaderContainerProps>`
@@ -92,7 +95,7 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
             fill: #a84448;
           `
         : css`
-         fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
+            fill: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#a84448"}; rgba(245, 245, 245, 1)" : "color: #222222"
           `}
     transition: all 0.5s ease-out;
 
