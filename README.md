@@ -104,6 +104,19 @@
 </details>
 
 <details>
+<summary><b>리뷰 작성 및 삭제</b></summary>
+<div markdown="1"><br/>
+
+![리뷰 달기 + 삭제](https://github.com/codestates-seb/seb43_main_006/assets/89833446/cdc4143d-a171-4f57-97ce-181d3332862f)
+
+<br/>
+  
+제품이나 서비스에 대한 솔직한 의견을 남기고 다른 이용자들과 공유할 수 있습니다. <br/>
+  
+</div>
+</details>
+
+<details>
 <summary><b>로컬 회원 가입</b></summary>
 <div markdown="1"><br/>
 
