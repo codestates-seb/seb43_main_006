@@ -261,7 +261,7 @@ const Payinfostyle = styled.div`
     min-width: 162px;
   }
   & div.pickdate {
-    width: 1040px;
+    width: 100%;
     ${({ theme }) => theme.common.flexCenter};
     height: 100%;
     border: 1px solid rgba(60, 60, 60, 0.1);
