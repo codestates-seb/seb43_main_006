@@ -39,7 +39,7 @@
 </details>
 
 <details>
-<summary><b>주류 페이지( 카테고리+검색 )</b></summary>
+<summary><b>주류 페이지( 카테고리 + 검색 )</b></summary>
 <div markdown="1"><br/>
 
 ![ItemCategoryandsearch](https://github.com/codestates-seb/seb43_main_006/assets/89833446/5d57d073-0765-490a-996f-d24e96387309.gif)
@@ -50,6 +50,26 @@
   
 </div>
 </details>
+
+<details>
+<summary><b>찜 하기</b></summary>
+<div markdown="1"><br/>
+
+![찜하기](https://github.com/codestates-seb/seb43_main_006/assets/89833446/275d5a5d-45a3-4221-9980-9573d33a0246)
+
+<br/>
+  
+원하는 주류를 찜 리스트에 추가할 수 있습니다. 이를 통해 즐겨찾는 주류를 손쉽게 관리하고, 필요할 때 언제든지 찾아볼 수 있습니다. <br/>
+  
+</div>
+</details>
+
+
+
+
+
+
+
 
 <br/>
 
