@@ -39,6 +39,9 @@ const SortingUtilsContainer = styled.div`
       @media screen and (max-width: 600px) {
         font-size: 14px;
       }
+      @media ${(props) => props.theme.breakpoints.mobileMax} {
+        width: 100px;
+      }
     }
     ul {
       list-style: none;

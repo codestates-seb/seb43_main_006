@@ -21,6 +21,10 @@ const AlcoholItemBuyContainer = styled.div`
   display: flex;
   max-width: ${({ theme }) => theme.widthSize.contentMax};
   width: 100%;
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    display: block;
+  }
 `;
 
 const StyledItemImgBox = styled.div`
@@ -30,12 +34,19 @@ const StyledItemImgBox = styled.div`
   padding: 0 20px;
 
   img {
-    /* margin: auto; */
     height: 550px;
-    max-width: 100%;
     object-fit: scale-down;
     min-width: 400px;
     width: 80%;
+  }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-bottom: 3rem;
+
+    img {
+      min-width: 0;
+      height: 250px;
+      width: 80%;
+    }
   }
 `;
 
@@ -52,6 +63,7 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   > .buy_titlebox > .buy_title {
     font-size: 28px;
@@ -109,6 +121,26 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    padding: 0;
+    .buy_titlebox > .buy_title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .buy_count > .quantity_box > .item_price {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .buy_price {
+      > .buy_item_content {
+        font-size: 14px;
+      }
+      .buy_price_text {
+        font-size: 16px;
+      }
+    }
   }
 `;
 
