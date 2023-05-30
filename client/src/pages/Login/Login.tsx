@@ -206,6 +206,10 @@ const ContentsContainer = styled.div`
   width: 95%;
   position: absolute;
   top: 15%;
+  margin-bottom: 30px;
+  @media screen and (max-width: 768px) {
+    padding-bottom: 50px;
+  }
 `;
 const Contour = styled.hr`
   width: 100%;
@@ -220,10 +224,16 @@ const TopContainer = styled.div`
   padding-bottom: 20px;
   gap: 20px;
   margin-bottom: 30px;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 
 const MiddleContainer = styled.div`
