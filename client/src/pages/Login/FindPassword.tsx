@@ -66,7 +66,7 @@ const FindPassword = () => {
       {showAlert ? <Alert text={alertMessage} onClickOk={() => setShowAlert(false)} /> : null}
       <ContentsContainer>
         <TopContainer>
-          <Title fontSize="28px" fontWeight="500">
+          <Title className="label" fontSize="28px" fontWeight="500">
             비밀번호 찾기
           </Title>
         </TopContainer>
@@ -107,12 +107,18 @@ const Container = styled.div`
   color: ${({ theme }) => theme.colors.fontColor};
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 20px;
+  @media screen and (max-width: 768px) {
+    .label {
+      display: none;
+    }
+  }
 `;
 const ContentsContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   gap: 50px;
   max-width: 600px;
-  width: 95%;
+  width: 100%;
+  padding: 0 25px;
   padding-bottom: 60px;
   position: absolute;
   top: 25%;
@@ -139,14 +145,17 @@ const MiddleContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 2px;
   padding: 50px 40px;
-  @media screen and (max-width: 768px) {
-    padding: 30px 20px;
-  }
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   background-color: white;
+  @media screen and (max-width: 768px) {
+    background-color: inherit;
+    border: none;
+    padding: 0;
+  }
   gap: 30px;
   width: 100%;
   .title {
@@ -183,6 +192,9 @@ const InputContainer = styled.div`
       padding: 10px 10px;
       font-size: 16px;
       width: 100%;
+      @media screen and (max-width: 768px) {
+        font-size: 14px;
+      }
     }
   }
 

@@ -34,12 +34,17 @@ const SelectionContainer = styled.div`
     padding: 40px 20px;
   }
   max-width: 600px;
-  width: 95%;
+  width: 100%;
   ${({ theme }) => theme.common.flexCenterCol};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 2px;
   gap: 20px;
   background-color: white;
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    background-color: inherit;
+    border: none;
+    gap: 10px;
+  }
 `;
 const BasicSignupBox = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
@@ -69,6 +74,9 @@ const OAuthSignUpBox = styled.div<TypeProps>`
     font-size: 18px;
     width: calc(100% - 65px);
     text-align: center;
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      font-size: 14px;
+    }
   }
   border-radius: 2px;
   cursor: pointer;
@@ -81,6 +89,9 @@ const OAuthIconContainer = styled.div`
   border-right: 1px solid ${({ theme }) => theme.colors.border};
   .icon {
     width: 35px;
+  }
+  @media screen and (max-width: 768px) {
+    height: 55px;
   }
 `;
 const SignupSelection = () => {
@@ -109,19 +120,19 @@ const SignupSelection = () => {
         <Contour />
         <OAuthSignUpBox onClick={googleOAuthHandler} type="google">
           <OAuthIconContainer>
-            <FcGoogle size="40" color="black" />
+            <FcGoogle size="35" color="black" />
           </OAuthIconContainer>
           <div className="desc">구글로 회원가입</div>
         </OAuthSignUpBox>
         <OAuthSignUpBox onClick={naverOAuthHandler} type="naver">
           <OAuthIconContainer>
-            <SiNaver size="30" color="white" />
+            <SiNaver size="25" color="white" />
           </OAuthIconContainer>
           <div className="desc">네이버로 회원가입</div>
         </OAuthSignUpBox>
         <OAuthSignUpBox onClick={kakaoOAuthHandler} type="kakao">
           <OAuthIconContainer>
-            <RiKakaoTalkFill size="40" color="black" />
+            <RiKakaoTalkFill size="35" color="black" />
           </OAuthIconContainer>
           <div className="desc">카카오톡으로 시작하기</div>
         </OAuthSignUpBox>

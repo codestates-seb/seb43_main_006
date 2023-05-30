@@ -105,6 +105,13 @@ const BtnContainer = styled.div`
   position: fixed;
   right: 20px;
   bottom: 20px;
+  @media ${({ theme }) => theme.breakpoints.mobileMax} {
+    button {
+      width: 50px;
+      height: 50px;
+      font-size: 12px;
+    }
+  }
 `;
 
 const GptContainer = styled.div`
@@ -203,7 +210,7 @@ const MiddleContainer = styled.div`
     content: "";
     position: absolute;
     left: 0;
-    top: 10%;
+    top: 50%;
     width: 0;
     height: 0;
     border: 20px solid transparent;

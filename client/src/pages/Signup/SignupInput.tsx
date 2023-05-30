@@ -205,7 +205,7 @@ const SignupInput = () => {
     } else if (style === "false") {
       setType("normal");
     } else {
-      setType("normal"); //수정해야함!
+      setType(null); //수정해야함!
       setAlertMessage("잘못된 경로로 접근함!");
       setShowAlert(true);
     }
@@ -331,7 +331,8 @@ const Container = styled.div`
 const InputContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterCol};
   max-width: 700px;
-  width: 95%;
+  width: 100%;
+  padding: 0 25px;
   gap: 40px;
   position: absolute;
   top: 15%;
@@ -347,7 +348,7 @@ const InputContainer = styled.div`
     align-items: center;
     width: 200px;
     @media screen and (max-width: 768px) {
-      width: 70%;
+      width: 60%;
     }
     p {
       width: 50%;
@@ -431,9 +432,9 @@ const SingleInfo = styled.div`
     width: 190px;
     height: 100%;
     @media screen and (max-width: 768px) {
-      width: 75px;
-      padding: 10px 0 10px 10px;
-      font-size: 15px;
+      width: 65px;
+      padding: 5px 0 5px 10px;
+      font-size: 14px;
     }
   }
   .code-pos {
@@ -442,6 +443,11 @@ const SingleInfo = styled.div`
     top: 10%;
     @media ${({ theme }) => theme.breakpoints.mobileMax} {
       right: 5px;
+    }
+    @media ${({ theme }) => theme.breakpoints.mobileMax} {
+      button {
+        font-size: 10px;
+      }
     }
   }
   .input-container {
@@ -462,6 +468,7 @@ const SingleInfo = styled.div`
       width: 80%;
       @media screen and (max-width: 768px) {
         width: 75%;
+        font-size: 12px;
       }
     }
   }
