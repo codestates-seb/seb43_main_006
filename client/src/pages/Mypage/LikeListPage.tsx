@@ -7,7 +7,6 @@ import { ButtonDark, ButtonLight } from "@components/Common/Button";
 import Pagination from "@components/AlcoholPage/Pagination";
 import PriceDisplay from "@components/Common/PriceDisplay";
 
-//components
 interface Likeitem {
   titleKor: string;
   price: number;
@@ -136,7 +135,6 @@ const LikePage = () => {
   const navigate = useNavigate();
   const totalPages = Math.ceil(totalLength / 5);
   const paginationData = likelist.slice(5 * (currentPage - 1), 5 * currentPage);
-
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
