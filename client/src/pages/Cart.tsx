@@ -500,6 +500,8 @@ const CartContainer = styled.section<{ isEmpty: boolean }>`
     @media screen and (max-width: 767px) {
       width: 100%;
       height: 0%;
+      padding-left: 25px;
+      padding-right: 25px;
     }
   }
 

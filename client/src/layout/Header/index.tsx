@@ -462,12 +462,21 @@ const Header: React.FC = () => {
                     onClick={() => {
                       if (localStorage.getItem("authToken")) {
                         if (authTokenExpired()) {
-                          navigate("/login");
+                          {
+                            navigate("/login");
+                            toggleAccordionMenu();
+                          }
                         } else {
-                          handleLogout();
+                          {
+                            handleLogout();
+                            toggleAccordionMenu();
+                          }
                         }
                       } else {
-                        navigate("/login");
+                        {
+                          navigate("/login");
+                          toggleAccordionMenu();
+                        }
                       }
                     }}
                   >
