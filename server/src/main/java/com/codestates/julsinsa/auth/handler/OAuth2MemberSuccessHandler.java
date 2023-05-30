@@ -171,9 +171,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("codestates-main-mejumeju.s3-website.ap-northeast-2.amazonaws.com")
-//                .port(8080)
+                .scheme("https")
+                .host("d19giwni3dtzaq.cloudfront.net")
+//                .port(3000)
                 .path("/signup/term")
                 .queryParams(queryParams)
                 .build()
@@ -194,8 +194,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("codestates-main-mejumeju.s3-website.ap-northeast-2.amazonaws.com")
+                .scheme("https")
+                .host("d19giwni3dtzaq.cloudfront.net")
 //                .port(3000)
                 .path("/")
                 .queryParams(queryParams)
