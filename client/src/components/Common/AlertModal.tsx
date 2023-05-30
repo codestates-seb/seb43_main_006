@@ -31,6 +31,15 @@ const AlertContainer = styled.div`
   .title {
     font-size: 20px;
     font-weight: 500;
+    @media screen and (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 340px;
+    padding: 30px 10px;
+    font-size: 14px;
+    left: calc(50% - 170px);
   }
 `;
 const Alert = ({ title = "", text, onClickOk, onClickCancel }: AlertProps) => {
