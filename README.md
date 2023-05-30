@@ -24,7 +24,7 @@
 ## 📄 Meju Meju Main Page
 ![main](https://github.com/codestates-seb/seb43_main_006/assets/89833446/0e47e591-462c-4433-bca5-7d6dca0be9c2)
 
-### 기능별 소개
+### 기능별 소개 ( 클릭해서 보세요 )
 
 <details>
 <summary><b>주류 페이지 ( 리스트 + 상세 )</b></summary>
@@ -169,6 +169,19 @@ OAuth를 통해 간편하게 로그인할 수 있습니다. <br/>
 </div>
 </details>
 
+<details>
+<summary><b>AI챗봇</b></summary>
+<div markdown="1"><br/>
+
+![지피티](https://github.com/codestates-seb/seb43_main_006/assets/89833446/21950e44-e2fa-4613-9a79-4efc617918e7)
+
+
+<br/>
+  
+GPT API를 이용하여 챗봇을 구현하였습니다. 이제 궁금한 점이나 질문이 있으시면 언제든지 물어보실 수 있습니다. <br/>
+  
+</div>
+</details>
 
 <details>
 <summary><b>고객센터</b></summary>
