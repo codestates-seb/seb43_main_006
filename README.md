@@ -7,8 +7,8 @@
 **`팀 명` :** 주신사 </br>
 **`프로젝트 명` :** 매주매주 </br>
 **`프로젝트 기간` :** 2023.04.28 - 2023.05.31 </br>
-`배포링크` :  [ ❤️매주매주❤️ ](http://codestates-main-mejumeju.s3-website.ap-northeast-2.amazonaws.com/)
-
+`배포링크` :  [ ❤️매주매주❤️ ](http://codestates-main-mejumeju.s3-website.ap-northeast-2.amazonaws.com/) </br>
+`개인 기술 발표` : [팀원들의 개인 기술 발표 보러가기](https://www.youtube.com/watch?v=Syx-0-BSedY) <br/>
 </br>
 
 ## ❤️ Team ❤️
@@ -25,8 +25,8 @@
 
 📓 [서비스 메뉴얼](https://www.notion.so/codestates/62386707b0014e6b8c38f244710adca4)<br/>
 📕 [사용자 요구사항 정의서](https://www.notion.so/c8e7cd801ebb4b18a2c8b8c61a0196ff)<br/>
-📗 [화면 정의서](https://www.notion.so/4edfc14c24794afcafe08f50de4992c3)<br/>
-📘 [테이블 명세서](https://www.notion.so/892e04814d234ba9bcba5d9daf6a0911)<br/>
+📗 [화면 정의서](https://codestates.notion.site/789ca0e5dbc7496fbd04970b04018570)<br/>
+📘 [테이블 명세서](https://www.notion.so/codestates/ERD-03bdc9b8aa0240df94dc82407023d1b3)<br/>
 📙 [ERD](https://www.erdcloud.com/d/Jnpe84PRbuc5vpHfD)<br/>
 📔 [API 명세서](https://documenter.getpostman.com/view/25534403/2s93eU2a1P#f16ceb5f-6cfa-46cb-bef8-9e772215a88f)<br/>
 📒 [개발자 테스트 체크리스트](https://file.notion.so/f/s/1c1c24d7-ccb7-4daa-99e6-a7125715192d/43%E1%84%80%E1%85%B5-Team-%E1%84%8C%E1%85%AE%E1%84%89%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1-%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3%E1%84%90%E1%85%B33.pdf?id=de750f51-ed78-4b3d-a320-b7ac9a767e2f&table=block&spaceId=82d63a72-8254-4cde-bf1e-b2597b7c099c&expirationTimestamp=1685507891242&signature=i8SWIqObz4Aan1SeSVcyLJn2NqjxbSndT2CLdlVWDns&downloadName=43%E1%84%80%E1%85%B5-Team-%E1%84%8C%E1%85%AE%E1%84%89%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A1-%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%8E%E1%85%A6%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3%E1%84%90%E1%85%B33.pdf)<br/>
