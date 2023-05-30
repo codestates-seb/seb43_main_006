@@ -24,7 +24,7 @@
 ## 📚 Documents
 
 📓 [서비스 메뉴얼](https://www.notion.so/codestates/62386707b0014e6b8c38f244710adca4)<br/>
-📕 [사용자 요구사항 정의서](https://www.notion.so/c8e7cd801ebb4b18a2c8b8c61a0196ff)<br/>
+📕 [사용자 요구사항 정의서](https://cdn.discordapp.com/attachments/1095265921255350284/1112971037500510228/e42aa2f8de37602f.png)<br/>
 📗 [화면 정의서](https://codestates.notion.site/789ca0e5dbc7496fbd04970b04018570)<br/>
 📘 [테이블 명세서](https://www.notion.so/codestates/ERD-03bdc9b8aa0240df94dc82407023d1b3)<br/>
 📙 [ERD](https://www.erdcloud.com/d/Jnpe84PRbuc5vpHfD)<br/>
@@ -66,11 +66,11 @@
 ## ✉️ Git Commit Message Convention ✉️ 
 
 ### 🌿 Branch
-* main : 서비스 운영 브랜치
-* dev : 개발중인 브랜치
-* fe : 프론트 브랜치
-* be : 백엔드 브랜치
-* fe-feat(또는 be)/기능명 : 기능 개발 브랜치
+main : 서비스 운영 브랜치
+dev : 개발중인 브랜치
+fe : 프론트 브랜치
+be : 백엔드 브랜치
+fe-feat(또는 be)/기능명 : 기능 개발 브랜치
 
 ### 💌 Commit Message
 |Tag|Title|
