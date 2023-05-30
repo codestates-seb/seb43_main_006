@@ -184,6 +184,20 @@ GPT API를 이용하여 챗봇을 구현하였습니다. 이제 궁금한 점이
 </details>
 
 <details>
+<summary><b>랜덤 술 추천</b></summary>
+<div markdown="1"><br/>
+
+![랜덤 술 추천](https://github.com/codestates-seb/seb43_main_006/assets/89833446/eb40f77f-3a0c-44bd-b704-edbbe156f8f9)
+
+<br/>
+  
+메인 페이지의 휴대폰 화면에 위치한 "촬영" 버튼을 클릭하여 랜덤으로 주류를 추천받을 수 있습니다. 이 기능을 통해 다양한 주류를 탐색하고 새로운 맛을 경험할 수 있습니다. <br/>
+  
+</div>
+</details>
+
+
+<details>
 <summary><b>고객센터</b></summary>
 <div markdown="1"><br/>
 
