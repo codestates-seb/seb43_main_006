@@ -104,19 +104,28 @@ const ItemContentContainer = styled.div`
     height: 100px;
     margin-bottom: 30px;
   }
+
+  @media screen and (max-width: 480px) {
+    > ul {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
 `;
 
 const ReviewTitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   font-weight: 600;
+  align-items: center;
   margin: 0.5rem 0;
   border-bottom: 2px solid ${({ theme }) => theme.colors.border};
 
   .review_titletext {
     font-size: 1.5rem;
   }
-  button {
+  > button {
     border: none;
     cursor: pointer;
     background: none;
@@ -124,6 +133,17 @@ const ReviewTitleBox = styled.div`
 
     span {
       margin-right: 10px;
+    }
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-top: 30px;
+
+    .review_titletext {
+      font-size: 20px;
+    }
+    > button {
+      font-size: 20px;
     }
   }
 `;

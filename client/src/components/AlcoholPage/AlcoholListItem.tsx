@@ -65,6 +65,19 @@ const AlcoholItemContainer = styled.div`
       }
     }
   }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    .item_img {
+      height: 190px;
+    }
+    .item_content > .item_title {
+      font-size: 15px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    .item_content > .item_price {
+      font-size: 15px;
+    }
+  }
 `;
 
 const AlcoholListItem = ({ item }: ItemProps) => {

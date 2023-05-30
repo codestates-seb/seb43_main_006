@@ -23,7 +23,6 @@ interface ReveiwUpdateProps {
 
 const ReviewListContainer = styled.div`
   width: 100%;
-  /* height: 1000px; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -107,12 +106,17 @@ const ReviewListContainer = styled.div`
         }
       }
     }
-    .content_input {
-      width: 85%;
-      padding: 0.5rem;
-      border: 1px solid lightgray;
-      border-radius: 3px;
-      outline: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    .review_content > .review_img > &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    > ul {
+      width: 100%;
+      padding: 1rem 0;
     }
   }
 `;

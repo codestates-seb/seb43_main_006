@@ -20,6 +20,9 @@ const ItemContentContainer = styled.div`
     margin-top: 1rem;
     width: 100%;
   }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin: 0.5rem 0 3rem 0;
+  }
 `;
 
 const ContentTitleBox = styled.div`
@@ -32,6 +35,13 @@ const ContentTitleBox = styled.div`
   .content_titletext {
     font-size: 1.5rem;
     padding-bottom: 0.3rem;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    .content_titletext {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -70,6 +80,20 @@ const ContentBox = styled.div`
       line-height: 30px;
     }
   }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    gap: 2rem;
+    padding-left: 2rem;
+    flex-direction: column;
+
+    .content_datail_title {
+      font-size: 18px;
+    }
+    .content_note_bold,
+    .content_info_bold {
+      font-size: 14px;
+    }
+  }
 `;
 
 const DetailInfoBox = styled.div`
@@ -86,6 +110,12 @@ const DetailInfoBox = styled.div`
       max-width: 1000px;
       height: auto;
     }
+
+    @media screen and (max-width: 480px) {
+      img {
+        width: 100vw;
+      }
+    }
   }
 `;
 
@@ -98,6 +128,12 @@ const SuggestionTitle = styled.div`
   .content_titletext {
     font-size: 1.5rem;
   }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-top: 4rem;
+    .content_titletext {
+      font-size: 20px;
+    }
+  }
 `;
 
 const ScrollContainer = styled.div`
@@ -108,8 +144,12 @@ const ScrollContainer = styled.div`
 const ScrollBtn = styled.button`
   border: none;
   background: transparent;
-  font-size: 2em;
+  font-size: 2rem;
   cursor: pointer;
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    display: none;
+  }
 `;
 
 const SuggestionBox = styled.ul`
@@ -127,6 +167,12 @@ const SuggestionBox = styled.ul`
     margin-right: 10px;
     width: 230px;
     cursor: pointer;
+  }
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    li {
+      width: 190px;
+    }
   }
 `;
 

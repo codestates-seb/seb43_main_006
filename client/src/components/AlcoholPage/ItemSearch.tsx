@@ -8,7 +8,7 @@ const ItemSearchContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 45%;
   height: 100%;
 
   > form {
@@ -34,6 +34,9 @@ const ItemSearchContainer = styled.div`
     cursor: pointer;
     background: none;
     font-size: 1.5rem;
+  }
+  @media screen and (max-width: 535px) {
+    display: none;
   }
 `;
 

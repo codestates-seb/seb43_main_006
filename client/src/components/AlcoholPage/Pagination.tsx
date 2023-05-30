@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { PaginationProps } from "types/AlcholInterfaces";
 
@@ -8,6 +8,10 @@ const PaginationContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 5rem;
+
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    margin-top: 1rem;
+  }
 `;
 
 const StyledPaginationBtn = styled.button`

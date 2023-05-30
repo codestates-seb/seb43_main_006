@@ -34,9 +34,6 @@ const AlcoholListBox = styled.ul`
     @media screen and (max-width: 860px) {
       width: 50%;
     }
-    @media screen and (max-width: 600px) {
-      width: 100%;
-    }
   }
 `;
 

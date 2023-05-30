@@ -32,7 +32,7 @@ const AlcoholTabNavBox = styled.div`
 
 // 주류 카테고리 NavBar
 const TabNav = styled.ul`
-  width: 50%;
+  width: 55%;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -50,6 +50,11 @@ const TabNav = styled.ul`
     font-size: 16px;
     color: ${({ theme }) => theme.colors.fontColor};
     transition: 0.5s;
+  }
+  @media ${(props) => props.theme.breakpoints.mobileMax} {
+    width: 100%;
+    font-size: 14px;
+    gap: 0.5rem;
   }
 `;
 
