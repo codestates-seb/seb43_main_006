@@ -34,11 +34,12 @@ const StyledItemImgBox = styled.div`
   padding: 0 20px;
 
   img {
-    height: 550px;
+    height: 510px;
     object-fit: scale-down;
-    min-width: 400px;
+    min-width: 380px;
     width: 80%;
   }
+
   @media ${(props) => props.theme.breakpoints.mobileMax} {
     margin-bottom: 3rem;
 
@@ -121,6 +122,9 @@ const StyledItemBuyBox = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
+  }
+  @media screen and (max-width: 900px) {
+    padding: 0 30px 0 0;
   }
 
   @media ${(props) => props.theme.breakpoints.mobileMax} {
