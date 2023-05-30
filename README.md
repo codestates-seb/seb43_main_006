@@ -24,6 +24,21 @@
 ## 📄 Meju Meju Main Page
 ![main](https://github.com/codestates-seb/seb43_main_006/assets/89833446/0e47e591-462c-4433-bca5-7d6dca0be9c2)
 
+### 기능별 소개
+
+<details>
+<summary><b>주류 페이지</b></summary>
+<div markdown="1"><br/>
+
+![ItemList](https://github.com/codestates-seb/seb43_main_006/assets/89833446/dfa6bf5b-0065-43cc-ae85-af702ce61688.gif)
+
+  
+- 다양한 주류 정보 제공
+- 카테고리와 검색 기준을 통해 주류 리스트 정보를 확인할 수 있다.
+
+</div>
+</details>
+
 <br/>
 
 
