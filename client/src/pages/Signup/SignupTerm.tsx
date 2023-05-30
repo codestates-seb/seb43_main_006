@@ -100,6 +100,7 @@ const SignupTerm = () => {
               약관동의
             </Title>
           </div>
+          <p style={{ color: "gray" }}>모든 약관을 읽어야 합니다</p>
           <div className="check-container">
             <div className="front">
               <input onChange={() => clickCheck(0)} type="checkbox" />
