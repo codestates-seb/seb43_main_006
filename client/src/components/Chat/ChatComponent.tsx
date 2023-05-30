@@ -86,7 +86,7 @@ const ChatComponent = () => {
           </MiddleContainer>
           <BottonContainer>
             <input onKeyDown={handleKeyDown} onChange={handleInput} className="input" />
-            <IoMdSend className="sendBtn" size="25" color="#222" onClick={handleSubmit}>
+            <IoMdSend className="sendBtn" size="25" color="gray" onClick={handleSubmit}>
               전송
             </IoMdSend>
           </BottonContainer>
@@ -123,7 +123,7 @@ const GptContainer = styled.div`
   width: 400px;
   height: 600px;
   color: white;
-  background-color: ${({ theme }) => theme.colors.themeColor};
+  background-color: gray;
   border: 1px solid lightgray;
   border-radius: 5px;
   @media screen and (max-width: 768px) {
@@ -176,7 +176,7 @@ const MiddleContainer = styled.div`
   }
   .question {
     position: relative;
-    background: #222;
+    background: gray;
     border-radius: 0.4em;
     padding: 5px 10px;
     color: white;
@@ -188,7 +188,7 @@ const MiddleContainer = styled.div`
     right: 5px;
     top: 50%;
     border: 20px solid transparent;
-    border-left-color: #222;
+    border-left-color: gray;
     border-right: 0;
     border-bottom: 0;
     margin-top: -10px;
