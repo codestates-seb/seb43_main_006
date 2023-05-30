@@ -58,7 +58,6 @@ const HelpCenter = () => {
             );
           })}
         </MiddleContainer>
-        <BottomConainer></BottomConainer>
       </ContentsContainer>
     </Container>
   );
@@ -74,10 +73,17 @@ const ContentsContainer = styled.div`
   width: 100vw;
   position: absolute;
   top: 15%;
+  padding-bottom: 100px;
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+  }
 `;
 const PageName = styled.div`
   font-size: 35px;
   font-weight: 700;
+  @media screen and (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -93,6 +99,9 @@ const TopContainer = styled.div`
 const Title = styled.div<TitleProps>`
   position: relative;
   font-size: ${({ fontSize }) => fontSize};
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
   font-weight: ${({ fontWeight }) => fontWeight};
   background-color: ${({ theme }) => theme.colors.themeColor};
   padding: 20px;
@@ -107,9 +116,11 @@ const MiddleContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  @media screen and (max-width: 768px) {
+    gap: 15px;
+  }
   border: 1px solid gray;
   border-radius: 2px;
 `;
-const BottomConainer = styled.div``;
 
 export default HelpCenter;

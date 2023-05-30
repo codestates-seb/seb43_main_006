@@ -205,7 +205,7 @@ const SignupInput = () => {
     } else if (style === "false") {
       setType("normal");
     } else {
-      setType(null);
+      setType("normal"); //수정해야함!
       setAlertMessage("잘못된 경로로 접근함!");
       setShowAlert(true);
     }
@@ -254,7 +254,7 @@ const SignupInput = () => {
                     <div className="input-container">
                       <input onChange={onEmail} />
                       <div className="code">
-                        <p>인증코드</p>
+                        <p className="label">인증코드</p>
                         <input onChange={onCode} className="code-input" />
                       </div>
                     </div>
@@ -262,12 +262,7 @@ const SignupInput = () => {
                   <SingleInfo>
                     <div className="name password">비밀번호</div>
                     <form className="input-container">
-                      <input
-                        autoComplete="off"
-                        type="password"
-                        placeholder="문자, 숫자, 특수문자를 결합해 8자 이상"
-                        onChange={onPassword}
-                      />
+                      <input autoComplete="off" type="password" onChange={onPassword} />
                       {isDisabled ? <ValidPassword>문자, 숫자, 특수기호를 결합해 8자 이상</ValidPassword> : null}
                     </form>
                   </SingleInfo>
@@ -278,10 +273,10 @@ const SignupInput = () => {
                         autoComplete="off"
                         className={isDisabled ? "disable" : ""}
                         type="password"
-                        placeholder={isDisabled ? "비밀번호를 먼저 올바르게 입력하세요" : ""}
                         disabled={isDisabled}
                         onChange={onPasswordCheck}
                       />
+                      {isDisabled ? <ValidPassword>먼저 비밀번호를 옳바르게 입력하세요</ValidPassword> : null}
                     </form>
                   </SingleInfo>
                 </>
@@ -351,19 +346,34 @@ const InputContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: 200px;
+    @media screen and (max-width: 768px) {
+      width: 70%;
+    }
+    p {
+      width: 50%;
+    }
   }
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 `;
 const ValidPassword = styled.p`
   color: red;
   margin-top: 5px;
   font-size: 12px;
   padding: 5px 10px;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    padding: 3px;
+    margin: 0px;
+    font-size: 10px;
+  }
 `;
 
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 22px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -374,10 +384,16 @@ const TopContainer = styled.div`
   padding-bottom: 20px;
   gap: 20px;
   margin-bottom: 50px;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0px;
+  }
 `;
 const StepContainer = styled.div`
   font-size: 18px;
   ${({ theme }) => theme.common.flexCenterRow};
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const Step = styled.div<StepProps>`
   ${({ theme }) => theme.common.flexCenterRow};
@@ -403,26 +419,21 @@ const SingleInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
-  border-bottom: 1px solid #b2b2b2;
-  p {
-    width: 50%;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
   }
+  border-bottom: 1px solid #b2b2b2;
+  background-color: #ededed;
+
   .name {
     display: flex;
     align-items: center;
     width: 190px;
-    padding: 20px;
-    background-color: #ededed;
+    height: 100%;
     @media screen and (max-width: 768px) {
       width: 75px;
       padding: 10px 0 10px 10px;
       font-size: 15px;
-    }
-    &.email {
-      height: 90px;
-    }
-    &.password {
-      height: 87px;
     }
   }
   .code-pos {
@@ -443,11 +454,15 @@ const SingleInfo = styled.div`
       width: calc(100% - 75px);
     }
     padding: 10px;
+    background-color: white;
     input {
       border: 1px solid #b2b2b2;
       padding: 5px 10px;
       font-size: 16px;
       width: 80%;
+      @media screen and (max-width: 768px) {
+        width: 75%;
+      }
     }
   }
 `;

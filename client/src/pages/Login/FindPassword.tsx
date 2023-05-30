@@ -113,14 +113,19 @@ const ContentsContainer = styled.div`
   gap: 50px;
   max-width: 600px;
   width: 95%;
-
   padding-bottom: 60px;
   position: absolute;
   top: 25%;
+  @media screen and (max-width: 768px) {
+    top: 15%;
+  }
 `;
 const Title = styled.div<TitleProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 const TopContainer = styled.div`
   display: flex;
@@ -134,6 +139,9 @@ const MiddleContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 2px;
   padding: 50px 40px;
+  @media screen and (max-width: 768px) {
+    padding: 30px 20px;
+  }
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,7 +197,7 @@ const InputContainer = styled.div`
       gap: 10px;
     }
     .button {
-      width: 30%;
+      width: 35%;
     }
   }
 `;
