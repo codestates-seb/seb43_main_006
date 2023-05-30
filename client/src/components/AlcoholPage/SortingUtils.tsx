@@ -66,6 +66,10 @@ const SortingUtilsContainer = styled.div`
         &:hover {
           background-color: #ddd;
         }
+
+        @media ${(props) => props.theme.breakpoints.mobileMax} {
+          font-size: 12px;
+        }
       }
     }
   }

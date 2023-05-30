@@ -53,8 +53,12 @@ const TabNav = styled.ul`
   }
   @media ${(props) => props.theme.breakpoints.mobileMax} {
     width: 100%;
-    font-size: 14px;
+    font-size: 13px;
     gap: 0.5rem;
+
+    .tab_selected {
+      font-size: 14px;
+    }
   }
 `;
 
