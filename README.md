@@ -21,6 +21,12 @@
 
 <br/>
 
+## 📄 Meju Meju Main Page
+![main](https://github.com/codestates-seb/seb43_main_006/assets/89833446/0e47e591-462c-4433-bca5-7d6dca0be9c2)
+
+<br/>
+
+
 ## 📚 Documents
 
 📓 [서비스 메뉴얼](https://www.notion.so/codestates/62386707b0014e6b8c38f244710adca4)<br/>
@@ -89,3 +95,4 @@ fe-feat(또는 be)/기능명 : 기능 개발 브랜치 </br>
 |!BREAKING CHANGE|커다란 API 변경
 |!HOTFIX|급하게 치명적인 버그를 고쳐야하는 경우
 </div>
+
