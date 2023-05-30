@@ -176,6 +176,11 @@ const PaymentContainer = styled.section`
     margin-top: 150px;
     width: 25%;
     padding-bottom: 200px;
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      margin-top: 0px;
+    }
   }
 
   .buttonDetail {

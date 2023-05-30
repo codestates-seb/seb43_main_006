@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { ReactComponent as Mainlogo } from "@assets/images/Logo.svg";
 import { useRef, useEffect, useState } from "react";
 import { useHover } from "usehooks-ts";
@@ -10,6 +10,8 @@ interface IHeaderContainerProps {
   hovering: string;
   y: number;
   pathname?: string;
+  isOpen?: string;
+  style?: string;
 }
 interface ScrollState {
   x: number;
@@ -40,7 +42,8 @@ const LogoContainer = styled.header<IHeaderContainerProps>`
   }
   @media screen and (max-width: 767px) {
     & div.tag {
-      width: 50%;
+      width: 75%;
+      padding-top: 0px;
     }
   }
 `;
@@ -57,6 +60,7 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
     border: 5px solid white;
     border-radius: 3px;
   }
+
   ${({ hovering, y, pathname }) =>
     y > 0 || hovering === "true"
       ? css`
@@ -69,6 +73,15 @@ const HeaderContainer = styled.div<IHeaderContainerProps>`
           background-image: none;
           color: ${pathname === "/" ? "rgba(245, 245, 245, 1)" : "#222222"};
         `}
+
+  @media (max-width:767px) {
+    background-image: none;
+    height: 0;
+
+    .mainlogo {
+      width: 100px;
+    }
+  }
 `;
 
 const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
@@ -88,6 +101,9 @@ const WhiteMainlogo = styled(Mainlogo)<IHeaderContainerProps>`
       cursor: pointer;
       transition: all 0.3 ease;
     }
+  }
+  @media (max-width: 767px) {
+    width: 70%;
   }
 `;
 const Ulist = styled.div<IHeaderContainerProps>`
@@ -151,13 +167,7 @@ const Ulist = styled.div<IHeaderContainerProps>`
     }
   }
   @media screen and (max-width: 767px) {
-    width: 100%;
-    & ul {
-      font-size: 13px;
-      & li {
-        font-size: 10px;
-      }
-    }
+    display: none;
   }
 `;
 
@@ -168,6 +178,62 @@ const StyledList = styled.li<IHeaderContainerProps>`
     color: #a84448;
     cursor: pointer;
   }
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const slideIn = keyframes`
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
+
+const slideOut = keyframes`
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+`;
+const AccordionMenu = styled.div<IHeaderContainerProps>`
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    font-family: WanjuRegular, sans-serif, Arial;
+    padding: 13px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #a84448;
+    background-color: none;
+    height: 280px;
+  }
+  & div.onclick {
+    filter: drop-shadow(2px 2px 1px rgba(8, 8, 8, 0.5));
+  }
+`;
+const AccordionMenuItem = styled.div<IHeaderContainerProps>`
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  color: #a84448;
+  cursor: pointer;
+  background-color: ${(props) => (props.isOpen ? "none" : "rgba(247,247,247,0.7)")};
+  animation: ${(isOpen) => (isOpen ? slideIn : slideOut)} 0.3s ease;
+  transition: background-color 0.3s ease-out;
+  width: ${(props) => (props.isOpen ? "0px" : "150px")};
+  height: ${(props) => (props.isOpen ? "0px" : "100px")};
+  border: ${(props) => (props.isOpen ? "none" : "1px solid rgba(8,8,8,0.1)")};
 `;
 
 const Header: React.FC = () => {
@@ -176,6 +242,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   function authTokenExpired() {
     const authToken = localStorage.getItem("authToken");
@@ -212,6 +279,10 @@ const Header: React.FC = () => {
     localStorage.removeItem("iat");
     setIsModalOpen(true);
     navigate("/");
+  };
+
+  const toggleAccordionMenu = () => {
+    setIsAccordionOpen(!isAccordionOpen);
   };
 
   const useScroll = (): ScrollState => {
@@ -312,6 +383,99 @@ const Header: React.FC = () => {
                 )}
               </ul>
             </Ulist>
+
+            <AccordionMenu hovering={(isHover || false).toString()} y={y}>
+              {isAccordionOpen ? (
+                <div className="onclick" onClick={toggleAccordionMenu}>
+                  Menu
+                </div>
+              ) : (
+                <div className="onclick" onClick={toggleAccordionMenu}>
+                  Menu
+                </div>
+              )}
+              {isAccordionOpen && (
+                <>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/alcohol");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    주류 리스트
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/cart");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    장바구니
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/mypage/likepage");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    찜
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/mypage/orderpage");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    주문 내역
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/mypage/changeinfo");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    개인 정보 수정
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      navigate("/helpcenter");
+                      toggleAccordionMenu();
+                    }}
+                  >
+                    자주 묻는 질문
+                  </AccordionMenuItem>
+                  <AccordionMenuItem
+                    hovering={(isHover || false).toString()}
+                    y={y}
+                    onClick={() => {
+                      if (localStorage.getItem("authToken")) {
+                        if (authTokenExpired()) {
+                          navigate("/login");
+                        } else {
+                          handleLogout();
+                        }
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                  >
+                    {localStorage.getItem("authToken") ? (authTokenExpired() ? "로그인" : "로그아웃") : "로그인"}
+                  </AccordionMenuItem>
+                </>
+              )}
+            </AccordionMenu>
           </LogoContainer>
         </div>
       </nav>

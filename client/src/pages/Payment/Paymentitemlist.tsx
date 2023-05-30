@@ -69,6 +69,9 @@ const IItemlist = styled.div`
     height: 30px;
 
     border-bottom: 1px solid rgba(60, 60, 60, 0.1);
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
 
   & div.imglisttitle {
