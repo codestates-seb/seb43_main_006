@@ -64,7 +64,18 @@
 </div>
 </details>
 
+<details>
+<summary><b>장바구니 ( 추가 + 삭제 + 수량 변경 + 결제 페이지 이동 ) </b></summary>
+<div markdown="1"><br/>
 
+![장바구니](https://github.com/codestates-seb/seb43_main_006/assets/89833446/482730cb-fa6a-410a-8a20-05268288103a)
+
+<br/>
+  
+장바구니에 주류를 추가하고, 삭제하며, 수량을 변경할 수 있습니다. 또한, 결제 페이지로 이동하여 주류를 구매할 수 있습니다. 이를 통해 편리하게 주류를 선택하고 구매할 수 있습니다. <br/>
+  
+</div>
+</details>
 
 
 
