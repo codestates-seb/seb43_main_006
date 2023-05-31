@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "PoetsenOne Regular";
+  font-style: normal;
+  font-weight: 100;
+  src: url("../assets/fonts/PoetsenOne-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../assets/fonts/IBMPlexSansKR-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../assets/fonts/IBMPlexSansKR-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../assets/fonts/IBMPlexSansKR-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/IBMPlexSansKR-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../assets/fonts/IBMPlexSansKR-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 200;
+  src: url("../assets/fonts/IBMPlexSansKR-ExtraLight.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans KR";
+  font-style: normal;
+  font-weight: 100;
+  src: url("../assets/fonts/IBMPlexSansKR-Thin.woff") format("woff");
+}
