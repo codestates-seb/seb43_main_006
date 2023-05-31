@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import ResetStyle from "styled-reset";
+import "@styles/font.css";
 import Cafe24Surroundair from "@assets/fonts/Cafe24Surroundair.ttf";
 import Cafe24Anemone from "@assets/fonts/Cafe24Anemone.ttf";
 import WanjuRegular from "@assets/fonts/WanjuRegular.ttf";
@@ -16,6 +17,7 @@ export default createGlobalStyle`
     }
     body {
         background: #F7F7F7;
+        font-family: "IBM Plex Sans KR";
     }
     a{
         text-decoration: none;

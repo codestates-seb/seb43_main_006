@@ -84,7 +84,6 @@ const Place = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("authToken"),
-          "ngrok-skip-browser-warning": "69420",
         },
       })
       .then((res) => {
