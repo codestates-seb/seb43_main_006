@@ -7,7 +7,7 @@
 **`팀 명` :** 주신사 </br>
 **`프로젝트 명` :** 매주매주 </br>
 **`프로젝트 기간` :** 2023.04.28 - 2023.05.31 </br>
-`배포링크` :  [ ❤️매주매주❤️ ](http://codestates-main-mejumeju.s3-website.ap-northeast-2.amazonaws.com/) </br>
+`배포링크` :  [ ❤️매주매주❤️ ](http://meju-meju.s3-website.ap-northeast-2.amazonaws.com/) </br>
 `개인 기술 발표` : [팀원들의 개인 기술 발표 보러가기](https://www.youtube.com/watch?v=Syx-0-BSedY) <br/>
 </br>
 
